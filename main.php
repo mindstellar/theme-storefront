@@ -61,7 +61,7 @@ $sf_hues = array(
                 </div>
                 <?php if (osc_count_categories()) { ?>
                 <div class="sf-hero__cat">
-                    <?php osc_categories_select('sCategory', null, __('All categories', 'storefront')); ?>
+                    <?php storefront_category_select('sCategory', Params::getParam('sCategory'), __('All categories', 'storefront')); ?>
                 </div>
                 <?php } ?>
                 <button class="sf-btn sf-btn--primary" type="submit">

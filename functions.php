@@ -236,6 +236,42 @@ if (!function_exists('storefront_logo')) {
 }
 
 /**
+ * Category <select> for the search forms. Rendered here rather than through core's
+ * osc_categories_select(), whose CategoryForm helper emits a blank <option> after
+ * every category — they show up as empty rows in the dropdown. Sub-categories are
+ * listed indented beneath their parent.
+ *
+ * @param string     $name          field name, e.g. 'sCategory'
+ * @param string|int $selected      currently selected category id, or '' for none
+ * @param string     $default_label label for the leading "any category" option
+ */
+if (!function_exists('storefront_category_select')) {
+    function storefront_category_select($name, $selected, $default_label)
+    {
+        $selected = (string) $selected;
+        $option = static function ($id, $label, $indent) use ($selected) {
+            $id = (string) $id;
+            echo '<option value="' . osc_esc_html($id) . '"'
+                . ($selected !== '' && $selected === $id ? ' selected' : '') . '>'
+                . str_repeat("\xC2\xA0", $indent * 3) . osc_esc_html($label) . '</option>';
+        };
+
+        echo '<select name="' . osc_esc_html($name) . '" id="' . osc_esc_html($name) . '">';
+        echo '<option value="">' . osc_esc_html($default_label) . '</option>';
+        osc_goto_first_category();
+        while (osc_has_categories()) {
+            $option(osc_category_id(), osc_category_name(), 0);
+            if (osc_count_subcategories() > 0) {
+                while (osc_has_subcategories()) {
+                    $option(osc_category_id(), osc_category_name(), 1);
+                }
+            }
+        }
+        echo '</select>';
+    }
+}
+
+/**
  * Emit the <body> class attribute. Each view passes its own page class.
  */
 if (!function_exists('storefront_body_class')) {
