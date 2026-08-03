@@ -18,6 +18,52 @@ $sf_types  = Search::getAllowedTypesForSorting();
 $sf_cat    = storefront_search_category();
 $sf_multi  = storefront_search_multi_country();
 $sf_country = Params::getParam('sCountry');
+$sf_location_mode = storefront_setting('search_location_type', 'autocomplete');
+
+// Shared by the "country_region_city" and "region_city" modes below: both render the
+// same cascading Region + City <select> pair, differing only in whether a Country
+// select is shown and what country code the pair is scoped to. Captures the current
+// sRegion/sCity params once so both call sites resolve preselection identically.
+$sf_region_param = Params::getParam('sRegion');
+$sf_region_name  = osc_search_region();
+$sf_city_param   = Params::getParam('sCity');
+$sf_city_name    = osc_search_city();
+$sf_render_region_city_selects = function ($sf_country_code) use ($sf_region_param, $sf_region_name, $sf_city_param, $sf_city_name) {
+    // Region options come from the given country code, City options from the
+    // resolved region. js/storefront-search.js re-fetches both lists (core's
+    // regions/cities ajax) when Country or Region changes.
+    $sf_regions = osc_get_regions($sf_country_code);
+    $sf_region_id = '';
+    foreach ($sf_regions as $sf_r) {
+        if ((string) $sf_r['pk_i_id'] === (string) $sf_region_param
+            || ($sf_region_name !== '' && $sf_r['s_name'] === $sf_region_name)
+        ) {
+            $sf_region_id = $sf_r['pk_i_id'];
+            break;
+        }
+    }
+    $sf_cities = ($sf_region_id !== '') ? osc_get_cities($sf_region_id) : array();
+    ?>
+    <div class="sf-field">
+        <label for="sRegion"><?php _e('Region', 'storefront'); ?></label>
+        <select class="sf-select" name="sRegion" id="sRegion">
+            <option value=""><?php echo osc_esc_html(__('Any region', 'storefront')); ?></option>
+            <?php foreach ($sf_regions as $sf_r) { ?>
+                <option value="<?php echo osc_esc_html($sf_r['pk_i_id']); ?>" <?php echo ((string) $sf_r['pk_i_id'] === (string) $sf_region_id) ? 'selected' : ''; ?>><?php echo osc_esc_html($sf_r['s_name']); ?></option>
+            <?php } ?>
+        </select>
+    </div>
+    <div class="sf-field">
+        <label for="sCity"><?php _e('City', 'storefront'); ?></label>
+        <select class="sf-select" name="sCity" id="sCity">
+            <option value=""><?php echo osc_esc_html(__('Any city', 'storefront')); ?></option>
+            <?php foreach ($sf_cities as $sf_ct) { ?>
+                <option value="<?php echo osc_esc_html($sf_ct['pk_i_id']); ?>" <?php echo (((string) $sf_ct['pk_i_id'] === (string) $sf_city_param) || ($sf_city_name !== '' && $sf_ct['s_name'] === $sf_city_name)) ? 'selected' : ''; ?>><?php echo osc_esc_html($sf_ct['s_name']); ?></option>
+            <?php } ?>
+        </select>
+    </div>
+    <?php
+};
 ?>
 <aside class="sf-searchlayout__side sf-filters" id="sf-filters" aria-label="<?php echo osc_esc_html(__('Search filters', 'storefront')); ?>">
     <div class="sf-filters__head">
@@ -60,7 +106,11 @@ $sf_country = Params::getParam('sCountry');
         <div class="sf-filters__group">
             <h3 class="sf-filters__label"><?php _e('Location', 'storefront'); ?></h3>
 
-            <?php if ($sf_multi) { ?>
+            <?php if ($sf_location_mode === 'country_region_city') { ?>
+                <?php // Country, region & city: the Country select is always shown (even on a
+                      // single-country install — an operator picking this mode wants the full
+                      // three-tier control), and Region/City cascade from whichever country is
+                      // currently selected (or "any", scoping to nothing selected). ?>
                 <div class="sf-field">
                     <label for="sCountry"><?php _e('Country', 'storefront'); ?></label>
                     <select class="sf-select" name="sCountry" id="sCountry">
@@ -70,33 +120,60 @@ $sf_country = Params::getParam('sCountry');
                         <?php } ?>
                     </select>
                 </div>
+                <?php $sf_render_region_city_selects($sf_country); ?>
+            <?php } elseif ($sf_location_mode === 'region_city') { ?>
+                <?php // Region & city: for single-country sites. No Country select — sCountry is
+                      // carried as a hidden field pinned to the site's default (first listed)
+                      // country, unless a sCountry param already overrides it (e.g. a bookmarked
+                      // search URL, or another mode's link). Region/City scope to that country. ?>
+                <?php
+                $sf_countries = Country::newInstance()->listAll();
+                $sf_cc = ($sf_country !== '') ? $sf_country : (isset($sf_countries[0]['pk_c_code']) ? $sf_countries[0]['pk_c_code'] : '');
+                ?>
+                <input type="hidden" name="sCountry" id="sCountry" value="<?php echo osc_esc_html($sf_cc); ?>" />
+                <?php $sf_render_region_city_selects($sf_cc); ?>
             <?php } else { ?>
-                <input type="hidden" name="sCountry" id="sCountry" value="<?php echo osc_esc_html($sf_country); ?>" />
-            <?php } ?>
+                <?php // Autocomplete (default): Country select shown only when the install spans
+                      // more than one country — a single-option select is a control you cannot
+                      // operate. Region + City are free text with autocomplete against core's own
+                      // ajax endpoints (page=ajax&action=location_regions|location_cities). The
+                      // hidden *Id fields carry the resolved primary key when a suggestion is
+                      // picked; core search accepts the id or the raw string, so typing a place
+                      // that is not in the table still searches. ?>
+                <?php if ($sf_multi) { ?>
+                    <div class="sf-field">
+                        <label for="sCountry"><?php _e('Country', 'storefront'); ?></label>
+                        <select class="sf-select" name="sCountry" id="sCountry">
+                            <option value=""><?php _e('Any country', 'storefront'); ?></option>
+                            <?php foreach (Country::newInstance()->listAll() as $sf_c) { ?>
+                                <option value="<?php echo osc_esc_html($sf_c['pk_c_code']); ?>" <?php echo ($sf_country === $sf_c['pk_c_code']) ? 'selected' : ''; ?>><?php echo osc_esc_html($sf_c['s_name']); ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                <?php } else { ?>
+                    <input type="hidden" name="sCountry" id="sCountry" value="<?php echo osc_esc_html($sf_country); ?>" />
+                <?php } ?>
 
-            <?php // Region + City: free text with autocomplete against core's own ajax endpoints
-                  // (page=ajax&action=location_regions|location_cities). The hidden *Id fields carry
-                  // the resolved primary key when a suggestion is picked; core search accepts the id
-                  // or the raw string, so typing a place that is not in the table still searches. ?>
-            <div class="sf-field">
-                <label for="sRegion"><?php _e('Region', 'storefront'); ?></label>
-                <input class="sf-input" type="text" name="sRegion" id="sRegion" autocomplete="off"
-                       value="<?php echo osc_esc_html(osc_search_region()); ?>"
-                       placeholder="<?php echo osc_esc_html(__('Any region', 'storefront')); ?>"
-                       data-ac="location_regions" data-ac-url="<?php echo osc_esc_html(osc_base_url(true)); ?>"
-                       data-ac-target="#regionId" data-ac-scope="#sCountry" data-ac-scope-param="country"
-                       data-ac-clears="#sCity,#cityId" />
-                <input type="hidden" name="regionId" id="regionId" value="" />
-            </div>
-            <div class="sf-field">
-                <label for="sCity"><?php _e('City', 'storefront'); ?></label>
-                <input class="sf-input" type="text" name="sCity" id="sCity" autocomplete="off"
-                       value="<?php echo osc_esc_html(osc_search_city()); ?>"
-                       placeholder="<?php echo osc_esc_html(__('Any city', 'storefront')); ?>"
-                       data-ac="location_cities" data-ac-url="<?php echo osc_esc_html(osc_base_url(true)); ?>"
-                       data-ac-target="#cityId" data-ac-scope="#regionId" data-ac-scope-param="region" />
-                <input type="hidden" name="cityId" id="cityId" value="" />
-            </div>
+                <div class="sf-field">
+                    <label for="sRegion"><?php _e('Region', 'storefront'); ?></label>
+                    <input class="sf-input" type="text" name="sRegion" id="sRegion" autocomplete="off"
+                           value="<?php echo osc_esc_html(osc_search_region()); ?>"
+                           placeholder="<?php echo osc_esc_html(__('Any region', 'storefront')); ?>"
+                           data-ac="location_regions" data-ac-url="<?php echo osc_esc_html(osc_base_url(true)); ?>"
+                           data-ac-target="#regionId" data-ac-scope="#sCountry" data-ac-scope-param="country"
+                           data-ac-clears="#sCity,#cityId" />
+                    <input type="hidden" name="regionId" id="regionId" value="" />
+                </div>
+                <div class="sf-field">
+                    <label for="sCity"><?php _e('City', 'storefront'); ?></label>
+                    <input class="sf-input" type="text" name="sCity" id="sCity" autocomplete="off"
+                           value="<?php echo osc_esc_html(osc_search_city()); ?>"
+                           placeholder="<?php echo osc_esc_html(__('Any city', 'storefront')); ?>"
+                           data-ac="location_cities" data-ac-url="<?php echo osc_esc_html(osc_base_url(true)); ?>"
+                           data-ac-target="#cityId" data-ac-scope="#regionId" data-ac-scope-param="region" />
+                    <input type="hidden" name="cityId" id="cityId" value="" />
+                </div>
+            <?php } ?>
         </div>
 
         <?php if (osc_price_enabled_at_items()) { ?>

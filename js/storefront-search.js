@@ -99,6 +99,68 @@
         });
     }
 
+    // Region/City cascading <select> pairs — the "dropdown" location_input_type.
+    // Unlike the type-ahead autocomplete (core's location_regions|location_cities,
+    // which LIKE-match a term and cap at 5 rows — right for suggestions, wrong for a
+    // dropdown that must list every child), this hits core's full-list endpoints:
+    // action=regions&countryId= (Region::findByCountry) and action=cities&regionId=
+    // (City::findByRegion), which return complete rows shaped {pk_i_id, s_name}.
+    // Only wires up pairs whose elements are real <select>s — in "autocomplete" mode
+    // the same ids exist but as text/hidden inputs, so the tagName check keeps this a
+    // no-op on that path.
+    function fetchLocationOptions(base, action, scopeParam, scopeValue, cb) {
+        var u = base + (base.indexOf('?') > -1 ? '&' : '?') + 'page=ajax&action=' + encodeURIComponent(action);
+        if (scopeParam && scopeValue) { u += '&' + scopeParam + '=' + encodeURIComponent(scopeValue); }
+        fetch(u, { credentials: 'same-origin', headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(function (r) { return r.json(); })
+            .then(function (list) { cb(Array.isArray(list) ? list : []); })
+            .catch(function () { cb([]); });
+    }
+    function fillLocationSelect(select, list) {
+        if (!select) { return; }
+        // Keep the existing first option (the server-rendered "Any …" / "Select …"
+        // placeholder) and replace everything after it.
+        var placeholder = select.options.length ? select.options[0] : null;
+        select.innerHTML = '';
+        if (placeholder) { select.appendChild(placeholder); }
+        list.forEach(function (item) {
+            var opt = document.createElement('option');
+            opt.value = item.id != null ? item.id : (item.pk_i_id != null ? item.pk_i_id : '');
+            opt.textContent = item.name != null ? item.name : (item.s_name != null ? item.s_name : '');
+            select.appendChild(opt);
+        });
+    }
+    function bindLocationDropdownCascade() {
+        [
+            { country: '#countryId', region: '#regionId', city: '#cityId' }, // item-post
+            { country: '#sCountry', region: '#sRegion', city: '#sCity' }     // search rail
+        ].forEach(function (ids) {
+            var countryEl = document.querySelector(ids.country);
+            var regionEl = document.querySelector(ids.region);
+            var cityEl = document.querySelector(ids.city);
+            var anchor = regionEl || cityEl || countryEl;
+            var form = anchor ? anchor.closest('form') : null;
+            var base = form ? form.getAttribute('action') : null;
+            if (!base) { return; }
+
+            if (countryEl && countryEl.tagName === 'SELECT' && regionEl && regionEl.tagName === 'SELECT') {
+                countryEl.addEventListener('change', function () {
+                    fetchLocationOptions(base, 'regions', 'countryId', countryEl.value, function (list) {
+                        fillLocationSelect(regionEl, list);
+                        if (cityEl && cityEl.tagName === 'SELECT') { fillLocationSelect(cityEl, []); }
+                    });
+                });
+            }
+            if (regionEl && regionEl.tagName === 'SELECT' && cityEl && cityEl.tagName === 'SELECT') {
+                regionEl.addEventListener('change', function () {
+                    fetchLocationOptions(base, 'cities', 'regionId', regionEl.value, function (list) {
+                        fillLocationSelect(cityEl, list);
+                    });
+                });
+            }
+        });
+    }
+
     // Search-alert subscribe: posts to core's ajax `alerts` action (no jQuery) and
     // announces the outcome. Core reads `alert` (the encrypted search) and `email`;
     // it returns "1" on success, "-4" when login is required, "-1" for a bad email.
@@ -144,6 +206,7 @@
     ready(function () {
         bindOffcanvas();
         bindLocationAutocomplete();
+        bindLocationDropdownCascade();
         bindSearchAlert();
     });
 })();

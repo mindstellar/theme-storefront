@@ -17,6 +17,7 @@ $sf_hues = array(
 ?>
 <section class="sf-hero">
     <div class="sf-container sf-hero__inner">
+        <?php if (storefront_setting('hero_show_decor', '1') !== '0') { ?>
         <svg class="sf-hero__decor" viewBox="0 0 460 420" aria-hidden="true">
             <circle cx="330" cy="120" r="96" fill="none" stroke="var(--color-accent-200)" stroke-width="2"></circle>
             <g><rect x="286" y="76" width="88" height="88" rx="18" fill="var(--color-accent)"></rect><path d="M310 120l14 14 26-30" fill="none" stroke="var(--color-fixed-light)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path></g>
@@ -24,13 +25,21 @@ $sf_hues = array(
             <g><circle cx="380" cy="300" r="40" fill="var(--color-accent)"></circle><path d="M366 300h28M380 286v28" stroke="var(--color-fixed-light)" stroke-width="5" stroke-linecap="round"></path></g>
             <g><rect x="222" y="250" width="58" height="58" rx="14" fill="var(--color-accent-2)"></rect><path d="M236 279l10 10 18-22" fill="none" stroke="var(--color-fixed-light)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path></g>
         </svg>
+        <?php } ?>
 
         <div class="sf-hero__content">
-        <h1 class="sf-hero__title"><?php echo osc_esc_html(osc_page_title()); ?></h1>
+        <h1 class="sf-hero__title"><?php echo osc_esc_html(storefront_setting('hero_headline', osc_page_title())); ?></h1>
         <p class="sf-hero__sub">
-            <?php echo osc_page_description() !== ''
-                ? osc_esc_html(osc_page_description())
-                : osc_esc_html(__('Buy, sell and rent near you. Browse a clean grid of local listings, or post your own for free in a couple of minutes.', 'storefront')); ?>
+            <?php
+            $sf_hero_tagline = storefront_setting('hero_tagline', '');
+            if ($sf_hero_tagline !== '') {
+                echo osc_esc_html($sf_hero_tagline);
+            } else {
+                echo osc_page_description() !== ''
+                    ? osc_esc_html(osc_page_description())
+                    : osc_esc_html(__('Buy, sell and rent near you. Browse a clean grid of local listings, or post your own for free in a couple of minutes.', 'storefront'));
+            }
+            ?>
         </p>
 
         <div class="sf-hero__glass">
@@ -62,7 +71,7 @@ $sf_hues = array(
             </form>
         </div>
 
-        <?php if (osc_count_categories()) { ?>
+        <?php if (osc_count_categories() && storefront_setting('hero_show_chips', '1') !== '0') { ?>
         <div class="sf-hero__popular">
             <span><?php _e('Popular:', 'storefront'); ?></span>
             <?php osc_goto_first_category(); $sf_n = 0; while (osc_has_categories() && $sf_n < 5) { $sf_n++; ?>

@@ -5,9 +5,12 @@ responsive, **vanilla-JS** (no jQuery) classifieds front end.
 
 ## Design
 
-- Brand palette (Deep Navy / Teal / Slate / Off-White / Coral), light **and** dark mode via
-  `prefers-color-scheme`.
-- Card-grid listings, sticky search, accessible mobile nav, logical CSS properties for RTL.
+- **Three selectable colour palettes** (Teal / Indigo / Violet) on a warm-sand ground with deep-navy
+  ink; **light, dark or auto** (follows the OS). Every palette × mode combination meets **WCAG 2.1 AA**
+  contrast. Picked in the admin (see below), or retuned through the CSS design tokens in
+  `css/storefront.css` (`--color-*`, `--font-*`, `--space-*`, `--radius-*`, `--shadow-*`).
+- Card-grid listings, sticky search, accessible mobile nav, **automatic RTL** via logical CSS
+  properties (switches on right-to-left locales — no setting to manage).
 - Consumes only the public Shopclass theme API (`osc_*` helpers and hooks) — no reach into core
   internals.
 
@@ -16,6 +19,39 @@ responsive, **vanilla-JS** (no jQuery) classifieds front end.
 Shopclass 6.0.0+ bundles Storefront in the release zip and activates it on a fresh install. To
 install manually, drop this folder into `oc-content/themes/storefront/` and activate it under
 **Settings → Appearance**.
+
+## Theme settings
+
+Storefront adds two admin pages under **Appearance** — rebrand and retune the front end without
+touching code. Everything is stored as theme preferences (so it survives theme updates) and read at
+render time.
+
+### Appearance → Storefront: Brand
+
+- **Site name** — the wordmark shown when no logo image is set, and the accessible site name in every
+  case.
+- **Logo** — upload an **SVG, PNG or JPG**. An SVG is sanitized on upload (scripts, event handlers and
+  remote references are stripped) and inlined so it follows the current text colour — one file that
+  looks right in both light and dark mode. PNG/JPG logos are saved to `oc-content/uploads/`.
+- **Compact logo** (optional) — a square-ish mark shown on small screens; falls back to the main logo
+  when left empty.
+
+### Appearance → Storefront: Settings
+
+- **Colour palette** — **Teal** (default), **Indigo** or **Violet**. Swaps the primary and secondary
+  accents site-wide; each is tuned to clear **WCAG 2.1 AA** in both light and dark.
+- **Colour scheme** — **Light**, **Dark**, or **Auto** (matches each visitor's device setting).
+- **Home / Hero** — override the headline and tagline; toggle the decorative graphic and the
+  popular-category chips.
+- **Search & location**
+  - *Post & edit form* — location fields as type-ahead **autocomplete** or cascading **dropdowns**.
+  - *Search page* — **Country + Region + City**, **Region + City** (for single-country sites — hides the
+    country choice and scopes to the default country), or **Autocomplete**.
+  - *Search box placeholder* text and the *default results view* (gallery or list).
+- **Footer & social** — footer tagline; links for Facebook, X, Instagram, YouTube and LinkedIn (each
+  icon is hidden when its field is blank); and the "Powered by Shopclass" credit toggle.
+
+Leaving a text field blank restores its built-in default (e.g. the site title for the hero headline).
 
 ## Local development
 

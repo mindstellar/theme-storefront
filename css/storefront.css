@@ -34,6 +34,11 @@
        text; this steps to a darker teal on light and a lighter one on dark, keeping
        teal text >=4.5:1 in both themes. Fills/buttons still use --color-accent. */
     --color-accent-ink: var(--color-accent-700);
+    /* Coral/amber/pink counterpart to --color-accent-ink, same rationale: any TEXT
+       or meaningful icon coloured with accent-2 must flip with the theme (dark
+       backgrounds need the lighter -300 step) rather than hard-coding a step tuned
+       for the light ground only. Fills/chips still use --color-accent-2 directly. */
+    --color-accent-2-ink: var(--color-accent-2-700);
 
     /* Tonal ramps — generated in OKLCH on one shared lightness scale, so the
        same step of any role matches the others in visual value. */
@@ -66,6 +71,21 @@
     --color-accent-2-700: #c53c1e;
     --color-accent-2-800: #99301a;
     --color-accent-2-900: #6b2414;
+
+    /* Solid-fill tokens for buttons/chips that carry --color-fixed-light text. The
+       base accent (500) only clears ~2.8:1 against white, so white-on-accent fails
+       AA as text; these resolve to the LIGHTEST ramp step that still clears >=4.5:1
+       against white, keeping fills as vibrant as AA allows. Fill-vs-white is
+       mode-invariant (the ramps don't flip light/dark), so no dark-theme override
+       is needed. Redefined per palette below since each hue reaches AA at a
+       different step (teal needs 700; indigo/violet clear it already at 500). The
+       -hover/-active steps are one/two steps further down the same ramp, so press
+       states only ever gain contrast, never lose it. */
+    --color-accent-fill: var(--color-accent-700);
+    --color-accent-fill-hover: var(--color-accent-800);
+    --color-accent-fill-active: var(--color-accent-900);
+    --color-accent-2-fill: var(--color-accent-2-700);
+    --color-accent-2-fill-hover: var(--color-accent-2-800);
 
     --font-heading: "Archivo", system-ui, sans-serif;
     --font-heading-weight: 800;
@@ -123,6 +143,7 @@
     --color-text: #eaf1f8;
     --color-divider: color-mix(in srgb, #eaf1f8 16%, transparent);
     --color-accent-ink: var(--color-accent-300);
+    --color-accent-2-ink: var(--color-accent-2-300);
 
     --color-neutral-100: #16273a;
     --color-neutral-200: #1e3145;
@@ -148,6 +169,7 @@
         --color-text: #eaf1f8;
         --color-divider: color-mix(in srgb, #eaf1f8 16%, transparent);
         --color-accent-ink: var(--color-accent-300);
+        --color-accent-2-ink: var(--color-accent-2-300);
 
         --color-neutral-100: #16273a;
         --color-neutral-200: #1e3145;
@@ -163,6 +185,82 @@
         --shadow-md: 0 4px 14px rgba(0, 0, 0, .45), 0 2px 6px rgba(0, 0, 0, .35);
         --shadow-lg: 0 18px 44px rgba(0, 0, 0, .55), 0 6px 16px rgba(0, 0, 0, .4);
     }
+}
+
+/* Palette presets — swap only the accent (primary) and accent-2 (secondary) tonal ramps
+   for `data-palette="indigo"|"violet"`; teal is the `:root` default so it needs no block.
+   bg/surface/text/neutral/fixed tokens are untouched, so only the brand hue moves.
+   Ramps are generated in OKLCH mirroring the teal ramp's own step-to-step LIGHTNESS shape
+   (100 lightest … 900 darkest), anchored to each hue's true rendered lightness rather than
+   the teal ramp's raw numbers — blue/violet renders noticeably darker than teal at matched
+   OKLCH lightness, so a straight copy would crush the ramp. --color-accent-700 clears
+   >=4.5:1 on the light ground and --color-accent-300 clears >=4.5:1 on the dark ground,
+   so --color-accent-ink (which resolves to one of those two, see above) keeps passing
+   text contrast under either preset. */
+:root[data-palette="indigo"] {
+    --color-accent: #4f46e5;
+    --color-accent-2: #f59e0b;
+
+    --color-accent-100: #aeb9ff;
+    --color-accent-200: #9aa6ff;
+    --color-accent-300: #7f89ff;
+    --color-accent-400: #6465ff;
+    --color-accent-500: #4f46e5;
+    --color-accent-600: #4000de;
+    --color-accent-700: #2e00a8;
+    --color-accent-800: #1e0076;
+    --color-accent-900: #0f004a;
+
+    --color-accent-2-100: #fff3e5;
+    --color-accent-2-200: #ffe4c5;
+    --color-accent-2-300: #ffcf97;
+    --color-accent-2-400: #ffb557;
+    --color-accent-2-500: #f59e0b;
+    --color-accent-2-600: #d68900;
+    --color-accent-2-700: #9c6200;
+    --color-accent-2-800: #955e00;
+    --color-accent-2-900: #784b00;
+
+    /* Indigo already clears 4.5:1 at 500, so fill sits two steps lighter than
+       teal's; amber accent-2 only reaches AA at 700. */
+    --color-accent-fill: var(--color-accent-500);
+    --color-accent-fill-hover: var(--color-accent-600);
+    --color-accent-fill-active: var(--color-accent-700);
+    --color-accent-2-fill: var(--color-accent-2-700);
+    --color-accent-2-fill-hover: var(--color-accent-2-800);
+}
+
+:root[data-palette="violet"] {
+    --color-accent: #7c3aed;
+    --color-accent-2: #ec4899;
+
+    --color-accent-100: #cbbeff;
+    --color-accent-200: #bba9ff;
+    --color-accent-300: #a789ff;
+    --color-accent-400: #9261ff;
+    --color-accent-500: #7c3aed;
+    --color-accent-600: #6900d8;
+    --color-accent-700: #4f00a6;
+    --color-accent-800: #380079;
+    --color-accent-900: #220050;
+
+    --color-accent-2-100: #ffe7ef;
+    --color-accent-2-200: #ffccdf;
+    --color-accent-2-300: #ffa6ca;
+    --color-accent-2-400: #ff73b2;
+    --color-accent-2-500: #ec4899;
+    --color-accent-2-600: #d90083;
+    --color-accent-2-700: #b1006a;
+    --color-accent-2-800: #8b0052;
+    --color-accent-2-900: #69003d;
+
+    /* Violet already clears 4.5:1 at 500, like indigo; pink accent-2 gets there
+       one step earlier than teal/indigo's amber-or-coral, at 600. */
+    --color-accent-fill: var(--color-accent-500);
+    --color-accent-fill-hover: var(--color-accent-600);
+    --color-accent-fill-active: var(--color-accent-700);
+    --color-accent-2-fill: var(--color-accent-2-600);
+    --color-accent-2-fill-hover: var(--color-accent-2-700);
 }
 
 /* ──────────────────────────────────────────────────────────────────────────
@@ -201,8 +299,10 @@ h5 { font-size: 16px; }
 h6 { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
 p { margin: 0 0 var(--space-3); }
 
-a { color: var(--color-accent); text-decoration: none; text-underline-offset: 3px; }
-a:hover { color: var(--color-accent-700); text-decoration: underline; }
+/* Ink token, not the raw --color-accent: base teal only clears ~2.8:1 on the
+   page ground, so text/links route through the mode-flipping ink step instead. */
+a { color: var(--color-accent-ink); text-decoration: none; text-underline-offset: 3px; }
+a:hover { color: var(--color-accent-ink); text-decoration: underline; }
 img { display: block; max-width: 100%; height: auto; }
 
 .text-muted, .sf-muted { color: var(--color-muted); }
@@ -243,23 +343,28 @@ img { display: block; max-width: 100%; height: auto; }
 .btn:active, .sf-btn:active { transform: translateY(1px); }
 .btn:disabled, .sf-btn:disabled { opacity: 0.45; cursor: not-allowed; }
 
-.btn-primary, .sf-btn--primary { background: var(--color-accent); color: var(--color-fixed-light); }
-.btn-primary:hover, .sf-btn--primary:hover { background: var(--color-accent-600); color: var(--color-fixed-light); }
-.btn-primary:active, .sf-btn--primary:active { background: var(--color-accent-700); }
+/* Fill token, not the raw --color-accent: base teal (500) only clears ~2.8:1
+   against the white label, so the AA-safe step (see --color-accent-fill above)
+   is used instead. */
+.btn-primary, .sf-btn--primary { background: var(--color-accent-fill); color: var(--color-fixed-light); }
+.btn-primary:hover, .sf-btn--primary:hover { background: var(--color-accent-fill-hover); color: var(--color-fixed-light); }
+.btn-primary:active, .sf-btn--primary:active { background: var(--color-accent-fill-active); }
 
 .btn-secondary, .sf-btn--ghost, .sf-btn--secondary { color: var(--color-text); border-color: var(--color-divider); }
 .btn-secondary:hover, .sf-btn--ghost:hover, .sf-btn--secondary:hover { background: color-mix(in srgb, var(--color-text) 7%, transparent); border-color: var(--color-divider); color: var(--color-text); }
 .btn-secondary:active, .sf-btn--ghost:active, .sf-btn--secondary:active { background: color-mix(in srgb, var(--color-text) 14%, transparent); }
 
-.btn-accent, .sf-btn--accent { background: var(--color-accent-2); color: var(--color-fixed-light); }
-.btn-accent:hover, .sf-btn--accent:hover { background: var(--color-accent-2-600); color: var(--color-fixed-light); }
+/* Fill token, not the raw --color-accent-2: base coral/amber/pink (500) fails AA
+   against the white label in every palette (see --color-accent-2-fill above). */
+.btn-accent, .sf-btn--accent { background: var(--color-accent-2-fill); color: var(--color-fixed-light); }
+.btn-accent:hover, .sf-btn--accent:hover { background: var(--color-accent-2-fill-hover); color: var(--color-fixed-light); }
 
 /* Solid destructive button — the confirm dialog's primary action. Uses the darker
    accent-2-700 fill so the white label clears AA (≈5.2:1); the -600 tint fails it. */
 .sf-btn--danger { background: var(--color-accent-2-700); color: var(--color-fixed-light); border-color: transparent; }
 .sf-btn--danger:hover { background: var(--color-accent-2-800); border-color: transparent; color: var(--color-fixed-light); }
 
-.btn-ghost { color: var(--color-accent); padding-inline: var(--space-1); }
+.btn-ghost { color: var(--color-accent-ink); padding-inline: var(--space-1); }
 .btn-ghost:hover { background: color-mix(in srgb, var(--color-accent) 10%, transparent); }
 
 /* Touch targets: on a coarse pointer every button clears the 44px WCAG 2.5.5 size
@@ -338,7 +443,7 @@ select.sf-select, .sf-field select { cursor: pointer; }
 .tag-accent { background: var(--color-accent-100); color: var(--color-accent-800); }
 .tag-accent-2 { background: var(--color-accent-2-100); color: var(--color-accent-2-800); }
 .tag-neutral { background: var(--color-neutral-100); color: var(--color-neutral-800); }
-.tag-outline { border: 1px solid var(--color-accent); color: var(--color-accent); }
+.tag-outline { border: 1px solid var(--color-accent); color: var(--color-accent-ink); }
 
 /* Tables */
 .table {
@@ -384,15 +489,28 @@ select.sf-select, .sf-field select { cursor: pointer; }
     background: var(--color-accent); display: inline-block;
 }
 .sf-logo img { max-height: 34px; width: auto; }
+/* An inline SVG logo (viewBox only, no width/height attrs) has no intrinsic size,
+   so a definite height is needed for the width to resolve from the aspect ratio —
+   max-height alone computes to 0×0. max-width guards an over-wide wordmark SVG. */
+.sf-logo svg { height: 34px; width: auto; max-width: 220px; }
+/* Hide the wordmark's brand bullet whenever a real logo is present — an uploaded
+   raster (img) or an inline SVG mark. The ::before square is only the fallback mark
+   for the plain-text wordmark. */
+.sf-logo:has(.sf-logo__mark)::before,
 .sf-logo:has(img)::before { display: none; }
 .sf-wordmark { letter-spacing: -0.02em; }
+
+/* Compact logo mark — hidden by default; the header's mobile breakpoint below swaps it in
+   for the full mark. Only rendered as its own element when a compact upload/SVG is set —
+   otherwise the full mark stands in for it and just keeps showing at every width. */
+.sf-logo__mark--compact { display: none; }
 
 .sf-nav { display: flex; align-items: center; gap: var(--space-4); margin-inline-start: auto; }
 .sf-nav__link {
     color: color-mix(in srgb, var(--color-text) 78%, transparent);
     font-size: 14px; font-weight: 600;
 }
-.sf-nav__link:hover { color: var(--color-accent); text-decoration: none; }
+.sf-nav__link:hover { color: var(--color-accent-ink); text-decoration: none; }
 .sf-nav__cta { margin-inline-start: var(--space-1); }
 
 .sf-nav-toggle {
@@ -404,7 +522,7 @@ select.sf-select, .sf-field select { cursor: pointer; }
 /* Active nav item — a short teal underline so the current section is visible, not
    only announced via aria-current. */
 .sf-nav__link { position: relative; }
-.sf-nav__link[aria-current] { color: var(--color-accent); }
+.sf-nav__link[aria-current] { color: var(--color-accent-ink); }
 .sf-nav__link[aria-current]::after {
     content: ""; position: absolute; inset-inline: 0; bottom: -6px; height: 2px;
     background: var(--color-accent); border-radius: 2px;
@@ -446,13 +564,13 @@ select.sf-select, .sf-field select { cursor: pointer; }
 }
 .sf-account__item:hover {
     background: color-mix(in srgb, var(--color-accent) 10%, transparent);
-    color: var(--color-accent-700); text-decoration: none;
+    color: var(--color-accent-ink); text-decoration: none;
 }
 .sf-account__item svg { flex: none; color: currentColor; }
 .sf-account__sep { height: 1px; margin: var(--space-1) 0; border: 0; background: var(--color-divider); }
-.sf-account__item--logout { color: var(--color-accent-2-700); }
+.sf-account__item--logout { color: var(--color-accent-2-ink); }
 .sf-account__item--logout:hover {
-    background: color-mix(in srgb, var(--color-accent-2) 12%, transparent); color: var(--color-accent-2-700);
+    background: color-mix(in srgb, var(--color-accent-2) 12%, transparent); color: var(--color-accent-2-ink);
 }
 @media (prefers-reduced-motion: no-preference) {
     .sf-account__menu:not([hidden]) { animation: sf-menu-in .16s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -613,7 +731,7 @@ select.sf-select, .sf-field select { cursor: pointer; }
     color: var(--color-text); transition: background .15s ease;
 }
 .sf-catgrid__item:hover { background: var(--color-neutral-100); text-decoration: none; color: var(--color-text); }
-.sf-catgrid__num { font-family: ui-monospace, monospace; font-size: 11px; color: var(--color-accent); }
+.sf-catgrid__num { font-family: ui-monospace, monospace; font-size: 11px; color: var(--color-accent-ink); }
 .sf-catgrid__name { font-family: var(--font-heading); font-weight: 800; font-size: 18px; margin-top: auto; }
 .sf-catgrid__count { font-size: 12px; color: var(--color-muted); }
 
@@ -624,7 +742,7 @@ select.sf-select, .sf-field select { cursor: pointer; }
     background: var(--color-surface); border: 1px solid var(--color-divider);
     border-radius: var(--radius-md); color: var(--color-text); font-weight: 600; font-size: 14px;
 }
-.sf-cat-chip:hover { border-color: var(--color-accent); color: var(--color-accent); text-decoration: none; }
+.sf-cat-chip:hover { border-color: var(--color-accent); color: var(--color-accent-ink); text-decoration: none; }
 .sf-cat-chip__count { color: var(--color-muted); font-weight: 500; }
 
 /* ──────────────────────────────────────────────────────────────────────────
@@ -651,7 +769,9 @@ select.sf-select, .sf-field select { cursor: pointer; }
 }
 .sf-card__body { padding: var(--space-3); display: flex; flex-direction: column; gap: 6px; flex: 1; }
 .sf-card__pricerow { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
-.sf-card__price { font-family: var(--font-heading); font-weight: 800; font-size: 16px; color: var(--color-accent-700); letter-spacing: -0.01em; white-space: nowrap; }
+/* Ink token, not hard-coded accent-700: on the dark surface that step only clears
+   ~2.9:1, so the price would nearly vanish on a dark card. */
+.sf-card__price { font-family: var(--font-heading); font-weight: 800; font-size: 16px; color: var(--color-accent-ink); letter-spacing: -0.01em; white-space: nowrap; }
 /* Category badge, overlaid on the listing image (bottom-left) so it never crowds or
    truncates the price. A frosted light chip with fixed ink text stays legible over any
    photo and over the noimg gradient, in both themes; the Featured badge keeps top-left. */
@@ -669,7 +789,7 @@ select.sf-select, .sf-field select { cursor: pointer; }
     text-wrap: pretty;
     display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
-.sf-card__title:hover { color: var(--color-accent-700); text-decoration: none; }
+.sf-card__title:hover { color: var(--color-accent-ink); text-decoration: none; }
 /* Description teaser: hidden in the grid, revealed in list view (below). */
 .sf-card__desc { display: none; }
 .sf-card__meta {
@@ -712,7 +832,7 @@ body.sf-list .sf-card__desc {
    ────────────────────────────────────────────────────────────────────────── */
 .sf-crumbs { font-size: 12px; color: var(--color-neutral-700); margin-bottom: var(--space-3); }
 .sf-crumbs a { color: var(--color-neutral-700); }
-.sf-crumbs a:hover { color: var(--color-accent); }
+.sf-crumbs a:hover { color: var(--color-accent-ink); }
 
 .sf-searchlayout { display: flex; gap: var(--space-6); align-items: flex-start; }
 /* Main column is first in the DOM so the results <h1> precedes the rail's
@@ -905,8 +1025,8 @@ body.sf-list .sf-card__desc {
 .sf-cat-link { justify-content: space-between; }
 .sf-cat-link .sf-cat-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .sf-cat-link svg, .sf-cat-reset a svg { color: var(--color-muted); flex: none; }
-.sf-cat-link:hover, .sf-cat-reset a:hover { background: color-mix(in srgb, var(--color-accent) 8%, transparent); color: var(--color-accent-700); text-decoration: none; }
-.sf-cat-link:hover svg { color: var(--color-accent); }
+.sf-cat-link:hover, .sf-cat-reset a:hover { background: color-mix(in srgb, var(--color-accent) 8%, transparent); color: var(--color-accent-ink); text-decoration: none; }
+.sf-cat-link:hover svg { color: var(--color-accent-ink); }
 .sf-cat-reset a { color: var(--color-muted); font-weight: 600; }
 .sf-cat-current { padding: 7px var(--space-2); font-weight: 800; color: var(--color-text); }
 .sf-cat-list .is-empty { justify-content: space-between; color: var(--color-muted); cursor: default; }
@@ -914,12 +1034,12 @@ body.sf-list .sf-card__desc {
 
 /* Email-alert form */
 .sf-alert-form__hint, .sf-alert-form__done { font-size: 13px; color: var(--color-muted); margin: 0 0 var(--space-2); }
-.sf-alert-form__done { display: flex; align-items: center; gap: var(--space-2); color: var(--color-accent-700); }
+.sf-alert-form__done { display: flex; align-items: center; gap: var(--space-2); color: var(--color-accent-ink); }
 .sf-alert-form .sf-btn { margin-top: var(--space-1); }
 .sf-alert-form__msg { font-size: 13px; margin: var(--space-2) 0 0; color: var(--color-muted); }
 .sf-alert-form__msg:empty { display: none; }
-.sf-alert-form__msg[data-state="ok"] { color: var(--color-accent-700); }
-.sf-alert-form__msg[data-state="err"] { color: var(--color-accent-2-700); }
+.sf-alert-form__msg[data-state="ok"] { color: var(--color-accent-ink); }
+.sf-alert-form__msg[data-state="err"] { color: var(--color-accent-2-ink); }
 
 /* "Selling something?" promo. Sits on the fixed light-teal accent-100 tint, which
    doesn't flip in dark mode, so its text uses fixed accent-ink (like tags/badges)
@@ -940,8 +1060,8 @@ body.sf-list .sf-card__desc {
     border-radius: var(--radius-md); font-size: 13px; color: var(--color-text); text-decoration: none;
 }
 .sf-chip svg { color: var(--color-muted); }
-.sf-chip:hover { border-color: var(--color-accent); color: var(--color-accent-700); text-decoration: none; }
-.sf-chip:hover svg { color: var(--color-accent); }
+.sf-chip:hover { border-color: var(--color-accent); color: var(--color-accent-ink); text-decoration: none; }
+.sf-chip:hover svg { color: var(--color-accent-ink); }
 .sf-chip__label { max-width: 22ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .sf-chip--clear { padding-inline: var(--space-3); color: var(--color-muted); font-weight: 600; }
 
@@ -952,7 +1072,7 @@ body.sf-list .sf-card__desc {
     border-radius: var(--radius-md); background: var(--color-surface);
     font-family: var(--font-heading); font-weight: 800; font-size: 13px; color: var(--color-text); cursor: pointer;
 }
-.sf-filterbtn:hover { border-color: var(--color-accent); color: var(--color-accent-700); }
+.sf-filterbtn:hover { border-color: var(--color-accent); color: var(--color-accent-ink); }
 .sf-filterbtn__count {
     display: inline-flex; align-items: center; justify-content: center; min-width: 18px; height: 18px;
     padding: 0 var(--space-1); border-radius: 999px; background: var(--color-accent-700); color: var(--color-fixed-light); font-size: 11px; font-weight: 800;
@@ -977,7 +1097,7 @@ body.sf-list .sf-card__desc {
     font-size: 14px; color: var(--color-text); cursor: pointer; list-style: none;
 }
 .osc-ac-option.is-active, .osc-ac-option:hover {
-    background: color-mix(in srgb, var(--color-accent) 12%, transparent); color: var(--color-accent-700);
+    background: color-mix(in srgb, var(--color-accent) 12%, transparent); color: var(--color-accent-ink);
 }
 
 /* Mobile: the rail becomes an off-canvas drawer so results lead the page */
@@ -1029,7 +1149,9 @@ body.sf-list .sf-card__desc {
 }
 .sf-viewbtn + .sf-viewbtn { border-inline-start: 1px solid var(--color-divider); }
 .sf-viewbtn:hover { background: color-mix(in srgb, var(--color-text) 7%, transparent); text-decoration: none; }
-.sf-viewbtn.is-active { background: var(--color-accent); color: var(--color-fixed-light); }
+/* Fill token: same white-on-accent pattern as the buttons above, so it needs the
+   AA-safe step rather than the raw (fails ~3:1 for teal) --color-accent. */
+.sf-viewbtn.is-active { background: var(--color-accent-fill); color: var(--color-fixed-light); }
 
 .sf-sort { display: inline-flex; align-items: center; gap: var(--space-2); font-size: 13px; }
 .sf-sort > span { color: var(--color-muted); }
@@ -1218,13 +1340,13 @@ body.sf-list .sf-card__desc {
 .sf-detail__title { font-size: clamp(23px, 3.4vw, 30px); line-height: 1.14; margin: 0 0 var(--space-2); text-wrap: balance; }
 .sf-detail__price {
     font-family: var(--font-heading); font-weight: 800; font-size: 32px; letter-spacing: -0.02em;
-    color: var(--color-accent-700); margin: 0 0 var(--space-2);
+    color: var(--color-accent-ink); margin: 0 0 var(--space-2);
 }
 /* Non-money states are not shouted in the price colour. */
 .sf-detail__price[data-price-state="ask"],
 .sf-detail__price[data-price-state="free"] { font-size: 19px; color: var(--color-text); }
 .sf-detail__location { display: flex; align-items: center; gap: 6px; color: var(--color-neutral-700); font-size: 14px; margin: 0 0 var(--space-4); }
-.sf-detail__location svg { flex: none; color: var(--color-accent); }
+.sf-detail__location svg { flex: none; color: var(--color-accent-ink); }
 
 .sf-detail__actions {
     display: flex; gap: var(--space-2); flex-wrap: wrap;
@@ -1249,15 +1371,17 @@ body.sf-list .sf-card__desc {
 .sf-seller__id .sf-seller__name { min-width: 0; }
 /* Long seller names must not blow out the 350px rail. */
 .sf-seller__name a, .sf-seller__name > span:first-child { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* Monogram fallback: same white-on-accent pattern as the buttons, so the fill
+   token is used instead of the raw --color-accent it would otherwise fail AA on. */
 .sf-seller__avatar {
     flex: none; width: 44px; height: 44px; border-radius: var(--radius-md); overflow: hidden;
     display: grid; place-items: center;
-    font-family: var(--font-heading); font-weight: 800; font-size: 18px; color: var(--color-fixed-light); background: var(--color-accent);
+    font-family: var(--font-heading); font-weight: 800; font-size: 18px; color: var(--color-fixed-light); background: var(--color-accent-fill);
 }
 .sf-seller__avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .sf-seller__name { font-family: var(--font-heading); font-weight: 800; font-size: 16px; line-height: 1.2; }
 .sf-seller__name a { color: var(--color-text); }
-.sf-seller__name a:hover { color: var(--color-accent-700); }
+.sf-seller__name a:hover { color: var(--color-accent-ink); }
 .sf-seller__kind { display: block; font-family: var(--font-body); font-weight: 400; font-size: 12px; color: var(--color-muted); margin-top: 2px; }
 .sf-seller__facts { list-style: none; margin: 0 0 var(--space-3); padding: 0; font-size: 13px; color: var(--color-neutral-700); display: flex; flex-direction: column; gap: var(--space-2); align-items: flex-start; }
 /* "New seller" — an honest expectation-setter for a days-old account, not an alarm. */
@@ -1275,7 +1399,7 @@ body.sf-list .sf-card__desc {
     display: block; margin-top: var(--space-2); text-align: center;
     font-family: var(--font-heading); font-weight: 800; font-size: 18px; color: var(--color-text);
 }
-.sf-phone__num:hover { color: var(--color-accent-700); }
+.sf-phone__num:hover { color: var(--color-accent-ink); }
 
 .sf-safetynote { font-size: 13px; color: var(--color-muted); margin: var(--space-3) 0 0; line-height: 1.5; }
 
@@ -1320,14 +1444,14 @@ body.sf-list .sf-card__desc {
     font-family: var(--font-heading); font-weight: 800; font-size: 14px;
     border-radius: inherit; cursor: pointer;
 }
-.sf-map__load:hover { background: color-mix(in srgb, var(--color-accent) 8%, transparent); color: var(--color-accent-700); }
+.sf-map__load:hover { background: color-mix(in srgb, var(--color-accent) 8%, transparent); color: var(--color-accent-ink); }
 .sf-map__load[aria-busy="true"] { cursor: progress; opacity: .65; }
 .sf-map__canvas { width: 100%; height: 340px; }
 .sf-map__canvas .leaflet-container { height: 100%; font: inherit; background: var(--color-neutral-100); }
 .sf-map__error { margin: 0; min-height: 120px; display: flex; align-items: center; justify-content: center; padding: var(--space-6); text-align: center; color: var(--color-muted); font-size: 14px; }
 .sf-map__link { margin: var(--space-2) 0 0; font-size: 13px; }
 .sf-map__link a { display: inline-flex; align-items: center; gap: 6px; color: var(--color-accent-ink); font-weight: 600; }
-.sf-map__link a:hover { color: var(--color-accent-700); }
+.sf-map__link a:hover { color: var(--color-accent-ink); }
 
 /* Comments — a calm thread of bordered cards on the body column (not nested cards),
    then the post form (or a sign-in invite when comments require an account). */
@@ -1347,8 +1471,8 @@ body.sf-list .sf-card__desc {
 .sf-comment__date { flex: none; font-size: 12px; color: var(--color-muted); }
 .sf-comment__title { font-family: var(--font-heading); font-weight: 800; font-size: 15px; margin: var(--space-2) 0 var(--space-1); }
 .sf-comment__body { margin: var(--space-1) 0 0; font-size: 15px; line-height: 1.6; color: var(--color-text); }
-.sf-comment__delete { display: inline-flex; align-items: center; gap: 5px; margin-top: var(--space-3); font-size: 12px; font-weight: 600; color: var(--color-accent-2-700); }
-.sf-comment__delete:hover { color: var(--color-accent-2-600); text-decoration: none; }
+.sf-comment__delete { display: inline-flex; align-items: center; gap: 5px; margin-top: var(--space-3); font-size: 12px; font-weight: 600; color: var(--color-accent-2-ink); }
+.sf-comment__delete:hover { color: var(--color-accent-2-ink); text-decoration: none; }
 .sf-comments__empty { margin: 0 0 var(--space-6); font-size: 15px; color: var(--color-muted); }
 .sf-comments__formhead { font-family: var(--font-heading); font-weight: 800; font-size: 16px; margin: 0 0 var(--space-3); }
 .sf-comments__hint { margin: 0; font-size: 14px; color: var(--color-muted); }
@@ -1370,7 +1494,7 @@ body.sf-list .sf-card__desc {
     }
     .sf-buybar[hidden] { display: none; }
     .sf-buybar__price { flex: 1; min-width: 0; display: flex; flex-direction: column; }
-    .sf-buybar__amount { font-family: var(--font-heading); font-weight: 800; font-size: 18px; line-height: 1.1; color: var(--color-accent-700); }
+    .sf-buybar__amount { font-family: var(--font-heading); font-weight: 800; font-size: 18px; line-height: 1.1; color: var(--color-accent-ink); }
     .sf-buybar__amount--ask { font-size: 15px; color: var(--color-text); }
     .sf-buybar__title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; color: var(--color-muted); }
     .sf-buybar .sf-btn { flex: none; }
@@ -1394,7 +1518,9 @@ body.sf-list .sf-card__desc {
 .sf-state svg { width: 12px; height: 12px; flex: none; }
 .sf-state--ok { background: var(--color-accent-100); color: var(--color-accent-800); }
 .sf-state--warn { background: var(--color-accent-2-100); color: var(--color-accent-2-800); }
-.sf-state--danger { background: var(--color-accent-2-600); color: var(--color-fixed-light); }
+/* Fill token: the -600 step this used to hard-code fails AA (teal ~3.7:1, indigo
+   ~2.8:1) against the white label; --color-accent-2-fill is the step that clears it. */
+.sf-state--danger { background: var(--color-accent-2-fill); color: var(--color-fixed-light); }
 /* Benign, no-action-needed state (e.g. Pending review) — neutral, so it reads as
    distinct from the warm "needs attention" Expired chip rather than identical to it. */
 .sf-state--muted { background: var(--color-neutral-200); color: var(--color-neutral-700); }
@@ -1411,7 +1537,7 @@ body.sf-list .sf-card__desc {
     color: var(--color-text); font-family: var(--font-heading); font-weight: 800; font-size: 14px;
     box-shadow: var(--shadow-sm); transition: border-color .15s ease, color .15s ease, transform .15s ease;
 }
-.sf-itemnav__link:hover { border-color: var(--color-accent); color: var(--color-accent-700); text-decoration: none; }
+.sf-itemnav__link:hover { border-color: var(--color-accent); color: var(--color-accent-ink); text-decoration: none; }
 .sf-itemnav__link--prev:hover { transform: translateX(-2px); }
 .sf-itemnav__link--next { margin-inline-start: auto; text-align: end; }
 .sf-itemnav__link--next:hover { transform: translateX(2px); }
@@ -1442,7 +1568,7 @@ body.sf-list .sf-card__desc {
     background: var(--color-neutral-100); border-radius: var(--radius-md);
 }
 .sf-dialog__context-title { font-family: var(--font-heading); font-weight: 800; font-size: 14px; }
-.sf-dialog__context-price { font-family: var(--font-heading); font-weight: 800; color: var(--color-accent-700); white-space: nowrap; }
+.sf-dialog__context-price { font-family: var(--font-heading); font-weight: 800; color: var(--color-accent-ink); white-space: nowrap; }
 .sf-dialog__note {
     display: flex; gap: 8px; align-items: flex-start; font-size: 13px; line-height: 1.5;
     padding: var(--space-3); margin-bottom: var(--space-4); border-radius: var(--radius-md);
@@ -1524,7 +1650,7 @@ body.sf-list .sf-card__desc {
 .sf-avatar-edit__actions { display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap; }
 .sf-avatar-edit__remove { display: inline-flex; align-items: center; gap: 6px; margin: 0; font-size: 13px; font-weight: 600; color: var(--color-muted); cursor: pointer; }
 .sf-avatar-edit__remove input { accent-color: var(--color-accent-2); }
-.sf-avatar-edit__remove:hover { color: var(--color-accent-2-700); }
+.sf-avatar-edit__remove:hover { color: var(--color-accent-2-ink); }
 
 /* Avatar in the sticky header's account button */
 .sf-nav__avatar { width: 26px; height: 26px; border-radius: var(--radius-sm); object-fit: cover; display: block; }
@@ -1554,8 +1680,8 @@ body.sf-list .sf-card__desc {
 .sf-sellercard__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 8px 0 0; color: var(--color-muted); font-size: 14px; }
 .sf-sellercard__loc { display: inline-flex; align-items: center; gap: 4px; }
 .sf-sellercard__sep { color: color-mix(in srgb, var(--color-text) 35%, transparent); }
-.sf-sellercard__web { display: inline-flex; align-items: center; gap: 5px; margin-top: 10px; font-size: 14px; font-weight: 700; color: var(--color-accent-700); }
-.sf-sellercard__web:hover { color: var(--color-accent); text-decoration: none; }
+.sf-sellercard__web { display: inline-flex; align-items: center; gap: 5px; margin-top: 10px; font-size: 14px; font-weight: 700; color: var(--color-accent-ink); }
+.sf-sellercard__web:hover { color: var(--color-accent-ink); text-decoration: none; }
 .sf-sellercard__subhead { font-size: 20px; margin: var(--space-8) 0 var(--space-4); }
 .sf-sellercard__about { color: var(--color-text); line-height: 1.7; max-width: 65ch; }
 
@@ -1578,11 +1704,12 @@ body.sf-list .sf-card__desc {
 /* Identity band */
 .sf-account-head { display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap; }
 /* Avatar — shared component. The brand mark is a teal square, so avatars echo it
-   (rounded-square, not round). Shows an uploaded photo or a monogram fallback. */
+   (rounded-square, not round). Shows an uploaded photo or a monogram fallback.
+   Fill token, not raw --color-accent, so the monogram's white text clears AA. */
 .sf-avatar {
     flex: none; width: 60px; height: 60px; border-radius: var(--radius-lg);
     display: grid; place-items: center; overflow: hidden;
-    background: var(--color-accent); color: var(--color-fixed-light); box-shadow: var(--shadow-sm);
+    background: var(--color-accent-fill); color: var(--color-fixed-light); box-shadow: var(--shadow-sm);
 }
 .sf-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .sf-avatar__monogram { font-family: var(--font-heading); font-weight: 800; font-size: 26px; line-height: 1; }
@@ -1611,7 +1738,7 @@ body.sf-list .sf-card__desc {
 }
 .sf-account-tab svg { opacity: .85; }
 .sf-account-tab:hover { color: var(--color-text); text-decoration: none; }
-.sf-account-tab.is-active { color: var(--color-accent-700); border-bottom-color: var(--color-accent); }
+.sf-account-tab.is-active { color: var(--color-accent-ink); border-bottom-color: var(--color-accent); }
 .sf-account-tab.is-active svg { opacity: 1; }
 @media (max-width: 640px) {
     .sf-account-tabs { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
@@ -1628,9 +1755,9 @@ body.sf-list .sf-card__desc {
 }
 .sf-account-more {
     display: inline-flex; align-items: center; gap: 4px; white-space: nowrap;
-    color: var(--color-accent-700); font-weight: 700; font-size: 14px;
+    color: var(--color-accent-ink); font-weight: 700; font-size: 14px;
 }
-.sf-account-more:hover { color: var(--color-accent); text-decoration: none; }
+.sf-account-more:hover { color: var(--color-accent-ink); text-decoration: none; }
 
 /* Dashboard card owner actions — a View / Edit / Delete footer on the owner's own
    listings (loop.php gates it behind sfCardOwner; never on a public grid). */
@@ -1638,7 +1765,7 @@ body.sf-list .sf-card__desc {
 .sf-card__actions .sf-btn { flex: 1; padding-inline: var(--space-2); font-size: 12px; }
 /* View + Edit are the co-equal pair that stretch; Delete stays compact and pushed
    to the end so the destructive action isn't given routine-action prominence. */
-.sf-card__actions .sf-card__delete { flex: 0 0 auto; margin-inline-start: var(--space-1); color: var(--color-accent-2-700); }
+.sf-card__actions .sf-card__delete { flex: 0 0 auto; margin-inline-start: var(--space-1); color: var(--color-accent-2-ink); }
 .sf-card__delete:hover { background: var(--color-accent-2-100); color: var(--color-accent-2-800); }
 
 /* Manage listings — a table on desktop, stacked rows on mobile, with a status +
@@ -1655,7 +1782,8 @@ body.sf-list .sf-card__desc {
     transition: color .12s ease, background .12s ease, border-color .12s ease;
 }
 .sf-filter-chip:hover { color: var(--color-text); border-color: color-mix(in srgb, var(--color-text) 22%, var(--color-divider)); }
-.sf-filter-chip.is-active { color: var(--color-fixed-light); background: var(--color-accent); border-color: var(--color-accent); }
+/* Fill token: white label on raw --color-accent fails AA (teal ~3:1). */
+.sf-filter-chip.is-active { color: var(--color-fixed-light); background: var(--color-accent-fill); border-color: var(--color-accent-fill); }
 .sf-filter-chip__n { font-size: 11px; font-variant-numeric: tabular-nums; padding: 1px 6px; border-radius: 999px; background: color-mix(in srgb, var(--color-text) 8%, transparent); }
 .sf-filter-chip.is-active .sf-filter-chip__n { background: color-mix(in srgb, var(--color-fixed-light) 24%, transparent); }
 .sf-manage__row.is-hidden { display: none; }
@@ -1667,18 +1795,18 @@ body.sf-list .sf-card__desc {
 .sf-manage__row:hover { background: color-mix(in srgb, var(--color-text) 3%, transparent); }
 .sf-manage__listing { display: flex; align-items: center; gap: var(--space-3); min-width: 0; color: var(--color-text); }
 .sf-manage__listing:hover { text-decoration: none; }
-.sf-manage__listing:hover .sf-manage__title { color: var(--color-accent-700); }
+.sf-manage__listing:hover .sf-manage__title { color: var(--color-accent-ink); }
 .sf-manage__thumb { flex: none; width: 56px; height: 56px; border-radius: var(--radius-md); overflow: hidden; background: var(--color-neutral-200); }
 .sf-manage__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .sf-manage__thumb .sf-card__noimg { display: block; width: 100%; height: 100%; }
 .sf-manage__info { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
 .sf-manage__title { font-family: var(--font-heading); font-weight: 800; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .sf-manage__sub { display: flex; gap: var(--space-2); font-size: 12px; color: var(--color-muted); }
-.sf-manage__price { color: var(--color-accent-700); font-weight: 800; }
+.sf-manage__price { color: var(--color-accent-ink); font-weight: 800; }
 .sf-manage__views { display: inline-flex; align-items: center; gap: 4px; font-family: ui-monospace, monospace; font-size: 13px; color: var(--color-neutral-700); }
 .sf-manage__actions { display: flex; gap: var(--space-1); justify-content: flex-end; }
-.sf-manage__delete { color: var(--color-accent-2-700); }
-.sf-manage__delete:hover { border-color: color-mix(in srgb, var(--color-accent-2) 40%, var(--color-divider)); color: var(--color-accent-2-600); }
+.sf-manage__delete { color: var(--color-accent-2-ink); }
+.sf-manage__delete:hover { border-color: color-mix(in srgb, var(--color-accent-2) 40%, var(--color-divider)); color: var(--color-accent-2-ink); }
 .sf-manage__actlabel { display: none; }
 @media (max-width: 760px) {
     .sf-manage__headrow { display: none; }
@@ -1702,7 +1830,7 @@ body.sf-list .sf-card__desc {
 .sf-settings-nav::-webkit-scrollbar { display: none; }
 .sf-settings-nav__tab { flex: none; white-space: nowrap; padding: var(--space-2) var(--space-4); border-radius: var(--radius-sm); font-family: var(--font-heading); font-weight: 800; font-size: 13px; color: var(--color-muted); }
 .sf-settings-nav__tab:hover { color: var(--color-text); text-decoration: none; }
-.sf-settings-nav__tab.is-active { background: var(--color-surface); color: var(--color-accent-700); box-shadow: var(--shadow-sm); }
+.sf-settings-nav__tab.is-active { background: var(--color-surface); color: var(--color-accent-ink); box-shadow: var(--shadow-sm); }
 
 /* Per-listing view count, account grids only */
 .sf-card__views { display: inline-flex; align-items: center; gap: 4px; }
@@ -1732,7 +1860,7 @@ body.sf-list .sf-card__desc {
 /* 404 */
 .sf-error__code {
     font-family: ui-monospace, monospace; font-size: clamp(72px, 16vw, 140px);
-    line-height: 0.9; color: var(--color-accent); letter-spacing: -0.04em; margin-bottom: var(--space-3);
+    line-height: 0.9; color: var(--color-accent-ink); letter-spacing: -0.04em; margin-bottom: var(--space-3);
 }
 
 /* ──────────────────────────────────────────────────────────────────────────
@@ -1767,6 +1895,23 @@ body.sf-list .sf-card__desc {
 .sf-footer__tagline { color: var(--color-muted); font-size: 14px; line-height: 1.5; max-width: 34ch; margin: 0 0 var(--space-4); }
 /* The footer's one action deserves a comfortable box, not the compact inline size. */
 .sf-footer__cta { display: inline-flex; align-items: center; gap: 6px; min-height: 42px; padding-inline: var(--space-4); }
+
+/* Social row — icon buttons at a full 40px tap target; muted by default so the row reads
+   quiet next to the tagline, stepping to the accent on hover/focus. Icons are drawn with
+   currentColor so they follow that colour change for free. */
+.sf-footer__social { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin: 0 0 var(--space-4); }
+.sf-footer__social-link {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 40px; height: 40px; border-radius: var(--radius-md);
+    color: var(--color-muted);
+    transition: color .15s ease, background-color .15s ease;
+}
+.sf-footer__social-link svg { width: 18px; height: 18px; fill: currentColor; }
+.sf-footer__social-link:hover,
+.sf-footer__social-link:focus-visible {
+    color: var(--color-accent-ink);
+    background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+}
 
 /* Structure leads: the label sits at near-full ink (not muted), so the uppercase
    Archivo 800 reads as the strongest layer of the column, above its links. */
@@ -1855,6 +2000,9 @@ body.sf-list .sf-card__desc {
    ────────────────────────────────────────────────────────────────────────── */
 @media (max-width: 860px) {
     .sf-nav-toggle { display: flex; }
+    /* Header has condensed to the hamburger row — hand off to the compact mark. */
+    .sf-logo__mark--full { display: none; }
+    .sf-logo__mark--compact { display: inline-flex; }
     .sf-nav {
         position: absolute; inset-inline: 0; top: 100%; flex-direction: column; align-items: stretch;
         gap: 0; background: var(--color-bg); border-bottom: 2px solid var(--color-divider);

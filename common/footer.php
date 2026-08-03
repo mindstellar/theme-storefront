@@ -29,7 +29,11 @@ $sf_can_post = osc_users_enabled() || (!osc_users_enabled() && !osc_reg_user_pos
         <div class="sf-footer__brand">
             <a class="sf-logo" href="<?php echo osc_base_url(); ?>"><?php echo storefront_logo(); ?></a>
             <p class="sf-footer__tagline">
-                <?php if (osc_page_description() !== '') {
+                <?php
+                $sf_footer_message = storefront_setting('footer_message', '');
+                if ($sf_footer_message !== '') {
+                    echo osc_esc_html($sf_footer_message);
+                } elseif (osc_page_description() !== '') {
                     echo osc_esc_html(osc_page_description());
                 } else {
                     _e('Buy and sell locally — real listings, real people, near you.', 'storefront');
@@ -40,6 +44,33 @@ $sf_can_post = osc_users_enabled() || (!osc_users_enabled() && !osc_reg_user_pos
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
                     <?php _e('Post a listing', 'storefront'); ?>
                 </a>
+            <?php } ?>
+
+            <?php
+            // Only the platforms with a URL set render — an empty slot would be a
+            // dead icon link, and an all-empty set means no nav at all.
+            $sf_socials = array(
+                'facebook'  => array(__('Facebook', 'storefront'), '<path d="M22 12a10 10 0 1 0-11.5 9.87v-6.98H7.9V12h2.6V9.8c0-2.57 1.53-4 3.87-4 1.12 0 2.3.2 2.3.2v2.5h-1.3c-1.28 0-1.68.8-1.68 1.62V12h2.86l-.46 2.89h-2.4v6.98A10 10 0 0 0 22 12z"/>'),
+                'twitter'   => array(__('Twitter / X', 'storefront'), '<path d="M18.24 2h3.3l-7.2 8.23L23 22h-6.63l-5.2-6.8L5.1 22H1.8l7.7-8.8L1 2h6.8l4.7 6.2L18.24 2zm-1.16 18h1.83L7.02 3.9H5.06L17.08 20z"/>'),
+                'instagram' => array(__('Instagram', 'storefront'), '<path d="M12 2c2.72 0 3.06.01 4.12.06 1.07.05 1.79.22 2.43.46.66.26 1.22.6 1.77 1.15.55.55.9 1.11 1.15 1.77.24.64.41 1.36.46 2.43.05 1.06.06 1.4.06 4.12s-.01 3.06-.06 4.12c-.05 1.07-.22 1.79-.46 2.43-.26.66-.6 1.22-1.15 1.77-.55.55-1.11.9-1.77 1.15-.64.24-1.36.41-2.43.46-1.06.05-1.4.06-4.12.06s-3.06-.01-4.12-.06c-1.07-.05-1.79-.22-2.43-.46-.66-.26-1.22-.6-1.77-1.15-.55-.55-.9-1.11-1.15-1.77-.24-.64-.41-1.36-.46-2.43C2.01 15.06 2 14.72 2 12s.01-3.06.06-4.12c.05-1.07.22-1.79.46-2.43.26-.66.6-1.22 1.15-1.77.55-.55 1.11-.9 1.77-1.15.64-.24 1.36-.41 2.43-.46C8.94 2.01 9.28 2 12 2zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4zm5.4-8.4a1.17 1.17 0 1 0 0-2.34 1.17 1.17 0 0 0 0 2.34z"/>'),
+                'youtube'   => array(__('YouTube', 'storefront'), '<path d="M23.5 7.2a3 3 0 0 0-2.1-2.1C19.5 4.6 12 4.6 12 4.6s-7.5 0-9.4.5A3 3 0 0 0 .5 7.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-4.8zM9.6 15.6V8.4L15.8 12l-6.2 3.6z"/>'),
+                'linkedin'  => array(__('LinkedIn', 'storefront'), '<path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.24 8.5h4.5V23H.24V8.5zM8.28 8.5h4.32v1.98h.06c.6-1.14 2.07-2.34 4.26-2.34 4.56 0 5.4 3 5.4 6.9V23h-4.5v-6.24c0-1.49-.03-3.4-2.07-3.4-2.07 0-2.39 1.62-2.39 3.3V23H8.28V8.5z"/>'),
+            );
+            $sf_social_links = array();
+            foreach ($sf_socials as $sf_social_key => $sf_social_meta) {
+                $sf_social_url = storefront_setting('social_' . $sf_social_key, '');
+                if ($sf_social_url !== '') {
+                    $sf_social_links[] = array($sf_social_url, $sf_social_meta[0], $sf_social_meta[1]);
+                }
+            }
+            if (!empty($sf_social_links)) { ?>
+                <nav class="sf-footer__social" aria-label="<?php echo osc_esc_html(__('Social', 'storefront')); ?>">
+                    <?php foreach ($sf_social_links as $sf_social) { ?>
+                        <a class="sf-footer__social-link" href="<?php echo osc_esc_html($sf_social[0]); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php echo osc_esc_html($sf_social[1]); ?>">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><?php echo $sf_social[2]; ?></svg>
+                        </a>
+                    <?php } ?>
+                </nav>
             <?php } ?>
         </div>
 

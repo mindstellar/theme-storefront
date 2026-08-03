@@ -16,6 +16,10 @@ if (!OC_ADMIN) {
     // page never ships JS it cannot use.
     osc_add_filter('scripts_defer', static function () { return true; });
     osc_add_hook('header', 'storefront_enqueue_base', 5);
+} else {
+    // The SVG sanitizer is admin-only (it's only ever run against an uploaded logo),
+    // but must be in place before storefront_admin_actions() below can run.
+    require_once STOREFRONT_THEME_FOLDER . '/admin/StorefrontSvg.php';
 }
 
 /**
@@ -98,6 +102,30 @@ if (!function_exists('storefront_theme_install')) {
         osc_set_preference('footer_link', '1', 'storefront');
         osc_set_preference('defaultShowAs@all', 'gallery', 'storefront');
         osc_set_preference('defaultShowAs@search', 'gallery');
+
+        // Settings-backend defaults, added later. Guarded (unlike the seeds above) so
+        // re-running install — an upgrade path can call this — never clobbers a value
+        // an operator already set. `header_logo_text` and `footer_message` are left
+        // unseeded: '' is already their fallback-triggering default.
+        if (!osc_get_preference('palette', 'storefront')) {
+            osc_set_preference('palette', 'teal', 'storefront');
+        }
+        if (!osc_get_preference('color_scheme', 'storefront')) {
+            osc_set_preference('color_scheme', 'light', 'storefront');
+        }
+        if (!osc_get_preference('hero_show_decor', 'storefront')) {
+            osc_set_preference('hero_show_decor', '1', 'storefront');
+        }
+        if (!osc_get_preference('hero_show_chips', 'storefront')) {
+            osc_set_preference('hero_show_chips', '1', 'storefront');
+        }
+        if (!osc_get_preference('location_input_type', 'storefront')) {
+            osc_set_preference('location_input_type', 'autocomplete', 'storefront');
+        }
+        if (!osc_get_preference('search_location_type', 'storefront')) {
+            osc_set_preference('search_location_type', 'autocomplete', 'storefront');
+        }
+
         osc_reset_preferences();
     }
 }
@@ -129,19 +157,78 @@ if (!function_exists('storefront_check_install')) {
 }
 
 /**
- * Site logo — an uploaded logo preference, else the site name as a wordmark.
+ * Read a theme preference with a real fallback: '' or false — an unset preference,
+ * or one explicitly cleared — falls back to $default; a stored '0' is a genuine value
+ * and passes straight through (a checkbox toggled off is not "unset").
  */
-if (!function_exists('storefront_logo')) {
-    function storefront_logo()
+if (!function_exists('storefront_setting')) {
+    function storefront_setting($key, $default = '')
     {
-        $logo = osc_get_preference('logo', 'storefront');
-        if ($logo) {
-            $src = osc_base_url() . 'oc-content/uploads/' . $logo;
-
-            return '<img src="' . osc_esc_html($src) . '" alt="' . osc_esc_html(osc_page_title()) . '" />';
+        $value = osc_get_preference($key, 'storefront');
+        if ($value === '' || $value === false) {
+            return $default;
         }
 
-        return '<span class="sf-wordmark">' . osc_esc_html(osc_page_title()) . '</span>';
+        return $value;
+    }
+}
+
+/**
+ * Site brand mark. Each of the two logo slots (primary, compact) independently holds
+ * EITHER a sanitized inline SVG or an uploaded raster filename — never both, an upload
+ * of one clears the other — and each is rendered as: the SVG markup if set (it was
+ * already run through StorefrontSvg::clean() at save time, so it is safe to print
+ * as-is here); else the raster <img> if set; else, for the compact slot only, the
+ * primary mark (there is no compact-specific asset to fall back to first). With no
+ * logo at all, the site name renders as a plain wordmark.
+ *
+ * Default call emits BOTH marks side by side, wrapped so the stylesheet can swap
+ * between them at a breakpoint (`.sf-logo__mark--compact` hides above it, `--full`
+ * hides below). Pass $compact = true from a context that only ever has room for one
+ * mark (no responsive swap wanted) to get just the compact-preferring mark back.
+ *
+ * @param bool $compact when true, return a single compact-preferring mark instead of
+ *                       the full+compact pair
+ *
+ * @return string
+ */
+if (!function_exists('storefront_logo')) {
+    function storefront_logo($compact = false)
+    {
+        $siteName = storefront_setting('header_logo_text', osc_page_title());
+        $wordmark = '<span class="sf-wordmark">' . osc_esc_html($siteName) . '</span>';
+
+        $resolveMark = static function ($svgKey, $rasterKey) use ($siteName) {
+            $svg = osc_get_preference($svgKey, 'storefront');
+            if ($svg !== '' && $svg !== false) {
+                return $svg; // sanitized on save — printed inline as-is
+            }
+            $raster = osc_get_preference($rasterKey, 'storefront');
+            if ($raster !== '' && $raster !== false) {
+                $src = osc_base_url() . 'oc-content/uploads/' . $raster;
+
+                return '<img src="' . osc_esc_html($src) . '" alt="' . osc_esc_html($siteName) . '">';
+            }
+
+            return null;
+        };
+
+        $full        = $resolveMark('brand_logo_svg', 'logo');
+        $compactMark = $resolveMark('brand_logo_svg_compact', 'logo_compact');
+
+        if ($full === null && $compactMark === null) {
+            return $wordmark;
+        }
+
+        if ($full === null) { $full = $wordmark; } // only a compact asset was set
+        if ($compact) {
+            return $compactMark !== null ? $compactMark : $full;
+        }
+
+        $compactContent = $compactMark !== null ? $compactMark : $full;
+
+        return '<span class="sf-logo__mark sf-logo__mark--full">' . $full . '</span>'
+            . '<span class="sf-logo__mark sf-logo__mark--compact">' . $compactContent . '</span>';
     }
 }
 
@@ -673,6 +760,173 @@ if (!function_exists('storefront_admin_item_action')) {
 // output is written.
 osc_add_route_hook('storefront-item-admin', 'item/moderate/?$', 'item/moderate');
 osc_add_hook('storefront-item-admin', 'storefront_admin_item_action');
+
+/**
+ * Unlink a logo slot's stored raster file, if any, from the uploads folder. Shared by
+ * the upload/remove admin actions and the on-uninstall cleanup — none of them should
+ * leave an orphaned file behind after the preference pointing at it is gone.
+ */
+if (!function_exists('storefront_logo_unlink_raster')) {
+    function storefront_logo_unlink_raster($rasterKey)
+    {
+        $raster = osc_get_preference($rasterKey, 'storefront');
+        if ($raster === '' || $raster === false) { return; }
+
+        $path = osc_uploads_path() . $raster;
+        if (file_exists($path)) { @unlink($path); }
+    }
+}
+
+/**
+ * Theme admin panel actions: brand text, logo upload/remove, and the settings form.
+ * Hooked on `init_admin` (before any admin output), mirroring bender's single
+ * dispatcher keyed off `action_specific`. These forms carry no CSRF token — same as
+ * bender's — so none is added here.
+ */
+if (!function_exists('storefront_admin_actions')) {
+    function storefront_admin_actions()
+    {
+        $adminUrl = static function ($page) {
+            return osc_admin_render_theme_url('oc-content/themes/storefront/admin/' . $page . '.php');
+        };
+
+        switch (Params::getParam('action_specific')) {
+            case 'storefront_brand':
+                osc_set_preference('header_logo_text', Params::getParam('header_logo_text'), 'storefront');
+                osc_reset_preferences();
+                osc_add_flash_ok_message(__('Brand settings updated correctly.', 'storefront'), 'admin');
+                osc_redirect_to($adminUrl('header'));
+                break;
+
+            case 'storefront_upload_logo':
+                $slot      = Params::getParam('slot') === 'compact' ? 'compact' : 'primary';
+                $suffix    = $slot === 'compact' ? '_compact' : '';
+                $svgKey    = 'brand_logo_svg' . $suffix;
+                $rasterKey = 'logo' . $suffix;
+
+                $file = Params::getFiles('logo_file');
+                if (empty($file) || !isset($file['error']) || $file['error'] !== UPLOAD_ERR_OK) {
+                    osc_add_flash_error_message(__('An error has occurred, please try again.', 'storefront'), 'admin');
+                    osc_redirect_to($adminUrl('header'));
+                    break;
+                }
+
+                $ext = strtolower(pathinfo((string) $file['name'], PATHINFO_EXTENSION));
+
+                if ($ext === 'svg') {
+                    $raw   = @file_get_contents($file['tmp_name']);
+                    $clean = $raw !== false ? StorefrontSvg::clean($raw) : '';
+                    if ($clean === '') {
+                        osc_add_flash_error_message(
+                            __('That SVG could not be used — it may be malformed, unsafe, or over the size limit.', 'storefront'),
+                            'admin'
+                        );
+                        osc_redirect_to($adminUrl('header'));
+                        break;
+                    }
+
+                    storefront_logo_unlink_raster($rasterKey);
+                    osc_delete_preference($rasterKey, 'storefront');
+                    osc_set_preference($svgKey, $clean, 'storefront');
+                    osc_reset_preferences();
+                    osc_add_flash_ok_message(__('The logo has been uploaded correctly.', 'storefront'), 'admin');
+                } elseif ($ext === 'jpg' || $ext === 'jpeg' || $ext === 'png') {
+                    try {
+                        $img      = ImageResizer::fromFile($file['tmp_name']);
+                        $fileExt  = $img->getExt();
+                        $filename = 'storefront_logo' . $suffix . '.' . $fileExt;
+                        $img->saveToFile(osc_uploads_path() . $filename);
+                    } catch (Exception $e) {
+                        osc_add_flash_error_message(__('An error has occurred, please try again.', 'storefront'), 'admin');
+                        osc_redirect_to($adminUrl('header'));
+                        break;
+                    }
+
+                    storefront_logo_unlink_raster($rasterKey);
+                    osc_delete_preference($svgKey, 'storefront');
+                    osc_set_preference($rasterKey, $filename, 'storefront');
+                    osc_reset_preferences();
+                    osc_add_flash_ok_message(__('The logo has been uploaded correctly.', 'storefront'), 'admin');
+                } else {
+                    osc_add_flash_error_message(__('Unsupported file type — upload an SVG, JPG or PNG.', 'storefront'), 'admin');
+                }
+                osc_redirect_to($adminUrl('header'));
+                break;
+
+            case 'storefront_remove_logo':
+                $slot      = Params::getParam('slot') === 'compact' ? 'compact' : 'primary';
+                $suffix    = $slot === 'compact' ? '_compact' : '';
+                $svgKey    = 'brand_logo_svg' . $suffix;
+                $rasterKey = 'logo' . $suffix;
+
+                storefront_logo_unlink_raster($rasterKey);
+                osc_delete_preference($svgKey, 'storefront');
+                osc_delete_preference($rasterKey, 'storefront');
+                osc_reset_preferences();
+                osc_add_flash_ok_message(__('The logo has been removed.', 'storefront'), 'admin');
+                osc_redirect_to($adminUrl('header'));
+                break;
+
+            case 'storefront_settings':
+                $set = static function ($key) {
+                    osc_set_preference($key, Params::getParam($key), 'storefront');
+                };
+                $setCheckbox = static function ($key) {
+                    osc_set_preference($key, Params::getParam($key) ? '1' : '0', 'storefront');
+                };
+
+                $set('palette');
+                $set('color_scheme');
+                $set('hero_headline');
+                $set('hero_tagline');
+                $setCheckbox('hero_show_decor');
+                $setCheckbox('hero_show_chips');
+                $set('location_input_type');
+                $set('search_location_type');
+                $set('keyword_placeholder');
+                osc_set_preference('defaultShowAs@all', Params::getParam('defaultShowAs@all'), 'storefront');
+                osc_set_preference('defaultShowAs@search', Params::getParam('defaultShowAs@all'));
+                $set('footer_message');
+                $set('social_facebook');
+                $set('social_twitter');
+                $set('social_instagram');
+                $set('social_youtube');
+                $set('social_linkedin');
+                $setCheckbox('footer_link');
+
+                osc_reset_preferences();
+                osc_add_flash_ok_message(__('Theme settings updated correctly.', 'storefront'), 'admin');
+                osc_redirect_to($adminUrl('settings'));
+                break;
+        }
+    }
+}
+
+/**
+ * On theme uninstall: drop every stored preference plus any raster logo files —
+ * nothing of the theme's own state should survive it being removed.
+ */
+if (!function_exists('storefront_theme_delete')) {
+    function storefront_theme_delete()
+    {
+        storefront_logo_unlink_raster('logo');
+        storefront_logo_unlink_raster('logo_compact');
+        Preference::newInstance()->delete(array('s_section' => 'storefront'));
+    }
+}
+
+osc_admin_menu_appearance(
+    __('Storefront: Brand', 'storefront'),
+    osc_admin_render_theme_url('oc-content/themes/storefront/admin/header.php'),
+    'storefront_brand'
+);
+osc_admin_menu_appearance(
+    __('Storefront: Settings', 'storefront'),
+    osc_admin_render_theme_url('oc-content/themes/storefront/admin/settings.php'),
+    'storefront_settings'
+);
+osc_add_hook('init_admin', 'storefront_admin_actions');
+osc_add_hook('theme_delete_storefront', 'storefront_theme_delete');
 
 // Run once per request, mirroring bender: register defaults / migrate on load.
 storefront_check_install();

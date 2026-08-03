@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 ?><!DOCTYPE html>
-<html lang="<?php echo str_replace('_', '-', osc_current_user_locale()); ?>" dir="<?php echo osc_get_preference('rtl', 'storefront') === '1' ? 'rtl' : 'ltr'; ?>">
+<html lang="<?php echo str_replace('_', '-', osc_current_user_locale()); ?>" dir="<?php echo osc_locale_text_direction() === 'rtl' ? 'rtl' : 'ltr'; ?>" data-theme="<?php echo osc_esc_html(storefront_setting('color_scheme', 'light')); ?>" data-palette="<?php echo osc_esc_html(storefront_setting('palette', 'teal')); ?>">
 <head>
 <?php osc_current_web_theme_path('common/head.php'); ?>
 </head>
