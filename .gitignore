@@ -1,0 +1,20 @@
+.DS_Store
+dist/
+*.log
+
+# Build tooling + generated (minified) assets. Source is committed; the .min.*
+# files are built by `npm run build` (locally or in the release workflow) and
+# shipped in the zip, never committed.
+node_modules/
+package-lock.json
+js/*.min.js
+css/*.min.css
+
+# Local-only assistant + design/product docs — never shipped or tracked.
+.claude/
+.remember/
+.impeccable/
+CLAUDE.md
+DESIGN.md
+PRODUCT.md
+docs/private/

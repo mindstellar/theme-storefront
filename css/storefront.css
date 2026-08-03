@@ -1,0 +1,1894 @@
+/*
+ * Storefront — a Shopclass public theme.
+ * Built on the Modern design system: Archivo type, a warm light ground with a
+ * teal accent and coral secondary, tonal ramps generated on one shared lightness
+ * scale, soft ink-tinted elevation, 2px section rules and gently rounded corners.
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&display=swap');
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Tokens — the source of truth for the look. Retune here.
+   ────────────────────────────────────────────────────────────────────────── */
+:root {
+    --color-bg: #f7f5f1;
+    --color-surface: #ffffff;
+    --color-text: #0f2742;
+    --color-accent: #12a6a0;
+    --color-accent-2: #ff6b4a;
+    /* Fixed palette — mode-INVARIANT colours that must NOT flip with the theme:
+       text/icons on a teal or coral fill, a scrim that stays dark, a frosted chip
+       or glass rim that stays light, the near-black lightbox stage. Never redefine
+       these in the dark blocks. */
+    --color-fixed-ink: #0f2742;    /* non-flipping navy: scrim + media-overlay fills, ink on frosted chips */
+    --color-fixed-light: #ffffff;  /* non-flipping white: labels on accent fills, frosted/glass surfaces, text on dark overlays */
+    --color-scrim: color-mix(in srgb, var(--color-fixed-ink) 55%, transparent); /* dim behind drawers & dialogs */
+    --color-overlay: #0b1420;      /* near-black lightbox stage */
+    --color-divider: color-mix(in srgb, #0f2742 16%, transparent);
+    /* Secondary/muted text. Derived from --color-text so it re-resolves per theme;
+       tuned to clear WCAG AA (>=4.5:1) on both bg and surface, light and dark. */
+    --color-muted: color-mix(in srgb, var(--color-text) 70%, transparent);
+    /* Teal for text/links sitting on the page ground. --color-accent (#12a6a0) is
+       mode-invariant and only clears ~2.8:1 on the sand ground, so it fails AA as
+       text; this steps to a darker teal on light and a lighter one on dark, keeping
+       teal text >=4.5:1 in both themes. Fills/buttons still use --color-accent. */
+    --color-accent-ink: var(--color-accent-700);
+
+    /* Tonal ramps — generated in OKLCH on one shared lightness scale, so the
+       same step of any role matches the others in visual value. */
+    --color-neutral-100: #f2f3f5;
+    --color-neutral-200: #e2e5e9;
+    --color-neutral-300: #ccd2d9;
+    --color-neutral-400: #a7b1bc;
+    --color-neutral-500: #7d8a98;
+    --color-neutral-600: #5f6d7c;
+    --color-neutral-700: #435466;
+    --color-neutral-800: #2c3c4e;
+    --color-neutral-900: #16273a;
+
+    --color-accent-100: #dcf4f2;
+    --color-accent-200: #b7e8e5;
+    --color-accent-300: #86d6d1;
+    --color-accent-400: #4cc0ba;
+    --color-accent-500: #12a6a0;
+    --color-accent-600: #0f8c87;
+    --color-accent-700: #0d716d;
+    --color-accent-800: #0b5854;
+    --color-accent-900: #0a413e;
+
+    --color-accent-2-100: #ffe7e0;
+    --color-accent-2-200: #ffcabd;
+    --color-accent-2-300: #ffa88f;
+    --color-accent-2-400: #ff8767;
+    --color-accent-2-500: #ff6b4a;
+    --color-accent-2-600: #ec4e2b;
+    --color-accent-2-700: #c53c1e;
+    --color-accent-2-800: #99301a;
+    --color-accent-2-900: #6b2414;
+
+    --font-heading: "Archivo", system-ui, sans-serif;
+    --font-heading-weight: 800;
+    --font-body: "Archivo", system-ui, sans-serif;
+
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-6: 24px;
+    --space-8: 32px;
+
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 12px;
+
+    /* Elevation — soft ink-tinted shadows tuned to the light ground. */
+    --shadow-sm: 0 1px 3px color-mix(in srgb, #262c38 10%, transparent), 0 1px 2px color-mix(in srgb, #262c38 8%, transparent);
+    --shadow-md: 0 4px 14px color-mix(in srgb, #262c38 12%, transparent), 0 2px 6px color-mix(in srgb, #262c38 8%, transparent);
+    --shadow-lg: 0 18px 44px color-mix(in srgb, #262c38 18%, transparent), 0 6px 16px color-mix(in srgb, #262c38 10%, transparent);
+
+    /* Layout */
+    --sf-container: 1200px;
+    --sf-header-h: 66px;
+
+    /* Legacy aliases — earlier markup referenced these; keep them resolving to
+       the design tokens so every template stays on one palette. */
+    --sf-navy: var(--color-text);
+    --sf-teal: var(--color-accent);
+    --sf-teal-dark: var(--color-accent-600);
+    --sf-slate: var(--color-neutral-700);
+    --sf-surface: var(--color-bg);
+    --sf-coral: var(--color-accent-2);
+    --sf-bg: var(--color-surface);
+    --sf-panel: var(--color-surface);
+    --sf-ink: var(--color-text);
+    --sf-muted: var(--color-neutral-700);
+    --sf-line: var(--color-divider);
+    --sf-shadow: var(--shadow-sm);
+    --sf-radius: var(--radius-lg);
+    --sf-radius-sm: var(--radius-md);
+    --sf-gap: var(--space-6);
+
+    /* Light is the default and the only theme that applies on its own. Dark still
+       ships — set data-theme="dark" on <html> to force it, or data-theme="auto" to
+       follow the OS. With no attribute present the UI never darkens by itself. */
+    color-scheme: light;
+}
+
+/* Opt-in dark theme. Keep these tokens in sync with the data-theme="auto" block. */
+:root[data-theme="dark"] {
+    color-scheme: dark;
+    --color-bg: #0c1a2b;
+    --color-surface: #12283f;
+    --color-text: #eaf1f8;
+    --color-divider: color-mix(in srgb, #eaf1f8 16%, transparent);
+    --color-accent-ink: var(--color-accent-300);
+
+    --color-neutral-100: #16273a;
+    --color-neutral-200: #1e3145;
+    --color-neutral-300: #294056;
+    --color-neutral-400: #3c566d;
+    --color-neutral-500: #6b8299;
+    --color-neutral-600: #93a6b8;
+    --color-neutral-700: #b6c4d2;
+    --color-neutral-800: #d3dde7;
+    --color-neutral-900: #eaf1f8;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, .4), 0 1px 2px rgba(0, 0, 0, .3);
+    --shadow-md: 0 4px 14px rgba(0, 0, 0, .45), 0 2px 6px rgba(0, 0, 0, .35);
+    --shadow-lg: 0 18px 44px rgba(0, 0, 0, .55), 0 6px 16px rgba(0, 0, 0, .4);
+}
+
+/* data-theme="auto" tracks the OS setting; mirrors the tokens above. */
+@media (prefers-color-scheme: dark) {
+    :root[data-theme="auto"] {
+        color-scheme: dark;
+        --color-bg: #0c1a2b;
+        --color-surface: #12283f;
+        --color-text: #eaf1f8;
+        --color-divider: color-mix(in srgb, #eaf1f8 16%, transparent);
+        --color-accent-ink: var(--color-accent-300);
+
+        --color-neutral-100: #16273a;
+        --color-neutral-200: #1e3145;
+        --color-neutral-300: #294056;
+        --color-neutral-400: #3c566d;
+        --color-neutral-500: #6b8299;
+        --color-neutral-600: #93a6b8;
+        --color-neutral-700: #b6c4d2;
+        --color-neutral-800: #d3dde7;
+        --color-neutral-900: #eaf1f8;
+
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, .4), 0 1px 2px rgba(0, 0, 0, .3);
+        --shadow-md: 0 4px 14px rgba(0, 0, 0, .45), 0 2px 6px rgba(0, 0, 0, .35);
+        --shadow-lg: 0 18px 44px rgba(0, 0, 0, .55), 0 6px 16px rgba(0, 0, 0, .4);
+    }
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Base
+   ────────────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+/* Neutralise the browser's default fieldset box. The theme groups fields with
+   headings, not <fieldset>, but plugins (the search_form / item custom-field hooks)
+   wrap their fields in a bare <fieldset>, which would otherwise draw a stray border. */
+fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
+legend { padding: 0; }
+
+body.sf {
+    margin: 0;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.55;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    margin: 0 0 var(--space-2);
+}
+h1 { font-size: 42px; }
+h2 { font-size: 32px; }
+h3 { font-size: 25px; }
+h4 { font-size: 20px; }
+h5 { font-size: 16px; }
+h6 { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
+p { margin: 0 0 var(--space-3); }
+
+a { color: var(--color-accent); text-decoration: none; text-underline-offset: 3px; }
+a:hover { color: var(--color-accent-700); text-decoration: underline; }
+img { display: block; max-width: 100%; height: auto; }
+
+.text-muted, .sf-muted { color: var(--color-muted); }
+
+:focus { outline: none; }
+:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+::selection { background: color-mix(in srgb, var(--color-accent) 30%, transparent); }
+
+.sf-container {
+    width: 100%;
+    max-width: var(--sf-container);
+    margin-inline: auto;
+    padding-inline: var(--space-6);
+}
+
+.sf-skip {
+    position: absolute; left: -9999px; top: 0; z-index: 100;
+    background: var(--color-text); color: var(--color-bg);
+    padding: 10px 16px; font-family: var(--font-heading); font-weight: 800;
+}
+.sf-skip:focus { left: 8px; top: 8px; border-radius: var(--radius-md); }
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Design-system components (available to every template)
+   ────────────────────────────────────────────────────────────────────────── */
+.btn, .sf-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    cursor: pointer; text-decoration: none; white-space: nowrap;
+    font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+    font-size: 13px; line-height: 1.2; color: var(--color-text);
+    background: transparent; border: 1px solid transparent;
+    padding: calc(var(--space-2) * 0.85) var(--space-3);
+    border-radius: var(--radius-md);
+    transition: background .15s ease, color .15s ease, border-color .15s ease, box-shadow .15s ease, transform .05s ease;
+}
+.btn svg, .sf-btn svg { display: block; }
+.btn:hover, .sf-btn:hover { text-decoration: none; }
+.btn:active, .sf-btn:active { transform: translateY(1px); }
+.btn:disabled, .sf-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.btn-primary, .sf-btn--primary { background: var(--color-accent); color: var(--color-fixed-light); }
+.btn-primary:hover, .sf-btn--primary:hover { background: var(--color-accent-600); color: var(--color-fixed-light); }
+.btn-primary:active, .sf-btn--primary:active { background: var(--color-accent-700); }
+
+.btn-secondary, .sf-btn--ghost, .sf-btn--secondary { color: var(--color-text); border-color: var(--color-divider); }
+.btn-secondary:hover, .sf-btn--ghost:hover, .sf-btn--secondary:hover { background: color-mix(in srgb, var(--color-text) 7%, transparent); border-color: var(--color-divider); color: var(--color-text); }
+.btn-secondary:active, .sf-btn--ghost:active, .sf-btn--secondary:active { background: color-mix(in srgb, var(--color-text) 14%, transparent); }
+
+.btn-accent, .sf-btn--accent { background: var(--color-accent-2); color: var(--color-fixed-light); }
+.btn-accent:hover, .sf-btn--accent:hover { background: var(--color-accent-2-600); color: var(--color-fixed-light); }
+
+/* Solid destructive button — the confirm dialog's primary action. Uses the darker
+   accent-2-700 fill so the white label clears AA (≈5.2:1); the -600 tint fails it. */
+.sf-btn--danger { background: var(--color-accent-2-700); color: var(--color-fixed-light); border-color: transparent; }
+.sf-btn--danger:hover { background: var(--color-accent-2-800); border-color: transparent; color: var(--color-fixed-light); }
+
+.btn-ghost { color: var(--color-accent); padding-inline: var(--space-1); }
+.btn-ghost:hover { background: color-mix(in srgb, var(--color-accent) 10%, transparent); }
+
+/* Touch targets: on a coarse pointer every button clears the 44px WCAG 2.5.5 size
+   (the resting look stays denser on mouse/trackpad), and breadcrumb text links get a
+   comfortable hit height without bloating the row. */
+@media (pointer: coarse) {
+    .btn, .sf-btn { min-height: 44px; }
+    .btn-icon, .sf-btn--icon-only { width: 44px; height: 44px; }
+    .sf-crumbs a { display: inline-flex; align-items: center; min-height: 32px; }
+}
+
+.btn-icon, .sf-btn--icon-only { width: 34px; height: 34px; padding: 0; flex: none; }
+.btn-block, .sf-btn--block { width: 100%; }
+.sf-btn--sm { font-size: 12px; padding: 4px var(--space-2); }
+
+/* Screen-reader-only utility: keeps a label in the accessibility tree without
+   occupying layout (used by icon-only controls and the price/keyword fields). */
+.sf-sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+/* Forms */
+.field > label, .sf-field > label, .sf-field label:not(.sf-check) {
+    display: block; font-size: 12px; margin-bottom: 5px;
+    color: var(--color-muted);
+    font-weight: 600;
+}
+.input, .sf-input, .sf-textarea, .sf-select,
+.sf-field input[type="text"], .sf-field input[type="email"],
+.sf-field input[type="password"], .sf-field input[type="tel"],
+.sf-field input[type="url"], .sf-field input[type="number"],
+.sf-field textarea, .sf-field select {
+    width: 100%; min-height: 38px; padding: 8px 10px; font: inherit;
+    font-size: 14px; color: var(--color-text); caret-color: var(--color-accent);
+    background: var(--color-surface);
+    border: 1px solid var(--color-divider); border-radius: var(--radius-md);
+    transition: border-color .15s ease, box-shadow .15s ease;
+}
+.input:hover, .sf-input:hover, .sf-textarea:hover, .sf-select:hover,
+.sf-field input:hover, .sf-field textarea:hover, .sf-field select:hover {
+    border-color: color-mix(in srgb, var(--color-text) 45%, transparent);
+}
+.input:focus, .input:focus-visible, .sf-input:focus, .sf-textarea:focus, .sf-select:focus,
+.sf-field input:focus, .sf-field textarea:focus, .sf-field select:focus {
+    border-color: var(--color-accent); outline: none;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 30%, transparent);
+    position: relative; z-index: 1;
+}
+textarea.input, .sf-textarea, .sf-field textarea { min-height: 96px; resize: vertical; }
+select.sf-select, .sf-field select { cursor: pointer; }
+
+.sf-field { margin-bottom: var(--space-4); }
+.sf-field--check label, .sf-check {
+    display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+    font-size: 14px; font-weight: 400; color: var(--color-text); margin: 0;
+}
+.sf-field--check input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--color-accent); }
+
+/* Cards (generic surface) */
+.card {
+    display: flex; flex-direction: column; gap: var(--space-2);
+    padding: var(--space-3); border-radius: var(--radius-md); background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+}
+.elev-sm { box-shadow: var(--shadow-sm); }
+.elev-md { box-shadow: var(--shadow-md); }
+.elev-lg { box-shadow: var(--shadow-lg); }
+
+/* Tags */
+.tag {
+    display: inline-flex; align-items: center; font-size: 11px;
+    letter-spacing: 0.02em; padding: 3px 10px;
+    border-radius: calc(var(--radius-md) * 0.75); font-weight: 600;
+}
+.tag-accent { background: var(--color-accent-100); color: var(--color-accent-800); }
+.tag-accent-2 { background: var(--color-accent-2-100); color: var(--color-accent-2-800); }
+.tag-neutral { background: var(--color-neutral-100); color: var(--color-neutral-800); }
+.tag-outline { border: 1px solid var(--color-accent); color: var(--color-accent); }
+
+/* Tables */
+.table {
+    width: 100%; border-collapse: collapse; font-size: 14px;
+}
+.table th {
+    text-align: left; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--color-muted);
+    padding: var(--space-2); border-bottom: 2px solid var(--color-divider);
+}
+.table td { padding: var(--space-2); border-bottom: 1px solid var(--color-divider); }
+.table tbody tr:hover { background: color-mix(in srgb, var(--color-text) 4%, transparent); }
+
+/* Rule */
+.hr, .sf-hr { height: 2px; border: 0; margin: var(--space-4) 0; background: var(--color-divider); }
+
+/* Panel */
+.sf-panel {
+    background: var(--color-surface); border: 1px solid var(--color-divider);
+    border-radius: var(--radius-lg); padding: var(--space-6); box-shadow: var(--shadow-sm);
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Header / navigation
+   ────────────────────────────────────────────────────────────────────────── */
+.sf-header {
+    position: sticky; top: 0; z-index: 40;
+    background: color-mix(in srgb, var(--color-bg) 85%, transparent);
+    backdrop-filter: blur(10px) saturate(1.3);
+    -webkit-backdrop-filter: blur(10px) saturate(1.3);
+    border-bottom: 2px solid var(--color-divider);
+}
+.sf-header__bar { display: flex; align-items: center; gap: var(--space-4); min-height: var(--sf-header-h); }
+
+.sf-logo {
+    display: inline-flex; align-items: center; gap: 8px; margin-right: var(--space-4);
+    font-family: var(--font-heading); font-weight: 800; font-size: 20px;
+    color: var(--color-text); letter-spacing: -0.02em;
+}
+.sf-logo:hover { text-decoration: none; color: var(--color-text); }
+.sf-logo::before {
+    content: ""; width: 14px; height: 14px; flex: none;
+    background: var(--color-accent); display: inline-block;
+}
+.sf-logo img { max-height: 34px; width: auto; }
+.sf-logo:has(img)::before { display: none; }
+.sf-wordmark { letter-spacing: -0.02em; }
+
+.sf-nav { display: flex; align-items: center; gap: var(--space-4); margin-inline-start: auto; }
+.sf-nav__link {
+    color: color-mix(in srgb, var(--color-text) 78%, transparent);
+    font-size: 14px; font-weight: 600;
+}
+.sf-nav__link:hover { color: var(--color-accent); text-decoration: none; }
+.sf-nav__cta { margin-inline-start: var(--space-1); }
+
+.sf-nav-toggle {
+    display: none; margin-inline-start: auto; background: none; border: 0; cursor: pointer;
+    width: 44px; height: 44px; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+}
+.sf-nav-toggle span { display: block; width: 22px; height: 2px; background: var(--color-text); border-radius: 2px; }
+
+/* Active nav item — a short teal underline so the current section is visible, not
+   only announced via aria-current. */
+.sf-nav__link { position: relative; }
+.sf-nav__link[aria-current] { color: var(--color-accent); }
+.sf-nav__link[aria-current]::after {
+    content: ""; position: absolute; inset-inline: 0; bottom: -6px; height: 2px;
+    background: var(--color-accent); border-radius: 2px;
+}
+
+/* Account menu — one avatar+name control that opens a dropdown (desktop) or shows its
+   items inline inside the mobile drawer. Replaces the old redundant icon+greeting pair. */
+.sf-account { position: relative; }
+.sf-account__toggle {
+    display: inline-flex; align-items: center; gap: var(--space-2);
+    min-height: 40px; padding: 4px 6px 4px 4px; margin-inline-start: var(--space-1);
+    background: none; border: 0; border-radius: var(--radius-md);
+    font: inherit; color: var(--color-text); cursor: pointer;
+    transition: background-color .15s ease;
+}
+.sf-account__toggle:hover { background: color-mix(in srgb, var(--color-text) 6%, transparent); }
+/* Higher specificity than the 60px .sf-avatar base so the header control stays compact. */
+.sf-account__toggle .sf-account__avatar { width: 30px; height: 30px; border-radius: var(--radius-sm); box-shadow: none; }
+.sf-account__toggle .sf-avatar__monogram { font-size: 12px; font-weight: 800; }
+.sf-account__name { font-size: 14px; font-weight: 600; max-width: 14ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sf-account__toggle > svg { color: var(--color-muted); transition: transform .15s ease; flex: none; }
+.sf-account__toggle[aria-expanded="true"] > svg { transform: rotate(180deg); }
+
+.sf-account__menu {
+    position: absolute; inset-inline-end: 0; top: calc(100% + 8px); z-index: 60;
+    min-width: 210px; padding: var(--space-1);
+    background: var(--color-surface); border: 1px solid var(--color-divider);
+    border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
+    display: flex; flex-direction: column;
+}
+/* `display: flex` above would otherwise beat the UA `[hidden]{display:none}` (equal
+   specificity, author wins), leaving the menu open on load; keep it closed until the
+   toggle clears [hidden]. The mobile drawer re-shows it inline in its own rule below. */
+.sf-account__menu[hidden] { display: none; }
+.sf-account__item {
+    display: flex; align-items: center; gap: var(--space-2);
+    min-height: 40px; padding: 9px var(--space-3); border-radius: var(--radius-md);
+    font-size: 14px; font-weight: 600; color: var(--color-text); text-decoration: none;
+}
+.sf-account__item:hover {
+    background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+    color: var(--color-accent-700); text-decoration: none;
+}
+.sf-account__item svg { flex: none; color: currentColor; }
+.sf-account__sep { height: 1px; margin: var(--space-1) 0; border: 0; background: var(--color-divider); }
+.sf-account__item--logout { color: var(--color-accent-2-700); }
+.sf-account__item--logout:hover {
+    background: color-mix(in srgb, var(--color-accent-2) 12%, transparent); color: var(--color-accent-2-700);
+}
+@media (prefers-reduced-motion: no-preference) {
+    .sf-account__menu:not([hidden]) { animation: sf-menu-in .16s cubic-bezier(0.16, 1, 0.3, 1); }
+}
+@keyframes sf-menu-in { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+
+/* Scrim behind the open mobile nav drawer. Gated by the [hidden] attribute (JS
+   toggles it), so it never shows on desktop where the drawer cannot open. */
+.sf-nav-backdrop {
+    position: fixed; inset: 0; top: var(--sf-header-h); z-index: 30;
+    background: var(--color-scrim);
+}
+
+/* Compact inline search box (used on the 404 page). NB: the bare class must not
+   be `.sf-search` — that collides with the `sf-search` body page-class. */
+.sf-searchbox {
+    display: flex; gap: 0; align-items: stretch;
+    background: var(--color-surface); border: 1px solid var(--color-divider);
+    border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm);
+}
+.sf-search__input {
+    flex: 1 1 auto; min-width: 0; border: 0; background: transparent; color: var(--color-text);
+    font: inherit; font-size: 15px; padding: 12px 14px;
+}
+.sf-search__input:focus { outline: none; }
+.sf-searchbox .sf-btn { border-radius: 0; padding-inline: var(--space-6); }
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Main
+   ────────────────────────────────────────────────────────────────────────── */
+.sf-main { display: block; }
+.sf-main__pad { padding-block: var(--space-6) var(--space-8); }
+
+/* ── Home hero ── */
+.sf-hero {
+    position: relative; overflow: hidden;
+    border-bottom: 2px solid var(--color-divider);
+    /* The home hero is a brand surface: a bright teal/coral field lifts it off the
+       sand ground so it reads as the peak of the page, not another section. */
+    background:
+        radial-gradient(115% 120% at 86% -12%, color-mix(in srgb, var(--color-accent) 24%, transparent), transparent 56%),
+        radial-gradient(92% 100% at -8% 118%, color-mix(in srgb, var(--color-accent-2) 15%, transparent), transparent 55%),
+        var(--color-bg);
+}
+.sf-hero__inner { position: relative; z-index: 1; padding-block: clamp(var(--space-8), 8vw, 88px); }
+/* Content sits in a left column so the full-width search row never runs under the
+   brand motif; the motif breathes in the right whitespace, behind the content. */
+.sf-hero__content { position: relative; z-index: 1; max-width: 800px; }
+.sf-hero__title {
+    font-size: clamp(46px, 7.4vw, 78px); line-height: 1.0; margin: 0 0 var(--space-4);
+    max-width: 16ch; letter-spacing: -0.03em; text-wrap: balance;
+}
+.sf-hero__sub {
+    color: color-mix(in srgb, var(--color-text) 72%, transparent);
+    max-width: 52ch; font-size: clamp(16px, 1.5vw, 19px);
+    margin-bottom: var(--space-6); text-wrap: pretty;
+}
+
+.sf-hero__decor {
+    position: absolute; top: 0; right: 0; z-index: 0; width: min(40%, 440px); height: auto;
+    pointer-events: none; opacity: 0.95;
+    filter: drop-shadow(0 16px 34px color-mix(in srgb, var(--color-accent) 24%, transparent));
+}
+@media (max-width: 860px) { .sf-hero__decor { display: none; } }
+
+/* Hero entrance — one authored moment. Content elements rise into place with
+   transform only, never opacity, so they stay fully visible even when a headless
+   renderer or hidden tab captures the frame mid-animation. Only the decorative,
+   aria-hidden motif fades in. The global reduced-motion rule collapses these. */
+@keyframes sf-hero-rise { from { transform: translateY(18px); } to { transform: none; } }
+@keyframes sf-hero-pop  { from { transform: scale(.92) rotate(-2deg); } to { transform: none; } }
+.sf-hero__title   { animation: sf-hero-rise .6s cubic-bezier(.22, 1, .36, 1) both; }
+.sf-hero__sub     { animation: sf-hero-rise .6s cubic-bezier(.22, 1, .36, 1) .05s both; }
+.sf-hero__glass   { animation: sf-hero-rise .7s cubic-bezier(.22, 1, .36, 1) .1s both; }
+.sf-hero__popular { animation: sf-hero-rise .6s cubic-bezier(.22, 1, .36, 1) .16s both; }
+.sf-hero__decor   { animation: sf-hero-pop  .9s cubic-bezier(.22, 1, .36, 1) .05s both; }
+
+.sf-hero__glass {
+    width: 100%; padding: var(--space-3); border-radius: 16px;
+    background: color-mix(in srgb, var(--color-bg) 55%, transparent);
+    backdrop-filter: blur(16px) saturate(1.4); -webkit-backdrop-filter: blur(16px) saturate(1.4);
+    border: 1px solid color-mix(in srgb, var(--color-fixed-light) 55%, transparent);
+    box-shadow: var(--shadow-lg);
+}
+.sf-hero__search {
+    display: flex; flex-wrap: nowrap; gap: 0;
+    border: 1px solid var(--color-divider); border-radius: 10px; overflow: hidden;
+    box-shadow: var(--shadow-sm); background: var(--color-bg);
+}
+.sf-hero__search .sf-hero__field { flex: 1 1 300px; min-width: 0; display: flex; align-items: center; gap: 10px; padding: 0 14px; }
+.sf-hero__search .sf-hero__field + .sf-hero__field { flex: 1 1 180px; border-inline-start: 1px solid var(--color-divider); }
+.sf-hero__search input, .sf-hero__search select {
+    border: 0; background: transparent; font: inherit; font-size: 15px;
+    height: 54px; color: var(--color-text); flex: 1; min-width: 0;
+}
+.sf-hero__search input:focus, .sf-hero__search select:focus { outline: none; }
+.sf-hero__search .sf-hero__cat { flex: 0 0 auto; display: flex; align-items: center; border-inline-start: 1px solid var(--color-divider); }
+.sf-hero__search .sf-hero__cat select { height: 54px; padding: 0 14px; cursor: pointer; font-size: 14px; }
+.sf-hero__search .sf-btn { border-radius: 0; padding-inline: var(--space-6); font-size: 14px; white-space: nowrap; }
+.sf-hero__icon { flex: none; color: var(--color-neutral-600); }
+
+.sf-hero__popular { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-4); align-items: center; }
+.sf-hero__popular > span { font-size: 12px; color: var(--color-muted); }
+.sf-hero__chip {
+    display: inline-flex; align-items: center; padding: 3px 10px;
+    border-radius: calc(var(--radius-md) * 0.75); border: 0;
+    background: var(--color-neutral-100); color: var(--color-neutral-800);
+    font: inherit; font-size: 12px; transition: background .15s ease, color .15s ease;
+}
+.sf-hero__chip:hover { background: var(--color-accent-100); color: var(--color-accent-800); text-decoration: none; }
+
+@media (max-width: 640px) {
+    .sf-hero__search { flex-direction: column; }
+    .sf-hero__search > * { border-inline-start: 0 !important; border-top: 1px solid var(--color-divider); }
+    .sf-hero__search > *:first-child { border-top: 0; }
+    /* Stacked: each control takes its natural height, so the horizontal flex-basis
+       (300/180px) never inflates a field vertically. Matches the base rules'
+       specificity so it wins inside the query. */
+    .sf-hero__search .sf-hero__field,
+    .sf-hero__search .sf-hero__field + .sf-hero__field,
+    .sf-hero__search .sf-hero__cat { flex: 0 0 auto; }
+    .sf-hero__search .sf-btn { width: 100%; padding: 14px 20px; }
+}
+
+/* ── Section wrapper ── */
+.sf-section { border-bottom: 2px solid var(--color-divider); }
+.sf-section > .sf-container { padding-block: var(--space-6); }
+.sf-section:last-of-type { border-bottom: 0; }
+.sf-section__head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3); margin-bottom: var(--space-4); }
+.sf-section__title { font-size: 32px; margin: 0; }
+.sf-section__aside { font-size: 13px; color: var(--color-muted); }
+.sf-empty {
+    color: var(--color-muted);
+    padding: var(--space-8); text-align: center;
+    border: 1px solid var(--color-divider); border-radius: var(--radius-lg);
+}
+.sf-more { text-align: center; margin-top: var(--space-6); }
+
+/* ── Category grid ── */
+/* Flex-wrap board: tiles grow to fill each row, so a partial final row never
+   leaves empty cells for any category count. Hairlines are drawn by the tiles'
+   inline-end/block-end borders against the board's inline-start/block-start edges. */
+.sf-catgrid {
+    display: flex; flex-wrap: wrap;
+    background: var(--color-bg);
+    border-inline-start: 1px solid var(--color-divider);
+    border-block-start: 1px solid var(--color-divider);
+    border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm);
+    list-style: none; margin: 0; padding: 0;
+}
+.sf-catgrid > li { flex: 1 1 200px; display: flex; }
+.sf-catgrid__item {
+    flex: 1; display: flex; flex-direction: column; gap: 6px;
+    background: var(--color-bg); padding: var(--space-4); min-height: 118px;
+    border-top: 3px solid var(--color-accent);
+    border-inline-end: 1px solid var(--color-divider);
+    border-block-end: 1px solid var(--color-divider);
+    color: var(--color-text); transition: background .15s ease;
+}
+.sf-catgrid__item:hover { background: var(--color-neutral-100); text-decoration: none; color: var(--color-text); }
+.sf-catgrid__num { font-family: ui-monospace, monospace; font-size: 11px; color: var(--color-accent); }
+.sf-catgrid__name { font-family: var(--font-heading); font-weight: 800; font-size: 18px; margin-top: auto; }
+.sf-catgrid__count { font-size: 12px; color: var(--color-muted); }
+
+/* Legacy category chips (used by 404) */
+.sf-cats { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: var(--space-4) 0; padding: 0; list-style: none; }
+.sf-cat-chip {
+    display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px;
+    background: var(--color-surface); border: 1px solid var(--color-divider);
+    border-radius: var(--radius-md); color: var(--color-text); font-weight: 600; font-size: 14px;
+}
+.sf-cat-chip:hover { border-color: var(--color-accent); color: var(--color-accent); text-decoration: none; }
+.sf-cat-chip__count { color: var(--color-muted); font-weight: 500; }
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Listing cards (ListingCardModern)
+   ────────────────────────────────────────────────────────────────────────── */
+.sf-cards {
+    list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-4);
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+}
+.sf-card {
+    position: relative; display: flex; flex-direction: column; height: 100%;
+    background: var(--color-surface); border: 1px solid var(--color-divider);
+    border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm);
+    transition: box-shadow .18s ease, transform .18s ease;
+}
+.sf-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+.sf-card__media { position: relative; display: block; aspect-ratio: 4 / 3; overflow: hidden; background: var(--color-neutral-200); }
+/* Pin the image to the media box so it covers the exact space in every layout —
+   the grid's 4:3 box and the list view's flex-stretched column alike. */
+.sf-card__media img, .sf-card__noimg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.sf-card__media img { object-fit: cover; }
+.sf-card__noimg {
+    background: linear-gradient(135deg, var(--color-neutral-100), var(--color-neutral-300));
+}
+.sf-card__body { padding: var(--space-3); display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.sf-card__pricerow { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.sf-card__price { font-family: var(--font-heading); font-weight: 800; font-size: 16px; color: var(--color-accent-700); letter-spacing: -0.01em; white-space: nowrap; }
+/* Category badge, overlaid on the listing image (bottom-left) so it never crowds or
+   truncates the price. A frosted light chip with fixed ink text stays legible over any
+   photo and over the noimg gradient, in both themes; the Featured badge keeps top-left. */
+.sf-card__cat {
+    position: absolute; inset-block-end: 8px; inset-inline-start: 8px; z-index: 1;
+    max-width: calc(100% - 16px); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: calc(var(--radius-md) * 0.75);
+    background: color-mix(in srgb, var(--color-fixed-light) 88%, transparent); color: var(--color-fixed-ink);
+    box-shadow: 0 1px 2px color-mix(in srgb, var(--color-fixed-ink) 25%, transparent);
+    -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+}
+.sf-card__title {
+    display: block; font-family: var(--font-heading); font-weight: 800;
+    font-size: 15px; line-height: 1.25; color: var(--color-text); margin: 0;
+    text-wrap: pretty;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.sf-card__title:hover { color: var(--color-accent-700); text-decoration: none; }
+/* Description teaser: hidden in the grid, revealed in list view (below). */
+.sf-card__desc { display: none; }
+.sf-card__meta {
+    margin-top: auto; display: flex; justify-content: space-between; align-items: center;
+    gap: 8px; font-size: 11px; color: var(--color-neutral-700);
+}
+.sf-card__loc { display: inline-flex; align-items: center; gap: 4px; min-width: 0; }
+.sf-card__loc span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sf-card__date { white-space: nowrap; }
+
+/* Featured / urgent ribbon */
+.sf-badge {
+    position: absolute; top: 8px; inset-inline-start: 8px; z-index: 1;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.02em;
+    padding: 3px 10px; border-radius: calc(var(--radius-md) * 0.75);
+}
+.sf-badge--featured { background: var(--color-accent-100); color: var(--color-accent-800); }
+.sf-badge--urgent { background: var(--color-accent-2-100); color: var(--color-accent-2-800); }
+.sf-card--featured { border-color: color-mix(in srgb, var(--color-accent) 40%, var(--color-divider)); }
+
+/* List view (search show-as=list): horizontal rows */
+body.sf-list .sf-cards { grid-template-columns: 1fr; gap: var(--space-3); }
+body.sf-list .sf-card { flex-direction: row; align-items: stretch; }
+body.sf-list .sf-card:hover { transform: translateX(3px); }
+body.sf-list .sf-card__media { flex: none; width: 190px; aspect-ratio: auto; }
+body.sf-list .sf-card__body { padding: var(--space-4); }
+body.sf-list .sf-card__title { font-size: 17px; -webkit-line-clamp: 1; }
+body.sf-list .sf-card__desc {
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+    margin: 0; font-size: 13px; line-height: 1.5; color: var(--color-neutral-700);
+}
+@media (max-width: 620px) {
+    body.sf-list .sf-card { flex-direction: column; }
+    body.sf-list .sf-card__media { width: 100%; aspect-ratio: 4 / 3; }
+    body.sf-list .sf-card__desc { -webkit-line-clamp: 2; }
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Search page
+   ────────────────────────────────────────────────────────────────────────── */
+.sf-crumbs { font-size: 12px; color: var(--color-neutral-700); margin-bottom: var(--space-3); }
+.sf-crumbs a { color: var(--color-neutral-700); }
+.sf-crumbs a:hover { color: var(--color-accent); }
+
+.sf-searchlayout { display: flex; gap: var(--space-6); align-items: flex-start; }
+/* Main column is first in the DOM so the results <h1> precedes the rail's
+   sub-headings for a screen reader; order places the rail on the left visually. */
+.sf-searchlayout__main { flex: 1; min-width: 0; order: 1; }
+.sf-searchlayout__side {
+    flex: 0 0 280px; min-width: 280px; order: 0;
+    position: sticky; top: calc(var(--sf-header-h) + var(--space-4));
+    /* Small inset so field focus rings clear the rail edges. */
+    padding: var(--space-1) var(--space-2);
+}
+
+/* Filter rail */
+.sf-filters__head {
+    display: flex; align-items: center; gap: var(--space-2);
+    padding-block: var(--space-2); border-bottom: 2px solid var(--color-divider); margin-bottom: var(--space-4);
+}
+.sf-filters__head h2 { margin: 0; margin-inline-end: auto; font-size: 14px; text-transform: uppercase; letter-spacing: 0.08em; }
+.sf-filters__close { display: none; }
+
+.sf-filters__group { padding-bottom: var(--space-4); margin-bottom: var(--space-4); border-bottom: 1px solid var(--color-divider); }
+.sf-filters__group:last-of-type { border-bottom: 0; }
+.sf-filters__label { margin: 0 0 var(--space-2); font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text); }
+.sf-filters .sf-field { margin-bottom: var(--space-3); }
+.sf-filters .sf-field:last-child { margin-bottom: 0; }
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Custom fields (per-category, core-rendered)
+   Core emits its own Bootstrap-derived markup for admin-defined fields —
+   form-control / form-select / form-check / form-label / form-text /
+   meta-radio-list / input-group — into two theme surfaces: the publish &
+   edit form (injected into #plugin-hook as .meta_list) and the search rail
+   (.sf-filters__plugin). Neither knows which field TYPES an install will
+   configure, so every primitive core supports is bridged here — text,
+   number, textarea, dropdown, radio, checkbox, url/email, date, and
+   from/to date & number ranges — onto the theme's own field system so a
+   custom field is indistinguishable from a native one, light and dark.
+   Scoped to the two container classes so the generic core class names
+   cannot leak onto anything else. accent-color + inherited color-scheme
+   flip the native radio/checkbox/date controls at paint time.
+   ────────────────────────────────────────────────────────────────────────── */
+.meta_list,
+.sf-filters__plugin { accent-color: var(--color-accent); }
+
+/* Text-like controls, selects and textareas — the theme's input look. */
+.meta_list .form-control,
+.meta_list .form-select,
+.meta_list input[type="text"],
+.meta_list input[type="number"],
+.meta_list input[type="url"],
+.meta_list input[type="email"],
+.meta_list input[type="date"],
+.meta_list select,
+.meta_list textarea,
+.sf-filters__plugin .form-control,
+.sf-filters__plugin .form-select,
+.sf-filters__plugin input[type="text"],
+.sf-filters__plugin input[type="number"],
+.sf-filters__plugin input[type="url"],
+.sf-filters__plugin input[type="date"],
+.sf-filters__plugin select,
+.sf-filters__plugin textarea {
+    width: 100%; min-height: 38px; padding: 8px 10px; font: inherit;
+    font-size: 14px; color: var(--color-text); caret-color: var(--color-accent);
+    background: var(--color-surface);
+    border: 1px solid var(--color-divider); border-radius: var(--radius-md);
+    transition: border-color .15s ease, box-shadow .15s ease;
+}
+.meta_list .form-control:hover, .meta_list .form-select:hover,
+.meta_list select:hover, .meta_list textarea:hover, .meta_list input:hover,
+.sf-filters__plugin .form-control:hover, .sf-filters__plugin .form-select:hover,
+.sf-filters__plugin select:hover, .sf-filters__plugin textarea:hover, .sf-filters__plugin input:hover {
+    border-color: color-mix(in srgb, var(--color-text) 45%, transparent);
+}
+.meta_list .form-control:focus, .meta_list .form-select:focus,
+.meta_list select:focus, .meta_list textarea:focus, .meta_list input:focus,
+.sf-filters__plugin .form-control:focus, .sf-filters__plugin .form-select:focus,
+.sf-filters__plugin select:focus, .sf-filters__plugin textarea:focus, .sf-filters__plugin input:focus {
+    border-color: var(--color-accent); outline: none;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 30%, transparent);
+    position: relative; z-index: 1;
+}
+.meta_list textarea, .sf-filters__plugin textarea { min-height: 96px; resize: vertical; }
+.meta_list select, .sf-filters__plugin select { cursor: pointer; }
+
+/* Field title (stacked above its control). On the publish form core emits a
+   .form-label — or a bare <label> for a date range — as the direct child of
+   each .meta; the search rail titles fields with an <h6> instead (handled
+   below). Radio-option and checkbox labels sit deeper, so they are untouched. */
+.meta_list .meta > label {
+    display: block; margin: 0 0 5px; font-family: var(--font-body);
+    font-size: 12px; font-weight: 600; color: var(--color-muted);
+}
+/* Search-rail field title — core writes an <h6>; align it to the rail's own
+   filter labels rather than a browser-default heading. */
+.sf-filters__plugin h3,
+.sf-filters__plugin h4,
+.sf-filters__plugin h5,
+.sf-filters__plugin h6,
+.sf-filters__plugin legend {
+    margin: 0 0 var(--space-2); font-family: var(--font-heading); font-size: 12px;
+    font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text);
+}
+.meta_list .form-text, .sf-filters__plugin .form-text {
+    margin: 5px 0 0; font-size: 12px; line-height: 1.5; color: var(--color-muted);
+}
+
+/* RADIO group — kill the UA list bullets and lay each option out as a
+   tappable, hoverable row with a teal control. */
+.meta_list .meta-radio-list, .sf-filters__plugin .meta-radio-list {
+    list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px;
+}
+.meta_list .meta-radio label, .sf-filters__plugin .meta-radio label {
+    display: flex; align-items: center; gap: var(--space-2);
+    margin: 0; padding: 6px var(--space-2); border-radius: var(--radius-md);
+    font-size: 14px; font-weight: 400; color: var(--color-text); cursor: pointer;
+}
+.meta_list .meta-radio label:hover, .sf-filters__plugin .meta-radio label:hover {
+    background: color-mix(in srgb, var(--color-accent) 8%, transparent);
+}
+
+/* CHECKBOX — control and label share a baseline row. */
+.meta_list .form-check, .sf-filters__plugin .form-check {
+    display: flex; align-items: center; gap: var(--space-2); margin: 0; padding: 0;
+}
+.meta_list .form-check .form-label, .sf-filters__plugin .form-check .form-label {
+    margin: 0; font-size: 14px; font-weight: 400; color: var(--color-text); cursor: pointer;
+}
+
+/* Native radio / checkbox controls — one accent, one size, no default blue. */
+.meta_list .meta-radio input, .meta_list .form-check-input,
+.sf-filters__plugin .meta-radio input, .sf-filters__plugin .form-check-input {
+    width: 18px; height: 18px; margin: 0; flex: none; cursor: pointer;
+    accent-color: var(--color-accent);
+}
+
+/* From / To ranges (NUMBER + DATEINTERVAL). The publish form has room for one
+   row; the narrow search rail stacks the two pairs so native date pickers
+   never overflow the column. */
+.meta_list .input-group {
+    display: grid; grid-template-columns: auto minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center; gap: var(--space-2);
+}
+.sf-filters__plugin .input-group {
+    display: grid; grid-template-columns: auto minmax(0, 1fr);
+    align-items: center; gap: var(--space-1) var(--space-2);
+}
+.meta_list .input-group-text, .sf-filters__plugin .input-group-text {
+    font-size: 12px; font-weight: 600; color: var(--color-muted); white-space: nowrap;
+}
+.meta_list .input-group > input, .sf-filters__plugin .input-group > input { min-width: 0; }
+@media (max-width: 560px) {
+    .meta_list .input-group { grid-template-columns: auto minmax(0, 1fr); }
+}
+
+/* Field rhythm. Publish form: one .meta per field, sections carry a 2px rule
+   in the theme's own section-heading idiom. Search rail: one .row per field. */
+.meta_list .meta { margin-bottom: var(--space-4); }
+.meta_list .meta:last-child { margin-bottom: 0; }
+.meta_list .meta-section { margin-bottom: var(--space-6); }
+.meta_list .meta-section:last-child { margin-bottom: 0; }
+.meta_list .meta-section-title {
+    margin: 0 0 var(--space-3); padding-bottom: var(--space-2);
+    font-family: var(--font-heading); font-size: 16px; font-weight: 800;
+    color: var(--color-text); border-bottom: 2px solid var(--color-divider);
+}
+.sf-form .meta_list { margin-top: var(--space-6); }
+.sf-filters__plugin fieldset > .row { margin-bottom: var(--space-3); }
+.sf-filters__plugin fieldset > .row:last-child { margin-bottom: 0; }
+
+/* Keyword field + inline search button */
+.sf-filters__search { display: flex; gap: var(--space-2); }
+.sf-filters__search .sf-input { flex: 1; }
+.sf-filters__search .sf-btn { flex: none; height: 38px; }
+
+/* Price range */
+.sf-range { display: flex; gap: var(--space-2); align-items: center; }
+.sf-range .sf-input { flex: 1; min-width: 0; }
+.sf-range__sep { color: var(--color-muted); flex: none; }
+
+/* Category refinement (navigation, not form controls) */
+.sf-catnav { margin-top: var(--space-4); }
+.sf-cat-list { list-style: none; margin: 0; padding: 0; }
+.sf-cat-list li { margin: 0; }
+.sf-cat-link, .sf-cat-reset a, .sf-cat-list .is-empty {
+    display: flex; align-items: center; gap: var(--space-2);
+    padding: 7px var(--space-2); border-radius: var(--radius-md);
+    font-size: 14px; color: var(--color-text); text-decoration: none;
+}
+.sf-cat-link { justify-content: space-between; }
+.sf-cat-link .sf-cat-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sf-cat-link svg, .sf-cat-reset a svg { color: var(--color-muted); flex: none; }
+.sf-cat-link:hover, .sf-cat-reset a:hover { background: color-mix(in srgb, var(--color-accent) 8%, transparent); color: var(--color-accent-700); text-decoration: none; }
+.sf-cat-link:hover svg { color: var(--color-accent); }
+.sf-cat-reset a { color: var(--color-muted); font-weight: 600; }
+.sf-cat-current { padding: 7px var(--space-2); font-weight: 800; color: var(--color-text); }
+.sf-cat-list .is-empty { justify-content: space-between; color: var(--color-muted); cursor: default; }
+.sf-cat-empty { padding: 7px var(--space-2); font-size: 13px; color: var(--color-muted); }
+
+/* Email-alert form */
+.sf-alert-form__hint, .sf-alert-form__done { font-size: 13px; color: var(--color-muted); margin: 0 0 var(--space-2); }
+.sf-alert-form__done { display: flex; align-items: center; gap: var(--space-2); color: var(--color-accent-700); }
+.sf-alert-form .sf-btn { margin-top: var(--space-1); }
+.sf-alert-form__msg { font-size: 13px; margin: var(--space-2) 0 0; color: var(--color-muted); }
+.sf-alert-form__msg:empty { display: none; }
+.sf-alert-form__msg[data-state="ok"] { color: var(--color-accent-700); }
+.sf-alert-form__msg[data-state="err"] { color: var(--color-accent-2-700); }
+
+/* "Selling something?" promo. Sits on the fixed light-teal accent-100 tint, which
+   doesn't flip in dark mode, so its text uses fixed accent-ink (like tags/badges)
+   rather than the theme-adaptive muted token — legible in both themes. */
+.sf-filters__promo {
+    background: var(--color-accent-100); border: 1px solid var(--color-accent-200);
+    border-radius: var(--radius-lg); padding: var(--space-3); margin-top: var(--space-4);
+}
+.sf-filters__promo h3 { font-size: 14px; margin: 0 0 4px; color: var(--color-accent-900); }
+.sf-filters__promo p { font-size: 12px; margin: 0 0 var(--space-2); color: var(--color-accent-800); }
+
+/* Active-filter chips (on the results head) */
+.sf-chips { display: flex; flex-wrap: wrap; gap: var(--space-2); list-style: none; margin: 0 0 var(--space-4); padding: 0; }
+.sf-chip {
+    display: inline-flex; align-items: center; gap: var(--space-1);
+    padding-block: var(--space-1); padding-inline: var(--space-3) var(--space-2);
+    background: var(--color-surface); border: 1px solid var(--color-divider);
+    border-radius: var(--radius-md); font-size: 13px; color: var(--color-text); text-decoration: none;
+}
+.sf-chip svg { color: var(--color-muted); }
+.sf-chip:hover { border-color: var(--color-accent); color: var(--color-accent-700); text-decoration: none; }
+.sf-chip:hover svg { color: var(--color-accent); }
+.sf-chip__label { max-width: 22ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sf-chip--clear { padding-inline: var(--space-3); color: var(--color-muted); font-weight: 600; }
+
+/* Mobile "Filters" button (desktop: hidden, the rail is always visible) */
+.sf-filterbtn {
+    display: none; align-items: center; gap: var(--space-2);
+    min-height: 40px; padding: var(--space-2) var(--space-3); border: 1px solid var(--color-divider);
+    border-radius: var(--radius-md); background: var(--color-surface);
+    font-family: var(--font-heading); font-weight: 800; font-size: 13px; color: var(--color-text); cursor: pointer;
+}
+.sf-filterbtn:hover { border-color: var(--color-accent); color: var(--color-accent-700); }
+.sf-filterbtn__count {
+    display: inline-flex; align-items: center; justify-content: center; min-width: 18px; height: 18px;
+    padding: 0 var(--space-1); border-radius: 999px; background: var(--color-accent-700); color: var(--color-fixed-light); font-size: 11px; font-weight: 800;
+}
+.sf-filters__backdrop { display: none; }
+
+/* Location autocomplete listbox */
+.sf-field { position: relative; }
+/* Autocomplete listbox. Every autocomplete on the theme — the location fields and
+   the custom-field filters (e.g. "Make") — runs on core's shared combobox
+   (oscAutocomplete in oc-includes/assets/osclass/ui-common.js), which portals
+   .osc-ac-list to <body>, positions it fixed inline, and leaves the look to the
+   theme. So the theme owns only the skin here. */
+.osc-ac-list {
+    padding: var(--space-1); list-style: none;
+    background: var(--color-surface); border: 1px solid var(--color-divider);
+    border-radius: var(--radius-md); box-shadow: var(--shadow-md);
+    max-height: 240px; overflow-y: auto;
+}
+.osc-ac-option {
+    padding: 7px var(--space-2); border-radius: var(--radius-sm);
+    font-size: 14px; color: var(--color-text); cursor: pointer; list-style: none;
+}
+.osc-ac-option.is-active, .osc-ac-option:hover {
+    background: color-mix(in srgb, var(--color-accent) 12%, transparent); color: var(--color-accent-700);
+}
+
+/* Mobile: the rail becomes an off-canvas drawer so results lead the page */
+@media (max-width: 860px) {
+    .sf-filterbtn { display: inline-flex; }
+    .sf-filters__close { display: inline-flex; }
+    .sf-searchlayout__side {
+        position: fixed; inset-block: 0; inset-inline-start: 0; z-index: 60;
+        width: min(88vw, 360px); max-height: none; margin: 0; padding: var(--space-4);
+        background: var(--color-surface); box-shadow: var(--shadow-lg); overflow-y: auto;
+        transform: translateX(-100%); visibility: hidden;
+        transition: transform .25s ease, visibility .25s ease;
+    }
+    [dir="rtl"] .sf-searchlayout__side { inset-inline-start: auto; inset-inline-end: 0; transform: translateX(100%); }
+    .sf-searchlayout__side.is-open { transform: none; visibility: visible; }
+    /* Only while the drawer is open (JS clears [hidden]); the class rule must not
+       override the hidden attribute or the closed scrim veils the whole page. */
+    .sf-filters__backdrop:not([hidden]) { display: block; position: fixed; inset: 0; z-index: 55; background: var(--color-scrim); }
+    body.sf-noscroll { overflow: hidden; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .sf-searchlayout__side { transition: none; }
+}
+
+.sf-results__head {
+    display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: baseline; justify-content: space-between;
+    padding-bottom: var(--space-3); border-bottom: 2px solid var(--color-divider); margin-bottom: var(--space-4);
+}
+.sf-results__title { font-size: 26px; margin: 0 0 2px; }
+.sf-results__count { font-size: 13px; color: var(--color-muted); }
+/* Subscribe-to-this-search (RSS): a quiet, muted affordance beside the count, going
+   teal on hover — content leads, the feed link never competes. */
+.sf-results__feed {
+    display: inline-flex; align-items: center; gap: 4px; margin-inline-start: var(--space-3);
+    font-size: 12px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--color-muted); text-decoration: none;
+}
+.sf-results__feed:hover { color: var(--color-accent-ink); }
+.sf-results__feed svg { flex: none; }
+.sf-results__tools { display: inline-flex; align-items: center; gap: var(--space-3); }
+
+.sf-results__views {
+    display: inline-flex; border: 1px solid var(--color-divider);
+    border-radius: var(--radius-md); overflow: hidden;
+}
+.sf-viewbtn {
+    width: 38px; height: 34px; display: inline-flex; align-items: center; justify-content: center;
+    color: var(--color-text); background: transparent;
+}
+.sf-viewbtn + .sf-viewbtn { border-inline-start: 1px solid var(--color-divider); }
+.sf-viewbtn:hover { background: color-mix(in srgb, var(--color-text) 7%, transparent); text-decoration: none; }
+.sf-viewbtn.is-active { background: var(--color-accent); color: var(--color-fixed-light); }
+
+.sf-sort { display: inline-flex; align-items: center; gap: var(--space-2); font-size: 13px; }
+.sf-sort > span { color: var(--color-muted); }
+.sf-sort select { width: auto; min-height: 34px; font-size: 13px; }
+
+/* Pagination — core's `Pagination` class emits <li><a class="searchPagination…">
+   number and glyph («‹›») links, with the current page as
+   <li><span class="searchPaginationSelected">. Style the classes core actually
+   emits (an earlier build targeted .active/<strong>, which core never renders, so
+   the current page was invisible). Core supplies the aria-current + control names;
+   common/pagination.php wraps this in a presentational (non-landmark) container. */
+.sf-pagination { margin-top: var(--space-6); padding-top: var(--space-4); border-top: 2px solid var(--color-divider); }
+.sf-pagination ul { display: flex; flex-wrap: wrap; gap: var(--space-2); list-style: none; padding: 0; margin: 0; justify-content: center; }
+.sf-pagination a, .sf-pagination span {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 40px; min-height: 40px; padding: 0 var(--space-3);
+    border: 1px solid var(--color-divider); border-radius: var(--radius-md);
+    color: var(--color-text); font-family: ui-monospace, monospace; font-size: 13px; line-height: 1;
+    transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+.sf-pagination a:hover {
+    background: color-mix(in srgb, var(--color-accent) 12%, transparent);
+    border-color: color-mix(in srgb, var(--color-accent) 40%, transparent);
+    color: var(--color-accent-ink); text-decoration: none;
+}
+.sf-pagination a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+/* Current page: solid teal so "you are here" is unmistakable. Steps to the 700
+   fill so the white label clears WCAG AA (~5.8:1), unlike white on base teal. */
+.sf-pagination .searchPaginationSelected {
+    background: var(--color-accent-700); border-color: var(--color-accent-700);
+    color: var(--color-fixed-light); font-weight: var(--font-heading-weight); cursor: default;
+}
+/* Directional controls («‹›») read as controls, not page numbers. */
+.sf-pagination .searchPaginationFirst,
+.sf-pagination .searchPaginationPrev,
+.sf-pagination .searchPaginationNext,
+.sf-pagination .searchPaginationLast { color: var(--color-accent-ink); font-weight: var(--font-heading-weight); }
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Item detail
+   ────────────────────────────────────────────────────────────────────────── */
+/* Layout: ONE grid, named areas. The aside is named in both rows, so it spans
+   them and `position: sticky` can hold the price + seller beside the scrolling
+   body. A single DOM order then reads correctly on both axes — desktop shows
+   media|aside / body|aside; mobile stacks media → aside → body, i.e. photo,
+   then title/price/seller, then the description. No duplicated markup. */
+.sf-detail__grid {
+    display: grid; align-items: start; gap: var(--space-6) var(--space-8);
+    grid-template-columns: minmax(0, 1fr) 350px;
+    grid-template-areas: "media aside" "body aside";
+}
+.sf-detail__media { grid-area: media; min-width: 0; }
+.sf-detail__aside { grid-area: aside; min-width: 0; }
+.sf-detail__body  { grid-area: body;  min-width: 0; }
+@media (min-width: 921px) {
+    .sf-detail__aside { position: sticky; top: calc(var(--sf-header-h) + var(--space-4)); }
+}
+@media (max-width: 920px) {
+    .sf-detail__grid { grid-template-columns: 1fr; grid-template-areas: "media" "aside" "body"; }
+}
+
+/* Status alert (expired / inactive) */
+.sf-alert {
+    display: flex; gap: 10px; align-items: flex-start; margin-bottom: var(--space-6);
+    padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); font-size: 14px;
+}
+.sf-alert svg { flex: none; margin-top: 1px; }
+.sf-alert--warning { background: var(--color-accent-2-100); color: var(--color-accent-2-800); border: 1px solid var(--color-accent-2-200); }
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Flash messages + form error list
+   Core queues page-level feedback (osc_add_flash_*_message) and prints it via
+   osc_show_flash_message() as `.flashmessage.flashmessage-<type>` — type is one
+   of ok / error / info / warning — with a leading `.ico-close` dismiss anchor.
+   The theme renders that call in common/header.php; here it is bridged to the
+   design system. The tinted panel is mixed against --color-surface so it reads
+   correctly in both themes at paint time, and the type is carried by a masked
+   status icon (background-color, so it recolours per theme) as well as hue —
+   never colour alone. #error_list is the empty <ul> that core's client-side
+   validation fills with <li> messages on the item, contact, user and profile
+   forms; styled as a coral error panel, hidden while empty.
+   ────────────────────────────────────────────────────────────────────────── */
+.sf-flash-wrap { margin-top: var(--space-4); }
+.flashmessage {
+    position: relative; display: flex; align-items: flex-start; gap: var(--space-2);
+    margin-bottom: var(--space-2);
+    padding: var(--space-3) var(--space-8) var(--space-3) var(--space-3);
+    font-size: 14px; line-height: 1.5; color: var(--color-text);
+    background: var(--color-surface);
+    border: 1px solid var(--color-divider); border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+.flashmessage::before {
+    content: ""; flex: none; width: 20px; height: 20px; margin-top: 1px;
+    background-color: var(--color-text);
+    -webkit-mask: var(--flash-icon) center / contain no-repeat;
+            mask: var(--flash-icon) center / contain no-repeat;
+}
+.flashmessage a.ico-close {
+    position: absolute; top: var(--space-2); inset-inline-end: var(--space-2);
+    width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center;
+    border-radius: var(--radius-sm); color: var(--color-muted);
+    font-size: 15px; line-height: 1; text-decoration: none; cursor: pointer;
+}
+.flashmessage a.ico-close:hover { background: color-mix(in srgb, var(--color-text) 8%, transparent); color: var(--color-text); }
+
+.flashmessage-ok {
+    background: color-mix(in srgb, var(--color-accent) 12%, var(--color-surface));
+    border-color: color-mix(in srgb, var(--color-accent) 34%, var(--color-surface));
+    --flash-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='m8 12 3 3 5-6'/%3E%3C/svg%3E");
+}
+.flashmessage-ok::before { background-color: var(--color-accent); }
+
+.flashmessage-error {
+    background: color-mix(in srgb, var(--color-accent-2) 12%, var(--color-surface));
+    border-color: color-mix(in srgb, var(--color-accent-2) 36%, var(--color-surface));
+    --flash-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 8v5'/%3E%3Cpath d='M12 16h.01'/%3E%3C/svg%3E");
+}
+.flashmessage-error::before { background-color: var(--color-accent-2); }
+
+.flashmessage-warning {
+    background: color-mix(in srgb, var(--color-accent-2) 12%, var(--color-surface));
+    border-color: color-mix(in srgb, var(--color-accent-2) 36%, var(--color-surface));
+    --flash-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 4 3 19h18z'/%3E%3Cpath d='M12 10v4'/%3E%3Cpath d='M12 17h.01'/%3E%3C/svg%3E");
+}
+.flashmessage-warning::before { background-color: var(--color-accent-2); }
+
+.flashmessage-info {
+    background: color-mix(in srgb, var(--color-text) 5%, var(--color-surface));
+    border-color: color-mix(in srgb, var(--color-text) 18%, var(--color-surface));
+    --flash-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 11v5'/%3E%3Cpath d='M12 8h.01'/%3E%3C/svg%3E");
+}
+.flashmessage-info::before { background-color: var(--color-neutral-600); }
+
+/* Client-side validation errors — the same coral error language as a flash. */
+#error_list:empty { display: none; }
+#error_list:not(:empty) {
+    list-style: none; margin: 0 0 var(--space-4); padding: var(--space-3) var(--space-4);
+    font-size: 14px; line-height: 1.5; color: var(--color-text);
+    background: color-mix(in srgb, var(--color-accent-2) 12%, var(--color-surface));
+    border: 1px solid color-mix(in srgb, var(--color-accent-2) 36%, var(--color-surface));
+    border-radius: var(--radius-md);
+}
+#error_list:not(:empty) li { margin: 0; padding: 2px 0 2px var(--space-4); position: relative; }
+#error_list:not(:empty) li::before {
+    content: ""; position: absolute; inset-inline-start: 0; top: 11px;
+    width: 6px; height: 6px; border-radius: 50%; background: var(--color-accent-2);
+}
+
+/* ── Gallery: a large stage + a thumbnail strip; the stage opens a lightbox ── */
+.sf-gallery { display: flex; flex-direction: column; gap: var(--space-2); margin: 0; }
+.sf-gallery__stage {
+    position: relative; display: block; width: 100%; aspect-ratio: 4 / 3; padding: 0;
+    border: 1px solid var(--color-divider); border-radius: var(--radius-lg); overflow: hidden;
+    background: var(--color-neutral-200); box-shadow: var(--shadow-sm); cursor: zoom-in;
+}
+.sf-gallery__stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.sf-gallery__zoom {
+    position: absolute; inset-block-end: 10px; inset-inline-end: 10px; z-index: 1;
+    display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; font-size: 12px;
+    font-family: var(--font-heading); font-weight: 800; color: var(--color-fixed-light);
+    background: color-mix(in srgb, var(--color-fixed-ink) 66%, transparent); border-radius: var(--radius-md);
+    backdrop-filter: blur(4px); pointer-events: none;
+}
+.sf-gallery__thumbs {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: var(--space-2);
+    list-style: none; margin: 0; padding: 0;
+}
+.sf-gallery__thumb {
+    position: relative; display: block; width: 100%; aspect-ratio: 1; padding: 0; cursor: pointer;
+    border: 2px solid transparent; border-radius: var(--radius-md); overflow: hidden;
+    background: var(--color-neutral-200);
+}
+.sf-gallery__thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.sf-gallery__thumb[aria-pressed="true"] { border-color: var(--color-accent); }
+.sf-gallery__empty {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-2);
+    aspect-ratio: 4 / 3; border: 1px dashed var(--color-divider); border-radius: var(--radius-lg);
+    background: linear-gradient(135deg, var(--color-neutral-100), var(--color-neutral-300));
+    color: var(--color-muted); font-size: 13px;
+}
+
+/* ── Aside: meta, title, price, actions ── */
+.sf-detail__meta { display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-2); }
+.sf-detail__date { color: var(--color-muted); font-size: 12px; }
+.sf-detail__title { font-size: clamp(23px, 3.4vw, 30px); line-height: 1.14; margin: 0 0 var(--space-2); text-wrap: balance; }
+.sf-detail__price {
+    font-family: var(--font-heading); font-weight: 800; font-size: 32px; letter-spacing: -0.02em;
+    color: var(--color-accent-700); margin: 0 0 var(--space-2);
+}
+/* Non-money states are not shouted in the price colour. */
+.sf-detail__price[data-price-state="ask"],
+.sf-detail__price[data-price-state="free"] { font-size: 19px; color: var(--color-text); }
+.sf-detail__location { display: flex; align-items: center; gap: 6px; color: var(--color-neutral-700); font-size: 14px; margin: 0 0 var(--space-4); }
+.sf-detail__location svg { flex: none; color: var(--color-accent); }
+
+.sf-detail__actions {
+    display: flex; gap: var(--space-2); flex-wrap: wrap;
+    padding-bottom: var(--space-4); margin-bottom: var(--space-4); border-bottom: 1px solid var(--color-divider);
+}
+.sf-detail__actions .sf-btn { flex: 1 1 auto; }
+
+.sf-detail__owner {
+    background: var(--color-neutral-100); border-radius: var(--radius-md);
+    padding: var(--space-3); margin-bottom: var(--space-4);
+}
+.sf-detail__owner-label { font-size: 12px; color: var(--color-muted); margin: 0 0 var(--space-2); font-weight: 600; }
+.sf-detail__owner-actions { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+
+/* ── Seller trust block ── */
+.sf-seller {
+    background: var(--color-surface); border: 1px solid var(--color-divider);
+    border-radius: var(--radius-lg); padding: var(--space-4); box-shadow: var(--shadow-sm);
+}
+.sf-seller__head { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-muted); margin: 0 0 var(--space-3); }
+.sf-seller__id { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3); }
+.sf-seller__id .sf-seller__name { min-width: 0; }
+/* Long seller names must not blow out the 350px rail. */
+.sf-seller__name a, .sf-seller__name > span:first-child { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sf-seller__avatar {
+    flex: none; width: 44px; height: 44px; border-radius: var(--radius-md); overflow: hidden;
+    display: grid; place-items: center;
+    font-family: var(--font-heading); font-weight: 800; font-size: 18px; color: var(--color-fixed-light); background: var(--color-accent);
+}
+.sf-seller__avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.sf-seller__name { font-family: var(--font-heading); font-weight: 800; font-size: 16px; line-height: 1.2; }
+.sf-seller__name a { color: var(--color-text); }
+.sf-seller__name a:hover { color: var(--color-accent-700); }
+.sf-seller__kind { display: block; font-family: var(--font-body); font-weight: 400; font-size: 12px; color: var(--color-muted); margin-top: 2px; }
+.sf-seller__facts { list-style: none; margin: 0 0 var(--space-3); padding: 0; font-size: 13px; color: var(--color-neutral-700); display: flex; flex-direction: column; gap: var(--space-2); align-items: flex-start; }
+/* "New seller" — an honest expectation-setter for a days-old account, not an alarm. */
+.sf-seller__badge { display: inline-block; padding: 2px 8px; border-radius: var(--radius-sm); background: var(--color-accent-100); color: var(--color-accent-800); font-size: 11px; font-weight: 800; letter-spacing: 0.02em; }
+.sf-seller__actions { display: flex; flex-direction: column; gap: var(--space-2); }
+.sf-seller__actions .sf-btn { width: 100%; }
+.sf-seller__note { font-size: 13px; color: var(--color-muted); margin: 0; }
+
+.sf-phone { margin: 0; }
+.sf-phone > summary {
+    list-style: none; cursor: pointer; width: 100%;
+}
+.sf-phone > summary::-webkit-details-marker { display: none; }
+.sf-phone__num {
+    display: block; margin-top: var(--space-2); text-align: center;
+    font-family: var(--font-heading); font-weight: 800; font-size: 18px; color: var(--color-text);
+}
+.sf-phone__num:hover { color: var(--color-accent-700); }
+
+.sf-safetynote { font-size: 13px; color: var(--color-muted); margin: var(--space-3) 0 0; line-height: 1.5; }
+
+/* ── Body: description, details, map, related ── */
+.sf-detail__section { margin-top: 0; }
+.sf-detail__section + .sf-detail__section { margin-top: var(--space-8); }
+.sf-detail__section > h2 { font-size: 22px; margin: 0 0 var(--space-3); }
+.sf-prose { line-height: 1.7; font-size: 15px; max-width: 66ch; }
+.sf-prose img { border-radius: var(--radius-md); margin: var(--space-3) 0; }
+/* Muted reference line — listing id + view count, out of the buyer's spec scan.
+   Inside the Details section it's a footnote under the table; standing alone (a
+   listing with no spec table) it takes the section's own vertical rhythm. */
+.sf-detail__ref { margin: var(--space-4) 0 0; font-family: ui-monospace, monospace; font-size: 12px; color: var(--color-muted); }
+.sf-detail__body > .sf-detail__ref { margin-block: var(--space-8); }
+.sf-detail__ref-sep { margin: 0 var(--space-1); }
+/* The label (row-header) column shares the value column's 1px rule — the heavier 2px
+   .table th rule is meant for a real header row, which this spec sheet has none of. */
+.sf-detail__table th { border-bottom-width: 1px; }
+/* Custom-field groups (6.0 field groups): each is a titled spec block. The title
+   is the system "label" eyebrow (Archivo 800, tracked, muted) so a group reads as a
+   sub-section of Details, not a competing h2. */
+.sf-spec-group + .sf-spec-group { margin-top: var(--space-6); }
+.sf-spec-group__title { margin: 0 0 var(--space-2); font-size: 12px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-muted); }
+.sf-spec-group .sf-detail__table { margin-top: 0; }
+/* Checkbox custom-field value: a ticked feature reads as "✓ Yes" (core would emit an
+   <img tick.png> this theme doesn't ship). Only ticked fields render; unticked are
+   omitted, so a spec sheet isn't padded with "No" rows. */
+.sf-spec-yes { display: inline-flex; align-items: center; gap: 6px; }
+.sf-spec-yes svg { color: var(--color-accent-ink); flex: none; }
+
+/* Location map — interactive + lazy: the tiles/API load only when "Show map" is
+   pressed, so nothing external is fetched (or billed) by default. The canvas is the
+   live map (Google or Leaflet); the button and error share the same framed box. */
+.sf-map { position: relative; border: 1px solid var(--color-divider); border-radius: var(--radius-lg); overflow: hidden; background: var(--color-neutral-100); }
+/* Default state is a compact click-to-load bar, not a full-size placeholder — the
+   canvas only grows to map height once loaded. border-radius:inherit keeps the
+   button's own hover fill and focus ring on the container's rounded corners. */
+.sf-map__load {
+    width: 100%; min-height: 56px; padding: var(--space-3) var(--space-4);
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    background: transparent; color: var(--color-text);
+    font-family: var(--font-heading); font-weight: 800; font-size: 14px;
+    border-radius: inherit; cursor: pointer;
+}
+.sf-map__load:hover { background: color-mix(in srgb, var(--color-accent) 8%, transparent); color: var(--color-accent-700); }
+.sf-map__load[aria-busy="true"] { cursor: progress; opacity: .65; }
+.sf-map__canvas { width: 100%; height: 340px; }
+.sf-map__canvas .leaflet-container { height: 100%; font: inherit; background: var(--color-neutral-100); }
+.sf-map__error { margin: 0; min-height: 120px; display: flex; align-items: center; justify-content: center; padding: var(--space-6); text-align: center; color: var(--color-muted); font-size: 14px; }
+.sf-map__link { margin: var(--space-2) 0 0; font-size: 13px; }
+.sf-map__link a { display: inline-flex; align-items: center; gap: 6px; color: var(--color-accent-ink); font-weight: 600; }
+.sf-map__link a:hover { color: var(--color-accent-700); }
+
+/* Comments — a calm thread of bordered cards on the body column (not nested cards),
+   then the post form (or a sign-in invite when comments require an account). */
+.sf-comments__count {
+    display: inline-flex; align-items: center; justify-content: center; min-width: 24px; height: 22px;
+    padding: 0 7px; margin-inline-start: 6px; border-radius: 999px; vertical-align: 3px;
+    background: var(--color-accent-100); color: var(--color-accent-800);
+    font-family: ui-monospace, monospace; font-size: 13px; font-weight: 800;
+}
+.sf-comments__list { list-style: none; margin: 0 0 var(--space-6); padding: 0; display: flex; flex-direction: column; gap: var(--space-3); }
+.sf-comment {
+    padding: var(--space-4); background: var(--color-surface);
+    border: 1px solid var(--color-divider); border-radius: var(--radius-lg);
+}
+.sf-comment__head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3); }
+.sf-comment__author { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--font-heading); font-weight: 800; font-size: 14px; color: var(--color-text); }
+.sf-comment__date { flex: none; font-size: 12px; color: var(--color-muted); }
+.sf-comment__title { font-family: var(--font-heading); font-weight: 800; font-size: 15px; margin: var(--space-2) 0 var(--space-1); }
+.sf-comment__body { margin: var(--space-1) 0 0; font-size: 15px; line-height: 1.6; color: var(--color-text); }
+.sf-comment__delete { display: inline-flex; align-items: center; gap: 5px; margin-top: var(--space-3); font-size: 12px; font-weight: 600; color: var(--color-accent-2-700); }
+.sf-comment__delete:hover { color: var(--color-accent-2-600); text-decoration: none; }
+.sf-comments__empty { margin: 0 0 var(--space-6); font-size: 15px; color: var(--color-muted); }
+.sf-comments__formhead { font-family: var(--font-heading); font-weight: 800; font-size: 16px; margin: 0 0 var(--space-3); }
+.sf-comments__hint { margin: 0; font-size: 14px; color: var(--color-muted); }
+.sf-comment-form, .sf-comments__gate { max-width: 64ch; margin-top: var(--space-6); padding-top: var(--space-6); border-top: 2px solid var(--color-divider); }
+.sf-comment-form .sf-form__actions { margin-top: var(--space-4); }
+
+/* Sticky mobile contact bar — desktop keeps the sticky rail, so this is off there. */
+.sf-buybar { display: none; }
+@media (max-width: 860px) {
+    .sf-buybar {
+        position: fixed; inset-inline: 0; bottom: 0; z-index: 70;
+        display: flex; align-items: center; gap: var(--space-4);
+        padding: var(--space-2) var(--space-4);
+        padding-bottom: max(var(--space-2), env(safe-area-inset-bottom));
+        background: color-mix(in srgb, var(--color-surface) 92%, transparent);
+        -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+        border-top: 2px solid var(--color-divider); box-shadow: var(--shadow-lg);
+        animation: sf-buybar-in .25s cubic-bezier(.22, 1, .36, 1);
+    }
+    .sf-buybar[hidden] { display: none; }
+    .sf-buybar__price { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+    .sf-buybar__amount { font-family: var(--font-heading); font-weight: 800; font-size: 18px; line-height: 1.1; color: var(--color-accent-700); }
+    .sf-buybar__amount--ask { font-size: 15px; color: var(--color-text); }
+    .sf-buybar__title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; color: var(--color-muted); }
+    .sf-buybar .sf-btn { flex: none; }
+}
+@keyframes sf-buybar-in { from { transform: translateY(100%); } to { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .sf-buybar { animation: none; } }
+
+.sf-related { margin-top: var(--space-8); padding-top: var(--space-6); border-top: 2px solid var(--color-divider); }
+.sf-related__title { font-size: 22px; margin: 0 0 var(--space-4); }
+
+/* ── Admin moderation bar (admin-only; dashed to read as meta, not listing content) ── */
+.sf-admin {
+    background: var(--color-neutral-100); border: 1px dashed var(--color-neutral-400);
+    border-radius: var(--radius-md); padding: var(--space-3); margin-bottom: var(--space-4);
+}
+.sf-admin__head { display: flex; align-items: center; gap: 6px; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-muted); margin: 0 0 var(--space-3); }
+.sf-admin__state { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 var(--space-3); padding: 0; }
+.sf-state { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 800; letter-spacing: 0.02em; padding: 3px 8px; border-radius: calc(var(--radius-md) * 0.75); }
+/* A per-state icon so status survives grayscale — the teal+coral palette alone
+   can't separate Expired / Flagged / Blocked for a colourblind or fast-scanning eye. */
+.sf-state svg { width: 12px; height: 12px; flex: none; }
+.sf-state--ok { background: var(--color-accent-100); color: var(--color-accent-800); }
+.sf-state--warn { background: var(--color-accent-2-100); color: var(--color-accent-2-800); }
+.sf-state--danger { background: var(--color-accent-2-600); color: var(--color-fixed-light); }
+/* Benign, no-action-needed state (e.g. Pending review) — neutral, so it reads as
+   distinct from the warm "needs attention" Expired chip rather than identical to it. */
+.sf-state--muted { background: var(--color-neutral-200); color: var(--color-neutral-700); }
+.sf-admin__actions { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2); margin-bottom: var(--space-3); }
+.sf-admin__form { margin: 0; }
+.sf-admin__actions .sf-btn { width: 100%; font-size: 12px; }
+.sf-admin__link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; }
+
+/* ── Prev / next listing nav ── */
+.sf-itemnav { display: flex; gap: var(--space-3); margin-top: var(--space-8); padding-top: var(--space-6); border-top: 2px solid var(--color-divider); }
+.sf-itemnav__link {
+    display: inline-flex; align-items: center; gap: 8px; padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-divider); border-radius: var(--radius-md); background: var(--color-surface);
+    color: var(--color-text); font-family: var(--font-heading); font-weight: 800; font-size: 14px;
+    box-shadow: var(--shadow-sm); transition: border-color .15s ease, color .15s ease, transform .15s ease;
+}
+.sf-itemnav__link:hover { border-color: var(--color-accent); color: var(--color-accent-700); text-decoration: none; }
+.sf-itemnav__link--prev:hover { transform: translateX(-2px); }
+.sf-itemnav__link--next { margin-inline-start: auto; text-align: end; }
+.sf-itemnav__link--next:hover { transform: translateX(2px); }
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Dialogs (native <dialog>): contact, share, report, lightbox
+   ────────────────────────────────────────────────────────────────────────── */
+.sf-dialog {
+    width: min(520px, calc(100vw - 2 * var(--space-4))); padding: 0; border: 0;
+    background: var(--color-surface); color: var(--color-text);
+    border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
+}
+.sf-dialog::backdrop { background: var(--color-scrim); }
+.sf-dialog__head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); padding: var(--space-4) var(--space-4) var(--space-2); }
+.sf-dialog__title { font-size: 18px; margin: 0; }
+.sf-dialog__close {
+    flex: none; width: 34px; height: 34px; display: grid; place-items: center; cursor: pointer;
+    color: var(--color-text); background: transparent; border: 0; border-radius: var(--radius-md);
+}
+.sf-dialog__close:hover { background: color-mix(in srgb, var(--color-text) 8%, transparent); }
+.sf-dialog__body { padding: 0 var(--space-4) var(--space-4); }
+.sf-dialog__actions { display: flex; justify-content: flex-end; gap: var(--space-2); padding: var(--space-3) var(--space-4) var(--space-4); }
+.sf-dialog .sf-field:last-of-type { margin-bottom: 0; }
+
+.sf-dialog__context {
+    display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3);
+    padding: var(--space-3); margin-bottom: var(--space-3);
+    background: var(--color-neutral-100); border-radius: var(--radius-md);
+}
+.sf-dialog__context-title { font-family: var(--font-heading); font-weight: 800; font-size: 14px; }
+.sf-dialog__context-price { font-family: var(--font-heading); font-weight: 800; color: var(--color-accent-700); white-space: nowrap; }
+.sf-dialog__note {
+    display: flex; gap: 8px; align-items: flex-start; font-size: 13px; line-height: 1.5;
+    padding: var(--space-3); margin-bottom: var(--space-4); border-radius: var(--radius-md);
+    background: var(--color-accent-100); color: var(--color-accent-900);
+}
+.sf-dialog__note svg { flex: none; margin-top: 2px; }
+
+/* Confirm — the branded guard for irreversible owner actions (footer.php #sf-confirm,
+   driven by core JS). Names the exact item so the trust-critical moment is specific. */
+.sf-confirm {
+    width: min(420px, calc(100vw - 2 * var(--space-4))); padding: 0; border: 0;
+    background: transparent; box-shadow: none;
+}
+.sf-confirm::backdrop { background: var(--color-scrim); }
+.sf-confirm__box {
+    background: var(--color-surface); color: var(--color-text);
+    border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); padding: var(--space-6);
+}
+.sf-confirm__title { font-family: var(--font-heading); font-weight: 800; font-size: 20px; margin: 0 0 var(--space-2); }
+.sf-confirm__msg { color: var(--color-muted); line-height: 1.5; margin: 0 0 var(--space-6); }
+.sf-confirm__actions { display: flex; justify-content: flex-end; gap: var(--space-2); }
+@media (prefers-reduced-motion: no-preference) {
+    .sf-confirm[open] .sf-confirm__box { animation: sf-confirm-in .16s ease-out; }
+    @keyframes sf-confirm-in { from { opacity: 0; transform: translateY(6px) scale(.985); } }
+}
+
+/* Share */
+.sf-share__copy { display: flex; gap: var(--space-2); }
+.sf-share__copy .sf-input { flex: 1; font-family: ui-monospace, monospace; font-size: 13px; }
+.sf-share__status { font-size: 12px; color: var(--color-muted); margin: var(--space-2) 0 0; min-height: 1em; }
+.sf-share__targets { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-3); }
+.sf-share__targets .sf-btn { flex: 1 1 auto; }
+
+/* Lightbox */
+.sf-lightbox { width: min(96vw, 1100px); max-width: 96vw; padding: 0; border: 0; background: transparent; box-shadow: none; overflow: visible; }
+.sf-lightbox::backdrop { background: color-mix(in srgb, var(--color-overlay) 90%, transparent); }
+.sf-lightbox__img { display: block; width: 100%; max-height: 82vh; object-fit: contain; border-radius: var(--radius-md); background: var(--color-overlay); }
+.sf-lightbox__bar { display: flex; align-items: center; justify-content: center; gap: var(--space-4); margin-top: var(--space-3); color: var(--color-fixed-light); }
+.sf-lightbox__count { font-family: ui-monospace, monospace; font-size: 13px; }
+.sf-lightbox__btn {
+    width: 44px; height: 44px; display: grid; place-items: center; cursor: pointer; color: var(--color-fixed-light);
+    background: color-mix(in srgb, var(--color-fixed-light) 12%, transparent); border: 0; border-radius: 50%;
+}
+.sf-lightbox__btn:hover { background: color-mix(in srgb, var(--color-fixed-light) 22%, transparent); }
+.sf-lightbox__nav {
+    position: absolute; top: 50%; transform: translateY(-50%); z-index: 1;
+}
+.sf-lightbox__nav--prev { inset-inline-start: -8px; }
+.sf-lightbox__nav--next { inset-inline-end: -8px; }
+.sf-lightbox__close { position: absolute; top: -46px; inset-inline-end: 0; }
+.sf-lightbox__dl { color: var(--color-fixed-light); }
+@media (max-width: 560px) {
+    .sf-lightbox__nav--prev { inset-inline-start: 4px; }
+    .sf-lightbox__nav--next { inset-inline-end: 4px; }
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Forms & account pages
+   ────────────────────────────────────────────────────────────────────────── */
+.sf-form { max-width: 680px; }
+.sf-form--narrow { max-width: 440px; }
+.sf-form__legend { font-family: var(--font-heading); font-weight: 800; font-size: 20px; margin: var(--space-6) 0 var(--space-4); }
+.sf-form__legend:first-of-type { margin-top: 0; }
+.sf-form__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); }
+.sf-form__links { display: flex; flex-wrap: wrap; gap: var(--space-4); margin-top: var(--space-4); font-size: 14px; }
+
+/* Grouped form (profile editor): labelled fieldset sections + a paired-field grid */
+.sf-form__lede { color: var(--color-muted); font-size: 14px; margin: -4px 0 var(--space-6); max-width: 60ch; }
+.sf-form__group { border: 0; margin: 0 0 var(--space-8); padding: 0; min-width: 0; }
+.sf-form__group:last-of-type { margin-bottom: var(--space-6); }
+.sf-form__group > .sf-form__legend { margin: 0 0 var(--space-4); padding: 0; }
+.sf-field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 var(--space-4); }
+@media (max-width: 560px) { .sf-field-grid { grid-template-columns: 1fr; } }
+
+/* Avatar editor */
+.sf-avatar-edit { display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap; }
+.sf-avatar-edit__body { min-width: 0; flex: 1 1 12rem; }
+.sf-avatar-edit__hint { color: var(--color-muted); font-size: 13px; margin: 0 0 var(--space-3); }
+.sf-avatar-edit__actions { display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap; }
+.sf-avatar-edit__remove { display: inline-flex; align-items: center; gap: 6px; margin: 0; font-size: 13px; font-weight: 600; color: var(--color-muted); cursor: pointer; }
+.sf-avatar-edit__remove input { accent-color: var(--color-accent-2); }
+.sf-avatar-edit__remove:hover { color: var(--color-accent-2-700); }
+
+/* Avatar in the sticky header's account button */
+.sf-nav__avatar { width: 26px; height: 26px; border-radius: var(--radius-sm); object-fit: cover; display: block; }
+.sf-btn--avatar { overflow: hidden; }
+
+/* Auth card wrapper */
+.sf-authcard {
+    max-width: 440px; margin-inline: auto;
+    background: var(--color-surface); border: 1px solid var(--color-divider);
+    border-radius: var(--radius-lg); box-shadow: var(--shadow-md); padding: var(--space-6);
+}
+
+/* Account area — identity band on top, tab strip below, content stacked under.
+   Deliberately NOT a sidebar: a rail stacked above content on mobile, so every
+   account page opened on a menu instead of on the thing the user came for. */
+.sf-account { display: flex; flex-direction: column; gap: var(--space-6); }
+.sf-account__main { min-width: 0; }
+/* Public seller identity card — the buyer's trust moment. Mirrors the account
+   identity band, tuned for a larger avatar and a stranger's first impression.
+   (Named -card to stay clear of .sf-seller, the item-page buy-box.) */
+.sf-sellercard { display: flex; align-items: center; gap: var(--space-6); flex-wrap: wrap; margin-bottom: var(--space-6); }
+.sf-sellercard__identity { min-width: 0; flex: 1 1 14rem; }
+.sf-sellercard__name {
+    font-family: var(--font-heading); font-weight: 800; font-size: clamp(26px, 4vw, 34px);
+    line-height: 1.08; letter-spacing: -0.015em; margin: 0;
+}
+.sf-sellercard__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 8px 0 0; color: var(--color-muted); font-size: 14px; }
+.sf-sellercard__loc { display: inline-flex; align-items: center; gap: 4px; }
+.sf-sellercard__sep { color: color-mix(in srgb, var(--color-text) 35%, transparent); }
+.sf-sellercard__web { display: inline-flex; align-items: center; gap: 5px; margin-top: 10px; font-size: 14px; font-weight: 700; color: var(--color-accent-700); }
+.sf-sellercard__web:hover { color: var(--color-accent); text-decoration: none; }
+.sf-sellercard__subhead { font-size: 20px; margin: var(--space-8) 0 var(--space-4); }
+.sf-sellercard__about { color: var(--color-text); line-height: 1.7; max-width: 65ch; }
+
+/* Public profile body — the seller's listings lead, with a sticky contact panel
+   in a rail to the RIGHT (mirroring the item page's buy-box). Two columns only
+   when both a contact panel and listings exist; else it collapses to one stack,
+   listings first (they come first in the DOM). */
+.sf-pubprofile { display: grid; grid-template-columns: 1fr minmax(0, 320px); gap: var(--space-6); align-items: start; }
+.sf-pubprofile--solo { display: block; }
+.sf-pubprofile__main { min-width: 0; }
+.sf-pubprofile__aside { position: sticky; top: var(--space-6); }
+.sf-pubprofile--solo .sf-pubprofile__aside { position: static; }
+@media (max-width: 860px) {
+    .sf-pubprofile { grid-template-columns: 1fr; }
+    .sf-pubprofile__aside { position: static; }
+}
+.sf-contact-gate__text { color: var(--color-muted); font-size: 14px; line-height: 1.55; margin: 0 0 var(--space-4); }
+.sf-contact-gate .sf-btn + .sf-btn { margin-top: var(--space-2); }
+
+/* Identity band */
+.sf-account-head { display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap; }
+/* Avatar — shared component. The brand mark is a teal square, so avatars echo it
+   (rounded-square, not round). Shows an uploaded photo or a monogram fallback. */
+.sf-avatar {
+    flex: none; width: 60px; height: 60px; border-radius: var(--radius-lg);
+    display: grid; place-items: center; overflow: hidden;
+    background: var(--color-accent); color: var(--color-fixed-light); box-shadow: var(--shadow-sm);
+}
+.sf-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.sf-avatar__monogram { font-family: var(--font-heading); font-weight: 800; font-size: 26px; line-height: 1; }
+.sf-avatar--lg { width: 104px; height: 104px; border-radius: calc(var(--radius-lg) * 1.4); }
+.sf-avatar--lg .sf-avatar__monogram { font-size: 44px; }
+.sf-account-head__identity { min-width: 0; flex: 1 1 12rem; }
+.sf-account-head__name {
+    font-family: var(--font-heading); font-weight: 800; font-size: 28px;
+    line-height: 1.1; letter-spacing: -0.015em; margin: 0;
+}
+.sf-account-head__meta {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+    margin: 5px 0 0; color: var(--color-muted); font-size: 13px;
+}
+.sf-account-head__place { display: inline-flex; align-items: center; gap: 4px; }
+.sf-account-head__sep { color: color-mix(in srgb, var(--color-text) 35%, transparent); }
+.sf-account-head__actions { display: flex; gap: var(--space-2); flex: none; }
+
+/* Tab strip — one row, current tab underlined; scrolls sideways on small screens
+   rather than stacking, so content stays above the fold. */
+.sf-account-tabs { display: flex; gap: 2px; flex-wrap: wrap; border-bottom: 2px solid var(--color-divider); }
+.sf-account-tab {
+    display: inline-flex; align-items: center; gap: 7px; white-space: nowrap;
+    padding: 10px 14px; margin-bottom: -2px; border-bottom: 2px solid transparent;
+    color: var(--color-muted); font-size: 14px; font-weight: 600;
+}
+.sf-account-tab svg { opacity: .85; }
+.sf-account-tab:hover { color: var(--color-text); text-decoration: none; }
+.sf-account-tab.is-active { color: var(--color-accent-700); border-bottom-color: var(--color-accent); }
+.sf-account-tab.is-active svg { opacity: 1; }
+@media (max-width: 640px) {
+    .sf-account-tabs { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .sf-account-tabs::-webkit-scrollbar { display: none; }
+    .sf-account-head__actions { width: 100%; }
+    .sf-account-head__actions .sf-btn { flex: 1 1 auto; }
+}
+
+/* Dashboard overview */
+.sf-dash-lead { margin: 6px 0 0; color: var(--color-muted); font-size: 14px; }
+.sf-dash-lead__count {
+    font-family: var(--font-heading); font-weight: 800; color: var(--color-text);
+    font-size: 18px; margin-inline-end: 2px;
+}
+.sf-account-more {
+    display: inline-flex; align-items: center; gap: 4px; white-space: nowrap;
+    color: var(--color-accent-700); font-weight: 700; font-size: 14px;
+}
+.sf-account-more:hover { color: var(--color-accent); text-decoration: none; }
+
+/* Dashboard card owner actions — a View / Edit / Delete footer on the owner's own
+   listings (loop.php gates it behind sfCardOwner; never on a public grid). */
+.sf-card__actions { display: flex; gap: var(--space-1); padding: var(--space-2) var(--space-3); border-top: 1px solid var(--color-divider); }
+.sf-card__actions .sf-btn { flex: 1; padding-inline: var(--space-2); font-size: 12px; }
+/* View + Edit are the co-equal pair that stretch; Delete stays compact and pushed
+   to the end so the destructive action isn't given routine-action prominence. */
+.sf-card__actions .sf-card__delete { flex: 0 0 auto; margin-inline-start: var(--space-1); color: var(--color-accent-2-700); }
+.sf-card__delete:hover { background: var(--color-accent-2-100); color: var(--color-accent-2-800); }
+
+/* Manage listings — a table on desktop, stacked rows on mobile, with a status +
+   actions column. Owner-only (user-items.php), so edit/delete are always safe. */
+.sf-manage-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); margin-bottom: var(--space-4); }
+.sf-manage-head .sf-section__title { margin: 0; }
+/* Status filter chips above the manage list (built by storefront-account.js). */
+.sf-manage-filter { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-4); }
+.sf-filter-chip {
+    display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
+    padding: 6px 12px; font-family: var(--font-heading); font-weight: 800; font-size: 13px;
+    color: var(--color-muted); background: var(--color-surface);
+    border: 1px solid var(--color-divider); border-radius: 999px;
+    transition: color .12s ease, background .12s ease, border-color .12s ease;
+}
+.sf-filter-chip:hover { color: var(--color-text); border-color: color-mix(in srgb, var(--color-text) 22%, var(--color-divider)); }
+.sf-filter-chip.is-active { color: var(--color-fixed-light); background: var(--color-accent); border-color: var(--color-accent); }
+.sf-filter-chip__n { font-size: 11px; font-variant-numeric: tabular-nums; padding: 1px 6px; border-radius: 999px; background: color-mix(in srgb, var(--color-text) 8%, transparent); }
+.sf-filter-chip.is-active .sf-filter-chip__n { background: color-mix(in srgb, var(--color-fixed-light) 24%, transparent); }
+.sf-manage__row.is-hidden { display: none; }
+.sf-manage { list-style: none; margin: 0; padding: 0; background: var(--color-surface); border: 1px solid var(--color-divider); border-radius: var(--radius-lg); overflow: hidden; }
+.sf-manage__headrow, .sf-manage__row { display: grid; grid-template-columns: minmax(0, 1fr) 96px 84px 128px; align-items: center; gap: var(--space-4); padding: var(--space-3) var(--space-4); }
+.sf-manage__headrow { background: var(--color-neutral-100); font-family: var(--font-heading); font-weight: 800; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-muted); }
+.sf-manage__col-actions { text-align: right; }
+.sf-manage__row + .sf-manage__row, .sf-manage__headrow + .sf-manage__row { border-top: 1px solid var(--color-divider); }
+.sf-manage__row:hover { background: color-mix(in srgb, var(--color-text) 3%, transparent); }
+.sf-manage__listing { display: flex; align-items: center; gap: var(--space-3); min-width: 0; color: var(--color-text); }
+.sf-manage__listing:hover { text-decoration: none; }
+.sf-manage__listing:hover .sf-manage__title { color: var(--color-accent-700); }
+.sf-manage__thumb { flex: none; width: 56px; height: 56px; border-radius: var(--radius-md); overflow: hidden; background: var(--color-neutral-200); }
+.sf-manage__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.sf-manage__thumb .sf-card__noimg { display: block; width: 100%; height: 100%; }
+.sf-manage__info { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.sf-manage__title { font-family: var(--font-heading); font-weight: 800; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sf-manage__sub { display: flex; gap: var(--space-2); font-size: 12px; color: var(--color-muted); }
+.sf-manage__price { color: var(--color-accent-700); font-weight: 800; }
+.sf-manage__views { display: inline-flex; align-items: center; gap: 4px; font-family: ui-monospace, monospace; font-size: 13px; color: var(--color-neutral-700); }
+.sf-manage__actions { display: flex; gap: var(--space-1); justify-content: flex-end; }
+.sf-manage__delete { color: var(--color-accent-2-700); }
+.sf-manage__delete:hover { border-color: color-mix(in srgb, var(--color-accent-2) 40%, var(--color-divider)); color: var(--color-accent-2-600); }
+.sf-manage__actlabel { display: none; }
+@media (max-width: 760px) {
+    .sf-manage__headrow { display: none; }
+    .sf-manage__row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); }
+    .sf-manage__listing { flex: 1 1 100%; }
+    /* Full title on mobile: it's how the row is identified before edit/delete, so it
+       must not truncate — wrap to two lines instead. */
+    .sf-manage__title { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+    .sf-manage__actions { flex: 1 1 100%; justify-content: flex-start; }
+    /* Icon-only loses its meaning on touch (no tooltip); show the label and let the
+       button size to it. */
+    .sf-manage__actions .sf-btn { width: auto; min-width: 44px; padding-inline: var(--space-3); gap: 6px; }
+    .sf-manage__actlabel { display: inline; }
+}
+
+/* Account settings sub-navigation — a segmented control for Profile / Username /
+   E-mail / Password, inside the Profile section. */
+/* One-line segmented control — scrolls horizontally on narrow screens rather than
+   wrapping a lone "Password" onto a second row (which reads as a layout hiccup). */
+.sf-settings-nav { display: flex; flex-wrap: nowrap; gap: var(--space-1); margin-bottom: var(--space-6); padding: var(--space-1); background: var(--color-neutral-100); border-radius: var(--radius-md); overflow-x: auto; scrollbar-width: none; }
+.sf-settings-nav::-webkit-scrollbar { display: none; }
+.sf-settings-nav__tab { flex: none; white-space: nowrap; padding: var(--space-2) var(--space-4); border-radius: var(--radius-sm); font-family: var(--font-heading); font-weight: 800; font-size: 13px; color: var(--color-muted); }
+.sf-settings-nav__tab:hover { color: var(--color-text); text-decoration: none; }
+.sf-settings-nav__tab.is-active { background: var(--color-surface); color: var(--color-accent-700); box-shadow: var(--shadow-sm); }
+
+/* Per-listing view count, account grids only */
+.sf-card__views { display: inline-flex; align-items: center; gap: 4px; }
+.sf-card__views svg { opacity: .8; }
+
+/* Empty state — reusable: icon, headline, one reassuring line, one action */
+.sf-empty-state {
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    gap: var(--space-3); padding: var(--space-8) var(--space-6);
+}
+.sf-empty-state__icon {
+    display: grid; place-items: center; width: 60px; height: 60px; border-radius: 50%;
+    background: var(--color-accent-100); color: var(--color-accent-700);
+}
+.sf-empty-state__title { font-family: var(--font-heading); font-weight: 800; font-size: 20px; margin: 0; }
+.sf-empty-state__text { color: var(--color-muted); font-size: 14px; max-width: 44ch; margin: 0; }
+.sf-empty-state__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-2); margin-top: var(--space-1); }
+.sf-btn--lg { font-size: 15px; padding: 11px 20px; }
+
+.sf-page__body { line-height: 1.7; max-width: 68ch; }
+.sf-page__body h2, .sf-page__body h3 { margin-top: var(--space-6); }
+/* Page-builder canvas: stacked widget blocks get vertical rhythm without a max-width
+   cap (a block may be a full-width band, not prose). See template-widgets.php. */
+.sf-page__blocks { max-width: none; }
+.sf-page__blocks > * + * { margin-top: var(--space-8); }
+
+/* 404 */
+.sf-error__code {
+    font-family: ui-monospace, monospace; font-size: clamp(72px, 16vw, 140px);
+    line-height: 0.9; color: var(--color-accent); letter-spacing: -0.04em; margin-bottom: var(--space-3);
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Footer
+   ────────────────────────────────────────────────────────────────────────── */
+/* The 2px signature rule earns its weight: stepped up from the 16% divider so it
+   reads as an authored line, not a hairline. Derived from --color-text, so it holds
+   in both themes. */
+.sf-footer { border-top: 2px solid color-mix(in srgb, var(--color-text) 22%, transparent); margin-top: var(--space-8); }
+.sf-footer__grid {
+    display: flex; flex-wrap: wrap; align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-8) var(--space-6);
+    padding-block: var(--space-8);
+}
+/* Brand is capped so its tagline fills the box (no dead trailing space); nav columns
+   size to their own content. flex:0 so they never balloon into rivers, and
+   space-between spreads all four across the full width in an even rhythm rather than
+   clustering into a lopsided band. */
+.sf-footer__brand { flex: 0 1 300px; min-width: 220px; }
+.sf-footer__links { flex: 0 1 auto; min-width: 120px; display: flex; flex-direction: column; }
+@media (max-width: 860px) {
+    /* Brand takes its own row; nav columns share the row below and fill it. */
+    .sf-footer__brand { flex-basis: 100%; }
+    .sf-footer__links { flex: 1 1 140px; }
+}
+@media (max-width: 480px) {
+    .sf-footer__links { flex-basis: 100%; }
+}
+
+.sf-footer__brand .sf-logo { display: inline-flex; margin-bottom: var(--space-3); }
+.sf-footer__tagline { color: var(--color-muted); font-size: 14px; line-height: 1.5; max-width: 34ch; margin: 0 0 var(--space-4); }
+/* The footer's one action deserves a comfortable box, not the compact inline size. */
+.sf-footer__cta { display: inline-flex; align-items: center; gap: 6px; min-height: 42px; padding-inline: var(--space-4); }
+
+/* Structure leads: the label sits at near-full ink (not muted), so the uppercase
+   Archivo 800 reads as the strongest layer of the column, above its links. */
+.sf-footer__links h2 {
+    font-family: var(--font-heading); font-weight: 800; font-size: 12px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: color-mix(in srgb, var(--color-text) 92%, transparent);
+    margin: 0 0 var(--space-2);
+}
+/* Tight, even rows on desktop (pointer); a full 44px tap box on the mobile stack. */
+.sf-footer__links a {
+    display: inline-flex; align-items: center; min-height: 30px;
+    color: color-mix(in srgb, var(--color-text) 82%, transparent);
+    font-size: 14px; line-height: 1.3;
+}
+.sf-footer__links a:hover { color: var(--color-accent-ink); }
+@media (max-width: 860px) { .sf-footer__links a { min-height: 44px; } }
+
+.sf-footer__legal { border-top: 1px solid var(--color-divider); }
+.sf-footer__legal-row {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+    gap: var(--space-2) var(--space-6); padding-block: var(--space-3);
+}
+.sf-footer__copy { color: var(--color-muted); font-size: 13px; margin: 0; }
+.sf-footer__copy a { color: var(--color-accent-ink); font-weight: 600; }
+.sf-footer__copy a:hover { text-decoration: underline; }
+.sf-footer__sep { margin-inline: 4px; }
+
+.sf-footer__legal-end { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-6); }
+.sf-footer__lang { display: flex; flex-wrap: wrap; gap: 2px 8px; align-items: center; }
+.sf-footer__lang-label {
+    font-family: var(--font-heading); font-weight: 800; font-size: 11px;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-muted);
+}
+.sf-footer__lang a {
+    display: inline-flex; align-items: center; min-height: 40px; padding-inline: 2px;
+    color: var(--color-muted); font-size: 13px;
+}
+.sf-footer__lang a:hover { color: var(--color-accent-ink); }
+/* Active locale marked by ink + underline, not weight alone, so "which is current"
+   is unambiguous at a glance. */
+.sf-footer__lang a.is-active {
+    color: var(--color-text); font-weight: 700;
+    text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 2px;
+}
+
+/* Collapsed switcher for many locales — a disclosure labelled with the current
+   language; the list floats above the legal bar instead of wrapping it. */
+.sf-footer__lang-menu { position: relative; }
+.sf-footer__lang-menu > summary {
+    display: inline-flex; align-items: center; gap: 6px; min-height: 40px;
+    list-style: none; cursor: pointer;
+    color: var(--color-muted); font-size: 13px; font-weight: 600;
+}
+.sf-footer__lang-menu > summary::-webkit-details-marker { display: none; }
+.sf-footer__lang-menu > summary:hover,
+.sf-footer__lang-menu[open] > summary { color: var(--color-text); }
+.sf-footer__lang-menu > summary > svg:last-child { transition: transform .15s ease; }
+.sf-footer__lang-menu[open] > summary > svg:last-child { transform: rotate(180deg); }
+.sf-footer__lang-list {
+    position: absolute; bottom: calc(100% + 6px); inset-inline-end: 0; z-index: 20;
+    display: flex; flex-direction: column; min-width: 168px; max-height: 264px; overflow-y: auto;
+    background: var(--color-surface); border: 1px solid var(--color-divider);
+    border-radius: var(--radius-md); box-shadow: var(--shadow-md); padding: var(--space-1);
+}
+.sf-footer__lang-list a {
+    display: flex; align-items: center; min-height: 40px; padding-inline: var(--space-2);
+    border-radius: var(--radius-sm); font-size: 13px;
+    color: color-mix(in srgb, var(--color-text) 82%, transparent);
+}
+.sf-footer__lang-list a:hover { background: var(--color-neutral-100); color: var(--color-accent-ink); }
+.sf-footer__lang-list a.is-active { color: var(--color-text); font-weight: 700; }
+@media (prefers-reduced-motion: reduce) { .sf-footer__lang-menu > summary > svg:last-child { transition: none; } }
+
+.sf-footer__top {
+    display: inline-flex; align-items: center; gap: 6px; min-height: 40px;
+    color: var(--color-muted); font-size: 13px; font-weight: 600;
+}
+.sf-footer__top:hover { color: var(--color-accent-ink); }
+.sf-footer__top svg { transition: transform .15s ease; }
+.sf-footer__top:hover svg { transform: translateY(-2px); }
+@media (prefers-reduced-motion: reduce) { .sf-footer__top svg { transition: none; } }
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Responsive nav
+   ────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 860px) {
+    .sf-nav-toggle { display: flex; }
+    .sf-nav {
+        position: absolute; inset-inline: 0; top: 100%; flex-direction: column; align-items: stretch;
+        gap: 0; background: var(--color-bg); border-bottom: 2px solid var(--color-divider);
+        padding: var(--space-2) var(--space-6) var(--space-4); display: none;
+        max-height: calc(100vh - var(--sf-header-h)); overflow-y: auto; overscroll-behavior: contain;
+    }
+    .sf-nav.is-open { display: flex; }
+    .sf-nav__link { padding: 12px 0; border-bottom: 1px solid var(--color-divider); }
+    .sf-nav__link[aria-current] { font-weight: 800; }
+    .sf-nav__link[aria-current]::after { display: none; }
+    .sf-nav__cta { margin-top: var(--space-3); }
+
+    /* Account cluster becomes an inline, always-open list inside the drawer:
+       an identity row (avatar + name) with its menu items indented beneath it. */
+    .sf-account { width: 100%; }
+    .sf-account__toggle {
+        width: 100%; justify-content: flex-start; margin: 0; padding: 12px 0;
+        min-height: 44px; border-radius: 0; border-bottom: 1px solid var(--color-divider);
+    }
+    .sf-account__toggle > svg { display: none; }
+    .sf-account__toggle .sf-account__avatar { width: 38px; height: 38px; }
+    .sf-account__name { max-width: none; font-weight: 700; }
+    .sf-account__menu, .sf-account__menu[hidden] {
+        position: static; display: flex; z-index: auto; min-width: 0;
+        padding: 0; background: none; border: 0; border-radius: 0; box-shadow: none; animation: none;
+    }
+    .sf-account__item {
+        padding: 12px 0 12px var(--space-6); min-height: 44px; border-radius: 0;
+        border-bottom: 1px solid var(--color-divider);
+    }
+    .sf-account__item:hover { background: none; }
+    .sf-account__sep { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}

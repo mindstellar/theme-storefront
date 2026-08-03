@@ -1,0 +1,14 @@
+{
+  "name": "storefront-theme",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Build tooling for the Storefront Shopclass theme — CSS/JS minification. Not shipped in the theme zip.",
+  "license": "GPL-3.0-or-later",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0"
+  }
+}

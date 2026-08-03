@@ -1,0 +1,44 @@
+name: Release Theme
+on:
+  push:
+    tags:
+      - 'v*'
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Build minified assets
+        run: |
+          npm install
+          npm run build
+
+      - name: Package theme
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          # Zip the theme under a top-level storefront/ dir so unzipping into
+          # oc-content/themes/ yields oc-content/themes/storefront/. The built
+          # *.min.css/js (from the step above) ship alongside the source; the build
+          # tooling itself does not.
+          mkdir -p dist/storefront
+          rsync -a \
+            --exclude '.git' --exclude '.github' --exclude 'dist' \
+            --exclude 'node_modules' --exclude 'package.json' \
+            --exclude 'package-lock.json' --exclude 'build.mjs' \
+            ./ dist/storefront/
+          ( cd dist && zip -qr "storefront_${VERSION}.zip" storefront )
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/storefront_*.zip
+          name: Storefront ${{ github.ref_name }}
