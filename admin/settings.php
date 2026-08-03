@@ -35,6 +35,7 @@ if ($showAs === '') {
 
 $heroShowDecor = (osc_get_preference('hero_show_decor', 'storefront') !== '0');
 $heroShowChips = (osc_get_preference('hero_show_chips', 'storefront') !== '0');
+$homeShowFeatured = (osc_get_preference('home_show_featured', 'storefront') !== '0');
 $footerLink    = (osc_get_preference('footer_link', 'storefront') !== '0');
 
 $palettes = array(
@@ -154,10 +155,16 @@ $palettes = array(
                 <label class="form-check-label" for="hero_show_decor"><?php _e('Show decorative graphic', 'storefront'); ?></label>
             </div>
 
-            <div class="form-check">
+            <div class="form-check mb-2">
                 <input class="form-check-input" type="checkbox" id="hero_show_chips" name="hero_show_chips"
                        value="1" <?php echo $heroShowChips ? 'checked' : ''; ?>>
                 <label class="form-check-label" for="hero_show_chips"><?php _e('Show popular-category chips', 'storefront'); ?></label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="home_show_featured" name="home_show_featured"
+                       value="1" <?php echo $homeShowFeatured ? 'checked' : ''; ?>>
+                <label class="form-check-label" for="home_show_featured"><?php _e('Show featured (promoted) listings on the home page', 'storefront'); ?></label>
             </div>
 
         </div>

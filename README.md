@@ -41,8 +41,8 @@ render time.
 - **Colour palette** — **Teal** (default), **Indigo** or **Violet**. Swaps the primary and secondary
   accents site-wide; each is tuned to clear **WCAG 2.1 AA** in both light and dark.
 - **Colour scheme** — **Light**, **Dark**, or **Auto** (matches each visitor's device setting).
-- **Home / Hero** — override the headline and tagline; toggle the decorative graphic and the
-  popular-category chips.
+- **Home / Hero** — override the headline and tagline; toggle the decorative graphic, the
+  popular-category chips, and the featured (promoted) listings row.
 - **Search & location**
   - *Post & edit form* — location fields as type-ahead **autocomplete** or cascading **dropdowns**.
   - *Search page* — **Country + Region + City**, **Region + City** (for single-country sites — hides the

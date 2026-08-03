@@ -109,7 +109,9 @@ $sf_hues = array(
 <?php } ?>
 
 <?php
-// Featured (premium) listings — only render when the site actually has them.
+// Featured (premium) listings — shown when the setting is on AND the site actually
+// has premiums. The query is skipped entirely when the section is disabled.
+if (storefront_setting('home_show_featured', '1') !== '0') {
 osc_get_premiums(4);
 if (osc_count_premiums() > 0) { ?>
 <section class="sf-section">
@@ -126,7 +128,8 @@ if (osc_count_premiums() > 0) { ?>
         <?php osc_run_hook('home_after_featured'); ?>
     </div>
 </section>
-<?php } ?>
+<?php }
+} ?>
 
 <section class="sf-section">
     <div class="sf-container">

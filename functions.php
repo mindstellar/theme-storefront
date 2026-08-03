@@ -125,6 +125,9 @@ if (!function_exists('storefront_theme_install')) {
         if (!osc_get_preference('search_location_type', 'storefront')) {
             osc_set_preference('search_location_type', 'autocomplete', 'storefront');
         }
+        if (!osc_get_preference('home_show_featured', 'storefront')) {
+            osc_set_preference('home_show_featured', '1', 'storefront');
+        }
 
         osc_reset_preferences();
     }
@@ -881,6 +884,7 @@ if (!function_exists('storefront_admin_actions')) {
                 $set('hero_tagline');
                 $setCheckbox('hero_show_decor');
                 $setCheckbox('hero_show_chips');
+                $setCheckbox('home_show_featured');
                 $set('location_input_type');
                 $set('search_location_type');
                 $set('keyword_placeholder');
