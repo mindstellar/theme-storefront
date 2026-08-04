@@ -108,16 +108,26 @@ function table(entries, headers, fill) {
         if (e.msgidPlural !== undefined) node.msgid_plural = e.msgidPlural;
         translations[''][e.msgid] = node;
     }
-    return { charset: 'utf-8', headers, translations };
+    return { charset: 'UTF-8', headers, translations };
 }
 
 const potHeaders = {
     'project-id-version': PROJECT_ID,
-    'mime-version': '1.0',
+    'report-msgid-bugs-to': 'https://github.com/mindstellar/theme-storefront/issues',
+    'MIME-Version': '1.0',
     'content-type': 'text/plain; charset=UTF-8',
     'content-transfer-encoding': '8bit',
     'plural-forms': PLURAL_FORMS,
 };
+
+// Compile a PO catalogue. gettext-parser lower-cases the Content-Type charset to
+// "utf-8"; every gettext tool writes "UTF-8", so normalise it back for the .po/.pot.
+function compilePo(tbl) {
+    const text = gettextParser.po.compile(tbl, { sort: false })
+        .toString('utf8')
+        .replace('charset=utf-8', 'charset=UTF-8');
+    return Buffer.from(text, 'utf8');
+}
 
 function writeFileIfChanged(file, buf) {
     const next = Buffer.isBuffer(buf) ? buf : Buffer.from(buf);
@@ -132,7 +142,7 @@ function doExtract() {
     // Template: empty msgstrs.
     const pot = table(entries, { ...potHeaders, language: '' }, (e) =>
         e.msgidPlural !== undefined ? ['', ''] : ['']);
-    writeFileIfChanged(POT, gettextParser.po.compile(pot, { sort: false }));
+    writeFileIfChanged(POT, compilePo(pot));
 
     // Default en_US: identity (English is the source).
     const enDir = path.join(LANG_DIR, 'en_US');
@@ -140,7 +150,7 @@ function doExtract() {
     writeFileIfChanged(path.join(enDir, 'index.php'), SILENCE + '\n');
     const en = table(entries, { ...potHeaders, language: 'en_US' }, (e) =>
         e.msgidPlural !== undefined ? [e.msgid, e.msgidPlural] : [e.msgid]);
-    writeFileIfChanged(path.join(enDir, 'theme.po'), gettextParser.po.compile(en, { sort: false }));
+    writeFileIfChanged(path.join(enDir, 'theme.po'), compilePo(en));
 
     console.log(`i18n: extracted ${entries.size} strings -> languages/storefront.pot, languages/en_US/theme.po`);
 }
