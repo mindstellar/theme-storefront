@@ -1,0 +1,1748 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Storefront 1.0.1\n"
+"mime-version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: \n"
+
+#: common/loop.php:114
+#: common/loop.php:64
+msgid "—"
+msgstr ""
+
+#: maintenance.php:43
+msgid "— The %s team"
+msgstr ""
+
+#: admin/settings.php:128
+msgid ""
+"\"Auto\" switches between light and dark to match each visitor's device "
+"setting."
+msgstr ""
+
+#: item.php:301
+msgid "%d listing"
+msgid_plural "%d listings"
+msgstr[0] ""
+msgstr[1] ""
+
+#: main.php:102
+msgid "%d listings"
+msgstr ""
+
+#: item.php:144
+msgid "%d photos"
+msgstr ""
+
+#: search.php:48
+msgid "%d results"
+msgstr ""
+
+#: common/search-sidebar.php:250
+msgid "%s to be emailed when a new listing matches this search."
+msgstr ""
+
+#: common/item-comments.php:71
+msgid "%s to leave a comment on this listing."
+msgstr ""
+
+#: item.php:425
+msgid "%s view"
+msgid_plural "%s views"
+msgstr[0] ""
+msgstr[1] ""
+
+#: common/footer.php:104
+#: common/footer.php:105
+#: user-public-profile.php:75
+msgid "About"
+msgstr ""
+
+#: user-profile.php:120
+msgid "About you"
+msgstr ""
+
+#: common/footer.php:88
+msgid "Account"
+msgstr ""
+
+#: common/account-settings-nav.php:16
+msgid "Account settings"
+msgstr ""
+
+#: user-profile.php:69
+msgid "Account type"
+msgstr ""
+
+#: user-items.php:46
+msgid "Actions"
+msgstr ""
+
+#: item.php:258
+msgid "Activate"
+msgstr ""
+
+#: user-items.php:54
+msgid "Active"
+msgstr ""
+
+#: search.php:85
+msgid "Active filters"
+msgstr ""
+
+#: user-dashboard.php:57
+msgid "active listing"
+msgstr ""
+
+#: user-dashboard.php:57
+msgid "active listings"
+msgstr ""
+
+#: item-post.php:115
+#: user-profile.php:114
+msgid "Address"
+msgstr ""
+
+#: item.php:242
+msgid "Admin"
+msgstr ""
+
+#: user-alerts.php:30
+msgid "Alert"
+msgstr ""
+
+#: common/account-header.php:34
+#: common/footer.php:92
+#: common/header.php:53
+#: user-alerts.php:24
+msgid "Alerts"
+msgstr ""
+
+#: user-items.php:41
+msgid "All"
+msgstr ""
+
+#: functions.php:645
+#: main.php:64
+msgid "All categories"
+msgstr ""
+
+#: user-register.php:44
+msgid "Already have an account? %s"
+msgstr ""
+
+#: functions.php:839
+#: functions.php:870
+msgid "An error has occurred, please try again."
+msgstr ""
+
+#: common/search-sidebar.php:171
+#: common/search-sidebar.php:59
+msgid "Any city"
+msgstr ""
+
+#: common/search-sidebar.php:117
+#: common/search-sidebar.php:147
+msgid "Any country"
+msgstr ""
+
+#: common/search-sidebar.php:161
+#: common/search-sidebar.php:50
+msgid "Any region"
+msgstr ""
+
+#: admin/settings.php:85
+msgid "Appearance"
+msgstr ""
+
+#: common/search-sidebar.php:220
+msgid "Apply filters"
+msgstr ""
+
+#: item-contact.php:55
+msgid "Attachment"
+msgstr ""
+
+#: admin/settings.php:125
+msgid "Auto (follow device)"
+msgstr ""
+
+#: admin/settings.php:183
+#: admin/settings.php:202
+msgid "Autocomplete (type-ahead)"
+msgstr ""
+
+#: 404.php:23
+#: error.php:16
+msgid "Back to home"
+msgstr ""
+
+#: common/footer.php:159
+msgid "Back to top"
+msgstr ""
+
+#: item.php:255
+msgid "Block"
+msgstr ""
+
+#: common/loop.php:27
+#: item.php:245
+#: user-items.php:55
+msgid "Blocked"
+msgstr ""
+
+#: admin/header.php:85
+msgid "Brand &amp; Logo"
+msgstr ""
+
+#: functions.php:827
+msgid "Brand settings updated correctly."
+msgstr ""
+
+#: admin/settings.php:240
+msgid "Brand tagline shown in the footer. Leave empty to use the default."
+msgstr ""
+
+#: common/header.php:25
+#: search.php:25
+msgid "Browse"
+msgstr ""
+
+#: 404.php:24
+msgid "Browse all listings"
+msgstr ""
+
+#: main.php:92
+msgid "Browse categories"
+msgstr ""
+
+#: common/footer.php:79
+#: contact.php:54
+#: search.php:22
+#: user-alerts.php:19
+#: user-dashboard.php:47
+#: user-items.php:25
+msgid "Browse listings"
+msgstr ""
+
+#: 404.php:29
+msgid "Browse popular categories"
+msgstr ""
+
+#: common/footer.php:39
+msgid "Buy and sell locally — real listings, real people, near you."
+msgstr ""
+
+#: main.php:40
+msgid ""
+"Buy, sell and rent near you. Browse a clean grid of local listings, or post "
+"your own for free in a couple of minutes."
+msgstr ""
+
+#: common/footer.php:178
+#: item-contact.php:65
+msgid "Cancel"
+msgstr ""
+
+#: 404.php:30
+#: common/search-sidebar.php:227
+msgid "Categories"
+msgstr ""
+
+#: item-post.php:45
+msgid "Category"
+msgstr ""
+
+#: user-profile.php:79
+msgid "Cell phone"
+msgstr ""
+
+#: user-change_email.php:13
+msgid "Change e-mail"
+msgstr ""
+
+#: common/footer.php:143
+msgid "Change language"
+msgstr ""
+
+#: user-change_password.php:13
+#: user-forgot_password.php:25
+msgid "Change password"
+msgstr ""
+
+#: user-profile.php:50
+msgid "Change photo"
+msgstr ""
+
+#: user-change_username.php:15
+msgid "Change username"
+msgstr ""
+
+#: common/loop.php:107
+#: common/loop.php:50
+#: item.php:187
+#: item.php:542
+#: user-items.php:72
+msgid "Check with seller"
+msgstr ""
+
+#: common/search-sidebar.php:168
+#: common/search-sidebar.php:57
+#: item-post.php:106
+#: item-post.php:88
+#: user-profile.php:105
+msgid "City"
+msgstr ""
+
+#: item-post.php:111
+#: user-profile.php:109
+msgid "City area"
+msgstr ""
+
+#: search.php:96
+msgid "Clear all"
+msgstr ""
+
+#: search.php:105
+msgid "Clear filters"
+msgstr ""
+
+#: item.php:558
+#: item.php:569
+#: item.php:602
+#: item.php:613
+msgid "Close"
+msgstr ""
+
+#: common/search-sidebar.php:73
+msgid "Close filters"
+msgstr ""
+
+#: admin/settings.php:89
+msgid "Colour palette"
+msgstr ""
+
+#: admin/settings.php:110
+msgid "Colour scheme"
+msgstr ""
+
+#: common/item-comments.php:103
+msgid "Comment"
+msgstr ""
+
+#: common/item-comments.php:26
+#: common/item-comments.php:28
+msgid "Comments"
+msgstr ""
+
+#: admin/header.php:121
+msgid "Compact logo (optional)"
+msgstr ""
+
+#: common/account-header.php:54
+#: item.php:289
+#: user-public-profile.php:54
+msgid "Company"
+msgstr ""
+
+#: common/footer.php:83
+#: common/user-public-sidebar.php:14
+#: common/user-public-sidebar.php:47
+#: user-profile.php:76
+msgid "Contact"
+msgstr ""
+
+#: contact.php:8
+msgid "Contact &amp; support"
+msgstr ""
+
+#: 404.php:25
+msgid "Contact support"
+msgstr ""
+
+#: item.php:578
+msgid "Copy"
+msgstr ""
+
+#: alert-form.php:30
+msgid "Could not subscribe. Please try again."
+msgstr ""
+
+#: common/search-sidebar.php:115
+#: common/search-sidebar.php:145
+#: item-post.php:72
+#: user-profile.php:97
+msgid "Country"
+msgstr ""
+
+#: admin/settings.php:196
+msgid "Country, region &amp; city"
+msgstr ""
+
+#: item.php:317
+msgid "Create a free account"
+msgstr ""
+
+#: user-register.php:39
+msgid "Create account"
+msgstr ""
+
+#: common/user-public-sidebar.php:51
+msgid "Create an account"
+msgstr ""
+
+#: user-register.php:9
+msgid "Create your account"
+msgstr ""
+
+#: user-change_email.php:19
+msgid "Current e-mail"
+msgstr ""
+
+#: user-change_password.php:19
+msgid "Current password"
+msgstr ""
+
+#: user-change_username.php:22
+msgid "Current username"
+msgstr ""
+
+#: admin/settings.php:120
+msgid "Dark"
+msgstr ""
+
+#: common/account-header.php:32
+#: common/footer.php:90
+#: common/header.php:51
+msgid "Dashboard"
+msgstr ""
+
+#: item.php:257
+msgid "Deactivate"
+msgstr ""
+
+#: admin/settings.php:216
+msgid "Default results view"
+msgstr ""
+
+#: common/footer.php:179
+#: common/item-comments.php:52
+#: common/loop.php:79
+#: item.php:215
+#: user-items.php:85
+msgid "Delete"
+msgstr ""
+
+#: common/loop.php:79
+#: item.php:212
+#: user-items.php:85
+msgid "Delete “%s”? This cannot be undone."
+msgstr ""
+
+#: common/item-comments.php:50
+#: common/item-comments.php:51
+msgid "Delete comment"
+msgstr ""
+
+#: common/loop.php:79
+#: item.php:213
+#: item.php:214
+#: user-items.php:85
+msgid "Delete listing"
+msgstr ""
+
+#: user-alerts.php:33
+msgid "Delete this alert"
+msgstr ""
+
+#: common/footer.php:175
+msgid "Delete this?"
+msgstr ""
+
+#: common/item-comments.php:49
+msgid "Delete your comment? This cannot be undone."
+msgstr ""
+
+#: item-post.php:53
+#: item.php:342
+#: user-profile.php:122
+msgid "Description"
+msgstr ""
+
+#: item.php:445
+msgid "Details"
+msgstr ""
+
+#: item.php:624
+msgid "Download"
+msgstr ""
+
+#: admin/settings.php:186
+msgid "Dropdowns (cascading selects)"
+msgstr ""
+
+#: common/item-sidebar.php:19
+msgid "Duplicated listing"
+msgstr ""
+
+#: common/account-settings-nav.php:12
+#: item-post.php:126
+#: user-login.php:16
+#: user-recover.php:15
+#: user-register.php:21
+msgid "E-mail"
+msgstr ""
+
+#: common/loop.php:78
+#: item.php:209
+#: user-items.php:84
+msgid "Edit"
+msgstr ""
+
+#: user-items.php:84
+msgid "Edit listing"
+msgstr ""
+
+#: user-profile.php:28
+msgid "Edit profile"
+msgstr ""
+
+#: item-post.php:27
+msgid "Edit your listing"
+msgstr ""
+
+#: alert-form.php:29
+msgid "Enter a valid e-mail address."
+msgstr ""
+
+#: user-items.php:19
+msgid ""
+"Everything you post shows up here, where you can edit it and watch the "
+"views add up."
+msgstr ""
+
+#: common/item-sidebar.php:20
+#: common/loop.php:29
+#: item.php:248
+#: user-items.php:57
+msgid "Expired"
+msgstr ""
+
+#: admin/settings.php:245
+#: common/footer.php:53
+msgid "Facebook"
+msgstr ""
+
+#: item.php:262
+msgid "Feature"
+msgstr ""
+
+#: common/loop.php:97
+#: item.php:249
+#: main.php:120
+msgid "Featured"
+msgstr ""
+
+#: item-post.php:30
+msgid "Fill in the details below. Listings are reviewed and go live within minutes."
+msgstr ""
+
+#: user-items.php:41
+msgid "Filter listings by status"
+msgstr ""
+
+#: common/search-sidebar.php:70
+#: search.php:41
+msgid "Filters"
+msgstr ""
+
+#: common/loop.php:28
+#: user-items.php:56
+msgid "Flagged"
+msgstr ""
+
+#: admin/settings.php:233
+msgid "Footer &amp; Social"
+msgstr ""
+
+#: admin/settings.php:238
+msgid "Footer tagline"
+msgstr ""
+
+#: user-login.php:36
+msgid "Forgot password?"
+msgstr ""
+
+#: item.php:185
+#: item.php:540
+msgid "Free"
+msgstr ""
+
+#: item-post.php:24
+msgid "Free to post"
+msgstr ""
+
+#: admin/settings.php:219
+msgid "Gallery"
+msgstr ""
+
+#: item-post.php:42
+msgid "General information"
+msgstr ""
+
+#: alert-form.php:31
+#: common/search-sidebar.php:247
+msgid "Get an email alert"
+msgstr ""
+
+#: search.php:61
+msgid "Grid view"
+msgstr ""
+
+#: admin/settings.php:140
+msgid "Headline"
+msgstr ""
+
+#: common/header.php:26
+msgid "Help"
+msgstr ""
+
+#: common/header.php:24
+#: item.php:119
+#: search.php:25
+msgid "Home"
+msgstr ""
+
+#: admin/settings.php:135
+msgid "Home / Hero"
+msgstr ""
+
+#: admin/settings.php:225
+msgid "How search results are displayed by default."
+msgstr ""
+
+#: admin/settings.php:189
+msgid "How the location field behaves on the listing post/edit form."
+msgstr ""
+
+#: admin/settings.php:205
+msgid ""
+"How the location filter behaves on the search page. \"Region &amp; city\" "
+"suits single-country sites — it hides the country choice and scopes results "
+"to your site's default country."
+msgstr ""
+
+#: item.php:246
+msgid "Inactive"
+msgstr ""
+
+#: admin/settings.php:43
+msgid "Indigo"
+msgstr ""
+
+#: common/account-header.php:54
+#: item.php:289
+#: user-public-profile.php:55
+msgid "Individual"
+msgstr ""
+
+#: admin/settings.php:257
+#: common/footer.php:55
+msgid "Instagram"
+msgstr ""
+
+#: user-dashboard.php:41
+msgid ""
+"It's free and goes live within minutes. Once it's up, this is where you'll "
+"watch the views add up."
+msgstr ""
+
+#: item.php:313
+msgid "It's your own listing — you can't contact yourself."
+msgstr ""
+
+#: common/item-comments.php:68
+msgid "Join the conversation"
+msgstr ""
+
+#: user-profile.php:48
+msgid "JPG, PNG, GIF or WebP — up to %s. Square photos look best."
+msgstr ""
+
+#: common/search-sidebar.php:93
+#: common/search-sidebar.php:95
+msgid "Keywords"
+msgstr ""
+
+#: common/footer.php:138
+#: common/footer.php:151
+#: common/footer.php:152
+msgid "Language"
+msgstr ""
+
+#: common/head.php:27
+#: user-public-profile.php:91
+msgid "Latest listings"
+msgstr ""
+
+#: common/item-comments.php:77
+msgid "Leave a comment"
+msgstr ""
+
+#: admin/settings.php:275
+msgid "Leave any field empty to hide that icon from the footer."
+msgstr ""
+
+#: admin/settings.php:212
+msgid "Leave empty to use the default placeholder."
+msgstr ""
+
+#: admin/settings.php:115
+msgid "Light"
+msgstr ""
+
+#: item.php:576
+msgid "Link copied to clipboard."
+msgstr ""
+
+#: item.php:577
+msgid "Link selected — press Ctrl+C to copy."
+msgstr ""
+
+#: admin/settings.php:269
+#: common/footer.php:57
+msgid "LinkedIn"
+msgstr ""
+
+#: admin/settings.php:222
+msgid "List"
+msgstr ""
+
+#: search.php:67
+msgid "List view"
+msgstr ""
+
+#: user-items.php:43
+msgid "Listing"
+msgstr ""
+
+#: item.php:422
+msgid "Listing #%d"
+msgstr ""
+
+#: functions.php:776
+msgid "Listing activated."
+msgstr ""
+
+#: functions.php:773
+msgid "Listing blocked — hidden from the site and search."
+msgstr ""
+
+#: functions.php:775
+msgid "Listing deactivated."
+msgstr ""
+
+#: functions.php:780
+msgid "Listing is no longer featured."
+msgstr ""
+
+#: functions.php:779
+msgid "Listing is now featured."
+msgstr ""
+
+#: item.php:574
+msgid "Listing link"
+msgstr ""
+
+#: item-post.php:70
+msgid "Listing location"
+msgstr ""
+
+#: item.php:517
+msgid "Listing navigation"
+msgstr ""
+
+#: functions.php:774
+msgid "Listing unblocked."
+msgstr ""
+
+#: user-alerts.php:37
+msgid "listings"
+msgstr ""
+
+#: item.php:250
+msgid "Live"
+msgstr ""
+
+#: common/search-sidebar.php:107
+#: item.php:472
+#: main.php:60
+#: user-profile.php:94
+msgid "Location"
+msgstr ""
+
+#: common/footer.php:95
+#: common/header.php:60
+#: item.php:316
+#: user-login.php:32
+#: user-register.php:45
+msgid "Log in"
+msgstr ""
+
+#: common/user-public-sidebar.php:49
+msgid "Log in to contact"
+msgstr ""
+
+#: item.php:315
+msgid "Log in to contact the seller."
+msgstr ""
+
+#: user-login.php:10
+msgid "Log in to manage your listings and messages."
+msgstr ""
+
+#: common/user-public-sidebar.php:48
+msgid ""
+"Log in to message this seller — it keeps the conversation to real, "
+"registered members."
+msgstr ""
+
+#: common/footer.php:93
+#: common/header.php:56
+msgid "Log out"
+msgstr ""
+
+#: admin/header.php:109
+msgid "Logo"
+msgstr ""
+
+#: user-dashboard.php:61
+msgid "Manage all"
+msgstr ""
+
+#: item.php:260
+msgid "Mark spam"
+msgstr ""
+
+#: functions.php:777
+msgid "Marked as spam."
+msgstr ""
+
+#: common/footer.php:77
+#: common/footer.php:78
+msgid "Marketplace"
+msgstr ""
+
+#: common/search-sidebar.php:187
+msgid "Max"
+msgstr ""
+
+#: common/search-sidebar.php:186
+msgid "Maximum price"
+msgstr ""
+
+#: common/account-header.php:61
+#: item.php:298
+#: user-public-profile.php:61
+msgid "Member since %s"
+msgstr ""
+
+#: common/header.php:18
+msgid "Menu"
+msgstr ""
+
+#: common/user-public-sidebar.php:33
+#: contact.php:31
+#: item-contact.php:49
+#: item-send-friend.php:42
+msgid "Message"
+msgstr ""
+
+#: item.php:320
+#: item.php:547
+#: item.php:557
+msgid "Message seller"
+msgstr ""
+
+#: common/search-sidebar.php:184
+msgid "Min"
+msgstr ""
+
+#: common/search-sidebar.php:183
+msgid "Minimum price"
+msgstr ""
+
+#: search.php:75
+msgid "Most recent"
+msgstr ""
+
+#: common/account-header.php:33
+#: common/footer.php:91
+#: common/header.php:52
+#: user-items.php:31
+msgid "My listings"
+msgstr ""
+
+#: item-post.php:122
+#: user-profile.php:65
+#: user-register.php:17
+msgid "Name"
+msgstr ""
+
+#: item.php:331
+msgid ""
+"Never pay in advance. Meet in a public place and inspect the item before "
+"paying."
+msgstr ""
+
+#: user-change_email.php:23
+msgid "New e-mail"
+msgstr ""
+
+#: user-change_password.php:23
+#: user-forgot_password.php:17
+msgid "New password"
+msgstr ""
+
+#: item.php:296
+msgid "New seller"
+msgstr ""
+
+#: user-change_username.php:27
+msgid "New username"
+msgstr ""
+
+#: item.php:525
+msgid "Next listing"
+msgstr ""
+
+#: item.php:620
+msgid "Next photo"
+msgstr ""
+
+#: common/item-comments.php:63
+msgid "No comments yet — ask the seller a question to get the conversation started."
+msgstr ""
+
+#: search.php:103
+msgid "No listings match"
+msgstr ""
+
+#: user-items.php:18
+msgid "No listings yet"
+msgstr ""
+
+#: main.php:142
+msgid "No listings yet — be the first to post one."
+msgstr ""
+
+#: functions.php:778
+msgid "No longer marked as spam."
+msgstr ""
+
+#: item.php:166
+msgid "No photo for this listing"
+msgstr ""
+
+#: search.php:104
+msgid "No results for \"%s\". Try widening your filters or clearing the search."
+msgstr ""
+
+#: user-alerts.php:15
+msgid "No saved alerts yet"
+msgstr ""
+
+#: functions.php:656
+msgid "No subcategories"
+msgstr ""
+
+#: common/item-comments.php:92
+msgid "not published"
+msgstr ""
+
+#: item.php:259
+msgid "Not spam"
+msgstr ""
+
+#: common/item-sidebar.php:21
+msgid "Offensive content"
+msgstr ""
+
+#: item.php:267
+msgid "Open in admin"
+msgstr ""
+
+#: item.php:487
+msgid "Open in full map"
+msgstr ""
+
+#: common/item-comments.php:99
+#: common/user-public-sidebar.php:29
+#: contact.php:19
+#: contact.php:27
+#: item-contact.php:45
+msgid "optional"
+msgstr ""
+
+#: item.php:457
+msgid "Other details"
+msgstr ""
+
+#: functions.php:603
+msgid "Over %s"
+msgstr ""
+
+#: admin/settings.php:143
+msgid "Overrides the big home headline. Leave empty to use the site title."
+msgstr ""
+
+#: common/account-settings-nav.php:13
+#: user-login.php:20
+#: user-register.php:25
+msgid "Password"
+msgstr ""
+
+#: common/loop.php:30
+#: user-items.php:58
+msgid "Pending"
+msgstr ""
+
+#: user-profile.php:83
+msgid "Phone"
+msgstr ""
+
+#: common/user-public-sidebar.php:29
+#: item-contact.php:45
+msgid "Phone number"
+msgstr ""
+
+#: user-profile.php:38
+msgid "Photo"
+msgstr ""
+
+#: item.php:155
+msgid "Photo %1$d of %2$d"
+msgstr ""
+
+#: item.php:612
+msgid "Photo viewer"
+msgstr ""
+
+#: alert-form.php:28
+msgid "Please sign in to subscribe."
+msgstr ""
+
+#: main.php:76
+msgid "Popular:"
+msgstr ""
+
+#: admin/settings.php:180
+msgid "Post &amp; edit form location"
+msgstr ""
+
+#: contact.php:53
+msgid "Post a free listing"
+msgstr ""
+
+#: common/search-sidebar.php:261
+msgid "Post a free listing in under two minutes."
+msgstr ""
+
+#: common/account-header.php:70
+#: common/footer.php:45
+#: common/footer.php:81
+#: common/header.php:70
+#: common/search-sidebar.php:262
+#: item-post.php:27
+#: user-dashboard.php:44
+#: user-items.php:22
+#: user-items.php:33
+msgid "Post a listing"
+msgstr ""
+
+#: common/item-comments.php:115
+msgid "Post comment"
+msgstr ""
+
+#: user-register.php:10
+msgid "Post listings, save searches, and message sellers — free."
+msgstr ""
+
+#: user-dashboard.php:40
+msgid "Post your first listing"
+msgstr ""
+
+#: common/footer.php:118
+msgid "Powered by %s"
+msgstr ""
+
+#: item.php:520
+msgid "Previous listing"
+msgstr ""
+
+#: item.php:619
+msgid "Previous photo"
+msgstr ""
+
+#: item-post.php:58
+msgid "Price"
+msgstr ""
+
+#: common/search-sidebar.php:181
+msgid "Price range"
+msgstr ""
+
+#: search.php:77
+msgid "Price: high to low"
+msgstr ""
+
+#: search.php:76
+msgid "Price: low to high"
+msgstr ""
+
+#: common/header.php:23
+msgid "Primary"
+msgstr ""
+
+#: common/account-settings-nav.php:10
+#: common/header.php:54
+msgid "Profile"
+msgstr ""
+
+#: main.php:121
+msgid "Promoted listings"
+msgstr ""
+
+#: common/account-header.php:67
+msgid "Public profile"
+msgstr ""
+
+#: item-post.php:156
+msgid "Publish"
+msgstr ""
+
+#: contact.php:10
+msgid ""
+"Questions about your account, a listing, or something not right? Send the "
+"team a message and we'll get back to you."
+msgstr ""
+
+#: contact.php:51
+msgid "Quick links"
+msgstr ""
+
+#: main.php:137
+msgid "Recent listings"
+msgstr ""
+
+#: user-forgot_password.php:9
+#: user-recover.php:9
+msgid "Recover your password"
+msgstr ""
+
+#: common/search-sidebar.php:226
+msgid "Refine by category"
+msgstr ""
+
+#: common/search-sidebar.php:158
+#: common/search-sidebar.php:48
+#: item-post.php:100
+#: item-post.php:84
+#: user-profile.php:101
+msgid "Region"
+msgstr ""
+
+#: admin/settings.php:199
+msgid "Region &amp; city"
+msgstr ""
+
+#: common/footer.php:97
+#: common/header.php:62
+msgid "Register"
+msgstr ""
+
+#: user-login.php:35
+msgid "Register for a free account"
+msgstr ""
+
+#: item.php:502
+msgid "Related listings"
+msgstr ""
+
+#: user-login.php:29
+msgid "Remember me"
+msgstr ""
+
+#: admin/header.php:40
+msgid "Remove"
+msgstr ""
+
+#: search.php:91
+msgid "Remove filter"
+msgstr ""
+
+#: user-profile.php:53
+msgid "Remove photo"
+msgstr ""
+
+#: user-change_password.php:27
+#: user-forgot_password.php:21
+msgid "Repeat new password"
+msgstr ""
+
+#: user-register.php:29
+msgid "Repeat password"
+msgstr ""
+
+#: admin/header.php:57
+msgid "Replace"
+msgstr ""
+
+#: item.php:200
+msgid "Report"
+msgstr ""
+
+#: common/item-sidebar.php:15
+#: item.php:601
+msgid "Report this listing"
+msgstr ""
+
+#: common/search-sidebar.php:71
+msgid "Reset"
+msgstr ""
+
+#: admin/header.php:99
+msgid "Save"
+msgstr ""
+
+#: user-alerts.php:16
+msgid ""
+"Save a search and we'll email you the moment a matching listing goes up — "
+"no need to keep checking back."
+msgstr ""
+
+#: user-profile.php:130
+msgid "Save changes"
+msgstr ""
+
+#: admin/settings.php:286
+msgid "Save settings"
+msgstr ""
+
+#: 404.php:19
+#: common/search-sidebar.php:100
+#: main.php:68
+msgid "Search"
+msgstr ""
+
+#: admin/settings.php:175
+msgid "Search &amp; Location"
+msgstr ""
+
+#: admin/settings.php:209
+msgid "Search box placeholder"
+msgstr ""
+
+#: common/search-sidebar.php:68
+msgid "Search filters"
+msgstr ""
+
+#: 404.php:18
+msgid "Search listings"
+msgstr ""
+
+#: admin/settings.php:193
+msgid "Search page location"
+msgstr ""
+
+#: common/head.php:27
+msgid "Search results"
+msgstr ""
+
+#: main.php:138
+msgid "See all"
+msgstr ""
+
+#: main.php:148
+msgid "See all listings"
+msgstr ""
+
+#: item-post.php:46
+msgid "Select a category"
+msgstr ""
+
+#: item.php:273
+msgid "Seller"
+msgstr ""
+
+#: item-post.php:120
+msgid "Seller's information"
+msgstr ""
+
+#: item-contact.php:51
+msgid "Sellers reply faster when they know what you want to ask."
+msgstr ""
+
+#: common/search-sidebar.php:260
+msgid "Selling something?"
+msgstr ""
+
+#: item-send-friend.php:50
+msgid "Send"
+msgstr ""
+
+#: user-recover.php:20
+msgid "Send me a new password"
+msgstr ""
+
+#: common/user-public-sidebar.php:41
+#: contact.php:39
+#: item-contact.php:66
+msgid "Send message"
+msgstr ""
+
+#: item-send-friend.php:9
+msgid "Send to a friend"
+msgstr ""
+
+#: admin/settings.php:108
+msgid "Sets the primary and secondary accent colours across the site."
+msgstr ""
+
+#: common/account-header.php:39
+msgid "Settings"
+msgstr ""
+
+#: item.php:196
+msgid "Share"
+msgstr ""
+
+#: item.php:568
+msgid "Share this listing"
+msgstr ""
+
+#: item.php:586
+msgid "Share…"
+msgstr ""
+
+#: admin/settings.php:280
+msgid "Show &quot;Powered by Shopclass&quot; credit"
+msgstr ""
+
+#: admin/settings.php:155
+msgid "Show decorative graphic"
+msgstr ""
+
+#: item-post.php:130
+msgid "Show e-mail on the listing page"
+msgstr ""
+
+#: admin/settings.php:167
+msgid "Show featured (promoted) listings on the home page"
+msgstr ""
+
+#: item.php:481
+msgid "Show map"
+msgstr ""
+
+#: item.php:324
+msgid "Show phone number"
+msgstr ""
+
+#: admin/settings.php:161
+msgid "Show popular-category chips"
+msgstr ""
+
+#: admin/header.php:122
+msgid ""
+"Shown on small screens in place of the main logo. Use a square-ish mark. "
+"Falls back to the main logo if left empty."
+msgstr ""
+
+#: common/item-comments.php:72
+#: common/search-sidebar.php:251
+msgid "Sign in"
+msgstr ""
+
+#: admin/header.php:92
+msgid "Site name"
+msgstr ""
+
+#: common/header.php:12
+msgid "Skip to content"
+msgstr ""
+
+#: common/footer.php:67
+msgid "Social"
+msgstr ""
+
+#: error.php:13
+msgid "Something went wrong"
+msgstr ""
+
+#: error.php:8
+msgid "Something went wrong. Please try again later."
+msgstr ""
+
+#: maintenance.php:42
+msgid ""
+"Sorry for the inconvenience — we're performing some maintenance right now. "
+"We'll be back online shortly."
+msgstr ""
+
+#: search.php:73
+msgid "Sort"
+msgstr ""
+
+#: item.php:247
+msgid "Spam"
+msgstr ""
+
+#: common/item-sidebar.php:17
+msgid "Spam or misleading listing"
+msgstr ""
+
+#: user-items.php:44
+msgid "Status"
+msgstr ""
+
+#: admin/settings.php:78
+msgid "Storefront settings"
+msgstr ""
+
+#: functions.php:950
+msgid "Storefront: Brand"
+msgstr ""
+
+#: functions.php:955
+msgid "Storefront: Settings"
+msgstr ""
+
+#: admin/settings.php:149
+msgid "Sub-text shown under the headline. Leave empty to use the site description."
+msgstr ""
+
+#: contact.php:27
+msgid "Subject"
+msgstr ""
+
+#: item-send-friend.php:38
+msgid "Subject (optional)"
+msgstr ""
+
+#: common/item-sidebar.php:31
+msgid "Submit report"
+msgstr ""
+
+#: alert-form.php:50
+#: search.php:53
+msgid "Subscribe"
+msgstr ""
+
+#: search.php:52
+msgid "Subscribe to this search (RSS)"
+msgstr ""
+
+#: alert-form.php:27
+msgid "Subscribed. Check your email to confirm."
+msgstr ""
+
+#: alert-form.php:26
+msgid "Subscribing…"
+msgstr ""
+
+#: contact.php:46
+msgid "Support hours"
+msgstr ""
+
+#: admin/header.php:53
+msgid ""
+"SVG, PNG or JPG. SVG is stored inline and follows your text colour (correct "
+"in dark mode). Scripts and remote references are stripped from SVGs on "
+"upload."
+msgstr ""
+
+#: admin/settings.php:147
+msgid "Tagline"
+msgstr ""
+
+#: admin/settings.php:42
+msgid "Teal"
+msgstr ""
+
+#: item.php:605
+msgid "Tell us what's wrong. Reports are confidential."
+msgstr ""
+
+#: functions.php:851
+msgid ""
+"That SVG could not be used — it may be malformed, unsafe, or over the size "
+"limit."
+msgstr ""
+
+#: 404.php:12
+msgid ""
+"The listing may have sold, expired or been removed — or the link was "
+"mistyped. Try searching for what you were after."
+msgstr ""
+
+#: functions.php:896
+msgid "The logo has been removed."
+msgstr ""
+
+#: functions.php:862
+#: functions.php:879
+msgid "The logo has been uploaded correctly."
+msgstr ""
+
+#: item-contact.php:26
+msgid ""
+"The seller will see your name and email. Never pay in advance — meet in a "
+"public place and inspect the item first."
+msgstr ""
+
+#: admin/header.php:96
+msgid ""
+"The wordmark shown when no logo image is set, and the accessible site name "
+"in every case."
+msgstr ""
+
+#: functions.php:929
+msgid "Theme settings updated correctly."
+msgstr ""
+
+#: user-alerts.php:32
+msgid "This action can't be undone. Are you sure you want to continue?"
+msgstr ""
+
+#: user-profile.php:29
+msgid "This is how buyers and sellers see you across the marketplace."
+msgstr ""
+
+#: item.php:207
+msgid "This is your listing."
+msgstr ""
+
+#: functions.php:756
+msgid "This listing doesn't exist."
+msgstr ""
+
+#: item.php:128
+msgid "This listing has expired — you can no longer contact the seller."
+msgstr ""
+
+#: item.php:311
+msgid "This listing has expired."
+msgstr ""
+
+#: item.php:129
+msgid "This listing is not active yet."
+msgstr ""
+
+#: 404.php:10
+msgid "This page couldn't be found."
+msgstr ""
+
+#: common/item-comments.php:99
+#: item-post.php:49
+msgid "Title"
+msgstr ""
+
+#: common/footer.php:54
+msgid "Twitter / X"
+msgstr ""
+
+#: contact.php:48
+msgid "Typically within 24 hours"
+msgstr ""
+
+#: item.php:256
+msgid "Unblock"
+msgstr ""
+
+#: functions.php:604
+msgid "Under %s"
+msgstr ""
+
+#: maintenance.php:12
+msgid "under maintenance"
+msgstr ""
+
+#: item.php:261
+msgid "Unfeature"
+msgstr ""
+
+#: functions.php:749
+msgid "Unknown action."
+msgstr ""
+
+#: functions.php:881
+msgid "Unsupported file type — upload an SVG, JPG or PNG."
+msgstr ""
+
+#: item-post.php:156
+#: user-change_email.php:27
+#: user-change_password.php:31
+#: user-change_username.php:31
+msgid "Update"
+msgstr ""
+
+#: admin/header.php:57
+msgid "Upload"
+msgstr ""
+
+#: user-profile.php:50
+msgid "Upload photo"
+msgstr ""
+
+#: common/account-settings-nav.php:11
+msgid "Username"
+msgstr ""
+
+#: common/loop.php:77
+#: item.php:144
+#: user-items.php:83
+msgid "View"
+msgstr ""
+
+#: main.php:93
+msgid "View all"
+msgstr ""
+
+#: search.php:58
+msgid "View as"
+msgstr ""
+
+#: user-items.php:83
+msgid "View listing"
+msgstr ""
+
+#: item.php:140
+msgid "View photo full size"
+msgstr ""
+
+#: common/loop.php:69
+#: user-items.php:78
+msgid "views"
+msgstr ""
+
+#: user-items.php:45
+msgid "Views"
+msgstr ""
+
+#: admin/settings.php:44
+msgid "Violet"
+msgstr ""
+
+#: item.php:479
+msgid "We couldn't load the map for this location."
+msgstr ""
+
+#: contact.php:47
+msgid "We reply as soon as we can"
+msgstr ""
+
+#: alert-form.php:32
+msgid "We will email you when a new listing matches this search."
+msgstr ""
+
+#: maintenance.php:41
+msgid "We'll be back soon"
+msgstr ""
+
+#: user-profile.php:88
+msgid "Website"
+msgstr ""
+
+#: user-login.php:9
+msgid "Welcome back"
+msgstr ""
+
+#: common/search-sidebar.php:98
+#: main.php:51
+msgid "What are you looking for?"
+msgstr ""
+
+#: functions.php:608
+msgid "With photos"
+msgstr ""
+
+#: common/search-sidebar.php:196
+msgid "With photos only"
+msgstr ""
+
+#: common/item-sidebar.php:18
+msgid "Wrong category"
+msgstr ""
+
+#: admin/settings.php:251
+msgid "X (Twitter)"
+msgstr ""
+
+#: item.php:371
+msgid "Yes"
+msgstr ""
+
+#: functions.php:738
+msgid "You are not allowed to do that."
+msgstr ""
+
+#: alert-form.php:22
+msgid "You are subscribed to this search."
+msgstr ""
+
+#: common/account-header.php:75
+#: common/footer.php:87
+msgid "Your account"
+msgstr ""
+
+#: user-profile.php:62
+msgid "Your details"
+msgstr ""
+
+#: common/item-comments.php:92
+#: item-send-friend.php:25
+msgid "Your e-mail"
+msgstr ""
+
+#: alert-form.php:43
+#: alert-form.php:46
+#: item-contact.php:41
+msgid "Your e-mail address"
+msgstr ""
+
+#: common/user-public-sidebar.php:25
+#: contact.php:23
+msgid "Your email address"
+msgstr ""
+
+#: item-send-friend.php:34
+msgid "Your friend's e-mail address"
+msgstr ""
+
+#: item-send-friend.php:30
+msgid "Your friend's name"
+msgstr ""
+
+#: user-dashboard.php:54
+msgid "Your latest listings"
+msgstr ""
+
+#: admin/header.php:110
+msgid "Your main logo, shown in the site header."
+msgstr ""
+
+#: common/item-comments.php:87
+#: common/user-public-sidebar.php:21
+#: contact.php:19
+#: item-contact.php:37
+#: item-send-friend.php:21
+msgid "Your name"
+msgstr ""
+
+#: admin/settings.php:263
+#: common/footer.php:56
+msgid "YouTube"
+msgstr ""

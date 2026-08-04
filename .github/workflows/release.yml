@@ -33,7 +33,7 @@ jobs:
           rsync -a \
             --exclude '.git' --exclude '.github' --exclude 'dist' \
             --exclude 'node_modules' --exclude 'package.json' \
-            --exclude 'package-lock.json' --exclude 'build.mjs' \
+            --exclude 'package-lock.json' --exclude 'build.mjs' --exclude 'bin' \
             ./ dist/storefront/
           ( cd dist && zip -qr "storefront_${VERSION}.zip" storefront )
 

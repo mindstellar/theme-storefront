@@ -2,13 +2,15 @@
   "name": "storefront-theme",
   "version": "1.0.0",
   "private": true,
-  "description": "Build tooling for the Storefront Shopclass theme — CSS/JS minification. Not shipped in the theme zip.",
+  "description": "Build tooling for the Storefront Shopclass theme — CSS/JS minification and gettext .po/.mo. Not shipped in the theme zip.",
   "license": "GPL-3.0-or-later",
   "type": "module",
   "scripts": {
-    "build": "node build.mjs"
+    "build": "node bin/i18n.mjs compile && node build.mjs",
+    "i18n": "node bin/i18n.mjs extract"
   },
   "devDependencies": {
-    "esbuild": "^0.24.0"
+    "esbuild": "^0.24.0",
+    "gettext-parser": "^9.1.1"
   }
 }

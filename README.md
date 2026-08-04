@@ -72,11 +72,27 @@ local dev — **no build step is required to develop**. For production, a minify
 to source otherwise):
 
 ```bash
-npm install     # once — installs esbuild (the only dev dependency)
-npm run build   # writes css/storefront.min.css and js/storefront-*.min.js
+npm install     # once — installs esbuild + gettext-parser (the dev dependencies)
+npm run build   # writes css/storefront.min.css, js/storefront-*.min.js, and languages/*/theme.mo
 ```
 
-Generated `*.min.*` files and `node_modules/` are gitignored; the release workflow builds them fresh.
+Generated `*.min.*` and compiled `languages/**/theme.mo` files, plus `node_modules/`, are gitignored;
+the release workflow builds them fresh. The toolchain is pure Node — no system `gettext` required.
+
+## Translations
+
+UI strings use the gettext domain **`storefront`** (`__()` / `_e()` / `_n()`), which core loads from
+`languages/<locale>/theme.mo` for the active locale. The theme ships a default **`en_US`** catalogue
+and a `languages/storefront.pot` template.
+
+```bash
+npm run i18n    # re-extract strings -> languages/storefront.pot + languages/en_US/theme.po
+npm run build   # compile every languages/<locale>/theme.po -> theme.mo (also builds assets)
+```
+
+Run `npm run i18n` after adding or changing UI strings, and commit the updated `.pot` / `.po`
+(the compiled `.mo` is a build artifact). To add a language, copy `languages/en_US/theme.po` to
+`languages/<locale>/theme.po` (e.g. `es_ES`), translate the `msgstr` entries, and run `npm run build`.
 
 **JS is split per surface and loaded only where it is used** — `storefront-core` (site chrome, every
 page), `storefront-item` (listing gallery/lightbox/map), `storefront-search` (filter drawer,

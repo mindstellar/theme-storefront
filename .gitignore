@@ -2,13 +2,15 @@
 dist/
 *.log
 
-# Build tooling + generated (minified) assets. Source is committed; the .min.*
-# files are built by `npm run build` (locally or in the release workflow) and
-# shipped in the zip, never committed.
+# Build tooling + generated assets. Source is committed; the .min.* and compiled
+# gettext .mo files are built by `npm run build` (locally or in the release workflow)
+# and shipped in the zip, never committed. The .pot template and .po catalogues ARE
+# committed (they are translation source).
 node_modules/
 package-lock.json
 js/*.min.js
 css/*.min.css
+languages/**/*.mo
 
 # Local-only assistant + design/product docs — never shipped or tracked.
 .claude/
