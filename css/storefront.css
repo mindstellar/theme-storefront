@@ -1668,6 +1668,19 @@ body.sf-list .sf-card__desc {
    account page opened on a menu instead of on the thing the user came for. */
 .sf-account { display: flex; flex-direction: column; gap: var(--space-6); }
 .sf-account__main { min-width: 0; }
+/* "Your data" — the two requests someone can make about their own account. Ruled
+   off from the profile form above it, because neither is part of editing a
+   profile: one hands over everything held about them, the other ends the account.
+   The destructive half sits in its own tinted panel so it reads as a separate
+   decision rather than the next control in a list. */
+.sf-account__data { border-top: 2px solid var(--color-divider); margin-top: var(--space-8); padding-top: var(--space-6); }
+.sf-account__data .sf-section__title { margin-bottom: var(--space-4); }
+/* Tinted with color-mix over whatever the surface is, not with the fixed -100 step:
+   that step is a light value in every palette and does not flip, so on a dark
+   background it put near-white body text on pale pink. */
+.sf-account__data .sf-field--danger { background: color-mix(in srgb, var(--color-accent-2) 12%, transparent); border-radius: var(--radius-md); margin-top: var(--space-6); padding: var(--space-5); }
+.sf-account__data .sf-field--danger .sf-form__lede { margin: 0 0 var(--space-4); }
+.sf-dialog__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); justify-content: flex-end; margin-top: var(--space-6); }
 /* Public seller identity card — the buyer's trust moment. Mirrors the account
    identity band, tuned for a larger avatar and a stranger's first impression.
    (Named -card to stay clear of .sf-seller, the item-page buy-box.) */

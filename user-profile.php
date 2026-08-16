@@ -132,6 +132,71 @@ $sf_maxsize = $sf_kb >= 1024 ? round($sf_kb / 1024, 1) . ' MB' : $sf_kb . ' KB';
                 <?php osc_run_hook('user_form', osc_user()); ?>
             </form>
         </section>
+
+        <?php
+        /*
+         * Your data — the two things a person can ask for about their own account.
+         *
+         * Both are guarded on the core function existing rather than on a version number:
+         * the download arrived in 6.2.0 and this theme still supports 6.0, so on an older
+         * install the whole section simply is not drawn. osc_user_export_url() itself
+         * returns '' when nobody is signed in, which is belt to that braces.
+         */
+        $sf_export_url = function_exists('osc_user_export_url') ? osc_user_export_url() : '';
+        $sf_secret     = isset($sf_user['s_secret']) ? $sf_user['s_secret'] : '';
+        if ($sf_export_url !== '' || $sf_secret !== '') { ?>
+        <section class="sf-section sf-form sf-account__data">
+            <h2 class="sf-section__title"><?php _e('Your data', 'storefront'); ?></h2>
+
+            <?php if ($sf_export_url !== '') { ?>
+                <div class="sf-field">
+                    <p class="sf-form__lede"><?php _e(
+                        'Download everything this site holds about you — your profile, listings, comments, saved searches and order history — as a JSON file.',
+                        'storefront'
+                    ); ?></p>
+                    <a class="sf-btn sf-btn--secondary" href="<?php echo osc_esc_html($sf_export_url); ?>" rel="nofollow">
+                        <?php echo storefront_icon('download', 15); ?><span><?php _e('Download my data', 'storefront'); ?></span>
+                    </a>
+                </div>
+            <?php } ?>
+
+            <?php if ($sf_secret !== '') { ?>
+                <div class="sf-field sf-field--danger">
+                    <p class="sf-form__lede"><?php _e(
+                        'Deleting your account removes your profile, listings, comments and saved searches. It cannot be undone.',
+                        'storefront'
+                    ); ?></p>
+                    <button type="button" class="sf-btn sf-btn--danger" data-dialog-open="sf-dialog-delete-account">
+                        <?php _e('Delete my account', 'storefront'); ?>
+                    </button>
+                </div>
+            <?php } ?>
+        </section>
+        <?php } ?>
     </div>
 </div>
+
+<?php if ($sf_secret !== '') { ?>
+<dialog class="sf-dialog" id="sf-dialog-delete-account" aria-labelledby="sf-dialog-delete-account-title">
+    <div class="sf-dialog__head">
+        <h2 class="sf-dialog__title" id="sf-dialog-delete-account-title"><?php _e('Delete your account?', 'storefront'); ?></h2>
+        <button type="button" class="sf-dialog__close" data-dialog-close aria-label="<?php echo osc_esc_html(__('Close', 'storefront')); ?>"><?php echo storefront_icon('x', 18); ?></button>
+    </div>
+    <div class="sf-dialog__body">
+        <p><?php _e(
+            'Your profile, listings, comments and saved searches will be removed. Records of anything you paid for are kept, because the site has its own obligation to hold them.',
+            'storefront'
+        ); ?></p>
+        <?php if ($sf_export_url !== '') { ?>
+            <p><?php _e('If you want a copy of your data, download it before continuing.', 'storefront'); ?></p>
+        <?php } ?>
+        <div class="sf-dialog__actions">
+            <button type="button" class="sf-btn sf-btn--ghost" data-dialog-close><?php _e('Keep my account', 'storefront'); ?></button>
+            <a class="sf-btn sf-btn--danger"
+               href="<?php echo osc_esc_html(osc_base_url(true) . '?page=user&amp;action=delete&amp;id=' . (int) osc_logged_user_id() . '&amp;secret=' . rawurlencode($sf_secret)); ?>"
+               rel="nofollow"><?php _e('Delete my account', 'storefront'); ?></a>
+        </div>
+    </div>
+</dialog>
+<?php } ?>
 <?php osc_current_web_theme_path('common/footer.php'); ?>
