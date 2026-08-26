@@ -47,11 +47,28 @@
                             <span class="sf-account__name"><?php echo osc_esc_html($sf_uname); ?></span>
                             <?php echo storefront_icon('chevron-down', 16); ?>
                         </button>
+                        <?php
+                        // Through user_menu_filter, the same hook osc_private_user_menu() applies, so a
+                        // plugin adding an account entry reaches this theme without knowing it exists.
+                        // Only the entries above the separator are filtered: log out stays put below it,
+                        // where a plugin cannot displace it. Core's 'class' is carried onto the anchor
+                        // for plugin CSS; the markup stays the theme's own, since the core helper emits
+                        // a <ul> this dropdown has no place for.
+                        $sf_account_menu = osc_apply_filter('user_menu_filter', array(
+                            array('name' => __('Dashboard', 'storefront'),   'url' => osc_user_dashboard_url(),  'class' => 'opt_dashboard'),
+                            array('name' => __('My listings', 'storefront'), 'url' => osc_user_list_items_url(), 'class' => 'opt_items'),
+                            array('name' => __('Alerts', 'storefront'),      'url' => osc_user_alerts_url(),     'class' => 'opt_alerts'),
+                            array('name' => __('Profile', 'storefront'),     'url' => osc_user_profile_url(),    'class' => 'opt_account'),
+                        ));
+                        ?>
                         <div class="sf-account__menu" id="sf-account-menu" role="menu" hidden>
-                            <a class="sf-account__item" role="menuitem" href="<?php echo osc_esc_html(osc_user_dashboard_url()); ?>"><?php _e('Dashboard', 'storefront'); ?></a>
-                            <a class="sf-account__item" role="menuitem" href="<?php echo osc_esc_html(osc_user_list_items_url()); ?>"><?php _e('My listings', 'storefront'); ?></a>
-                            <a class="sf-account__item" role="menuitem" href="<?php echo osc_esc_html(osc_user_alerts_url()); ?>"><?php _e('Alerts', 'storefront'); ?></a>
-                            <a class="sf-account__item" role="menuitem" href="<?php echo osc_esc_html(osc_user_profile_url()); ?>"><?php _e('Profile', 'storefront'); ?></a>
+                            <?php foreach ($sf_account_menu as $sf_item) {
+                                if (empty($sf_item['url']) || empty($sf_item['name'])) {
+                                    continue;
+                                } ?>
+                                <a class="sf-account__item <?php echo osc_esc_html($sf_item['class'] ?? ''); ?>" role="menuitem"
+                                   href="<?php echo osc_esc_html($sf_item['url']); ?>"><?php echo osc_esc_html($sf_item['name']); ?></a>
+                            <?php } ?>
                             <hr class="sf-account__sep" />
                             <a class="sf-account__item sf-account__item--logout" role="menuitem" href="<?php echo osc_esc_html(osc_user_logout_url()); ?>"><?php echo storefront_icon('log-out', 15); ?><span><?php _e('Log out', 'storefront'); ?></span></a>
                         </div>
