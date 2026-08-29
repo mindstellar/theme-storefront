@@ -27,5 +27,7 @@ $sf_feed_url  = $sf_on_search
 $sf_feed_ttl  = $sf_on_search ? __('Search results', 'storefront') : __('Latest listings', 'storefront');
 ?>
 <link rel="alternate" type="application/rss+xml" title="<?php echo osc_esc_html($sf_feed_ttl); ?>" href="<?php echo osc_esc_html($sf_feed_url); ?>" />
+<?php // OpenGraph, Twitter card and JSON-LD for whatever page this is. ?>
+<?php osc_current_web_theme_path('common/head-seo.php'); ?>
 <?php // Enqueued styles and scripts (theme + plugins) are printed by this hook. ?>
 <?php osc_run_hook('header'); ?>
