@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Storefront 1.0.2\n"
+"Project-Id-Version: Storefront 1.2.0\n"
 "Report-Msgid-Bugs-To: "
 "https://github.com/mindstellar/theme-storefront/issues\n"
 "MIME-Version: 1.0\n"
@@ -119,7 +119,7 @@ msgstr "Alert"
 
 #: common/account-header.php:34
 #: common/footer.php:92
-#: common/header.php:53
+#: common/header.php:60
 #: user-alerts.php:24
 msgid "Alerts"
 msgstr "Alerts"
@@ -319,6 +319,7 @@ msgstr "Clear filters"
 #: item.php:569
 #: item.php:602
 #: item.php:613
+#: user-profile.php:183
 msgid "Close"
 msgstr "Close"
 
@@ -421,7 +422,7 @@ msgstr "Dark"
 
 #: common/account-header.php:32
 #: common/footer.php:90
-#: common/header.php:51
+#: common/header.php:58
 msgid "Dashboard"
 msgstr "Dashboard"
 
@@ -459,6 +460,11 @@ msgstr "Delete comment"
 msgid "Delete listing"
 msgstr "Delete listing"
 
+#: user-profile.php:170
+#: user-profile.php:197
+msgid "Delete my account"
+msgstr "Delete my account"
+
 #: user-alerts.php:33
 msgid "Delete this alert"
 msgstr "Delete this alert"
@@ -467,9 +473,21 @@ msgstr "Delete this alert"
 msgid "Delete this?"
 msgstr "Delete this?"
 
+#: user-profile.php:182
+msgid "Delete your account?"
+msgstr "Delete your account?"
+
 #: common/item-comments.php:49
 msgid "Delete your comment? This cannot be undone."
 msgstr "Delete your comment? This cannot be undone."
+
+#: user-profile.php:165
+msgid ""
+"Deleting your account removes your profile, listings, comments and saved "
+"searches. It cannot be undone."
+msgstr ""
+"Deleting your account removes your profile, listings, comments and saved "
+"searches. It cannot be undone."
 
 #: item-post.php:53
 #: item.php:342
@@ -484,6 +502,18 @@ msgstr "Details"
 #: item.php:624
 msgid "Download"
 msgstr "Download"
+
+#: user-profile.php:153
+msgid ""
+"Download everything this site holds about you — your profile, listings, "
+"comments, saved searches and order history — as a JSON file."
+msgstr ""
+"Download everything this site holds about you — your profile, listings, "
+"comments, saved searches and order history — as a JSON file."
+
+#: user-profile.php:158
+msgid "Download my data"
+msgstr "Download my data"
 
 #: admin/settings.php:186
 msgid "Dropdowns (cascading selects)"
@@ -617,6 +647,7 @@ msgstr "Headline"
 msgid "Help"
 msgstr "Help"
 
+#: common/head-seo.php:133
 #: common/header.php:24
 #: item.php:119
 #: search.php:25
@@ -644,6 +675,10 @@ msgstr ""
 "How the location filter behaves on the search page. \"Region &amp; city\" "
 "suits single-country sites — it hides the country choice and scopes results "
 "to your site's default country."
+
+#: user-profile.php:191
+msgid "If you want a copy of your data, download it before continuing."
+msgstr "If you want a copy of your data, download it before continuing."
 
 #: item.php:246
 msgid "Inactive"
@@ -683,6 +718,10 @@ msgstr "Join the conversation"
 #: user-profile.php:48
 msgid "JPG, PNG, GIF or WebP — up to %s. Square photos look best."
 msgstr "JPG, PNG, GIF or WebP — up to %s. Square photos look best."
+
+#: user-profile.php:194
+msgid "Keep my account"
+msgstr "Keep my account"
 
 #: common/search-sidebar.php:93
 #: common/search-sidebar.php:95
@@ -797,7 +836,7 @@ msgid "Location"
 msgstr "Location"
 
 #: common/footer.php:95
-#: common/header.php:60
+#: common/header.php:77
 #: item.php:316
 #: user-login.php:32
 #: user-register.php:45
@@ -825,7 +864,7 @@ msgstr ""
 "registered members."
 
 #: common/footer.php:93
-#: common/header.php:56
+#: common/header.php:73
 msgid "Log out"
 msgstr "Log out"
 
@@ -895,7 +934,7 @@ msgstr "Most recent"
 
 #: common/account-header.php:33
 #: common/footer.php:91
-#: common/header.php:52
+#: common/header.php:59
 #: user-items.php:31
 msgid "My listings"
 msgstr "My listings"
@@ -1070,7 +1109,7 @@ msgstr "Post a free listing in under two minutes."
 #: common/account-header.php:70
 #: common/footer.php:45
 #: common/footer.php:81
-#: common/header.php:70
+#: common/header.php:87
 #: common/search-sidebar.php:262
 #: item-post.php:27
 #: user-dashboard.php:44
@@ -1124,7 +1163,7 @@ msgid "Primary"
 msgstr "Primary"
 
 #: common/account-settings-nav.php:10
-#: common/header.php:54
+#: common/header.php:61
 msgid "Profile"
 msgstr "Profile"
 
@@ -1178,7 +1217,7 @@ msgid "Region &amp; city"
 msgstr "Region &amp; city"
 
 #: common/footer.php:97
-#: common/header.php:62
+#: common/header.php:79
 msgid "Register"
 msgstr "Register"
 
@@ -1734,6 +1773,10 @@ msgstr "You are subscribed to this search."
 msgid "Your account"
 msgstr "Your account"
 
+#: user-profile.php:149
+msgid "Your data"
+msgstr "Your data"
+
 #: user-profile.php:62
 msgid "Your details"
 msgstr "Your details"
@@ -1777,6 +1820,16 @@ msgstr "Your main logo, shown in the site header."
 #: item-send-friend.php:21
 msgid "Your name"
 msgstr "Your name"
+
+#: user-profile.php:186
+msgid ""
+"Your profile, listings, comments and saved searches will be removed. "
+"Records of anything you paid for are kept, because the site has its own "
+"obligation to hold them."
+msgstr ""
+"Your profile, listings, comments and saved searches will be removed. "
+"Records of anything you paid for are kept, because the site has its own "
+"obligation to hold them."
 
 #: admin/settings.php:263
 #: common/footer.php:56

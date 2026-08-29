@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Storefront 1.0.2\n"
+"Project-Id-Version: Storefront 1.2.0\n"
 "Report-Msgid-Bugs-To: "
 "https://github.com/mindstellar/theme-storefront/issues\n"
 "MIME-Version: 1.0\n"
@@ -117,7 +117,7 @@ msgstr ""
 
 #: common/account-header.php:34
 #: common/footer.php:92
-#: common/header.php:53
+#: common/header.php:60
 #: user-alerts.php:24
 msgid "Alerts"
 msgstr ""
@@ -315,6 +315,7 @@ msgstr ""
 #: item.php:569
 #: item.php:602
 #: item.php:613
+#: user-profile.php:183
 msgid "Close"
 msgstr ""
 
@@ -417,7 +418,7 @@ msgstr ""
 
 #: common/account-header.php:32
 #: common/footer.php:90
-#: common/header.php:51
+#: common/header.php:58
 msgid "Dashboard"
 msgstr ""
 
@@ -455,6 +456,11 @@ msgstr ""
 msgid "Delete listing"
 msgstr ""
 
+#: user-profile.php:170
+#: user-profile.php:197
+msgid "Delete my account"
+msgstr ""
+
 #: user-alerts.php:33
 msgid "Delete this alert"
 msgstr ""
@@ -463,8 +469,18 @@ msgstr ""
 msgid "Delete this?"
 msgstr ""
 
+#: user-profile.php:182
+msgid "Delete your account?"
+msgstr ""
+
 #: common/item-comments.php:49
 msgid "Delete your comment? This cannot be undone."
+msgstr ""
+
+#: user-profile.php:165
+msgid ""
+"Deleting your account removes your profile, listings, comments and saved "
+"searches. It cannot be undone."
 msgstr ""
 
 #: item-post.php:53
@@ -479,6 +495,16 @@ msgstr ""
 
 #: item.php:624
 msgid "Download"
+msgstr ""
+
+#: user-profile.php:153
+msgid ""
+"Download everything this site holds about you — your profile, listings, "
+"comments, saved searches and order history — as a JSON file."
+msgstr ""
+
+#: user-profile.php:158
+msgid "Download my data"
 msgstr ""
 
 #: admin/settings.php:186
@@ -611,6 +637,7 @@ msgstr ""
 msgid "Help"
 msgstr ""
 
+#: common/head-seo.php:133
 #: common/header.php:24
 #: item.php:119
 #: search.php:25
@@ -634,6 +661,10 @@ msgid ""
 "How the location filter behaves on the search page. \"Region &amp; city\" "
 "suits single-country sites — it hides the country choice and scopes results "
 "to your site's default country."
+msgstr ""
+
+#: user-profile.php:191
+msgid "If you want a copy of your data, download it before continuing."
 msgstr ""
 
 #: item.php:246
@@ -671,6 +702,10 @@ msgstr ""
 
 #: user-profile.php:48
 msgid "JPG, PNG, GIF or WebP — up to %s. Square photos look best."
+msgstr ""
+
+#: user-profile.php:194
+msgid "Keep my account"
 msgstr ""
 
 #: common/search-sidebar.php:93
@@ -786,7 +821,7 @@ msgid "Location"
 msgstr ""
 
 #: common/footer.php:95
-#: common/header.php:60
+#: common/header.php:77
 #: item.php:316
 #: user-login.php:32
 #: user-register.php:45
@@ -812,7 +847,7 @@ msgid ""
 msgstr ""
 
 #: common/footer.php:93
-#: common/header.php:56
+#: common/header.php:73
 msgid "Log out"
 msgstr ""
 
@@ -882,7 +917,7 @@ msgstr ""
 
 #: common/account-header.php:33
 #: common/footer.php:91
-#: common/header.php:52
+#: common/header.php:59
 #: user-items.php:31
 msgid "My listings"
 msgstr ""
@@ -1055,7 +1090,7 @@ msgstr ""
 #: common/account-header.php:70
 #: common/footer.php:45
 #: common/footer.php:81
-#: common/header.php:70
+#: common/header.php:87
 #: common/search-sidebar.php:262
 #: item-post.php:27
 #: user-dashboard.php:44
@@ -1109,7 +1144,7 @@ msgid "Primary"
 msgstr ""
 
 #: common/account-settings-nav.php:10
-#: common/header.php:54
+#: common/header.php:61
 msgid "Profile"
 msgstr ""
 
@@ -1161,7 +1196,7 @@ msgid "Region &amp; city"
 msgstr ""
 
 #: common/footer.php:97
-#: common/header.php:62
+#: common/header.php:79
 msgid "Register"
 msgstr ""
 
@@ -1700,6 +1735,10 @@ msgstr ""
 msgid "Your account"
 msgstr ""
 
+#: user-profile.php:149
+msgid "Your data"
+msgstr ""
+
 #: user-profile.php:62
 msgid "Your details"
 msgstr ""
@@ -1742,6 +1781,13 @@ msgstr ""
 #: item-contact.php:37
 #: item-send-friend.php:21
 msgid "Your name"
+msgstr ""
+
+#: user-profile.php:186
+msgid ""
+"Your profile, listings, comments and saved searches will be removed. "
+"Records of anything you paid for are kept, because the site has its own "
+"obligation to hold them."
 msgstr ""
 
 #: admin/settings.php:263
