@@ -139,4 +139,4 @@ plugins can inject content into the new sections:
 
 ## License
 
-GPL-3.0-or-later. © Mindstellar Community.
+GPL-3.0-or-later. © Navjot Tomer (Mindstellar) and contributors.

@@ -1,7 +1,7 @@
 <?php
 /*
  * Storefront — a Shopclass public theme.
- * Copyright (c) 2026 Mindstellar Community
+ * Copyright (c) 2026 Navjot Tomer (Mindstellar) and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
