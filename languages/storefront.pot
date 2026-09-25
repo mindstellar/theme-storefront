@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Storefront 1.3.0\n"
+"Project-Id-Version: Storefront 1.3.3\n"
 "Report-Msgid-Bugs-To: "
 "https://github.com/mindstellar/theme-storefront/issues\n"
 "MIME-Version: 1.0\n"
@@ -111,7 +111,7 @@ msgstr ""
 msgid "Admin"
 msgstr ""
 
-#: user-alerts.php:30
+#: user-alerts.php:31
 msgid "Alert"
 msgstr ""
 
@@ -126,17 +126,21 @@ msgstr ""
 msgid "All"
 msgstr ""
 
-#: functions.php:646
+#: functions.php:701
 #: main.php:64
 msgid "All categories"
+msgstr ""
+
+#: functions.php:582
+msgid "All listings"
 msgstr ""
 
 #: user-register.php:44
 msgid "Already have an account? %s"
 msgstr ""
 
-#: functions.php:840
-#: functions.php:871
+#: functions.php:895
+#: functions.php:926
 msgid "An error has occurred, please try again."
 msgstr ""
 
@@ -199,7 +203,7 @@ msgstr ""
 msgid "Brand &amp; Logo"
 msgstr ""
 
-#: functions.php:828
+#: functions.php:883
 msgid "Brand settings updated correctly."
 msgstr ""
 
@@ -462,7 +466,7 @@ msgstr ""
 msgid "Delete my account"
 msgstr ""
 
-#: user-alerts.php:33
+#: user-alerts.php:39
 msgid "Delete this alert"
 msgstr ""
 
@@ -770,23 +774,23 @@ msgstr ""
 msgid "Listing #%d"
 msgstr ""
 
-#: functions.php:777
+#: functions.php:832
 msgid "Listing activated."
 msgstr ""
 
-#: functions.php:774
+#: functions.php:829
 msgid "Listing blocked — hidden from the site and search."
 msgstr ""
 
-#: functions.php:776
+#: functions.php:831
 msgid "Listing deactivated."
 msgstr ""
 
-#: functions.php:781
+#: functions.php:836
 msgid "Listing is no longer featured."
 msgstr ""
 
-#: functions.php:780
+#: functions.php:835
 msgid "Listing is now featured."
 msgstr ""
 
@@ -802,11 +806,11 @@ msgstr ""
 msgid "Listing navigation"
 msgstr ""
 
-#: functions.php:775
+#: functions.php:830
 msgid "Listing unblocked."
 msgstr ""
 
-#: user-alerts.php:37
+#: user-alerts.php:43
 msgid "listings"
 msgstr ""
 
@@ -864,7 +868,7 @@ msgstr ""
 msgid "Mark spam"
 msgstr ""
 
-#: functions.php:778
+#: functions.php:833
 msgid "Marked as spam."
 msgstr ""
 
@@ -976,7 +980,7 @@ msgstr ""
 msgid "No listings yet — be the first to post one."
 msgstr ""
 
-#: functions.php:779
+#: functions.php:834
 msgid "No longer marked as spam."
 msgstr ""
 
@@ -992,7 +996,7 @@ msgstr ""
 msgid "No saved alerts yet"
 msgstr ""
 
-#: functions.php:657
+#: functions.php:712
 msgid "No subcategories"
 msgstr ""
 
@@ -1028,7 +1032,7 @@ msgstr ""
 msgid "Other details"
 msgstr ""
 
-#: functions.php:604
+#: functions.php:659
 msgid "Over %s"
 msgstr ""
 
@@ -1040,6 +1044,10 @@ msgstr ""
 #: user-login.php:20
 #: user-register.php:25
 msgid "Password"
+msgstr ""
+
+#: functions.php:559
+msgid "Paused: delete this alert and save the search again."
 msgstr ""
 
 #: common/loop.php:30
@@ -1128,8 +1136,20 @@ msgstr ""
 msgid "Price"
 msgstr ""
 
+#: functions.php:575
+msgid "Price %1$s – %2$s"
+msgstr ""
+
+#: functions.php:577
+msgid "Price from %s"
+msgstr ""
+
 #: common/search-sidebar.php:181
 msgid "Price range"
+msgstr ""
+
+#: functions.php:579
+msgid "Price up to %s"
 msgstr ""
 
 #: search.php:77
@@ -1450,11 +1470,11 @@ msgstr ""
 msgid "Storefront settings"
 msgstr ""
 
-#: functions.php:951
+#: functions.php:1006
 msgid "Storefront: Brand"
 msgstr ""
 
-#: functions.php:956
+#: functions.php:1011
 msgid "Storefront: Settings"
 msgstr ""
 
@@ -1514,7 +1534,7 @@ msgstr ""
 msgid "Tell us what's wrong. Reports are confidential."
 msgstr ""
 
-#: functions.php:852
+#: functions.php:907
 msgid ""
 "That SVG could not be used — it may be malformed, unsafe, or over the size "
 "limit."
@@ -1526,12 +1546,12 @@ msgid ""
 "mistyped. Try searching for what you were after."
 msgstr ""
 
-#: functions.php:897
+#: functions.php:952
 msgid "The logo has been removed."
 msgstr ""
 
-#: functions.php:863
-#: functions.php:880
+#: functions.php:918
+#: functions.php:935
 msgid "The logo has been uploaded correctly."
 msgstr ""
 
@@ -1547,11 +1567,11 @@ msgid ""
 "in every case."
 msgstr ""
 
-#: functions.php:930
+#: functions.php:985
 msgid "Theme settings updated correctly."
 msgstr ""
 
-#: user-alerts.php:32
+#: user-alerts.php:38
 msgid "This action can't be undone. Are you sure you want to continue?"
 msgstr ""
 
@@ -1563,7 +1583,7 @@ msgstr ""
 msgid "This is your listing."
 msgstr ""
 
-#: functions.php:757
+#: functions.php:812
 msgid "This listing doesn't exist."
 msgstr ""
 
@@ -1600,7 +1620,7 @@ msgstr ""
 msgid "Unblock"
 msgstr ""
 
-#: functions.php:605
+#: functions.php:660
 msgid "Under %s"
 msgstr ""
 
@@ -1612,11 +1632,11 @@ msgstr ""
 msgid "Unfeature"
 msgstr ""
 
-#: functions.php:750
+#: functions.php:805
 msgid "Unknown action."
 msgstr ""
 
-#: functions.php:882
+#: functions.php:937
 msgid "Unsupported file type — upload an SVG, JPG or PNG."
 msgstr ""
 
@@ -1703,7 +1723,7 @@ msgstr ""
 msgid "What are you looking for?"
 msgstr ""
 
-#: functions.php:609
+#: functions.php:664
 msgid "With photos"
 msgstr ""
 
@@ -1723,7 +1743,7 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: functions.php:739
+#: functions.php:794
 msgid "You are not allowed to do that."
 msgstr ""
 

@@ -539,6 +539,51 @@ if (!function_exists('storefront_search_multi_country')) {
 }
 
 /**
+ * One line describing the current alert's saved search, or null when the core cannot say.
+ * Works on any core: locations are shown only when the core stores alerts as search values,
+ * since older ones keep them as SQL. 'paused' is set for an alert the core has paused.
+ *
+ * @return array{text:string,paused:bool}|null
+ */
+if (!function_exists('storefront_alert_summary')) {
+    function storefront_alert_summary()
+    {
+        if (!function_exists('osc_get_raw_search') || !function_exists('osc_alert_field')) {
+            return null;
+        }
+        $raw = osc_get_raw_search((array) json_decode((string) osc_alert_field('s_search'), true));
+        if (!is_array($raw)) {
+            return null;
+        }
+        if (!empty($raw['held'])) {
+            return array('text' => __('Paused: delete this alert and save the search again.', 'storefront'), 'paused' => true);
+        }
+
+        $parts = array();
+        if (!empty($raw['sPattern']) && is_string($raw['sPattern'])) {
+            $parts[] = '“' . $raw['sPattern'] . '”';
+        }
+        $keys = isset($raw['params']) ? array('aCategories', 'city_areas', 'cities', 'regions', 'countries') : array('aCategories');
+        foreach ($keys as $key) {
+            if (!empty($raw[$key]) && is_array($raw[$key])) {
+                $parts[] = implode(', ', array_filter($raw[$key], 'is_scalar'));
+            }
+        }
+        $min = !empty($raw['price_min']) ? (float) $raw['price_min'] : null;
+        $max = !empty($raw['price_max']) ? (float) $raw['price_max'] : null;
+        if ($min !== null && $max !== null) {
+            $parts[] = sprintf(__('Price %1$s – %2$s', 'storefront'), $min, $max);
+        } elseif ($min !== null) {
+            $parts[] = sprintf(__('Price from %s', 'storefront'), $min);
+        } elseif ($max !== null) {
+            $parts[] = sprintf(__('Price up to %s', 'storefront'), $max);
+        }
+
+        return array('text' => $parts ? implode(' · ', $parts) : __('All listings', 'storefront'), 'paused' => false);
+    }
+}
+
+/**
  * Every country, read once per request for the search rail.
  */
 if (!function_exists('storefront_countries')) {

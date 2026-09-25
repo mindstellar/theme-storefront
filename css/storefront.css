@@ -1152,6 +1152,8 @@ body.sf-list .sf-card__desc {
     padding-bottom: var(--space-3); border-bottom: 2px solid var(--color-divider); margin-bottom: var(--space-4);
 }
 .sf-results__title { font-size: 26px; margin: 0 0 2px; }
+.sf-alert__summary { margin: 0; font-size: 14px; color: var(--color-muted); }
+.sf-alert__summary--paused { color: var(--color-accent-2-ink); }
 .sf-results__count { font-size: 13px; color: var(--color-muted); }
 /* Subscribe-to-this-search (RSS): a quiet, muted affordance beside the count, going
    teal on hover — content leads, the feed link never competes. */

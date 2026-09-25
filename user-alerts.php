@@ -27,7 +27,13 @@ osc_current_web_theme_path('common/header.php');
                 while (osc_has_alerts()) { ?>
                 <div class="sf-alert">
                     <div class="sf-results__head">
-                        <h2 class="sf-results__title"><?php _e('Alert', 'storefront'); ?> <?php echo (int) $sf_i; ?></h2>
+                        <div>
+                            <h2 class="sf-results__title"><?php _e('Alert', 'storefront'); ?> <?php echo (int) $sf_i; ?></h2>
+                            <?php $sf_summary = storefront_alert_summary(); ?>
+                            <?php if ($sf_summary) { ?>
+                                <p class="sf-alert__summary<?php echo $sf_summary['paused'] ? ' sf-alert__summary--paused' : ''; ?>"><?php echo osc_esc_html($sf_summary['text']); ?></p>
+                            <?php } ?>
+                        </div>
                         <a class="sf-btn sf-btn--ghost"
                            onclick="return confirm('<?php echo osc_esc_js(__("This action can't be undone. Are you sure you want to continue?", 'storefront')); ?>');"
                            href="<?php echo osc_user_unsubscribe_alert_url(); ?>"><?php _e('Delete this alert', 'storefront'); ?></a>
