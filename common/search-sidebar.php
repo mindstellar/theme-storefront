@@ -115,7 +115,7 @@ $sf_render_region_city_selects = function ($sf_country_code) use ($sf_region_par
                     <label for="sCountry"><?php _e('Country', 'storefront'); ?></label>
                     <select class="sf-select" name="sCountry" id="sCountry">
                         <option value=""><?php _e('Any country', 'storefront'); ?></option>
-                        <?php foreach (Country::newInstance()->listAll() as $sf_c) { ?>
+                        <?php foreach (storefront_countries() as $sf_c) { ?>
                             <option value="<?php echo osc_esc_html($sf_c['pk_c_code']); ?>" <?php echo ($sf_country === $sf_c['pk_c_code']) ? 'selected' : ''; ?>><?php echo osc_esc_html($sf_c['s_name']); ?></option>
                         <?php } ?>
                     </select>
@@ -127,7 +127,7 @@ $sf_render_region_city_selects = function ($sf_country_code) use ($sf_region_par
                       // country, unless a sCountry param already overrides it (e.g. a bookmarked
                       // search URL, or another mode's link). Region/City scope to that country. ?>
                 <?php
-                $sf_countries = Country::newInstance()->listAll();
+                $sf_countries = storefront_countries();
                 $sf_cc = ($sf_country !== '') ? $sf_country : (isset($sf_countries[0]['pk_c_code']) ? $sf_countries[0]['pk_c_code'] : '');
                 ?>
                 <input type="hidden" name="sCountry" id="sCountry" value="<?php echo osc_esc_html($sf_cc); ?>" />
@@ -145,7 +145,7 @@ $sf_render_region_city_selects = function ($sf_country_code) use ($sf_region_par
                         <label for="sCountry"><?php _e('Country', 'storefront'); ?></label>
                         <select class="sf-select" name="sCountry" id="sCountry">
                             <option value=""><?php _e('Any country', 'storefront'); ?></option>
-                            <?php foreach (Country::newInstance()->listAll() as $sf_c) { ?>
+                            <?php foreach (storefront_countries() as $sf_c) { ?>
                                 <option value="<?php echo osc_esc_html($sf_c['pk_c_code']); ?>" <?php echo ($sf_country === $sf_c['pk_c_code']) ? 'selected' : ''; ?>><?php echo osc_esc_html($sf_c['s_name']); ?></option>
                             <?php } ?>
                         </select>

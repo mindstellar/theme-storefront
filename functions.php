@@ -534,12 +534,22 @@ if (!function_exists('sf_user_monogram')) {
 if (!function_exists('storefront_search_multi_country')) {
     function storefront_search_multi_country()
     {
-        static $multi = null;
-        if ($multi === null) {
-            $multi = count((array) Country::newInstance()->listAll()) > 1;
+        return count(storefront_countries()) > 1;
+    }
+}
+
+/**
+ * Every country, read once per request for the search rail.
+ */
+if (!function_exists('storefront_countries')) {
+    function storefront_countries()
+    {
+        static $countries = null;
+        if ($countries === null) {
+            $countries = (array) Country::newInstance()->listAll();
         }
 
-        return $multi;
+        return $countries;
     }
 }
 
