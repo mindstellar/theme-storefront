@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
  * Core's Pagination::doPagination() emits the accessible list itself: a
- * <ul role="navigation" aria-label> with aria-current on the current page and an
+ * <nav aria-label> around the <ul>, aria-current on the current page and an
  * aria-label on every control. So this wrapper is presentation only (the top rule
  * + spacing); it must NOT add a second navigation landmark of its own.
  *
