@@ -10,8 +10,8 @@ import { build } from 'esbuild';
 const JS = ['storefront-core', 'storefront-item', 'storefront-search', 'storefront-account'];
 
 // Minify only — no `target`, so modern CSS the theme depends on at runtime
-// (color-mix(), custom properties, logical properties) is preserved verbatim and
-// the remote Google Fonts @import is left external (bundle:false).
+// (color-mix(), custom properties, logical properties) is preserved verbatim, and
+// the font url()s stay relative to css/ (bundle:false).
 const common = { minify: true, bundle: false, legalComments: 'none', charset: 'utf8' };
 
 await Promise.all(

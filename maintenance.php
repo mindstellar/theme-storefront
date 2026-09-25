@@ -10,9 +10,11 @@ $sf_site = osc_get_preference('pageTitle');
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title><?php echo osc_esc_html(ucfirst($sf_site) . ' — ' . __('under maintenance', 'storefront')); ?></title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&display=swap');
+        @font-face {
+            font-family: 'Archivo'; font-style: normal; font-weight: 100 900; font-display: swap;
+            src: url('<?php echo osc_esc_html(osc_current_web_theme_url('fonts/archivo-latin.woff2')); ?>') format('woff2');
+        }
         /* Standalone page (core serves it without the theme stylesheet), so it carries
            its own tokens — mirroring the theme values — rather than any raw colour. */
         :root {
