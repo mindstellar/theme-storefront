@@ -61,7 +61,7 @@ $sf_hues = array(
                 </div>
                 <?php if (osc_count_categories()) { ?>
                 <div class="sf-hero__cat">
-                    <?php storefront_category_select('sCategory', Params::getParam('sCategory'), __('All categories', 'storefront')); ?>
+                    <?php storefront_category_select('sCategory', Params::getParam('sCategory'), __('All categories', 'storefront'), __('Category', 'storefront')); ?>
                 </div>
                 <?php } ?>
                 <button class="sf-btn sf-btn--primary" type="submit">
@@ -97,7 +97,7 @@ $sf_hues = array(
                 $sf_hue = $sf_hues[($sf_i - 1) % count($sf_hues)]; ?>
                 <li>
                     <a class="sf-catgrid__item" href="<?php echo osc_search_category_url(); ?>" style="border-top-color: <?php echo $sf_hue; ?>">
-                        <span class="sf-catgrid__num" style="color: <?php echo $sf_hue; ?>"><?php echo str_pad((string) $sf_i, 2, '0', STR_PAD_LEFT); ?></span>
+                        <span class="sf-catgrid__num" style="--sf-hue: <?php echo $sf_hue; ?>" aria-hidden="true"><?php echo str_pad((string) $sf_i, 2, '0', STR_PAD_LEFT); ?></span>
                         <span class="sf-catgrid__name"><?php echo osc_esc_html(osc_category_name()); ?></span>
                         <span class="sf-catgrid__count"><?php printf(__('%d listings', 'storefront'), (int) osc_category_total_items()); ?></span>
                     </a>

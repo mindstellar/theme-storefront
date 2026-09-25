@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Storefront 1.2.0\n"
+"Project-Id-Version: Storefront 1.3.0\n"
 "Report-Msgid-Bugs-To: "
 "https://github.com/mindstellar/theme-storefront/issues\n"
 "MIME-Version: 1.0\n"
@@ -14,7 +14,7 @@ msgstr ""
 msgid "—"
 msgstr "—"
 
-#: maintenance.php:43
+#: maintenance.php:45
 msgid "— The %s team"
 msgstr "— The %s team"
 
@@ -128,7 +128,7 @@ msgstr "Alerts"
 msgid "All"
 msgstr "All"
 
-#: functions.php:645
+#: functions.php:646
 #: main.php:64
 msgid "All categories"
 msgstr "All categories"
@@ -137,8 +137,8 @@ msgstr "All categories"
 msgid "Already have an account? %s"
 msgstr "Already have an account? %s"
 
-#: functions.php:839
-#: functions.php:870
+#: functions.php:840
+#: functions.php:871
 msgid "An error has occurred, please try again."
 msgstr "An error has occurred, please try again."
 
@@ -201,7 +201,7 @@ msgstr "Blocked"
 msgid "Brand &amp; Logo"
 msgstr "Brand &amp; Logo"
 
-#: functions.php:827
+#: functions.php:828
 msgid "Brand settings updated correctly."
 msgstr "Brand settings updated correctly."
 
@@ -258,6 +258,7 @@ msgid "Categories"
 msgstr "Categories"
 
 #: item-post.php:45
+#: main.php:64
 msgid "Category"
 msgstr "Category"
 
@@ -784,23 +785,23 @@ msgstr "Listing"
 msgid "Listing #%d"
 msgstr "Listing #%d"
 
-#: functions.php:776
+#: functions.php:777
 msgid "Listing activated."
 msgstr "Listing activated."
 
-#: functions.php:773
+#: functions.php:774
 msgid "Listing blocked — hidden from the site and search."
 msgstr "Listing blocked — hidden from the site and search."
 
-#: functions.php:775
+#: functions.php:776
 msgid "Listing deactivated."
 msgstr "Listing deactivated."
 
-#: functions.php:780
+#: functions.php:781
 msgid "Listing is no longer featured."
 msgstr "Listing is no longer featured."
 
-#: functions.php:779
+#: functions.php:780
 msgid "Listing is now featured."
 msgstr "Listing is now featured."
 
@@ -816,7 +817,7 @@ msgstr "Listing location"
 msgid "Listing navigation"
 msgstr "Listing navigation"
 
-#: functions.php:774
+#: functions.php:775
 msgid "Listing unblocked."
 msgstr "Listing unblocked."
 
@@ -880,7 +881,7 @@ msgstr "Manage all"
 msgid "Mark spam"
 msgstr "Mark spam"
 
-#: functions.php:777
+#: functions.php:778
 msgid "Marked as spam."
 msgstr "Marked as spam."
 
@@ -994,7 +995,7 @@ msgstr "No listings yet"
 msgid "No listings yet — be the first to post one."
 msgstr "No listings yet — be the first to post one."
 
-#: functions.php:778
+#: functions.php:779
 msgid "No longer marked as spam."
 msgstr "No longer marked as spam."
 
@@ -1010,7 +1011,7 @@ msgstr "No results for \"%s\". Try widening your filters or clearing the search.
 msgid "No saved alerts yet"
 msgstr "No saved alerts yet"
 
-#: functions.php:656
+#: functions.php:657
 msgid "No subcategories"
 msgstr "No subcategories"
 
@@ -1046,7 +1047,7 @@ msgstr "optional"
 msgid "Other details"
 msgstr "Other details"
 
-#: functions.php:603
+#: functions.php:604
 msgid "Over %s"
 msgstr "Over %s"
 
@@ -1448,7 +1449,7 @@ msgstr "Something went wrong"
 msgid "Something went wrong. Please try again later."
 msgstr "Something went wrong. Please try again later."
 
-#: maintenance.php:42
+#: maintenance.php:44
 msgid ""
 "Sorry for the inconvenience — we're performing some maintenance right now. "
 "We'll be back online shortly."
@@ -1476,11 +1477,11 @@ msgstr "Status"
 msgid "Storefront settings"
 msgstr "Storefront settings"
 
-#: functions.php:950
+#: functions.php:951
 msgid "Storefront: Brand"
 msgstr "Storefront: Brand"
 
-#: functions.php:955
+#: functions.php:956
 msgid "Storefront: Settings"
 msgstr "Storefront: Settings"
 
@@ -1543,7 +1544,7 @@ msgstr "Teal"
 msgid "Tell us what's wrong. Reports are confidential."
 msgstr "Tell us what's wrong. Reports are confidential."
 
-#: functions.php:851
+#: functions.php:852
 msgid ""
 "That SVG could not be used — it may be malformed, unsafe, or over the size "
 "limit."
@@ -1559,12 +1560,12 @@ msgstr ""
 "The listing may have sold, expired or been removed — or the link was "
 "mistyped. Try searching for what you were after."
 
-#: functions.php:896
+#: functions.php:897
 msgid "The logo has been removed."
 msgstr "The logo has been removed."
 
-#: functions.php:862
-#: functions.php:879
+#: functions.php:863
+#: functions.php:880
 msgid "The logo has been uploaded correctly."
 msgstr "The logo has been uploaded correctly."
 
@@ -1584,7 +1585,7 @@ msgstr ""
 "The wordmark shown when no logo image is set, and the accessible site name "
 "in every case."
 
-#: functions.php:929
+#: functions.php:930
 msgid "Theme settings updated correctly."
 msgstr "Theme settings updated correctly."
 
@@ -1600,7 +1601,7 @@ msgstr "This is how buyers and sellers see you across the marketplace."
 msgid "This is your listing."
 msgstr "This is your listing."
 
-#: functions.php:756
+#: functions.php:757
 msgid "This listing doesn't exist."
 msgstr "This listing doesn't exist."
 
@@ -1637,7 +1638,7 @@ msgstr "Typically within 24 hours"
 msgid "Unblock"
 msgstr "Unblock"
 
-#: functions.php:604
+#: functions.php:605
 msgid "Under %s"
 msgstr "Under %s"
 
@@ -1649,11 +1650,11 @@ msgstr "under maintenance"
 msgid "Unfeature"
 msgstr "Unfeature"
 
-#: functions.php:749
+#: functions.php:750
 msgid "Unknown action."
 msgstr "Unknown action."
 
-#: functions.php:881
+#: functions.php:882
 msgid "Unsupported file type — upload an SVG, JPG or PNG."
 msgstr "Unsupported file type — upload an SVG, JPG or PNG."
 
@@ -1723,7 +1724,7 @@ msgstr "We reply as soon as we can"
 msgid "We will email you when a new listing matches this search."
 msgstr "We will email you when a new listing matches this search."
 
-#: maintenance.php:41
+#: maintenance.php:43
 msgid "We'll be back soon"
 msgstr "We'll be back soon"
 
@@ -1740,7 +1741,7 @@ msgstr "Welcome back"
 msgid "What are you looking for?"
 msgstr "What are you looking for?"
 
-#: functions.php:608
+#: functions.php:609
 msgid "With photos"
 msgstr "With photos"
 
@@ -1760,7 +1761,7 @@ msgstr "X (Twitter)"
 msgid "Yes"
 msgstr "Yes"
 
-#: functions.php:738
+#: functions.php:739
 msgid "You are not allowed to do that."
 msgstr "You are not allowed to do that."
 

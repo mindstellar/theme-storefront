@@ -246,10 +246,11 @@ if (!function_exists('storefront_logo')) {
  * @param string     $default_label label for the leading "any category" option
  */
 if (!function_exists('storefront_category_select')) {
-    function storefront_category_select($name, $selected, $default_label)
+    function storefront_category_select($name, $selected, $default_label, $aria_label = '')
     {
         $selected = (string) $selected;
-        echo '<select name="' . osc_esc_html($name) . '" id="' . osc_esc_html($name) . '">';
+        echo '<select name="' . osc_esc_html($name) . '" id="' . osc_esc_html($name) . '"'
+            . ($aria_label !== '' ? ' aria-label="' . osc_esc_html($aria_label) . '"' : '') . '>';
         echo '<option value="">' . osc_esc_html($default_label) . '</option>';
         osc_goto_first_category();
         while (osc_has_categories()) {
