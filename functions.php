@@ -1012,6 +1012,11 @@ osc_admin_menu_appearance(
     osc_admin_render_theme_url('oc-content/themes/storefront/admin/settings.php'),
     'storefront_settings'
 );
+// The theme prints its own feed link with a friendlier title than core's.
+if (function_exists('osc_add_theme_support')) {
+    osc_add_theme_support('head', array('feed' => false));
+}
+
 osc_add_hook('init_admin', 'storefront_admin_actions');
 osc_add_hook('theme_delete_storefront', 'storefront_theme_delete');
 
