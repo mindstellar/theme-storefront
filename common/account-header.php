@@ -44,10 +44,9 @@ if (function_exists('osc_billing_enabled') && osc_billing_enabled()) {
 }
 
 $sf_settings_tabs = array(
-    array('name' => __('Profile', 'storefront'),  'url' => osc_user_profile_url(),        'current' => $sf_page === 'user-profile'),
-    array('name' => __('Username', 'storefront'), 'url' => osc_change_user_username_url(), 'current' => osc_is_change_username_page()),
-    array('name' => __('E-mail', 'storefront'),   'url' => osc_change_user_email_url(),    'current' => osc_is_change_email_page()),
-    array('name' => __('Password', 'storefront'), 'url' => osc_change_user_password_url(), 'current' => osc_is_change_password_page()),
+    array('name' => __('Profile', 'storefront'),          'url' => osc_user_profile_url(),      'current' => $sf_page === 'user-profile'),
+    // Core draws email, username and password on one page.
+    array('name' => __('Sign-in details', 'storefront'), 'url' => osc_change_user_email_url(), 'current' => $sf_page === 'user-signin'),
 );
 
 // The heading each page had when the theme drew it; core's own h1 is kept for
