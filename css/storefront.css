@@ -1866,7 +1866,7 @@ body.sf-list .sf-card__desc {
    E-mail / Password, inside the Profile section. */
 /* One-line segmented control — scrolls horizontally on narrow screens rather than
    wrapping a lone "Password" onto a second row (which reads as a layout hiccup). */
-.sf-settings-nav { display: flex; flex-wrap: nowrap; gap: var(--space-1); margin-bottom: var(--space-6); padding: var(--space-1); background: var(--color-neutral-100); border-radius: var(--radius-md); overflow-x: auto; scrollbar-width: none; }
+.sf-settings-nav { display: flex; flex-wrap: nowrap; gap: var(--space-1); padding: var(--space-1); background: var(--color-neutral-100); border-radius: var(--radius-md); overflow-x: auto; scrollbar-width: none; }
 .sf-settings-nav::-webkit-scrollbar { display: none; }
 .sf-settings-nav__tab { flex: none; white-space: nowrap; padding: var(--space-2) var(--space-4); border-radius: var(--radius-sm); font-family: var(--font-heading); font-weight: 800; font-size: 13px; color: var(--color-muted); }
 .sf-settings-nav__tab:hover { color: var(--color-text); text-decoration: none; }
