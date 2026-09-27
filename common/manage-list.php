@@ -58,6 +58,19 @@ $sf_action = static function (array $action, string $class, string $icon = '') u
         elseif (!osc_item_is_active()) { $sf_kind = 'muted';  $sf_status = __('Pending', 'storefront'); $sf_ic = 'clock'; }
 
         $sf_item    = osc_item();
+
+        // The same badge list core's rows show, through the same filter, so a plugin's badge appears here too.
+        $sf_badges = array('status' => array('label' => $sf_status, 'class' => $sf_kind, 'icon' => $sf_ic));
+        if (osc_item_is_premium()) {
+            $sf_badges['premium'] = array('label' => __('Featured', 'storefront'), 'class' => 'ok', 'icon' => 'star');
+        }
+        if (osc_item_is_highlighted()) {
+            $sf_badges['highlight'] = array('label' => __('Highlighted', 'storefront'), 'class' => 'ok', 'icon' => 'zap');
+        }
+        if (osc_item_is_urgent()) {
+            $sf_badges['urgent'] = array('label' => __('Urgent', 'storefront'), 'class' => 'warn', 'icon' => 'clock');
+        }
+        $sf_badges = (array) osc_apply_filter('listing_row_badges', $sf_badges, $sf_item, 'user_items');
         $sf_actions = array(
             'edit'   => array('label' => __('Edit', 'storefront'), 'url' => osc_item_edit_url()),
             'delete' => array(
@@ -100,9 +113,18 @@ $sf_action = static function (array $action, string $class, string $icon = '') u
             </span>
         </a>
         <span class="sf-manage__status">
-            <span class="sf-state sf-state--<?php echo $sf_kind; ?>"><?php echo storefront_icon($sf_ic, 12); ?><?php echo osc_esc_html($sf_status); ?></span>
-            <?php if (osc_item_is_premium()) { ?>
-                <span class="sf-state sf-state--ok"><?php echo storefront_icon('star', 12); ?><?php _e('Featured', 'storefront'); ?></span>
+            <?php foreach ($sf_badges as $sf_badge) {
+                if (!is_array($sf_badge) || !isset($sf_badge['label'])) {
+                    continue;
+                }
+                // Core's badge classes read as the theme's state colours.
+                $sf_map  = array('paid' => 'ok', 'pending' => 'muted', 'cancelled' => 'danger', 'failed' => 'danger', 'refunded' => 'warn');
+                $sf_cls  = (string) ($sf_badge['class'] ?? 'muted');
+                $sf_cls  = $sf_map[$sf_cls] ?? $sf_cls;
+                $sf_cls  = in_array($sf_cls, array('ok', 'warn', 'danger', 'muted'), true) ? $sf_cls : 'muted'; ?>
+                <span class="sf-state sf-state--<?php echo osc_esc_html($sf_cls); ?>"><?php
+                    echo !empty($sf_badge['icon']) ? storefront_icon((string) $sf_badge['icon'], 12) : '';
+                    echo osc_esc_html((string) $sf_badge['label']); ?></span>
             <?php } ?>
         </span>
         <span class="sf-manage__views"><?php echo storefront_icon('eye', 14); ?><?php echo (int) osc_item_views(); ?><span class="sf-sr-only"> <?php _e('views', 'storefront'); ?></span></span>
