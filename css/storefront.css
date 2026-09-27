@@ -2107,7 +2107,7 @@ body.sf-list .sf-card__desc {
 }
 .sf .oe-page .oe-account { display: block; }
 .sf .oe-page .oe-account-main > .sf-account { margin-bottom: var(--space-6); }
-.sf .oe-page .oe-dashboard-intro,
+.sf .oe-page .oe-dashboard-intro, .sf .oe-page .oe-dashboard-actions,
 .sf .oe-page .oe-dashboard-title,
 .sf .oe-page .oe-dashboard-more { display: none; }
 
