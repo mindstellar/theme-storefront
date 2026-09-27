@@ -130,6 +130,9 @@ $sf_titles = array(
                     <?php echo osc_esc_html($sf_active === 1 ? __('active listing', 'storefront') : __('active listings', 'storefront')); ?>
                 </p>
             <?php } ?>
+            <?php if ($sf_page === 'user-profile') { ?>
+                <p class="sf-form__lede"><?php _e('This is how buyers and sellers see you across the marketplace.', 'storefront'); ?></p>
+            <?php } ?>
             <?php if ($sf_page === 'user-delete_account') { ?>
                 <p class="sf-form__lede"><?php _e('Enter your password to delete your account. Your listings and messages are removed with it. This cannot be undone.', 'storefront'); ?></p>
             <?php } ?>
