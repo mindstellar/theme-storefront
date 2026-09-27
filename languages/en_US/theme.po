@@ -9,8 +9,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: en_US\n"
 
-#: common/loop.php:114
-#: common/loop.php:64
+#: common/loop.php:120
+#: common/loop.php:70
 msgid "—"
 msgstr "—"
 
@@ -256,8 +256,8 @@ msgstr "Category"
 msgid "Change language"
 msgstr "Change language"
 
-#: common/loop.php:107
-#: common/loop.php:50
+#: common/loop.php:113
+#: common/loop.php:56
 #: common/manage-list.php:110
 #: item.php:187
 #: item.php:542
@@ -375,13 +375,13 @@ msgstr "Default results view"
 
 #: common/footer.php:179
 #: common/item-comments.php:52
-#: common/loop.php:79
+#: common/loop.php:85
 #: common/manage-list.php:77
 #: item.php:215
 msgid "Delete"
 msgstr "Delete"
 
-#: common/loop.php:79
+#: common/loop.php:85
 #: common/manage-list.php:82
 #: item.php:212
 msgid "Delete “%s”? This cannot be undone."
@@ -392,7 +392,7 @@ msgstr "Delete “%s”? This cannot be undone."
 msgid "Delete comment"
 msgstr "Delete comment"
 
-#: common/loop.php:79
+#: common/loop.php:85
 #: common/manage-list.php:78
 #: item.php:213
 #: item.php:214
@@ -436,7 +436,7 @@ msgstr "Duplicated listing"
 msgid "E-mail"
 msgstr "E-mail"
 
-#: common/loop.php:78
+#: common/loop.php:84
 #: common/manage-list.php:75
 #: item.php:209
 msgid "Edit"
@@ -478,7 +478,8 @@ msgstr "Facebook"
 msgid "Feature"
 msgstr "Feature"
 
-#: common/loop.php:97
+#: common/loop.php:103
+#: common/loop.php:34
 #: common/manage-list.php:65
 #: item.php:249
 #: main.php:120
@@ -1398,11 +1399,12 @@ msgstr "Update"
 msgid "Upload"
 msgstr "Upload"
 
+#: common/loop.php:33
 #: common/manage-list.php:71
 msgid "Urgent"
 msgstr "Urgent"
 
-#: common/loop.php:77
+#: common/loop.php:83
 #: common/manage-list.php:132
 #: item.php:144
 msgid "View"
@@ -1424,7 +1426,7 @@ msgstr "View listing"
 msgid "View photo full size"
 msgstr "View photo full size"
 
-#: common/loop.php:69
+#: common/loop.php:75
 #: common/manage-list.php:130
 msgid "views"
 msgstr "views"

@@ -834,6 +834,8 @@ select.sf-select, .sf-field select { cursor: pointer; }
 .sf-badge--featured { background: var(--color-accent-100); color: var(--color-accent-800); }
 .sf-badge--urgent { background: var(--color-accent-2-100); color: var(--color-accent-2-800); }
 .sf-card--featured { border-color: color-mix(in srgb, var(--color-accent) 40%, var(--color-divider)); }
+/* Highlighted: a paid outline in the accent colour. */
+.sf-card--highlight { border-color: var(--color-accent); box-shadow: 0 0 0 1px var(--color-accent), var(--shadow-sm); }
 
 /* List view (search show-as=list): horizontal rows */
 body.sf-list .sf-cards { grid-template-columns: 1fr; gap: var(--space-3); }

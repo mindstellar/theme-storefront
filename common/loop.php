@@ -29,14 +29,20 @@ $sf_item_card = static function () use ($sf_show_views, $sf_card_owner) {
         elseif (osc_item_is_expired()) { $sf_state_kind = 'warn';   $sf_state_label = __('Expired', 'storefront'); $sf_state_ic = 'alert'; }
         elseif (!osc_item_is_active()) { $sf_state_kind = 'muted';  $sf_state_label = __('Pending', 'storefront'); $sf_state_ic = 'clock'; }
     }
+    // Paid upgrades: one badge at most (Urgent before Featured), and Highlighted outlines the card.
+    $sf_badge = osc_item_is_urgent() ? array('urgent', __('Urgent', 'storefront'))
+        : (osc_item_is_premium() ? array('featured', __('Featured', 'storefront')) : null);
     ?>
-    <li class="sf-card">
+    <li class="sf-card<?php echo osc_item_is_highlighted() ? ' sf-card--highlight' : ''; ?>">
         <a class="sf-card__media" href="<?php echo osc_item_url(); ?>">
             <?php if (osc_images_enabled_at_items() && osc_has_item_resources()) { ?>
                 <img loading="lazy" src="<?php echo osc_esc_html(osc_resource_thumbnail_url()); ?>"
                      alt="<?php echo osc_esc_html(osc_item_title()); ?>" />
             <?php } else { ?>
                 <span class="sf-card__noimg" aria-hidden="true"></span>
+            <?php } ?>
+            <?php if ($sf_badge !== null) { ?>
+                <span class="sf-badge sf-badge--<?php echo $sf_badge[0]; ?>"><?php echo osc_esc_html($sf_badge[1]); ?></span>
             <?php } ?>
             <?php if (osc_item_category() !== '') { ?>
                 <span class="sf-card__cat"><?php echo osc_esc_html(osc_item_category()); ?></span>
