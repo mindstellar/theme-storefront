@@ -2319,11 +2319,26 @@ body.sf-list .sf-card__desc {
 .sf .oe-page .oe-tabs ~ .oe-muted:not(:has(+ .oe-muted)) { border-bottom: 1px solid color-mix(in srgb, var(--color-accent-2) 40%, transparent); border-radius: 0 0 var(--radius-md) var(--radius-md); padding-bottom: var(--space-3); margin-bottom: var(--space-4); }
 .sf .oe-page .oe-tabs + .oe-muted:not(:has(+ .oe-muted)) { border-radius: var(--radius-md); }
 
-/* Credits: the balance card as one centred column. */
-.sf .oe-page .oe-bill-card:has(> .oe-bill-balance) { display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--space-1); }
+/* Credits: the figures in a row, each label under its figure, the buttons at the end. */
+.sf .oe-page .oe-bill-card:has(> .oe-bill-balance) {
+    display: grid; grid-template-rows: auto auto; grid-auto-flow: column; grid-auto-columns: max-content;
+    align-items: end; column-gap: var(--space-8); row-gap: var(--space-1); padding: var(--space-6);
+}
 .sf .oe-page .oe-bill-card > .oe-bill-balance { margin: 0; }
-.sf .oe-page .oe-bill-card > .oe-bill-sub { margin: 0 0 var(--space-3); }
-.sf .oe-page .oe-bill-card > .oe-bill-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-2); margin: var(--space-2) 0 0; }
+.sf .oe-page .oe-bill-card > .oe-bill-sub { margin: 0; }
+.sf .oe-page .oe-bill-card > .oe-bill-actions {
+    grid-row: 1 / -1; align-self: center; justify-self: end;
+    display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0;
+}
+@media (min-width: 641px) {
+    .sf .oe-page .oe-bill-card:has(> .oe-bill-balance) { grid-template-columns: max-content max-content 1fr; }
+    .sf .oe-page .oe-bill-card > .oe-bill-actions { grid-column: -2 / -1; }
+}
+@media (max-width: 640px) {
+    .sf .oe-page .oe-bill-card:has(> .oe-bill-balance) { grid-template-rows: none; grid-auto-flow: row; grid-auto-columns: auto; padding: var(--space-4); }
+    .sf .oe-page .oe-bill-card > .oe-bill-sub + .oe-bill-balance { margin-top: var(--space-4); }
+    .sf .oe-page .oe-bill-card > .oe-bill-actions { grid-row: auto; justify-self: start; margin-top: var(--space-4); }
+}
 .sf .oe-page .oe-account-main > .sf-account:has(+ form) { margin-bottom: var(--space-6); }
 .sf .oe-page .oe-account-main > form + * , .sf .oe-page .oe-account-main > form ~ .oe-panel { margin-top: var(--space-6); }
 .sf-manage__row > .sf-manage__promote { padding-top: 0; margin-top: calc(var(--space-2) * -1); }
