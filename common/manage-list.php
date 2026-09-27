@@ -20,7 +20,10 @@ $sf_action = static function (array $action, string $class, string $icon = '') u
         ? ' data-confirm="' . osc_esc_html((string) $action['confirm']) . '" data-confirm-title="' . osc_esc_html((string) ($action['confirm_label'] ?? $label))
           . '" data-confirm-ok="' . osc_esc_html((string) ($action['confirm_label'] ?? $label)) . '"'
         : '';
-    $inner = ($icon !== '' ? storefront_icon($icon, 16) : '') . '<span class="sf-manage__actlabel">' . osc_esc_html($label) . '</span>';
+    // Icon buttons keep their label for phones only; a text button always shows it.
+    $inner = $icon !== ''
+        ? storefront_icon($icon, 16) . '<span class="sf-manage__actlabel">' . osc_esc_html($label) . '</span>'
+        : '<span>' . osc_esc_html($label) . '</span>';
     $aria  = ' aria-label="' . osc_esc_html($label) . '" title="' . osc_esc_html($label) . '"';
 
     if (($action['method'] ?? 'get') === 'post') {
