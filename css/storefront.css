@@ -2280,3 +2280,16 @@ body.sf-list .sf-card__desc {
     overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
 }
 .sf .oe-page .oe-account-main > form:not(:has(.oe-group)) { max-width: 440px; }
+
+/* A tab strip with more tabs past its end fades that edge (storefront-core.js sets data-more). */
+.sf-account-tabs[data-more], .sf-settings-nav[data-more] {
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent);
+}
+[dir="rtl"] :is(.sf-account-tabs, .sf-settings-nav)[data-more] {
+    -webkit-mask-image: linear-gradient(to left, #000 calc(100% - 40px), transparent);
+    mask-image: linear-gradient(to left, #000 calc(100% - 40px), transparent);
+}
+.sf .oe-page .oe-check input[type=checkbox] { accent-color: var(--color-accent); width: 16px; height: 16px; }
+/* A failed form shows its reason inside the form, so the same flash above the page is left out. */
+.sf:has(.oe-form-error, .sf-form-error) .flashmessage-error { display: none; }
