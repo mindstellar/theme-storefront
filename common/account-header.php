@@ -3,11 +3,10 @@
  * Storefront — a Shopclass public theme.
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
- * Partial: account chrome for the logged-in area — an identity band plus a
- * horizontal tab strip. It replaces the old vertical sidebar rail, which on
- * mobile stacked above the page so every account page opened on a menu instead
- * of on the thing the user came for. Included at the top of every user-* view;
- * it prints identity + navigation only, never page content.
+ * Partial: the account chrome on core's account pages, hung on core's
+ * account_page_before hook: an identity band, the account tabs, the settings
+ * sub-tabs, and the page's own heading. Core draws everything below it.
+ * Reads $sf_page, the core page slug the hook passed.
  */
 
 $sf_acct = sf_account_user();
@@ -26,20 +25,46 @@ $sf_place = $sf_acct
     ? storefront_location_line(array($sf_acct['s_city'] ?? '', $sf_acct['s_region'] ?? ''))
     : '';
 
-// Public osc_* URLs + osc_is_* current checks; icons from the theme set.
-// Favourites is a private-plugin route, deliberately absent from a public theme.
+$sf_page = isset($sf_page) ? (string) $sf_page : '';
+
+// Live listings only: the figure a seller watches, one COUNT on their own rows.
+$sf_active = (int) Item::newInstance()->countItemTypesByUserID(osc_logged_user_id(), 'active');
+
+$sf_settings = in_array($sf_page, array('user-profile', 'user-signin', 'user-delete_account'), true);
 $sf_tabs = array(
-    array('name' => __('Dashboard', 'storefront'),  'url' => osc_user_dashboard_url(),  'icon' => 'layout',   'current' => osc_is_user_dashboard()),
-    array('name' => __('My listings', 'storefront'), 'url' => osc_user_list_items_url(), 'icon' => 'list',     'current' => osc_is_list_items()),
-    array('name' => __('Alerts', 'storefront'),      'url' => osc_user_alerts_url(),     'icon' => 'bell',     'current' => osc_is_list_alerts()),
-    // "Settings", not "Profile" — the settings sub-nav below already owns a "Profile"
-    // tab, and this primary tab covers all four settings views. `soft` keeps it
-    // visually active without claiming aria-current="page": on a settings page the
-    // sub-nav marks the current location, so only one "current page" is announced.
-    array('name' => __('Settings', 'storefront'),    'url' => osc_user_profile_url(),    'icon' => 'settings', 'soft' => true,
-          'current' => osc_is_user_profile() || osc_is_change_email_page() || osc_is_change_username_page() || osc_is_change_password_page()),
+    array('name' => __('Dashboard', 'storefront'),   'url' => osc_user_dashboard_url(),  'icon' => 'layout', 'current' => $sf_page === 'user-dashboard'),
+    array('name' => __('My listings', 'storefront'), 'url' => osc_user_list_items_url(), 'icon' => 'list',   'current' => $sf_page === 'user-items'),
+    array('name' => __('Alerts', 'storefront'),      'url' => osc_user_alerts_url(),     'icon' => 'bell',   'current' => $sf_page === 'user-alerts'),
+    // "Settings", not "Profile": the sub-tabs below own "Profile". `soft` keeps it
+    // active without a second aria-current, which the sub-tab carries.
+    array('name' => __('Settings', 'storefront'),    'url' => osc_user_profile_url(),    'icon' => 'settings', 'soft' => true, 'current' => $sf_settings),
+);
+if (function_exists('osc_billing_enabled') && osc_billing_enabled()) {
+    $sf_tabs[] = array('name' => __('Credits', 'storefront'), 'url' => osc_billing_wallet_url(), 'icon' => 'credit-card', 'current' => osc_get_osclass_location() === 'billing');
+}
+
+$sf_settings_tabs = array(
+    array('name' => __('Profile', 'storefront'),  'url' => osc_user_profile_url(),        'current' => $sf_page === 'user-profile'),
+    array('name' => __('Username', 'storefront'), 'url' => osc_change_user_username_url(), 'current' => osc_is_change_username_page()),
+    array('name' => __('E-mail', 'storefront'),   'url' => osc_change_user_email_url(),    'current' => osc_is_change_email_page()),
+    array('name' => __('Password', 'storefront'), 'url' => osc_change_user_password_url(), 'current' => osc_is_change_password_page()),
+);
+
+// The heading each page had when the theme drew it; core's own h1 is kept for
+// screen readers and hidden on screen (css/storefront.css).
+$sf_titles = array(
+    'user-dashboard'      => __('Your latest listings', 'storefront'),
+    'user-items'          => __('My listings', 'storefront'),
+    'user-alerts'         => __('Alerts', 'storefront'),
+    'user-profile'        => __('Edit profile', 'storefront'),
+    'user-signin'         => __('Sign-in details', 'storefront'),
+    'user-delete_account' => __('Delete your account', 'storefront'),
+    'billing-wallet'      => __('Credits', 'storefront'),
+    'billing-buy'         => __('Buy credits', 'storefront'),
+    'billing-orders'      => __('Your orders', 'storefront'),
 );
 ?>
+<div class="sf-account">
 <header class="sf-account-head">
     <span class="sf-avatar sf-account-head__avatar">
         <?php if (sf_has_avatar()) { ?>
@@ -49,7 +74,7 @@ $sf_tabs = array(
         <?php } ?>
     </span>
     <div class="sf-account-head__identity">
-        <h1 class="sf-account-head__name"><?php echo osc_esc_html($sf_name); ?></h1>
+        <p class="sf-account-head__name" role="presentation"><?php echo osc_esc_html($sf_name); ?></p>
         <p class="sf-account-head__meta">
             <span><?php echo osc_esc_html(empty($sf_acct['b_company']) ? __('Individual', 'storefront') : __('Company', 'storefront')); ?></span>
             <?php if ($sf_place !== '') { ?>
@@ -83,3 +108,41 @@ $sf_tabs = array(
         osc_run_hook('user_menu');
     ?>
 </nav>
+
+<?php if ($sf_settings) { ?>
+    <nav class="sf-settings-nav" aria-label="<?php echo osc_esc_html(__('Account settings', 'storefront')); ?>">
+        <?php foreach ($sf_settings_tabs as $sf_st) { ?>
+            <a class="sf-settings-nav__tab<?php echo $sf_st['current'] ? ' is-active' : ''; ?>"
+               href="<?php echo osc_esc_html($sf_st['url']); ?>"<?php echo $sf_st['current'] ? ' aria-current="page"' : ''; ?>>
+                <?php echo osc_esc_html($sf_st['name']); ?>
+            </a>
+        <?php } ?>
+    </nav>
+<?php } ?>
+
+<?php if (isset($sf_titles[$sf_page])) { ?>
+    <div class="sf-manage-head">
+        <div>
+            <h2 class="sf-section__title"><?php echo osc_esc_html($sf_titles[$sf_page]); ?></h2>
+            <?php if ($sf_page === 'user-dashboard' && $sf_active > 0) { ?>
+                <p class="sf-dash-lead">
+                    <strong class="sf-dash-lead__count"><?php echo $sf_active; ?></strong>
+                    <?php echo osc_esc_html($sf_active === 1 ? __('active listing', 'storefront') : __('active listings', 'storefront')); ?>
+                </p>
+            <?php } ?>
+            <?php if ($sf_page === 'user-delete_account') { ?>
+                <p class="sf-form__lede"><?php _e('Enter your password to delete your account. Your listings and messages are removed with it. This cannot be undone.', 'storefront'); ?></p>
+            <?php } ?>
+        </div>
+        <?php if ($sf_page === 'user-dashboard' && $sf_active > 0) { ?>
+            <a class="sf-account-more" href="<?php echo osc_esc_html(osc_user_list_items_url()); ?>">
+                <?php _e('Manage all', 'storefront'); ?><?php echo storefront_icon('chevron-right', 15); ?>
+            </a>
+        <?php } elseif ($sf_page === 'user-items') { ?>
+            <a class="sf-btn sf-btn--primary sf-btn--sm" href="<?php echo osc_esc_html(osc_item_post_url_in_category()); ?>">
+                <?php echo storefront_icon('plus', 15); ?><span><?php _e('Post a listing', 'storefront'); ?></span>
+            </a>
+        <?php } ?>
+    </div>
+<?php } ?>
+</div>

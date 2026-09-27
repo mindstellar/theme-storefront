@@ -137,6 +137,8 @@
             dlg.querySelectorAll('[data-dialog-close]').forEach(function (btn) {
                 btn.addEventListener('click', function () { dlg.close(); });
             });
+            // A form that failed comes back open, showing why.
+            if (dlg.hasAttribute('data-dialog-show') && typeof dlg.showModal === 'function') { dlg.showModal(); }
         });
     }
 
@@ -147,34 +149,48 @@
     // — so the trust-critical moment is styled and specific, not a bare browser
     // prompt. Falls back to window.confirm when the dialog isn't on the page.
     function bindConfirms() {
-        var links = document.querySelectorAll('[data-confirm]');
+        // [data-osc-confirm] is core's own attribute (account pages); it gets this
+        // dialog too, and core's plain window.confirm fallback never runs.
+        var links = document.querySelectorAll('[data-confirm], [data-osc-confirm]');
         if (!links.length) { return; }
         var dlg = document.getElementById('sf-confirm');
         var canDialog = dlg && typeof dlg.showModal === 'function';
-        var titleEl, msgEl, goEl, defTitle, defOk;
+        var titleEl, msgEl, goEl, defTitle, defOk, pending = null;
         if (canDialog) {
             titleEl = dlg.querySelector('.sf-confirm__title');
             msgEl = dlg.querySelector('[data-confirm-msg]');
             goEl = dlg.querySelector('[data-confirm-go]');
             defTitle = titleEl ? titleEl.textContent : '';
             defOk = goEl ? goEl.textContent : '';
+            // A confirmed button submits its own form (a POST action); a link is followed.
+            if (goEl) {
+                goEl.addEventListener('click', function (e) {
+                    if (pending && pending.form) {
+                        e.preventDefault();
+                        dlg.close();
+                        pending.form.requestSubmit ? pending.form.requestSubmit(pending) : pending.form.submit();
+                    }
+                });
+            }
         }
         links.forEach(function (el) {
             el.addEventListener('click', function (e) {
-                var msg = el.getAttribute('data-confirm');
+                var msg = el.getAttribute('data-confirm') || el.getAttribute('data-osc-confirm');
+                e.stopImmediatePropagation();
                 if (!canDialog) {
                     if (!window.confirm(msg)) { e.preventDefault(); }
                     return;
                 }
                 e.preventDefault();
+                pending = el.tagName === 'BUTTON' ? el : null;
                 if (titleEl) { titleEl.textContent = el.getAttribute('data-confirm-title') || defTitle; }
                 if (msgEl) { msgEl.textContent = msg; }
                 if (goEl) {
                     goEl.textContent = el.getAttribute('data-confirm-ok') || defOk;
-                    goEl.setAttribute('href', el.getAttribute('href'));
+                    goEl.setAttribute('href', pending ? '#' : el.getAttribute('href'));
                 }
                 dlg.showModal();
-            });
+            }, true);
         });
     }
 

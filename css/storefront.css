@@ -2080,3 +2080,203 @@ body.sf-list .sf-card__desc {
 @media (prefers-reduced-motion: reduce) {
     * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
 }
+
+/* ==========================================================================
+   Pages core draws — account, sign-in, profile, contact.
+   Core prints .oe-* markup with its own small stylesheet after this one, so
+   rules here carry the extra `.sf` (body) class to win, and core's colour
+   tokens are pointed at the theme's so light/dark still flips.
+   ========================================================================== */
+.sf .oe-page {
+    --oe-ink: var(--color-text); --oe-ink-muted: var(--color-muted);
+    --oe-teal: var(--color-accent-ink); --oe-teal-deep: var(--color-accent-fill-hover);
+    --oe-rule: var(--color-divider); --oe-bench: var(--color-surface);
+    --oe-bench-sunk: var(--color-neutral-100); --oe-danger: var(--color-accent-2-ink);
+    --oe-success: var(--color-accent-ink);
+}
+.sf .oe-page .oe-doc { max-width: none; margin: 0; padding: 0; }
+.sf .oe-page .oe-h1 { font-family: var(--font-heading); font-weight: 800; font-size: 32px; letter-spacing: -.01em; }
+.sf .oe-page h2 { font-family: var(--font-heading); font-weight: 800; }
+
+/* Account pages: the theme's band and tabs (account_page_before) replace core's
+   heading and side menu, which stay in the page for screen readers only. */
+.sf .oe-doc:has(> .oe-account) > .oe-h1,
+.sf .oe-page .oe-account-nav {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+.sf .oe-page .oe-account { display: block; }
+.sf .oe-page .oe-account-main > .sf-account { margin-bottom: var(--space-6); }
+.sf .oe-page .oe-dashboard-intro,
+.sf .oe-page .oe-dashboard-title,
+.sf .oe-page .oe-dashboard-more { display: none; }
+
+/* Buttons and fields */
+.sf .oe-page .oe-btn, .sf .oe-page .oe-actions a.oe-primary {
+    display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-heading); font-weight: 800;
+    font-size: 14px; line-height: 1.2; padding: calc(var(--space-2) * 0.85) var(--space-3);
+    border-radius: var(--radius-md); border: 1px solid transparent; background: var(--color-accent-fill);
+    color: var(--color-fixed-light); text-decoration: none;
+}
+.sf .oe-page .oe-btn:hover { background: var(--color-accent-fill-hover); color: var(--color-fixed-light); }
+.sf .oe-page .oe-btn.oe-secondary, .sf .oe-page .oe-actions a.oe-secondary {
+    background: transparent; color: var(--color-text); border-color: var(--color-divider);
+}
+.sf .oe-page .oe-btn.oe-secondary:hover { background: color-mix(in srgb, var(--color-text) 7%, transparent); color: var(--color-text); }
+.sf .oe-page .oe-btn-danger { background: var(--color-accent-2-700); border-color: transparent; color: var(--color-fixed-light); }
+.sf .oe-page .oe-btn-danger:hover { background: var(--color-accent-2-800); }
+.sf .oe-page .oe-label { font-size: 12px; font-weight: 600; color: var(--color-muted); margin-bottom: 5px; }
+.sf .oe-page .oe-field :is(input:not([type=checkbox]):not([type=radio]):not([type=file]), select, textarea) {
+    width: 100%; max-width: none; min-height: 38px; padding: 8px 10px; font: inherit; font-size: 14px;
+    color: var(--color-text); background: var(--color-surface);
+    border: 1px solid var(--color-divider); border-radius: var(--radius-md);
+}
+.sf .oe-page .oe-field :is(input, select, textarea):focus {
+    border-color: var(--color-accent); outline: none;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 30%, transparent);
+}
+.sf .oe-page .oe-field textarea { min-height: 96px; resize: vertical; }
+.sf .oe-page .oe-hint, .sf .oe-page .oe-muted { color: var(--color-muted); font-size: 13px; }
+
+/* Sign in, register and password pages: the theme's auth card. */
+.sf .oe-page .oe-doc:has(> .oe-form-page) {
+    max-width: 440px; margin: var(--space-6) auto var(--space-8);
+    background: var(--color-surface); border: 1px solid var(--color-divider);
+    border-radius: var(--radius-lg); box-shadow: var(--shadow-md); padding: var(--space-6);
+}
+.sf .oe-page .oe-doc:has(> .oe-form-page) > .oe-h1 { font-size: 28px; margin-bottom: var(--space-4); }
+.sf .oe-page .oe-form-page .oe-btn[type=submit] { width: 100%; justify-content: center; }
+
+/* Panels, empty states, status tabs, pager */
+.sf .oe-page .oe-panel {
+    background: var(--color-surface); border: 1px solid var(--color-divider);
+    border-radius: var(--radius-lg); padding: var(--space-6); margin-bottom: var(--space-4);
+}
+.sf .oe-page .oe-empty {
+    padding: var(--space-8) var(--space-6); text-align: center; color: var(--color-muted);
+    font-size: 14px; border: 1px dashed var(--color-divider); border-radius: var(--radius-lg);
+}
+.sf .oe-page .oe-tabs {
+    display: flex; flex-wrap: nowrap; gap: var(--space-1); margin-bottom: var(--space-4);
+    padding: var(--space-1); background: var(--color-neutral-100); border: 0;
+    border-radius: var(--radius-md); overflow-x: auto; scrollbar-width: none;
+}
+.sf .oe-page .oe-tabs a {
+    flex: none; padding: var(--space-2) var(--space-4); border: 0; margin: 0; border-radius: var(--radius-sm);
+    font-family: var(--font-heading); font-weight: 800; font-size: 13px; color: var(--color-muted);
+}
+.sf .oe-page .oe-tabs [aria-current] { background: var(--color-surface); color: var(--color-accent-ink); box-shadow: var(--shadow-sm); }
+.sf .oe-page .oe-pager { margin-top: var(--space-6); padding-top: var(--space-4); border-top: 2px solid var(--color-divider); justify-content: center; }
+.sf .oe-page .oe-pager ul { display: flex; flex-wrap: wrap; gap: var(--space-2); list-style: none; padding: 0; margin: 0; }
+.sf .oe-page .oe-pager :is(a, span) {
+    display: inline-flex; align-items: center; justify-content: center; min-width: 40px; min-height: 40px;
+    padding: 0 var(--space-3); border: 1px solid var(--color-divider); border-radius: var(--radius-md);
+    color: var(--color-text); font-family: ui-monospace, monospace; font-size: 13px;
+}
+.sf .oe-page .oe-pager .searchPaginationSelected { background: var(--color-accent-fill); border-color: transparent; color: var(--color-fixed-light); }
+
+/* My listings: POST actions sit in the icon row like links. */
+.sf-manage__form { display: contents; }
+.sf-manage__promote {
+    grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2);
+    padding-top: var(--space-2); font-size: 12px; color: var(--color-muted);
+}
+.sf-manage__promote-label { font-weight: 600; }
+.sf-manage__status { display: flex; flex-wrap: wrap; gap: 4px; }
+
+/* Profile form: core's groups take the theme's sections. */
+.sf .oe-page form:has(> .oe-group) { max-width: 680px; }
+.sf .oe-page .oe-group { margin: 0 0 var(--space-8); }
+.sf .oe-page .oe-group > legend { font-family: var(--font-heading); font-weight: 800; font-size: 20px; margin: 0 0 var(--space-4); padding: 0; }
+.sf .oe-page .oe-grid { grid-template-columns: 1fr 1fr; gap: 0 var(--space-4); }
+@media (max-width: 640px) { .sf .oe-page .oe-grid { grid-template-columns: 1fr; } }
+.sf .oe-page .oe-avatar-field { align-items: center; gap: var(--space-4); }
+.sf .oe-page .oe-avatar, .sf .oe-page .oe-avatar-field .sf-avatar {
+    width: 104px; height: 104px; margin: 0; border-radius: calc(var(--radius-lg) * 1.4); object-fit: cover; opacity: 1;
+}
+.sf .oe-page .oe-avatar-field input[type=file] { font-size: 13px; color: var(--color-muted); }
+.sf .oe-page .oe-avatar-field input[type=file]::file-selector-button {
+    font: inherit; font-family: var(--font-heading); font-weight: 800; font-size: 13px; margin-right: var(--space-3);
+    padding: 6px var(--space-3); border-radius: var(--radius-md); cursor: pointer;
+    background: transparent; color: var(--color-text); border: 1px solid var(--color-divider);
+}
+.sf .oe-page .oe-check { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--color-muted); margin-top: var(--space-2); }
+.sf .oe-page .oe-danger { max-width: 680px; }
+.sf .oe-page .oe-avatar-field input[type=file] { border: 0; padding: 0; background: none; min-height: 0; max-width: none; width: auto; }
+.sf .oe-page .oe-account-main > .oe-panel { max-width: 680px; }
+.sf .oe-page .oe-panel > h2 { font-size: 20px; margin: 0 0 var(--space-3); }
+
+/* Public profile: picture beside the name and details, the Message button on the right. */
+.sf .oe-page .oe-doc:has(> .oe-profile-head) {
+    display: grid; grid-template-columns: 104px minmax(0, 1fr) auto; column-gap: var(--space-4); align-items: center;
+}
+.sf .oe-page .oe-doc:has(> .oe-profile-head) > * { grid-column: 1 / -1; }
+.sf .oe-page .oe-doc:has(> .oe-profile-head) > .oe-h1 { grid-column: 2; grid-row: 1; align-self: end; margin: 0; }
+.sf .oe-page .oe-profile-head { display: contents; }
+.sf .oe-page .oe-profile-head > .oe-avatar { grid-column: 1; grid-row: 1 / span 2; width: 104px; height: 104px; border-radius: calc(var(--radius-lg) * 1.4); box-shadow: var(--shadow-sm); }
+.sf .oe-page .oe-profile-head > .oe-meta { grid-column: 2; grid-row: 2; align-self: start; margin: 6px 0 0; font-size: 14px; }
+.sf .oe-page .oe-profile-head > .oe-actions { grid-column: 3; grid-row: 1 / span 2; margin: 0; }
+.sf .oe-page .oe-doc:has(> .oe-profile-head) > h2 { font-size: 20px; margin: var(--space-8) 0 var(--space-4); }
+@media (max-width: 640px) {
+    .sf .oe-page .oe-doc:has(> .oe-profile-head) { grid-template-columns: 72px minmax(0, 1fr); }
+    .sf .oe-page .oe-profile-head > .oe-avatar { width: 72px; height: 72px; }
+    .sf .oe-page .oe-profile-head > .oe-actions { grid-column: 1 / -1; grid-row: 3; margin-top: var(--space-4); }
+}
+
+/* Core's message dialog, in the theme's dialog look. */
+.sf .oe-dialog[data-osc-dialog-ready] {
+    width: min(480px, calc(100vw - 2 * var(--space-4))); border: 0; border-radius: var(--radius-lg);
+    background: var(--color-surface); color: var(--color-text); box-shadow: var(--shadow-lg);
+}
+.sf .oe-dialog[data-osc-dialog-ready]::backdrop { background: var(--color-scrim); }
+.sf .oe-dialog-head { border-color: var(--color-divider); padding: var(--space-4) var(--space-6); }
+.sf .oe-dialog-head h2 { font-family: var(--font-heading); font-weight: 800; font-size: 20px; }
+.sf .oe-dialog-body { padding: var(--space-4) var(--space-6) var(--space-6); }
+.sf .oe-dialog-body .oe-actions .oe-btn { width: 100%; justify-content: center; }
+.sf .oe-form-error {
+    border-color: var(--color-accent-2-ink); color: var(--color-accent-2-ink);
+    background: color-mix(in srgb, var(--color-accent-2) 12%, transparent);
+}
+
+/* Contact page: the form, and the support panels beside it. */
+.sf .oe-page .oe-contact { grid-template-columns: minmax(0, 680px) 300px; gap: var(--space-8); }
+.sf .oe-page .oe-contact-main { max-inline-size: none; }
+.sf .oe-page .oe-contact-aside { display: flex; flex-direction: column; gap: var(--space-4); }
+@media (max-width: 900px) { .sf .oe-page .oe-contact { grid-template-columns: minmax(0, 1fr); } }
+.sf-contact-panel { padding: var(--space-4); }
+.sf .oe-page .sf-contact-panel__title, .sf-contact-panel__title { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 var(--space-2); }
+.sf-contact-panel__lead { font-size: 14px; margin: 0; }
+.sf-contact-panel__note { font-size: 12px; color: var(--color-muted); margin: 0; }
+.sf-contact-panel__links { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; font-size: 14px; }
+
+/* Core's save-this-search form in the filter rail. */
+.sf-filters__alert .oe-alert-form .oe-label { display: block; font-size: 12px; font-weight: 600; color: var(--color-muted); margin-bottom: 5px; }
+.sf-filters__alert .oe-alert-form .oe-field { margin: 0 0 var(--space-2); }
+.sf-filters__alert .oe-alert-form .oe-input {
+    width: 100%; max-width: none; min-height: 38px; padding: 8px 10px; font: inherit; font-size: 14px;
+    color: var(--color-text); background: var(--color-surface);
+    border: 1px solid var(--color-divider); border-radius: var(--radius-md);
+}
+.sf-filters__alert .oe-alert-form .oe-actions { margin: 0; }
+.sf-filters__alert .oe-alert-form .oe-btn {
+    width: 100%; justify-content: center; display: inline-flex; font-family: var(--font-heading); font-weight: 800;
+    font-size: 14px; padding: calc(var(--space-2) * 0.85) var(--space-3); border-radius: var(--radius-md);
+    background: transparent; color: var(--color-text); border: 1px solid var(--color-divider); cursor: pointer;
+}
+.sf-filters__alert .oe-alert-form .oe-btn:hover { background: color-mix(in srgb, var(--color-text) 7%, transparent); }
+.sf-form-error {
+    margin: 0 0 var(--space-4); padding: 10px 14px; border-radius: var(--radius-md); font-size: 14px;
+    border: 1px solid var(--color-accent-2-ink); color: var(--color-accent-2-ink);
+    background: color-mix(in srgb, var(--color-accent-2) 12%, transparent);
+}
+
+/* Credits pages: the balance beside its label, the history as the theme's table. */
+.sf .oe-page .oe-bill-balance { font-family: var(--font-heading); font-weight: 800; font-size: 40px; line-height: 1; font-variant-numeric: tabular-nums; }
+.sf .oe-page .oe-bill table th { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--color-muted); }
+.sf .oe-page .oe-bill .oe-bill-badge { font-family: var(--font-heading); font-weight: 800; font-size: 12px; }
+/* The delete page's warning: the band repeats it under the heading, so core's copy above is for screen readers. */
+.sf .oe-page .oe-doc:has(> .oe-account) > p {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+.sf .oe-page .oe-account-main > form:not(:has(.oe-group)) { max-width: 440px; }

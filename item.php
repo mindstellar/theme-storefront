@@ -552,7 +552,8 @@ $sf_next = storefront_adjacent_item_url('next');
 <?php // ════════════════ dialogs ════════════════ ?>
 
 <?php if ($sf_can_contact) { ?>
-<dialog class="sf-dialog" id="sf-dialog-contact" aria-labelledby="sf-dialog-contact-title">
+<?php $sf_contact_error = (string) Session::newInstance()->_getForm('contact_error'); ?>
+<dialog class="sf-dialog" id="sf-dialog-contact" aria-labelledby="sf-dialog-contact-title"<?php echo $sf_contact_error !== '' ? ' data-dialog-show' : ''; ?>>
     <div class="sf-dialog__head">
         <h2 class="sf-dialog__title" id="sf-dialog-contact-title"><?php _e('Message seller', 'storefront'); ?></h2>
         <button type="button" class="sf-dialog__close" data-dialog-close aria-label="<?php echo osc_esc_html(__('Close', 'storefront')); ?>"><?php echo $sf_icon('x', 18); ?></button>

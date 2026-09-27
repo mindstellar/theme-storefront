@@ -16,7 +16,8 @@ responsive, **vanilla-JS** (no jQuery) classifieds front end.
 
 ## Install
 
-Shopclass 6.0.0+ bundles Storefront in the release zip and activates it on a fresh install. To
+Storefront 2.0 needs Shopclass 6.4.0 or later; sites on an older core stay on Storefront 1.3.x.
+Shopclass bundles Storefront in the release zip and activates it on a fresh install. To
 install manually, drop this folder into `oc-content/themes/storefront/` and activate it under
 **Settings → Appearance**.
 
@@ -118,6 +119,16 @@ Storefront is meant to double as a reference for what the platform can do:
   core's JS beacon does the counting and full-page caching keeps working.
 - **Widget zones** (`header`, `footer`, `item_sidebar`) for drop-in plugin components.
 - **Vanilla JS only**, light + dark mode, RTL via logical properties.
+
+## Pages core draws
+
+The account pages, sign-in and registration, the public profile, the contact page and the
+credits pages are drawn by core, inside Storefront's header and footer. Storefront hangs its
+own pieces on core's hooks (`inc/core-pages.php`): the account band and tabs on
+`account_page_before`, the listing cards and the "My listings" table on `listing_list_html`,
+and the contact panels on `contact_page_aside`. `css/storefront.css` styles core's `.oe-*`
+markup. Plugins use core's hooks on these pages; see the account pages guide in the Shopclass
+developer docs.
 
 ## Plugin hooks
 

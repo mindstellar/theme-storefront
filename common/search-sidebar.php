@@ -239,8 +239,17 @@ $sf_render_region_city_selects = function ($sf_country_code) use ($sf_region_par
     if (osc_users_enabled()) {
         $sf_alerts_gated = (bool) osc_get_preference('alerts_require_login');
         if (osc_is_web_user_logged_in() || !$sf_alerts_gated) { ?>
-            <div class="sf-filters__group sf-filters__alert">
+            <div class="sf-filters__group sf-filters__alert" data-search-alert
+                 data-wait="<?php echo osc_esc_html(__('Subscribing…', 'storefront')); ?>"
+                 data-ok="<?php echo osc_esc_html(__('Subscribed. Check your email to confirm.', 'storefront')); ?>"
+                 data-login="<?php echo osc_esc_html(__('Please sign in to subscribe.', 'storefront')); ?>"
+                 data-bademail="<?php echo osc_esc_html(__('Enter a valid e-mail address.', 'storefront')); ?>"
+                 data-fail="<?php echo osc_esc_html(__('Could not subscribe. Please try again.', 'storefront')); ?>">
+                <h3 class="sf-filters__label"><?php _e('Get an email alert', 'storefront'); ?></h3>
+                <p class="sf-alert-form__hint"><?php _e('We will email you when a new listing matches this search.', 'storefront'); ?></p>
+                <?php // Core's form: it posts on its own without JavaScript; storefront-search.js sends it in the background. ?>
                 <?php osc_alert_form(); ?>
+                <p class="sf-alert-form__msg" role="status" aria-live="polite" data-alert-msg></p>
             </div>
         <?php } else { ?>
             <div class="sf-filters__group sf-filters__alert">

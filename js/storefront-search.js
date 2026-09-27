@@ -165,9 +165,11 @@
     // announces the outcome. Core reads `alert` (the encrypted search) and `email`;
     // it returns "1" on success, "-4" when login is required, "-1" for a bad email.
     function bindSearchAlert() {
-        var form = document.querySelector('[data-search-alert]');
+        // The wrapper carries the messages; core's [data-osc-alert-form] is the form.
+        var box = document.querySelector('[data-search-alert]');
+        var form = box ? box.querySelector('[data-osc-alert-form]') : null;
         if (!form) { return; }
-        var msg = form.querySelector('[data-alert-msg]');
+        var msg = box.querySelector('[data-alert-msg]');
         function say(text, state) {
             if (!msg) { return; }
             msg.textContent = text || '';
@@ -181,7 +183,7 @@
             body.set('page', 'ajax'); body.set('action', 'alerts');
             if (tok) { body.set('alert', tok.value); }
             if (email) { body.set('email', email.value); }
-            say(form.getAttribute('data-wait'));
+            say(box.getAttribute('data-wait'));
             fetch(form.action, {
                 method: 'POST', credentials: 'same-origin',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-Requested-With': 'XMLHttpRequest' },
@@ -189,12 +191,12 @@
             }).then(function (r) { return r.text(); }).then(function (t) {
                 t = (t || '').trim();
                 if (t === '1') {
-                    say(form.getAttribute('data-ok'), 'ok');
+                    say(box.getAttribute('data-ok'), 'ok');
                     form.querySelectorAll('input, button').forEach(function (el) { el.disabled = true; });
-                } else if (t === '-4') { say(form.getAttribute('data-login'), 'err'); }
-                else if (t === '-1') { say(form.getAttribute('data-bademail'), 'err'); }
-                else { say(form.getAttribute('data-fail'), 'err'); }
-            }).catch(function () { say(form.getAttribute('data-fail'), 'err'); });
+                } else if (t === '-4') { say(box.getAttribute('data-login'), 'err'); }
+                else if (t === '-1') { say(box.getAttribute('data-bademail'), 'err'); }
+                else { say(box.getAttribute('data-fail'), 'err'); }
+            }).catch(function () { say(box.getAttribute('data-fail'), 'err'); });
         });
     }
 
