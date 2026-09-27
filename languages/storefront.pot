@@ -28,7 +28,7 @@ msgstr ""
 msgid "%1$s · %2$d credits"
 msgstr ""
 
-#: item.php:301
+#: item.php:304
 msgid "%d listing"
 msgid_plural "%d listings"
 msgstr[0] ""
@@ -38,7 +38,7 @@ msgstr[1] ""
 msgid "%d listings"
 msgstr ""
 
-#: item.php:144
+#: item.php:146
 msgid "%d photos"
 msgstr ""
 
@@ -58,7 +58,7 @@ msgstr ""
 msgid "%s to leave a comment on this listing."
 msgstr ""
 
-#: item.php:425
+#: item.php:428
 msgid "%s view"
 msgid_plural "%s views"
 msgstr[0] ""
@@ -81,7 +81,7 @@ msgstr ""
 msgid "Actions"
 msgstr ""
 
-#: item.php:258
+#: item.php:261
 msgid "Activate"
 msgstr ""
 
@@ -105,7 +105,7 @@ msgstr ""
 msgid "Address"
 msgstr ""
 
-#: item.php:242
+#: item.php:245
 msgid "Admin"
 msgstr ""
 
@@ -116,17 +116,17 @@ msgstr ""
 msgid "Alerts"
 msgstr ""
 
-#: functions.php:704
+#: functions.php:734
 #: main.php:64
 msgid "All categories"
 msgstr ""
 
-#: functions.php:585
+#: functions.php:615
 msgid "All listings"
 msgstr ""
 
-#: functions.php:898
-#: functions.php:929
+#: functions.php:928
+#: functions.php:959
 msgid "An error has occurred, please try again."
 msgstr ""
 
@@ -175,13 +175,13 @@ msgstr ""
 msgid "Back to top"
 msgstr ""
 
-#: item.php:255
+#: item.php:258
 msgid "Block"
 msgstr ""
 
 #: common/loop.php:27
 #: common/manage-list.php:55
-#: item.php:245
+#: item.php:248
 msgid "Blocked"
 msgstr ""
 
@@ -189,7 +189,7 @@ msgstr ""
 msgid "Brand &amp; Logo"
 msgstr ""
 
-#: functions.php:886
+#: functions.php:916
 msgid "Brand settings updated correctly."
 msgstr ""
 
@@ -255,8 +255,8 @@ msgstr ""
 #: common/loop.php:113
 #: common/loop.php:56
 #: common/manage-list.php:110
-#: item.php:187
-#: item.php:542
+#: item.php:190
+#: item.php:545
 msgid "Check with seller"
 msgstr ""
 
@@ -279,10 +279,10 @@ msgstr ""
 msgid "Clear filters"
 msgstr ""
 
-#: item.php:559
-#: item.php:570
-#: item.php:603
-#: item.php:614
+#: item.php:562
+#: item.php:573
+#: item.php:606
+#: item.php:617
 msgid "Close"
 msgstr ""
 
@@ -312,7 +312,7 @@ msgid "Compact logo (optional)"
 msgstr ""
 
 #: common/account-header.php:78
-#: item.php:289
+#: item.php:292
 msgid "Company"
 msgstr ""
 
@@ -324,7 +324,7 @@ msgstr ""
 msgid "Contact support"
 msgstr ""
 
-#: item.php:579
+#: item.php:582
 msgid "Copy"
 msgstr ""
 
@@ -342,7 +342,7 @@ msgstr ""
 msgid "Country, region &amp; city"
 msgstr ""
 
-#: item.php:317
+#: item.php:320
 msgid "Create a free account"
 msgstr ""
 
@@ -361,7 +361,7 @@ msgstr ""
 msgid "Dashboard"
 msgstr ""
 
-#: item.php:257
+#: item.php:260
 msgid "Deactivate"
 msgstr ""
 
@@ -373,13 +373,13 @@ msgstr ""
 #: common/item-comments.php:52
 #: common/loop.php:85
 #: common/manage-list.php:77
-#: item.php:215
+#: item.php:218
 msgid "Delete"
 msgstr ""
 
 #: common/loop.php:85
 #: common/manage-list.php:82
-#: item.php:212
+#: item.php:215
 msgid "Delete “%s”? This cannot be undone."
 msgstr ""
 
@@ -390,8 +390,8 @@ msgstr ""
 
 #: common/loop.php:85
 #: common/manage-list.php:78
-#: item.php:213
-#: item.php:214
+#: item.php:216
+#: item.php:217
 msgid "Delete listing"
 msgstr ""
 
@@ -408,15 +408,15 @@ msgid "Delete your comment? This cannot be undone."
 msgstr ""
 
 #: item-post.php:53
-#: item.php:342
+#: item.php:345
 msgid "Description"
 msgstr ""
 
-#: item.php:445
+#: item.php:448
 msgid "Details"
 msgstr ""
 
-#: item.php:625
+#: item.php:628
 msgid "Download"
 msgstr ""
 
@@ -434,7 +434,7 @@ msgstr ""
 
 #: common/loop.php:84
 #: common/manage-list.php:75
-#: item.php:209
+#: item.php:212
 msgid "Edit"
 msgstr ""
 
@@ -459,7 +459,7 @@ msgstr ""
 #: common/item-sidebar.php:20
 #: common/loop.php:29
 #: common/manage-list.php:57
-#: item.php:248
+#: item.php:251
 msgid "Expired"
 msgstr ""
 
@@ -468,14 +468,14 @@ msgstr ""
 msgid "Facebook"
 msgstr ""
 
-#: item.php:262
+#: item.php:265
 msgid "Feature"
 msgstr ""
 
 #: common/loop.php:103
 #: common/loop.php:34
 #: common/manage-list.php:65
-#: item.php:249
+#: item.php:252
 #: main.php:120
 msgid "Featured"
 msgstr ""
@@ -502,8 +502,8 @@ msgstr ""
 msgid "Footer tagline"
 msgstr ""
 
-#: item.php:185
-#: item.php:540
+#: item.php:188
+#: item.php:543
 msgid "Free"
 msgstr ""
 
@@ -540,7 +540,7 @@ msgstr ""
 msgid "Highlighted"
 msgstr ""
 
-#: common/head-seo.php:133
+#: common/head-seo.php:130
 #: common/header.php:24
 #: item.php:119
 #: search.php:25
@@ -566,7 +566,7 @@ msgid ""
 "to your site's default country."
 msgstr ""
 
-#: item.php:246
+#: item.php:249
 msgid "Inactive"
 msgstr ""
 
@@ -575,7 +575,7 @@ msgid "Indigo"
 msgstr ""
 
 #: common/account-header.php:78
-#: item.php:289
+#: item.php:292
 msgid "Individual"
 msgstr ""
 
@@ -584,7 +584,7 @@ msgstr ""
 msgid "Instagram"
 msgstr ""
 
-#: item.php:313
+#: item.php:316
 msgid "It's your own listing — you can't contact yourself."
 msgstr ""
 
@@ -623,11 +623,11 @@ msgstr ""
 msgid "Light"
 msgstr ""
 
-#: item.php:577
+#: item.php:580
 msgid "Link copied to clipboard."
 msgstr ""
 
-#: item.php:578
+#: item.php:581
 msgid "Link selected — press Ctrl+C to copy."
 msgstr ""
 
@@ -648,31 +648,31 @@ msgstr ""
 msgid "Listing"
 msgstr ""
 
-#: item.php:422
+#: item.php:425
 msgid "Listing #%d"
 msgstr ""
 
-#: functions.php:835
+#: functions.php:865
 msgid "Listing activated."
 msgstr ""
 
-#: functions.php:832
+#: functions.php:862
 msgid "Listing blocked — hidden from the site and search."
 msgstr ""
 
-#: functions.php:834
+#: functions.php:864
 msgid "Listing deactivated."
 msgstr ""
 
-#: functions.php:839
+#: functions.php:869
 msgid "Listing is no longer featured."
 msgstr ""
 
-#: functions.php:838
+#: functions.php:868
 msgid "Listing is now featured."
 msgstr ""
 
-#: item.php:575
+#: item.php:578
 msgid "Listing link"
 msgstr ""
 
@@ -680,31 +680,31 @@ msgstr ""
 msgid "Listing location"
 msgstr ""
 
-#: item.php:517
+#: item.php:520
 msgid "Listing navigation"
 msgstr ""
 
-#: functions.php:833
+#: functions.php:863
 msgid "Listing unblocked."
 msgstr ""
 
-#: item.php:250
+#: item.php:253
 msgid "Live"
 msgstr ""
 
 #: common/search-sidebar.php:107
-#: item.php:472
+#: item.php:475
 #: main.php:60
 msgid "Location"
 msgstr ""
 
 #: common/footer.php:95
 #: common/header.php:77
-#: item.php:316
+#: item.php:319
 msgid "Log in"
 msgstr ""
 
-#: item.php:315
+#: item.php:318
 msgid "Log in to contact the seller."
 msgstr ""
 
@@ -721,11 +721,11 @@ msgstr ""
 msgid "Manage all"
 msgstr ""
 
-#: item.php:260
+#: item.php:263
 msgid "Mark spam"
 msgstr ""
 
-#: functions.php:836
+#: functions.php:866
 msgid "Marked as spam."
 msgstr ""
 
@@ -743,7 +743,7 @@ msgid "Maximum price"
 msgstr ""
 
 #: common/account-header.php:85
-#: item.php:298
+#: item.php:301
 msgid "Member since %s"
 msgstr ""
 
@@ -755,9 +755,9 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
-#: item.php:320
-#: item.php:547
-#: item.php:558
+#: item.php:323
+#: item.php:550
+#: item.php:561
 msgid "Message seller"
 msgstr ""
 
@@ -784,21 +784,21 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: item.php:331
+#: item.php:334
 msgid ""
 "Never pay in advance. Meet in a public place and inspect the item before "
 "paying."
 msgstr ""
 
-#: item.php:296
+#: item.php:299
 msgid "New seller"
 msgstr ""
 
-#: item.php:525
+#: item.php:528
 msgid "Next listing"
 msgstr ""
 
-#: item.php:621
+#: item.php:624
 msgid "Next photo"
 msgstr ""
 
@@ -814,11 +814,11 @@ msgstr ""
 msgid "No listings yet — be the first to post one."
 msgstr ""
 
-#: functions.php:837
+#: functions.php:867
 msgid "No longer marked as spam."
 msgstr ""
 
-#: item.php:166
+#: item.php:168
 msgid "No photo for this listing"
 msgstr ""
 
@@ -826,7 +826,7 @@ msgstr ""
 msgid "No results for \"%s\". Try widening your filters or clearing the search."
 msgstr ""
 
-#: functions.php:715
+#: functions.php:745
 msgid "No subcategories"
 msgstr ""
 
@@ -834,7 +834,7 @@ msgstr ""
 msgid "not published"
 msgstr ""
 
-#: item.php:259
+#: item.php:262
 msgid "Not spam"
 msgstr ""
 
@@ -842,11 +842,11 @@ msgstr ""
 msgid "Offensive content"
 msgstr ""
 
-#: item.php:267
+#: item.php:270
 msgid "Open in admin"
 msgstr ""
 
-#: item.php:487
+#: item.php:490
 msgid "Open in full map"
 msgstr ""
 
@@ -855,11 +855,11 @@ msgstr ""
 msgid "optional"
 msgstr ""
 
-#: item.php:457
+#: item.php:460
 msgid "Other details"
 msgstr ""
 
-#: functions.php:662
+#: functions.php:692
 msgid "Over %s"
 msgstr ""
 
@@ -867,7 +867,7 @@ msgstr ""
 msgid "Overrides the big home headline. Leave empty to use the site title."
 msgstr ""
 
-#: functions.php:562
+#: functions.php:592
 msgid "Paused: delete this alert and save the search again."
 msgstr ""
 
@@ -880,11 +880,11 @@ msgstr ""
 msgid "Phone number"
 msgstr ""
 
-#: item.php:155
+#: item.php:157
 msgid "Photo %1$d of %2$d"
 msgstr ""
 
-#: item.php:613
+#: item.php:616
 msgid "Photo viewer"
 msgstr ""
 
@@ -922,11 +922,11 @@ msgstr ""
 msgid "Powered by %s"
 msgstr ""
 
-#: item.php:520
+#: item.php:523
 msgid "Previous listing"
 msgstr ""
 
-#: item.php:620
+#: item.php:623
 msgid "Previous photo"
 msgstr ""
 
@@ -934,11 +934,11 @@ msgstr ""
 msgid "Price"
 msgstr ""
 
-#: functions.php:578
+#: functions.php:608
 msgid "Price %1$s – %2$s"
 msgstr ""
 
-#: functions.php:580
+#: functions.php:610
 msgid "Price from %s"
 msgstr ""
 
@@ -946,7 +946,7 @@ msgstr ""
 msgid "Price range"
 msgstr ""
 
-#: functions.php:582
+#: functions.php:612
 msgid "Price up to %s"
 msgstr ""
 
@@ -1007,7 +1007,7 @@ msgstr ""
 msgid "Register"
 msgstr ""
 
-#: item.php:502
+#: item.php:505
 msgid "Related listings"
 msgstr ""
 
@@ -1023,12 +1023,12 @@ msgstr ""
 msgid "Replace"
 msgstr ""
 
-#: item.php:200
+#: item.php:203
 msgid "Report"
 msgstr ""
 
 #: common/item-sidebar.php:15
-#: item.php:602
+#: item.php:605
 msgid "Report this listing"
 msgstr ""
 
@@ -1086,7 +1086,7 @@ msgstr ""
 msgid "Select a category"
 msgstr ""
 
-#: item.php:273
+#: item.php:276
 msgid "Seller"
 msgstr ""
 
@@ -1114,15 +1114,15 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: item.php:196
+#: item.php:199
 msgid "Share"
 msgstr ""
 
-#: item.php:569
+#: item.php:572
 msgid "Share this listing"
 msgstr ""
 
-#: item.php:587
+#: item.php:590
 msgid "Share…"
 msgstr ""
 
@@ -1142,11 +1142,11 @@ msgstr ""
 msgid "Show featured (promoted) listings on the home page"
 msgstr ""
 
-#: item.php:481
+#: item.php:484
 msgid "Show map"
 msgstr ""
 
-#: item.php:324
+#: item.php:327
 msgid "Show phone number"
 msgstr ""
 
@@ -1200,7 +1200,7 @@ msgstr ""
 msgid "Sort"
 msgstr ""
 
-#: item.php:247
+#: item.php:250
 msgid "Spam"
 msgstr ""
 
@@ -1216,11 +1216,11 @@ msgstr ""
 msgid "Storefront settings"
 msgstr ""
 
-#: functions.php:1009
+#: functions.php:1039
 msgid "Storefront: Brand"
 msgstr ""
 
-#: functions.php:1014
+#: functions.php:1044
 msgid "Storefront: Settings"
 msgstr ""
 
@@ -1263,11 +1263,11 @@ msgstr ""
 msgid "Teal"
 msgstr ""
 
-#: item.php:606
+#: item.php:609
 msgid "Tell us what's wrong. Reports are confidential."
 msgstr ""
 
-#: functions.php:910
+#: functions.php:940
 msgid ""
 "That SVG could not be used — it may be malformed, unsafe, or over the size "
 "limit."
@@ -1279,12 +1279,12 @@ msgid ""
 "mistyped. Try searching for what you were after."
 msgstr ""
 
-#: functions.php:955
+#: functions.php:985
 msgid "The logo has been removed."
 msgstr ""
 
-#: functions.php:921
-#: functions.php:938
+#: functions.php:951
+#: functions.php:968
 msgid "The logo has been uploaded correctly."
 msgstr ""
 
@@ -1300,7 +1300,7 @@ msgid ""
 "in every case."
 msgstr ""
 
-#: functions.php:988
+#: functions.php:1018
 msgid "Theme settings updated correctly."
 msgstr ""
 
@@ -1308,23 +1308,23 @@ msgstr ""
 msgid "This is how buyers and sellers see you across the marketplace."
 msgstr ""
 
-#: item.php:207
+#: item.php:210
 msgid "This is your listing."
 msgstr ""
 
-#: functions.php:815
+#: functions.php:845
 msgid "This listing doesn't exist."
 msgstr ""
 
-#: item.php:128
+#: item.php:130
 msgid "This listing has expired — you can no longer contact the seller."
 msgstr ""
 
-#: item.php:311
+#: item.php:314
 msgid "This listing has expired."
 msgstr ""
 
-#: item.php:129
+#: item.php:131
 msgid "This listing is not active yet."
 msgstr ""
 
@@ -1341,11 +1341,11 @@ msgstr ""
 msgid "Twitter / X"
 msgstr ""
 
-#: item.php:256
+#: item.php:259
 msgid "Unblock"
 msgstr ""
 
-#: functions.php:663
+#: functions.php:693
 msgid "Under %s"
 msgstr ""
 
@@ -1353,15 +1353,15 @@ msgstr ""
 msgid "under maintenance"
 msgstr ""
 
-#: item.php:261
+#: item.php:264
 msgid "Unfeature"
 msgstr ""
 
-#: functions.php:808
+#: functions.php:838
 msgid "Unknown action."
 msgstr ""
 
-#: functions.php:940
+#: functions.php:970
 msgid "Unsupported file type — upload an SVG, JPG or PNG."
 msgstr ""
 
@@ -1380,7 +1380,7 @@ msgstr ""
 
 #: common/loop.php:83
 #: common/manage-list.php:132
-#: item.php:144
+#: item.php:146
 msgid "View"
 msgstr ""
 
@@ -1396,7 +1396,7 @@ msgstr ""
 msgid "View listing"
 msgstr ""
 
-#: item.php:140
+#: item.php:142
 msgid "View photo full size"
 msgstr ""
 
@@ -1413,7 +1413,7 @@ msgstr ""
 msgid "Violet"
 msgstr ""
 
-#: item.php:479
+#: item.php:482
 msgid "We couldn't load the map for this location."
 msgstr ""
 
@@ -1430,7 +1430,7 @@ msgstr ""
 msgid "What are you looking for?"
 msgstr ""
 
-#: functions.php:667
+#: functions.php:697
 msgid "With photos"
 msgstr ""
 
@@ -1446,11 +1446,11 @@ msgstr ""
 msgid "X (Twitter)"
 msgstr ""
 
-#: item.php:371
+#: item.php:374
 msgid "Yes"
 msgstr ""
 
-#: functions.php:797
+#: functions.php:827
 msgid "You are not allowed to do that."
 msgstr ""
 

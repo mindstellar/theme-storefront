@@ -127,14 +127,12 @@ if ($sf_is_item) {
     // Mirrors the .sf-crumbs trail at the top of item.php. The last crumb is the
     // page itself, so it carries no url — same as the markup, which does not
     // link it.
-    $sf_graph[] = array(
-        '@type'           => 'BreadcrumbList',
-        'itemListElement' => array(
-            array('@type' => 'ListItem', 'position' => 1, 'name' => __('Home', 'storefront'), 'item' => osc_base_url()),
-            array('@type' => 'ListItem', 'position' => 2, 'name' => osc_item_category(), 'item' => osc_search_category_url()),
-            array('@type' => 'ListItem', 'position' => 3, 'name' => osc_item_title()),
-        ),
-    );
+    $sf_crumbs = array(array('@type' => 'ListItem', 'position' => 1, 'name' => __('Home', 'storefront'), 'item' => osc_base_url()));
+    foreach (storefront_item_category_path() as $sf_crumb) {
+        $sf_crumbs[] = array('@type' => 'ListItem', 'position' => count($sf_crumbs) + 1, 'name' => $sf_crumb['name'], 'item' => $sf_crumb['url']);
+    }
+    $sf_crumbs[] = array('@type' => 'ListItem', 'position' => count($sf_crumbs) + 1, 'name' => osc_item_title());
+    $sf_graph[]  = array('@type' => 'BreadcrumbList', 'itemListElement' => $sf_crumbs);
 }
 
 // JSON_HEX_TAG is the load-bearing flag: a listing title containing "</script>"

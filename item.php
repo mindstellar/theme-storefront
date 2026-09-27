@@ -117,7 +117,9 @@ $sf_next = storefront_adjacent_item_url('next');
 
 <div class="sf-crumbs">
     <a href="<?php echo osc_base_url(); ?>"><?php _e('Home', 'storefront'); ?></a> &nbsp;/&nbsp;
-    <a href="<?php echo osc_search_category_url(); ?>"><?php echo osc_esc_html(osc_item_category()); ?></a> &nbsp;/&nbsp;
+    <?php foreach (storefront_item_category_path() as $sf_crumb) { ?>
+        <a href="<?php echo osc_esc_html($sf_crumb['url']); ?>"><?php echo osc_esc_html($sf_crumb['name']); ?></a> &nbsp;/&nbsp;
+    <?php } ?>
     <?php echo osc_esc_html(osc_item_title()); ?>
 </div>
 
@@ -132,7 +134,7 @@ $sf_next = storefront_adjacent_item_url('next');
 
 <article class="sf-detail__grid">
 
-    <!-- ── media ─────────────────────────────────────────────────────────── -->
+    <?php /* ── media ─────────────────────────────────────────────────────────── */ ?>
     <div class="sf-detail__media">
         <?php if ($sf_photos) { ?>
         <figure class="sf-gallery" data-gallery>
@@ -168,11 +170,12 @@ $sf_next = storefront_adjacent_item_url('next');
         <?php } ?>
     </div>
 
-    <!-- ── aside: the sticky column ──────────────────────────────────────── -->
+    <?php /* ── aside: the sticky column ──────────────────────────────────────── */ ?>
     <aside class="sf-detail__aside">
         <div class="sf-detail__meta">
             <?php if (osc_item_category() !== '') { ?>
-                <a class="tag tag-neutral" href="<?php echo osc_search_category_url(); ?>"><?php echo osc_esc_html(osc_item_category()); ?></a>
+                <?php $sf_path = storefront_item_category_path(); $sf_leaf = end($sf_path); ?>
+                <a class="tag tag-neutral" href="<?php echo osc_esc_html($sf_leaf ? $sf_leaf['url'] : osc_search_url()); ?>"><?php echo osc_esc_html(osc_item_category()); ?></a>
             <?php } ?>
             <time class="sf-detail__date" datetime="<?php echo osc_esc_html(osc_item_pub_date()); ?>"><?php echo osc_esc_html(osc_format_date(osc_item_pub_date())); ?></time>
         </div>
@@ -336,7 +339,7 @@ $sf_next = storefront_adjacent_item_url('next');
         <?php osc_run_hook('item_sidebar', osc_item()); ?>
     </aside>
 
-    <!-- ── body: description, details, map, related ───────────────────────── -->
+    <?php /* ── body: description, details, map, related ───────────────────────── */ ?>
     <div class="sf-detail__body">
         <section class="sf-detail__section">
             <h2><?php _e('Description', 'storefront'); ?></h2>

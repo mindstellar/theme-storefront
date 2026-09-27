@@ -463,6 +463,36 @@ if (!function_exists('storefront_icon')) {
 }
 
 /**
+ * The current listing's category path, root first: each entry is ['name', 'url'].
+ * Read once per listing.
+ *
+ * @return array<int,array{name:string,url:string}>
+ */
+if (!function_exists('storefront_item_category_path')) {
+    function storefront_item_category_path()
+    {
+        static $paths = array();
+        $id = (int) osc_item_category_id();
+        if ($id === 0) {
+            return array();
+        }
+        if (!isset($paths[$id])) {
+            $paths[$id] = array();
+            foreach (Category::newInstance()->toRootTree($id) as $cat) {
+                if (is_array($cat) && !empty($cat['pk_i_id'])) {
+                    $paths[$id][] = array(
+                        'name' => (string) ($cat['s_name'] ?? ''),
+                        'url'  => osc_search_url(array('sCategory' => (int) $cat['pk_i_id'])),
+                    );
+                }
+            }
+        }
+
+        return $paths[$id];
+    }
+}
+
+/**
  * The logged-in user's own row, fetched once per request.
  *
  * The account chrome (identity band + tabs) shows on every account page, but

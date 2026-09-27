@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 ?>
-<?php if (!osc_is_home_page()) { ?></div><!-- .sf-container --><?php } ?>
+<?php if (!osc_is_home_page()) { ?></div><?php /* .sf-container */ ?><?php } ?>
 <?php osc_run_hook('after-main'); ?>
 </main>
 

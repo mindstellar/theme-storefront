@@ -79,7 +79,7 @@ $sf_hues = array(
             <?php } ?>
         </div>
         <?php } ?>
-        </div><!-- /.sf-hero__content -->
+        </div><?php /* /.sf-hero__content */ ?>
     </div>
 </section>
 
