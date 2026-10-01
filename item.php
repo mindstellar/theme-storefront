@@ -140,6 +140,8 @@ $sf_next = storefront_adjacent_item_url('next');
         <figure class="sf-gallery" data-gallery>
             <button type="button" class="sf-gallery__stage" data-gallery-open
                     aria-label="<?php echo osc_esc_html(__('View photo full size', 'storefront')); ?>">
+                <img class="sf-gallery__backdrop" src="<?php echo osc_esc_html($sf_photos[0]['large']); ?>"
+                     alt="" aria-hidden="true" data-gallery-backdrop width="800" height="600" />
                 <img src="<?php echo osc_esc_html($sf_photos[0]['large']); ?>"
                      alt="<?php echo osc_esc_html(osc_item_title()); ?>"
                      data-gallery-stage width="800" height="600" />

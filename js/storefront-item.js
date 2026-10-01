@@ -15,13 +15,16 @@
         if (!gallery) { return; }
 
         var stage = gallery.querySelector('[data-gallery-stage]');
+        var backdrop = gallery.querySelector('[data-gallery-backdrop]');
         var thumbs = gallery.querySelectorAll('[data-gallery-select]');
         var current = 0;
 
         thumbs.forEach(function (thumb) {
             thumb.addEventListener('click', function () {
                 current = parseInt(thumb.getAttribute('data-gallery-select'), 10) || 0;
-                if (stage) { stage.src = thumb.getAttribute('data-large'); }
+                var src = thumb.getAttribute('data-large');
+                if (stage) { stage.src = src; }
+                if (backdrop) { backdrop.src = src; }
                 thumbs.forEach(function (t) { t.setAttribute('aria-pressed', t === thumb ? 'true' : 'false'); });
             });
         });
