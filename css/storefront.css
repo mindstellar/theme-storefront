@@ -1335,7 +1335,11 @@ body.sf-list .sf-card__desc {
     border: 1px solid var(--color-divider); border-radius: var(--radius-lg); overflow: hidden;
     background: var(--color-neutral-200); box-shadow: var(--shadow-sm); cursor: zoom-in;
 }
-.sf-gallery__stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* The whole photo shows; a blurred copy of it fills the space a tall or wide photo leaves. */
+.sf-gallery__stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.sf-gallery__stage img.sf-gallery__backdrop {
+    object-fit: cover; filter: blur(28px) saturate(1.15) brightness(.92); transform: scale(1.2);
+}
 .sf-gallery__zoom {
     position: absolute; inset-block-end: 10px; inset-inline-end: 10px; z-index: 1;
     display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; font-size: 12px;
