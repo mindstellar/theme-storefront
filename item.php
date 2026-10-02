@@ -564,7 +564,10 @@ $sf_next = storefront_adjacent_item_url('next');
         <button type="button" class="sf-dialog__close" data-dialog-close aria-label="<?php echo osc_esc_html(__('Close', 'storefront')); ?>"><?php echo $sf_icon('x', 18); ?></button>
     </div>
     <div class="sf-dialog__body">
-        <?php osc_current_web_theme_path('item-contact.php'); ?>
+        <?php
+        // Tells item-contact.php it is inside this dialog, not rendered on its own by core.
+        if (!defined('STOREFRONT_CONTACT_IN_DIALOG')) { define('STOREFRONT_CONTACT_IN_DIALOG', true); }
+        osc_current_web_theme_path('item-contact.php'); ?>
     </div>
 </dialog>
 <?php } ?>

@@ -148,7 +148,8 @@
         document.querySelectorAll('.sf-account-tabs, .sf-settings-nav').forEach(function (strip) {
             var active = strip.querySelector('.is-active');
             if (active && strip.scrollWidth > strip.clientWidth) {
-                strip.scrollLeft = active.offsetLeft - (strip.clientWidth - active.offsetWidth) / 2;
+                var a = active.getBoundingClientRect(), s = strip.getBoundingClientRect();
+                strip.scrollLeft += (a.left - s.left) - (s.width - a.width) / 2;
             }
             function mark() {
                 var more = strip.scrollWidth - strip.clientWidth - Math.abs(strip.scrollLeft) > 4;
@@ -231,6 +232,21 @@
         });
     }
 
+    // Core's public profile shows a grey placeholder for a user with no photo; show the
+    // same letter tile the account band uses instead.
+    function bindProfileMonogram() {
+        var img = document.querySelector('.oe-profile-head > img.oe-avatar[src$="/avatar-placeholder.svg"]');
+        var name = document.querySelector('.oe-doc > .oe-h1');
+        if (!img || !name) { return; }
+        var first = Array.from(name.textContent.trim())[0] || '?';
+        var tile = document.createElement('span');
+        tile.className = 'oe-avatar sf-avatar sf-avatar--lg';
+        tile.setAttribute('aria-hidden', 'true');
+        tile.innerHTML = '<span class="sf-avatar__monogram"></span>';
+        tile.firstChild.textContent = first.toLocaleUpperCase();
+        img.replaceWith(tile);
+    }
+
     function ready(fn) {
         if (document.readyState !== 'loading') { fn(); }
         else { document.addEventListener('DOMContentLoaded', fn); }
@@ -245,5 +261,6 @@
         bindTabStrips();
         bindConfirms();
         bindFlashDismiss();
+        bindProfileMonogram();
     });
 })();

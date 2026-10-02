@@ -44,7 +44,8 @@ if (function_exists('osc_billing_enabled') && osc_billing_enabled()) {
 }
 
 $sf_settings_tabs = array(
-    array('name' => __('Profile', 'storefront'),          'url' => osc_user_profile_url(),      'current' => $sf_page === 'user-profile'),
+    // Delete account is reached from the profile page, so it keeps Profile lit.
+    array('name' => __('Profile', 'storefront'),          'url' => osc_user_profile_url(),      'current' => in_array($sf_page, array('user-profile', 'user-delete_account'), true)),
     // Core draws email, username and password on one page.
     array('name' => __('Sign-in details', 'storefront'), 'url' => osc_change_user_email_url(), 'current' => $sf_page === 'user-signin'),
 );

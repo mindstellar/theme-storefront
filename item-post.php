@@ -19,9 +19,9 @@ osc_enqueue_script('osc-uploader');
 osc_enqueue_style('osc-uploader');
 osc_current_web_theme_path('common/header.php');
 ?>
-<section class="sf-form">
+<section class="sf-form sf-post">
     <?php if (!$sf_edit) { ?>
-        <div class="sf-hero__kicker" style="margin-bottom:var(--space-2);"><?php _e('Free to post', 'storefront'); ?></div>
+        <div class="sf-hero__kicker"><?php _e('Free to post', 'storefront'); ?></div>
     <?php } ?>
     <h1>
         <?php echo $sf_edit ? osc_esc_html(__('Edit your listing', 'storefront')) : osc_esc_html(__('Post a listing', 'storefront')); ?>
@@ -62,6 +62,7 @@ osc_current_web_theme_path('common/header.php');
         <?php } ?>
 
         <?php if (osc_images_enabled_at_items()) { ?>
+        <h2 class="sf-form__legend"><?php _e('Photos', 'storefront'); ?></h2>
         <div class="sf-field">
             <?php ItemForm::ajax_photos(); ?>
         </div>

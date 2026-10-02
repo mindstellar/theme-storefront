@@ -12,7 +12,17 @@
  * CONTRACT (unchanged, read by core's item controller): the field names
  * yourName / yourEmail / phoneNumber / message, and the hidden action=contact_post
  * + page=item + id inputs. Only presentation is ours.
+ *
+ * Core also renders this file on its own for ?page=item&action=contact; then it
+ * draws the site chrome and a page title around the form itself.
  */
+$sf_contact_page = !defined('STOREFRONT_CONTACT_IN_DIALOG');
+if ($sf_contact_page) {
+    osc_current_web_theme_path('common/header.php'); ?>
+<section class="sf-form sf-contact-page">
+    <p class="sf-crumbs"><a href="<?php echo osc_esc_html(osc_item_url()); ?>">&larr; <?php _e('Back to listing', 'storefront'); ?></a></p>
+    <h1 class="sf-contact-page__title"><?php _e('Message seller', 'storefront'); ?></h1>
+<?php }
 ?>
 <p class="sf-dialog__context">
     <span class="sf-dialog__context-title"><?php echo osc_esc_html(osc_item_title()); ?></span>
@@ -66,7 +76,15 @@ if ($sf_contact_error !== '') { ?>
         <?php osc_show_captcha(); ?>
     </div>
     <div class="sf-dialog__actions">
-        <button type="button" class="sf-btn sf-btn--ghost" data-dialog-close><?php _e('Cancel', 'storefront'); ?></button>
+        <?php if ($sf_contact_page) { ?>
+            <a class="sf-btn sf-btn--ghost" href="<?php echo osc_esc_html(osc_item_url()); ?>"><?php _e('Cancel', 'storefront'); ?></a>
+        <?php } else { ?>
+            <button type="button" class="sf-btn sf-btn--ghost" data-dialog-close><?php _e('Cancel', 'storefront'); ?></button>
+        <?php } ?>
         <button type="submit" class="sf-btn sf-btn--primary"><?php _e('Send message', 'storefront'); ?></button>
     </div>
 </form>
+<?php if ($sf_contact_page) { ?>
+</section>
+<?php osc_current_web_theme_path('common/footer.php');
+}

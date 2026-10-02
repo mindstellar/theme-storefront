@@ -299,6 +299,8 @@ legend { padding: 0; }
 
 body.sf {
     margin: 0;
+    min-height: 100vh; min-height: 100dvh;
+    display: flex; flex-direction: column;
     background: var(--color-bg);
     color: var(--color-text);
     font-family: var(--font-body);
@@ -404,6 +406,11 @@ img { display: block; max-width: 100%; height: auto; }
 .btn-block, .sf-btn--block { width: 100%; }
 .sf-btn--sm { font-size: 12px; padding: 4px var(--space-2); }
 
+/* A form's own action buttons match its 40px fields. */
+@media not (pointer: coarse) {
+    .sf-form .sf-btn[type=submit], .sf-comment-form .sf-btn[type=submit], .sf-dialog__actions .sf-btn { min-height: 40px; }
+}
+
 /* Screen-reader-only utility: keeps a label in the accessibility tree without
    occupying layout (used by icon-only controls and the price/keyword fields). */
 .sf-sr-only {
@@ -413,7 +420,7 @@ img { display: block; max-width: 100%; height: auto; }
 
 /* Forms */
 .field > label, .sf-field > label, .sf-field label:not(.sf-check) {
-    display: block; font-size: 12px; margin-bottom: 5px;
+    display: block; font-size: 13px; margin-bottom: 5px;
     color: var(--color-muted);
     font-weight: 600;
 }
@@ -422,7 +429,7 @@ img { display: block; max-width: 100%; height: auto; }
 .sf-field input[type="password"], .sf-field input[type="tel"],
 .sf-field input[type="url"], .sf-field input[type="number"],
 .sf-field textarea, .sf-field select {
-    width: 100%; min-height: 38px; padding: 8px 10px; font: inherit;
+    width: 100%; min-height: 40px; padding: 8px 10px; font: inherit;
     font-size: 14px; color: var(--color-text); caret-color: var(--color-accent);
     background: var(--color-surface);
     border: 1px solid var(--color-divider); border-radius: var(--radius-md);
@@ -447,6 +454,15 @@ select.sf-select, .sf-field select { cursor: pointer; }
     font-size: 14px; font-weight: 400; color: var(--color-text); margin: 0;
 }
 .sf-field--check input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--color-accent); }
+.sf-field__hint { margin: var(--space-1) 0 0; font-size: 13px; line-height: 1.45; color: var(--color-muted); }
+.sf-field input[type="file"] { max-width: 100%; font: inherit; font-size: 13px; color: var(--color-muted); }
+.sf-field input[type="file"]::file-selector-button {
+    margin-inline-end: var(--space-3); padding: 6px var(--space-3); cursor: pointer;
+    font-family: var(--font-heading); font-weight: 800; font-size: 13px; color: var(--color-text);
+    background: transparent; border: 1px solid var(--color-divider); border-radius: var(--radius-md);
+    transition: background .15s ease;
+}
+.sf-field input[type="file"]::file-selector-button:hover { background: color-mix(in srgb, var(--color-text) 7%, transparent); }
 
 /* Cards (generic surface) */
 .card {
@@ -528,6 +544,14 @@ select.sf-select, .sf-field select { cursor: pointer; }
    for the full mark. Only rendered as its own element when a compact upload/SVG is set —
    otherwise the full mark stands in for it and just keeps showing at every width. */
 .sf-logo__mark--compact { display: none; }
+
+/* The brand SVG paints its ink parts in fixed navy, which vanishes on the dark ground. */
+:root[data-theme="dark"] .sf-logo svg [fill="#0f2742" i] { fill: var(--color-text); }
+:root[data-theme="dark"] .sf-logo svg [stroke="#0f2742" i] { stroke: var(--color-text); }
+@media (prefers-color-scheme: dark) {
+    :root[data-theme="auto"] .sf-logo svg [fill="#0f2742" i] { fill: var(--color-text); }
+    :root[data-theme="auto"] .sf-logo svg [stroke="#0f2742" i] { stroke: var(--color-text); }
+}
 
 .sf-nav { display: flex; align-items: center; gap: var(--space-4); margin-inline-start: auto; }
 .sf-nav__link {
@@ -625,7 +649,8 @@ select.sf-select, .sf-field select { cursor: pointer; }
 /* ──────────────────────────────────────────────────────────────────────────
    Main
    ────────────────────────────────────────────────────────────────────────── */
-.sf-main { display: block; }
+.sf-main { display: block; flex: 1 0 auto; }
+body.sf > * { flex-shrink: 0; }
 .sf-main__pad { padding-block: var(--space-6) var(--space-8); }
 
 /* ── Home hero ── */
@@ -726,11 +751,13 @@ select.sf-select, .sf-field select { cursor: pointer; }
 .sf-section__head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3); margin-bottom: var(--space-4); }
 .sf-section__title { font-size: 32px; margin: 0; }
 .sf-section__aside { font-size: 13px; color: var(--color-muted); }
+.sf-section__head > a { flex: none; white-space: nowrap; }
 .sf-empty {
     color: var(--color-muted);
     padding: var(--space-8); text-align: center;
     border: 1px solid var(--color-divider); border-radius: var(--radius-lg);
 }
+.sf-empty > h4 { color: var(--color-text); }
 .sf-more { text-align: center; margin-top: var(--space-6); }
 
 /* ── Category grid ── */
@@ -922,7 +949,7 @@ body.sf-list .sf-card__desc {
 .sf-filters__plugin input[type="date"],
 .sf-filters__plugin select,
 .sf-filters__plugin textarea {
-    width: 100%; min-height: 38px; padding: 8px 10px; font: inherit;
+    width: 100%; min-height: 40px; padding: 8px 10px; font: inherit;
     font-size: 14px; color: var(--color-text); caret-color: var(--color-accent);
     background: var(--color-surface);
     border: 1px solid var(--color-divider); border-radius: var(--radius-md);
@@ -951,7 +978,7 @@ body.sf-list .sf-card__desc {
    below). Radio-option and checkbox labels sit deeper, so they are untouched. */
 .meta_list .meta > label {
     display: block; margin: 0 0 5px; font-family: var(--font-body);
-    font-size: 12px; font-weight: 600; color: var(--color-muted);
+    font-size: 13px; font-weight: 600; color: var(--color-muted);
 }
 /* Search-rail field title — core writes an <h6>; align it to the rail's own
    filter labels rather than a browser-default heading. */
@@ -1033,7 +1060,7 @@ body.sf-list .sf-card__desc {
 /* Keyword field + inline search button */
 .sf-filters__search { display: flex; gap: var(--space-2); }
 .sf-filters__search .sf-input { flex: 1; }
-.sf-filters__search .sf-btn { flex: none; height: 38px; }
+.sf-filters__search .sf-btn { flex: none; height: 40px; }
 
 /* Price range */
 .sf-range { display: flex; gap: var(--space-2); align-items: center; }
@@ -1167,6 +1194,20 @@ body.sf-list .sf-card__desc {
 .sf-results__feed:hover { color: var(--color-accent-ink); }
 .sf-results__feed svg { flex: none; }
 .sf-results__tools { display: inline-flex; align-items: center; gap: var(--space-3); }
+/* Phones: the title takes its own line; Filters and the view/sort tools share the row below. */
+@media (max-width: 860px) {
+    .sf-results__head { align-items: center; }
+    .sf-results__headline { order: -1; flex: 1 1 100%; }
+    .sf-results__tools { flex: 1 1 0; min-width: 0; justify-content: flex-end; gap: var(--space-2); }
+    .sf-sort { flex: 0 1 auto; min-width: 0; }
+    .sf-sort select { min-width: 0; max-width: 100%; }
+}
+@media (max-width: 480px) {
+    .sf-sort > span {
+        position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden;
+        clip: rect(0, 0, 0, 0); white-space: nowrap;
+    }
+}
 
 .sf-results__views {
     display: inline-flex; border: 1px solid var(--color-divider);
@@ -1362,9 +1403,9 @@ body.sf-list .sf-card__desc {
 .sf-gallery__thumb[aria-pressed="true"] { border-color: var(--color-accent); }
 .sf-gallery__empty {
     display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-2);
-    aspect-ratio: 4 / 3; border: 1px dashed var(--color-divider); border-radius: var(--radius-lg);
-    background: linear-gradient(135deg, var(--color-neutral-100), var(--color-neutral-300));
-    color: var(--color-muted); font-size: 13px;
+    aspect-ratio: 16 / 7; border: 1px solid var(--color-divider); border-radius: var(--radius-lg);
+    background: var(--color-neutral-200); box-shadow: var(--shadow-sm);
+    color: var(--color-muted); font-size: 14px;
 }
 
 /* ── Aside: meta, title, price, actions ── */
@@ -1475,7 +1516,7 @@ body.sf-list .sf-card__desc {
     display: flex; align-items: center; justify-content: center; gap: 8px;
     background: transparent; color: var(--color-text);
     font-family: var(--font-heading); font-weight: 800; font-size: 14px;
-    border-radius: inherit; cursor: pointer;
+    border: 0; border-radius: inherit; cursor: pointer;
 }
 .sf-map__load:hover { background: color-mix(in srgb, var(--color-accent) 8%, transparent); color: var(--color-accent-ink); }
 .sf-map__load[aria-busy="true"] { cursor: progress; opacity: .65; }
@@ -1507,9 +1548,10 @@ body.sf-list .sf-card__desc {
 .sf-comment__delete { display: inline-flex; align-items: center; gap: 5px; margin-top: var(--space-3); font-size: 12px; font-weight: 600; color: var(--color-accent-2-ink); }
 .sf-comment__delete:hover { color: var(--color-accent-2-ink); text-decoration: none; }
 .sf-comments__empty { margin: 0 0 var(--space-6); font-size: 15px; color: var(--color-muted); }
-.sf-comments__formhead { font-family: var(--font-heading); font-weight: 800; font-size: 16px; margin: 0 0 var(--space-3); }
+.sf-comments__formhead { font-family: var(--font-heading); font-weight: 800; font-size: 16px; line-height: 1.3; margin: 0 0 var(--space-3); }
 .sf-comments__hint { margin: 0; font-size: 14px; color: var(--color-muted); }
-.sf-comment-form, .sf-comments__gate { max-width: 64ch; margin-top: var(--space-6); padding-top: var(--space-6); border-top: 2px solid var(--color-divider); }
+.sf-comment-form, .sf-comments__gate { margin-top: var(--space-6); padding-top: var(--space-6); border-top: 2px solid var(--color-divider); }
+.sf-comment-form > :is(.sf-field, .sf-field-grid) { max-width: 64ch; }
 .sf-comment-form .sf-form__actions { margin-top: var(--space-4); }
 
 /* Sticky mobile contact bar — desktop keeps the sticky rail, so this is off there. */
@@ -1537,6 +1579,12 @@ body.sf-list .sf-card__desc {
 
 .sf-related { margin-top: var(--space-8); padding-top: var(--space-6); border-top: 2px solid var(--color-divider); }
 .sf-related__title { font-size: 22px; margin: 0 0 var(--space-4); }
+/* Four related cards: one row where the column allows it, a 2x2 block otherwise. */
+.sf-related { container-type: inline-size; }
+.sf-related .sf-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
+@container (min-width: 640px) {
+    .sf-related .sf-cards { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
 
 /* ── Admin moderation bar (admin-only; dashed to read as meta, not listing content) ── */
 .sf-admin {
@@ -1594,6 +1642,7 @@ body.sf-list .sf-card__desc {
 .sf-dialog__body { padding: 0 var(--space-4) var(--space-4); }
 .sf-dialog__actions { display: flex; justify-content: flex-end; gap: var(--space-2); padding: var(--space-3) var(--space-4) var(--space-4); }
 .sf-dialog .sf-field:last-of-type { margin-bottom: 0; }
+.sf-dialog .sf-field textarea { height: 120px; }
 
 .sf-dialog__context {
     display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3);
@@ -1651,7 +1700,11 @@ body.sf-list .sf-card__desc {
 }
 .sf-lightbox__nav--prev { inset-inline-start: -8px; }
 .sf-lightbox__nav--next { inset-inline-end: -8px; }
-.sf-lightbox__close { position: absolute; top: -46px; inset-inline-end: 0; }
+.sf-lightbox__close {
+    position: absolute; top: var(--space-2); inset-inline-end: var(--space-2); z-index: 2;
+    background: color-mix(in srgb, var(--color-fixed-ink) 60%, transparent);
+}
+.sf-lightbox__close:hover { background: color-mix(in srgb, var(--color-fixed-ink) 80%, transparent); }
 .sf-lightbox__dl { color: var(--color-fixed-light); }
 @media (max-width: 560px) {
     .sf-lightbox__nav--prev { inset-inline-start: 4px; }
@@ -1666,6 +1719,35 @@ body.sf-list .sf-card__desc {
 .sf-form__legend { font-family: var(--font-heading); font-weight: 800; font-size: 20px; margin: var(--space-6) 0 var(--space-4); }
 .sf-form__legend:first-of-type { margin-top: 0; }
 .sf-form__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); }
+/* Post / edit listing page */
+.sf-post, .sf-contact-page { margin-inline: auto; }
+.sf-contact-page__title { font-size: 32px; }
+.sf-contact-page .sf-dialog__actions { padding-inline: 0; }
+.sf-post > .sf-hero__kicker {
+    margin-bottom: var(--space-2); font-family: var(--font-heading); font-weight: 800; font-size: 12px;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-accent-ink);
+}
+.sf-field.control-group-price { display: grid; grid-template-columns: minmax(0, 1fr) minmax(110px, 130px); gap: 0 var(--space-3); }
+.sf-field.control-group-price > label { grid-column: 1 / -1; }
+.sf-field.sf-field--check label:not(.sf-check) {
+    display: flex; align-items: center; gap: var(--space-2); margin: 0;
+    font-size: 14px; font-weight: 400; color: var(--color-text); cursor: pointer;
+}
+/* Core's photo uploader, on the theme's tokens. */
+.sf-form .osc-uploader {
+    --osc-rule: var(--color-divider); --osc-rule-strong: color-mix(in srgb, var(--color-text) 30%, transparent);
+    --osc-bronze: var(--color-accent-fill); --osc-bronze-tint: color-mix(in srgb, var(--color-accent) 12%, var(--color-surface));
+    --osc-ink-muted: var(--color-muted); --osc-bench-sunk: var(--color-neutral-100);
+    --osc-danger: var(--color-accent-2-ink); --osc-danger-tint: color-mix(in srgb, var(--color-accent-2) 12%, var(--color-surface));
+    --osc-radius: var(--radius-lg); --osc-radius-sm: var(--radius-sm);
+}
+.sf-field .osc-uploader label.osc-uploader-drop {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-2);
+    min-height: 120px; margin: 0; padding: var(--space-4); text-align: center;
+    font-size: 14px; font-weight: 400; color: var(--color-muted);
+    background: var(--color-surface); border-radius: var(--radius-lg);
+}
+.sf-field .osc-uploader label.osc-uploader-drop:hover { border-color: var(--color-accent); color: var(--color-accent-ink); }
 .sf-form__links { display: flex; flex-wrap: wrap; gap: var(--space-4); margin-top: var(--space-4); font-size: 14px; }
 
 /* Grouped form (profile editor): labelled fieldset sections + a paired-field grid */
@@ -1786,6 +1868,7 @@ body.sf-list .sf-card__desc {
 .sf-account-tab:hover { color: var(--color-text); text-decoration: none; }
 .sf-account-tab.is-active { color: var(--color-accent-ink); border-bottom-color: var(--color-accent); }
 .sf-account-tab.is-active svg { opacity: 1; }
+.sf-account-tabs + .sf-settings-nav { margin-top: calc(var(--space-3) - var(--space-6)); }
 @media (max-width: 640px) {
     .sf-account-tabs { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
     .sf-account-tabs::-webkit-scrollbar { display: none; }
@@ -1896,6 +1979,7 @@ body.sf-list .sf-card__desc {
 .sf-empty-state__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-2); margin-top: var(--space-1); }
 .sf-btn--lg { font-size: 15px; padding: 11px 20px; }
 
+.sf-page > .sf-section__title { margin: 0 0 var(--space-4); }
 .sf-page__body { line-height: 1.7; max-width: 68ch; }
 .sf-page__body h2, .sf-page__body h3 { margin-top: var(--space-6); }
 /* Page-builder canvas: stacked widget blocks get vertical rhythm without a max-width
@@ -1905,7 +1989,7 @@ body.sf-list .sf-card__desc {
 
 /* 404 */
 .sf-error__code {
-    font-family: ui-monospace, monospace; font-size: clamp(72px, 16vw, 140px);
+    font-family: ui-monospace, monospace; font-size: clamp(56px, 10vw, 96px);
     line-height: 0.9; color: var(--color-accent-ink); letter-spacing: -0.04em; margin-bottom: var(--space-3);
 }
 
@@ -2101,7 +2185,7 @@ body.sf-list .sf-card__desc {
     --oe-success: var(--color-accent-ink);
 }
 .sf .oe-page .oe-doc { max-width: none; margin: 0; padding: 0; }
-.sf .oe-page .oe-h1 { font-family: var(--font-heading); font-weight: 800; font-size: 32px; letter-spacing: -.01em; }
+.sf .oe-page .oe-h1 { font-family: var(--font-heading); font-weight: 800; font-size: 32px; letter-spacing: -.01em; margin: 0 0 var(--space-4); }
 .sf .oe-page h2 { font-family: var(--font-heading); font-weight: 800; }
 
 /* Account pages: the theme's band and tabs (account_page_before) replace core's
@@ -2131,9 +2215,9 @@ body.sf-list .sf-card__desc {
 .sf .oe-page .oe-btn.oe-secondary:hover { background: color-mix(in srgb, var(--color-text) 7%, transparent); color: var(--color-text); }
 .sf .oe-page .oe-btn-danger { background: var(--color-accent-2-700); border-color: transparent; color: var(--color-fixed-light); }
 .sf .oe-page .oe-btn-danger:hover { background: var(--color-accent-2-800); }
-.sf .oe-page .oe-label { font-size: 12px; font-weight: 600; color: var(--color-muted); margin-bottom: 5px; }
+.sf .oe-page .oe-label { font-size: 13px; font-weight: 600; color: var(--color-muted); margin-bottom: 5px; }
 .sf .oe-page .oe-field :is(input:not([type=checkbox]):not([type=radio]):not([type=file]), select, textarea) {
-    width: 100%; max-width: none; min-height: 38px; padding: 8px 10px; font: inherit; font-size: 14px;
+    width: 100%; max-width: none; min-height: 40px; padding: 8px 10px; font: inherit; font-size: 14px;
     color: var(--color-text); background: var(--color-surface);
     border: 1px solid var(--color-divider); border-radius: var(--radius-md);
 }
@@ -2151,7 +2235,10 @@ body.sf-list .sf-card__desc {
     border-radius: var(--radius-lg); box-shadow: var(--shadow-md); padding: var(--space-6);
 }
 .sf .oe-page .oe-doc:has(> .oe-form-page) > .oe-h1 { font-size: 28px; margin-bottom: var(--space-4); }
-.sf .oe-page .oe-form-page .oe-btn[type=submit] { width: 100%; justify-content: center; }
+.sf .oe-page .oe-form-page .oe-btn[type=submit] { width: 100%; min-height: 40px; justify-content: center; }
+.sf .oe-page .oe-form-page form > .oe-check { display: flex; margin: 0; }
+.sf .oe-page .oe-form-page form > .oe-actions { margin-top: var(--space-4); }
+.sf .oe-page .oe-form-page :is(.oe-actions a, .oe-muted) { font-size: 13px; }
 
 /* Panels, empty states, status tabs, pager */
 .sf .oe-page .oe-panel {
@@ -2222,10 +2309,11 @@ body.sf-list .sf-card__desc {
 .sf .oe-page .oe-profile-head > .oe-avatar { grid-column: 1; grid-row: 1 / span 2; width: 104px; height: 104px; border-radius: calc(var(--radius-lg) * 1.4); box-shadow: var(--shadow-sm); }
 .sf .oe-page .oe-profile-head > .oe-meta { grid-column: 2; grid-row: 2; align-self: start; margin: 6px 0 0; font-size: 14px; }
 .sf .oe-page .oe-profile-head > .oe-actions { grid-column: 3; grid-row: 1 / span 2; margin: 0; }
-.sf .oe-page .oe-doc:has(> .oe-profile-head) > h2 { font-size: 20px; margin: var(--space-8) 0 var(--space-4); }
+.sf .oe-page .oe-doc:has(> .oe-profile-head) > h2 { font-size: 26px; margin: var(--space-8) 0 var(--space-4); }
 @media (max-width: 640px) {
     .sf .oe-page .oe-doc:has(> .oe-profile-head) { grid-template-columns: 72px minmax(0, 1fr); }
     .sf .oe-page .oe-profile-head > .oe-avatar { width: 72px; height: 72px; }
+    .sf .oe-page .oe-profile-head > .sf-avatar .sf-avatar__monogram { font-size: 32px; }
     .sf .oe-page .oe-profile-head > .oe-actions { grid-column: 1 / -1; grid-row: 3; margin-top: var(--space-4); }
 }
 
@@ -2245,21 +2333,21 @@ body.sf-list .sf-card__desc {
 }
 
 /* Contact page: the form, and the support panels beside it. */
-.sf .oe-page .oe-contact { grid-template-columns: minmax(0, 680px) 300px; gap: var(--space-8); }
+.sf .oe-page .oe-contact { grid-template-columns: minmax(0, 1fr) 320px; gap: var(--space-8); }
 .sf .oe-page .oe-contact-main { max-inline-size: none; }
 .sf .oe-page .oe-contact-aside { display: flex; flex-direction: column; gap: var(--space-4); }
 @media (max-width: 900px) { .sf .oe-page .oe-contact { grid-template-columns: minmax(0, 1fr); } }
 .sf-contact-panel { padding: var(--space-4); }
 .sf .oe-page .sf-contact-panel__title, .sf-contact-panel__title { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 var(--space-2); }
 .sf-contact-panel__lead { font-size: 14px; margin: 0; }
-.sf-contact-panel__note { font-size: 12px; color: var(--color-muted); margin: 0; }
+.sf-contact-panel__note { font-size: 13px; color: var(--color-muted); margin: 0; }
 .sf-contact-panel__links { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; font-size: 14px; }
 
 /* Core's save-this-search form in the filter rail. */
-.sf-filters__alert .oe-alert-form .oe-label { display: block; font-size: 12px; font-weight: 600; color: var(--color-muted); margin-bottom: 5px; }
+.sf-filters__alert .oe-alert-form .oe-label { display: block; font-size: 13px; font-weight: 600; color: var(--color-muted); margin-bottom: 5px; }
 .sf-filters__alert .oe-alert-form .oe-field { margin: 0 0 var(--space-2); }
 .sf-filters__alert .oe-alert-form .oe-input {
-    width: 100%; max-width: none; min-height: 38px; padding: 8px 10px; font: inherit; font-size: 14px;
+    width: 100%; max-width: none; min-height: 40px; padding: 8px 10px; font: inherit; font-size: 14px;
     color: var(--color-text); background: var(--color-surface);
     border: 1px solid var(--color-divider); border-radius: var(--radius-md);
 }
@@ -2289,12 +2377,12 @@ body.sf-list .sf-card__desc {
 
 /* A tab strip with more tabs past its end fades that edge (storefront-core.js sets data-more). */
 .sf-account-tabs[data-more], .sf-settings-nav[data-more] {
-    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent);
-    mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent);
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
 }
 [dir="rtl"] :is(.sf-account-tabs, .sf-settings-nav)[data-more] {
-    -webkit-mask-image: linear-gradient(to left, #000 calc(100% - 40px), transparent);
-    mask-image: linear-gradient(to left, #000 calc(100% - 40px), transparent);
+    -webkit-mask-image: linear-gradient(to left, #000 calc(100% - 28px), transparent);
+    mask-image: linear-gradient(to left, #000 calc(100% - 28px), transparent);
 }
 .sf .oe-page .oe-check input[type=checkbox] { accent-color: var(--color-accent); width: 16px; height: 16px; }
 /* A failed form shows its reason inside the form, so the same flash above the page is left out. */
@@ -2318,11 +2406,11 @@ body.sf-list .sf-card__desc {
 /* Your listings: the listing-limit lines as one notice. */
 .sf .oe-page .oe-tabs ~ .oe-muted {
     margin: 0; padding: var(--space-2) var(--space-4); font-size: 14px; color: var(--color-text);
-    background: color-mix(in srgb, var(--color-accent-2) 10%, transparent);
-    border-inline: 1px solid color-mix(in srgb, var(--color-accent-2) 40%, transparent);
+    background: var(--color-neutral-100);
+    border-inline: 1px solid var(--color-divider);
 }
-.sf .oe-page .oe-tabs + .oe-muted { border-top: 1px solid color-mix(in srgb, var(--color-accent-2) 40%, transparent); border-radius: var(--radius-md) var(--radius-md) 0 0; padding-top: var(--space-3); }
-.sf .oe-page .oe-tabs ~ .oe-muted:not(:has(+ .oe-muted)) { border-bottom: 1px solid color-mix(in srgb, var(--color-accent-2) 40%, transparent); border-radius: 0 0 var(--radius-md) var(--radius-md); padding-bottom: var(--space-3); margin-bottom: var(--space-4); }
+.sf .oe-page .oe-tabs + .oe-muted { border-top: 1px solid var(--color-divider); border-radius: var(--radius-md) var(--radius-md) 0 0; padding-top: var(--space-3); }
+.sf .oe-page .oe-tabs ~ .oe-muted:not(:has(+ .oe-muted)) { border-bottom: 1px solid var(--color-divider); border-radius: 0 0 var(--radius-md) var(--radius-md); padding-bottom: var(--space-3); margin-bottom: var(--space-4); }
 .sf .oe-page .oe-tabs + .oe-muted:not(:has(+ .oe-muted)) { border-radius: var(--radius-md); }
 
 /* Credits: the figures in a row, each label under its figure, the buttons at the end. */
@@ -2441,3 +2529,103 @@ body.sf-list .sf-card__desc {
     box-shadow: inset 4px 0 0 var(--color-accent-2-ink), var(--shadow-sm);
 }
 [dir="rtl"] .sf .oe-page .oe-account-main > form:has(> .oe-group) ~ .oe-danger { box-shadow: inset -4px 0 0 var(--color-accent-2-ink), var(--shadow-sm); }
+
+/* Dark-only component fixes: pale accent-100 panels become a teal-tinted surface, and the
+   active tab pill is lifted above its track. Mirrored for data-theme="auto". */
+:root[data-theme="dark"] :is(.sf-filters__promo, .sf-dialog__note) {
+    background: color-mix(in srgb, var(--color-accent) 14%, var(--color-surface));
+    border-color: color-mix(in srgb, var(--color-accent) 30%, var(--color-surface));
+    color: var(--color-text);
+}
+:root[data-theme="dark"] .sf-filters__promo :is(h3, p) { color: var(--color-text); }
+:root[data-theme="dark"] :is(.sf .oe-page .oe-tabs [aria-current], .sf-settings-nav__tab.is-active) {
+    background: var(--color-neutral-300); box-shadow: var(--shadow-md);
+}
+@media (prefers-color-scheme: dark) {
+    :root[data-theme="auto"] :is(.sf-filters__promo, .sf-dialog__note) {
+        background: color-mix(in srgb, var(--color-accent) 14%, var(--color-surface));
+        border-color: color-mix(in srgb, var(--color-accent) 30%, var(--color-surface));
+        color: var(--color-text);
+    }
+    :root[data-theme="auto"] .sf-filters__promo :is(h3, p) { color: var(--color-text); }
+    :root[data-theme="auto"] :is(.sf .oe-page .oe-tabs [aria-current], .sf-settings-nav__tab.is-active) {
+        background: var(--color-neutral-300); box-shadow: var(--shadow-md);
+    }
+}
+
+/* Sign-in details: full-width cards laid out like the Profile cards. */
+.sf .oe-page .oe-account-main > .oe-panel:is(#email, #username, #password) { max-width: none; box-shadow: var(--shadow-sm); }
+.sf .oe-page .oe-account-main > .oe-panel:is(#email, #username, #password) > h2 { font-size: 18px; margin: 0 0 var(--space-2); }
+@media (min-width: 900px) {
+    .sf .oe-page .oe-account-main > .oe-panel:is(#email, #username, #password) {
+        display: grid; grid-template-columns: 220px minmax(0, 1fr); column-gap: var(--space-8); align-items: start;
+    }
+    .sf .oe-page .oe-account-main > .oe-panel:is(#email, #username, #password) > h2 { grid-column: 1; grid-row: 1 / span 20; margin: 0; padding-top: 6px; }
+    .sf .oe-page .oe-account-main > .oe-panel:is(#email, #username, #password) > :not(h2) { grid-column: 2; }
+}
+.sf .oe-page .oe-account-main > .oe-panel:is(#email, #username, #password) > .oe-muted { margin: 0 0 var(--space-4); }
+
+/* Delete account: the Profile page's danger card. */
+.sf .oe-page .oe-account-main > form.osc-user-delete-account {
+    max-width: none; padding: var(--space-6);
+    background: var(--color-surface); border: 1px solid var(--color-divider); border-radius: var(--radius-lg);
+    box-shadow: inset 4px 0 0 var(--color-accent-2-ink), var(--shadow-sm);
+}
+[dir="rtl"] .sf .oe-page .oe-account-main > form.osc-user-delete-account { box-shadow: inset -4px 0 0 var(--color-accent-2-ink), var(--shadow-sm); }
+.sf .oe-page .osc-user-delete-account .oe-field { max-width: 440px; }
+.sf .oe-page .osc-user-delete-account .oe-actions { align-items: center; margin-top: var(--space-4); }
+.sf .oe-page .osc-user-delete-account .oe-actions a.oe-muted {
+    display: inline-flex; align-items: center; margin: 0; padding: calc(var(--space-2) * 0.85) var(--space-3);
+    font-family: var(--font-heading); font-weight: 800; font-size: 14px; line-height: 1.2; color: var(--color-text);
+    border: 1px solid var(--color-divider); border-radius: var(--radius-md); text-decoration: none;
+}
+.sf .oe-page .osc-user-delete-account .oe-actions a.oe-muted:hover { background: color-mix(in srgb, var(--color-text) 7%, transparent); }
+
+/* TinyMCE on the post form: the editor chrome on the theme's tokens, so it flips with dark mode.
+   The editing area is an iframe; storefront-search.js paints its body. */
+.sf .tox.tox-tinymce { border: 1px solid var(--color-divider); border-radius: var(--radius-md); }
+.sf .tox.tox-tinymce :is(.tox-editor-header, .tox-toolbar-overlord, .tox-toolbar, .tox-toolbar__primary, .tox-toolbar__overflow,
+    .tox-statusbar, .tox-edit-area__iframe, .tox-view-wrap, .tox-view-wrap__slot-container) {
+    background-color: var(--color-surface); background-image: none;
+}
+.sf .tox.tox-tinymce:not(.tox-tinymce-inline) .tox-editor-header { border-bottom: 1px solid var(--color-divider); box-shadow: none; padding: 0; }
+.sf .tox.tox-tinymce .tox-statusbar { border-top: 1px solid var(--color-divider); color: var(--color-muted); }
+.sf .tox.tox-tinymce :is(.tox-statusbar a, .tox-statusbar__path-item) { color: var(--color-muted); }
+.sf .tox.tox-tinymce .tox-tbtn { background: transparent; color: var(--color-text); }
+.sf .tox.tox-tinymce :is(.tox-tbtn svg, .tox-statusbar__resize-handle svg) { fill: currentColor; }
+.sf .tox.tox-tinymce :is(.tox-tbtn:hover, .tox-tbtn--enabled, .tox-tbtn--enabled:hover) {
+    background: color-mix(in srgb, var(--color-accent) 16%, transparent); color: var(--color-text);
+}
+.sf .tox.tox-tinymce :is(.tox-tbtn--disabled, .tox-tbtn--disabled:hover, .tox-tbtn:disabled) { background: transparent; color: var(--color-muted); }
+.sf .tox.tox-tinymce:focus-within { border-color: var(--color-accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 30%, transparent); }
+
+/* The editor's link dialog, menus and pop-up toolbar live in the page, so the theme reaches them. */
+.sf .tox.tox-tinymce-aux, .sf .tox .tox-dialog, .sf .tox .tox-menu, .sf .tox .tox-pop__dialog { font-family: var(--font-body); }
+.sf .tox .tox-dialog-wrap__backdrop { background: color-mix(in srgb, var(--color-overlay) 55%, transparent); }
+.sf .tox .tox-dialog {
+    background: var(--color-surface); color: var(--color-text); border: 1px solid var(--color-divider);
+    border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
+}
+.sf .tox :is(.tox-dialog__header, .tox-dialog__footer, .tox-dialog__body) { background: transparent; color: var(--color-text); border-color: var(--color-divider); }
+.sf .tox .tox-dialog__title { font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 18px; }
+.sf .tox :is(.tox-label, .tox-form__group label) { color: var(--color-muted); font-size: 13px; font-weight: 600; }
+.sf .tox :is(.tox-textfield, .tox-listboxfield .tox-listbox--select, .tox-textarea),
+.sf .tox :is(.tox-textfield, .tox-listboxfield .tox-listbox--select, .tox-textarea):is(:hover, :focus) {
+    background: var(--color-surface); color: var(--color-text); border-color: var(--color-divider); border-radius: var(--radius-md); font-family: inherit; font-size: 14px;
+}
+.sf .tox :is(.tox-textfield, .tox-listboxfield .tox-listbox--select, .tox-textarea):focus { border-color: var(--color-accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 30%, transparent); }
+.sf .tox :is(.tox-listbox__select-chevron, .tox-button--icon, .tox-button--naked) svg { fill: currentColor; }
+.sf .tox .tox-form__group { margin-bottom: var(--space-3); }
+.sf .tox .tox-button {
+    font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 13px; border-radius: var(--radius-md);
+    background: var(--color-accent-fill); border-color: transparent; color: var(--color-fixed-light);
+}
+.sf .tox .tox-button:hover:not(:disabled) { background: var(--color-accent-fill-hover); border-color: transparent; color: var(--color-fixed-light); }
+.sf .tox :is(.tox-button--secondary, .tox-button--naked) { background: transparent; border: 1px solid var(--color-divider); color: var(--color-text); }
+.sf .tox .tox-button--naked { border-color: transparent; }
+.sf .tox :is(.tox-button--secondary, .tox-button--naked):hover:not(:disabled) { background: color-mix(in srgb, var(--color-text) 7%, transparent); color: var(--color-text); }
+.sf .tox :is(.tox-menu, .tox-collection--list, .tox-pop__dialog) { background: var(--color-surface); color: var(--color-text); border-color: var(--color-divider); }
+.sf .tox .tox-collection__item { color: var(--color-text); }
+.sf .tox .tox-collection__item--active { background: color-mix(in srgb, var(--color-accent) 16%, transparent); }
+.sf .tox .tox-pop .tox-tbtn { background: transparent; color: var(--color-text); }
+.sf .tox .tox-pop .tox-tbtn svg { fill: currentColor; }

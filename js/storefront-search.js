@@ -200,6 +200,30 @@
         });
     }
 
+    // Post form: TinyMCE edits inside an iframe the theme CSS cannot reach, so copy the
+    // current surface/text colours onto its body, and again when the OS theme flips.
+    function bindEditorTheme() {
+        if (typeof tinymce === 'undefined') { return; }
+        function paint(ed) {
+            var doc = ed.getDoc && ed.getDoc();
+            if (!doc || !doc.body) { return; }
+            var cs = getComputedStyle(document.documentElement);
+            doc.documentElement.style.colorScheme = cs.colorScheme;
+            doc.body.style.backgroundColor = cs.getPropertyValue('--color-surface').trim();
+            doc.body.style.color = cs.getPropertyValue('--color-text').trim();
+        }
+        function hook(ed) {
+            if (ed.initialized) { paint(ed); } else { ed.on('init', function () { paint(ed); }); }
+        }
+        tinymce.get().forEach(hook);
+        tinymce.on('AddEditor', function (e) { hook(e.editor); });
+        function paintAll() { tinymce.get().forEach(paint); }
+        if (window.matchMedia) {
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', paintAll);
+        }
+        new MutationObserver(paintAll).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    }
+
     function ready(fn) {
         if (document.readyState !== 'loading') { fn(); }
         else { document.addEventListener('DOMContentLoaded', fn); }
@@ -211,4 +235,6 @@
         bindLocationDropdownCascade();
         bindSearchAlert();
     });
+    // tinymce.min.js loads after this bundle, so wait for the page to finish.
+    window.addEventListener('load', bindEditorTheme);
 })();
