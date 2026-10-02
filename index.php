@@ -3,7 +3,7 @@
 Theme Name: storefront
 Theme URI: https://github.com/mindstellar/theme-storefront
 Description: Storefront — the default Shopclass public theme. Modern, responsive, vanilla-JS classifieds front end.
-Version: 2.0.0
+Version: 2.0.1
 Author: Mindstellar
 Author URI: https://github.com/mindstellar
 Widgets: header, footer, item_sidebar

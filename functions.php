@@ -361,6 +361,8 @@ if (!function_exists('storefront_related_items')) {
             $collect($s);
         }
 
+        if (function_exists('osc_prime_item_upgrades')) { osc_prime_item_upgrades($items); }
+
         return $items;
     }
 }
@@ -772,6 +774,11 @@ if (!function_exists('storefront_subcategories')) {
 if (!function_exists('storefront_adjacent_item_url')) {
     function storefront_adjacent_item_url($dir = 'next')
     {
+        // Core 6.4.0 has a faster helper with the same links; the code below is for older cores.
+        if (function_exists('osc_item_adjacent_url')) {
+            return osc_item_adjacent_url($dir === 'prev' ? 'prev' : 'next');
+        }
+
         $itemId = (int) osc_item_id();
         if ($itemId === 0) { return ''; }
 
