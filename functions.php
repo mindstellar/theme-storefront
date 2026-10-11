@@ -307,23 +307,61 @@ if (!function_exists('storefront_excerpt')) {
 
 /**
  * Related listings: other live ads in the current item's category. Returns an
- * array of item rows (Search already filters to enabled + active items).
+ * array of item rows (Search already filters to enabled + active items). The
+ * picked ids are cached per category for a few minutes, so most item views run
+ * one lookup by id instead of the category searches.
  */
 if (!function_exists('storefront_related_items')) {
     function storefront_related_items($max = 4)
     {
         $max = max(1, (int) $max);
         $currentId = (int) osc_item_id();
-        $items = array();
-        $seen  = array($currentId => true);
+        $catId = (int) osc_item_category_id();
 
-        // Append a Search's live results (minus the current item and anything already
-        // collected) until $max is reached.
-        $collect = static function ($search) use (&$items, &$seen, $max, $currentId) {
-            if (count($items) >= $max) { return; }
-            $search->addConditions(DB_TABLE_PREFIX . 't_item.pk_i_id <> ' . $currentId);
+        $key   = 'storefront_related_' . $catId . '_' . $max;
+        $found = false;
+        $ids   = osc_cache_get($key, $found);
+        if ($found !== false && is_array($ids)) {
+            $ids = array_slice(array_values(array_diff($ids, array($currentId))), 0, $max);
+            $items = array();
+            if ($ids) {
+                $s = new Search();
+                $s->fromPrimaryKeys($ids);
+                $items = (array) $s->doSearch(true, false);
+            }
+        } else {
+            // One more than shown, so the list stays full for whichever item of the
+            // category is being viewed once that item is dropped from it.
+            $rows  = storefront_related_rows($catId, $max + 1);
+            osc_cache_set($key, array_map('intval', array_column($rows, 'pk_i_id')), 300);
+            $items = array();
+            foreach ($rows as $row) {
+                if ((int) $row['pk_i_id'] === $currentId) { continue; }
+                $items[] = $row;
+                if (count($items) >= $max) { break; }
+            }
+        }
+
+        if (function_exists('osc_prime_item_upgrades')) { osc_prime_item_upgrades($items); }
+
+        return $items;
+    }
+}
+
+/**
+ * Up to $max live listings for a category: its own first, then its parent's other
+ * subcategories, then the newest anywhere, so a thin category still fills the row.
+ */
+if (!function_exists('storefront_related_rows')) {
+    function storefront_related_rows($catId, $max)
+    {
+        $items = array();
+        $seen  = array();
+
+        $collect = static function (Search $search) use (&$items, &$seen, $max) {
+            $search->order('dt_pub_date', 'DESC');
             $search->limit(0, $max * 3);
-            foreach ((array) $search->doSearch() as $it) {
+            foreach ((array) $search->doSearch(true, false) as $it) {
                 if (count($items) >= $max) { break; }
                 $id = (int) $it['pk_i_id'];
                 if (isset($seen[$id])) { continue; }
@@ -332,36 +370,23 @@ if (!function_exists('storefront_related_items')) {
             }
         };
 
-        $catId = (int) osc_item_category_id();
-
-        // 1) Same category — the genuinely related set.
         if ($catId > 0) {
-            $s = Search::newInstance();
+            $s = new Search();
             $s->addCategory($catId);
             $collect($s);
         }
-        // 2) Backfill from the parent category — addCategory() pulls in the whole subtree
-        //    (the sibling categories), so a thin category doesn't collapse the section
-        //    into dead whitespace beside the taller rail on desktop.
         if (count($items) < $max && $catId > 0) {
             $cat = Category::newInstance()->findByPrimaryKey($catId);
             $parentId = isset($cat['fk_i_parent_id']) ? (int) $cat['fk_i_parent_id'] : 0;
             if ($parentId > 0) {
-                $s = Search::newInstance();
+                $s = new Search();
                 $s->addCategory($parentId);
-                $s->order('dt_pub_date', 'DESC');
                 $collect($s);
             }
         }
-        // 3) Last resort — the most recent live listings anywhere, so the row only ever
-        //    disappears on a near-empty site with genuinely nothing else to show.
         if (count($items) < $max) {
-            $s = Search::newInstance();
-            $s->order('dt_pub_date', 'DESC');
-            $collect($s);
+            $collect(new Search());
         }
-
-        if (function_exists('osc_prime_item_upgrades')) { osc_prime_item_upgrades($items); }
 
         return $items;
     }
@@ -619,14 +644,19 @@ if (!function_exists('storefront_alert_summary')) {
 }
 
 /**
- * Every country, read once per request for the search rail.
+ * Every country, for the search rail. Kept in the object cache, since the list rarely changes.
  */
 if (!function_exists('storefront_countries')) {
     function storefront_countries()
     {
         static $countries = null;
         if ($countries === null) {
-            $countries = (array) Country::newInstance()->listAll();
+            $found     = false;
+            $countries = osc_cache_get('storefront_countries', $found);
+            if ($found === false || !is_array($countries)) {
+                $countries = (array) Country::newInstance()->listAll();
+                osc_cache_set('storefront_countries', $countries, 680);
+            }
         }
 
         return $countries;
@@ -710,11 +740,8 @@ if (!function_exists('storefront_active_filters')) {
  * Category-refinement rows for the search rail: a way back up, the current
  * category as a heading, then its enabled subcategories as links. Rendered as
  * <a href> navigation, not form controls, so every level is bookmarkable,
- * shareable and openable in a new tab (a category IS a URL). One cached round
- * trip per parent via the object cache; a cached empty list is not re-fetched
- * (osc_cache_get returns false only on a real miss). Echoes <li> rows into the
- * caller's <ul>. Names come through the model's locale-joined listWhere, so no
- * separate name lookup is needed.
+ * shareable and openable in a new tab (a category IS a URL). Read from the
+ * category tree the page has already loaded. Echoes <li> rows into the caller's <ul>.
  */
 if (!function_exists('storefront_subcategories')) {
     function storefront_subcategories()
@@ -722,15 +749,9 @@ if (!function_exists('storefront_subcategories')) {
         $cat      = storefront_search_category();
         $parentId = (int) $cat['id'];
 
-        $key   = 'storefront_subcats_' . $parentId;
-        $found = false;
-        $subs  = osc_cache_get($key, $found);
-        if ($found === false) {
-            $subs = $parentId
-                ? Category::newInstance()->findSubcategoriesEnabled($parentId)
-                : Category::newInstance()->listWhere('a.fk_i_parent_id IS NULL AND a.b_enabled = 1');
-            osc_cache_set($key, $subs, 680);
-        }
+        $subs = $parentId
+            ? Category::newInstance()->toSubTree($parentId)
+            : Category::newInstance()->toTree();
 
         // Drilled into a category: offer the way out and say where you are.
         if ($parentId) { ?>
