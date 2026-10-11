@@ -698,6 +698,10 @@ if (!function_exists('storefront_active_filters')) {
 
         if (osc_search_has_pic()) { $add(__('With photos', 'storefront'), array('bPic' => null)); }
 
+        if (storefront_distance_search() && osc_search_radius() > 0) {
+            $add(sprintf(__('Within %s', 'storefront'), osc_distance_label(osc_search_radius())), array('iRadius' => null, 'sLat' => null, 'sLng' => null));
+        }
+
         return $filters;
     }
 }
@@ -1062,3 +1066,18 @@ osc_add_hook('theme_delete_storefront', 'storefront_theme_delete');
 
 // Run once per request, mirroring bender: register defaults / migrate on load.
 storefront_check_install();
+
+if (!function_exists('storefront_distance_search')) {
+    /**
+     * Whether the site offers distance search. Shopclass before 7.0 has none.
+     */
+    function storefront_distance_search()
+    {
+        return function_exists('osc_geo_search_enabled') && osc_geo_search_enabled();
+    }
+}
+
+// The sidebar draws the distance field in its location group, not at the end of the form.
+if (function_exists('osc_search_distance_field')) {
+    osc_remove_hook('search_form', 'osc_search_distance_field');
+}
