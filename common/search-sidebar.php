@@ -174,6 +174,9 @@ $sf_render_region_city_selects = function ($sf_country_code) use ($sf_region_par
                     <input type="hidden" name="cityId" id="cityId" value="" />
                 </div>
             <?php } ?>
+            <?php if (storefront_distance_search()) { ?>
+                <div class="sf-field sf-distance"><?php osc_search_distance_field(); ?></div>
+            <?php } ?>
         </div>
 
         <?php if (osc_price_enabled_at_items()) { ?>

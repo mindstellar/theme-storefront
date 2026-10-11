@@ -75,6 +75,9 @@ if ($sf_title === '') { $sf_title = __('Browse listings', 'storefront'); }
                         <option value="<?php echo $sf_sort_url('dt_pub_date', 'desc'); ?>" <?php echo ($sf_cur_ord === 'dt_pub_date' && $sf_cur_type === 'desc') ? 'selected' : ''; ?>><?php _e('Most recent', 'storefront'); ?></option>
                         <option value="<?php echo $sf_sort_url('i_price', 'asc'); ?>" <?php echo ($sf_cur_ord === 'i_price' && $sf_cur_type === 'asc') ? 'selected' : ''; ?>><?php _e('Price: low to high', 'storefront'); ?></option>
                         <option value="<?php echo $sf_sort_url('i_price', 'desc'); ?>" <?php echo ($sf_cur_ord === 'i_price' && $sf_cur_type === 'desc') ? 'selected' : ''; ?>><?php _e('Price: high to low', 'storefront'); ?></option>
+                        <?php if (storefront_distance_search()) { ?>
+                        <option value="<?php echo $sf_sort_url('distance', 'asc'); ?>" <?php echo $sf_cur_ord === 'distance' ? 'selected' : ''; ?>><?php _e('Nearest first', 'storefront'); ?></option>
+                        <?php } ?>
                     </select>
                 </label>
             </div>

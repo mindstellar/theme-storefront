@@ -912,6 +912,15 @@ body.sf-list .sf-card__desc {
 .sf-filters__label { margin: 0 0 var(--space-2); font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text); }
 .sf-filters .sf-field { margin-bottom: var(--space-3); }
 .sf-filters .sf-field:last-child { margin-bottom: 0; }
+/* Distance field: the markup is core's osc_search_distance_field(). */
+.sf-distance .osc-distance { border: 0; margin: 0; padding: 0; min-width: 0; }
+.sf-distance .osc-near-me {
+    display: inline-flex; margin-top: var(--space-2); padding: 0; border: 0; background: none;
+    font: inherit; font-size: 13px; font-weight: 600; color: var(--color-accent); cursor: pointer;
+}
+.sf-distance .osc-near-me:hover { text-decoration: underline; }
+.sf-distance .osc-near-me:disabled { opacity: 0.6; cursor: progress; }
+.sf-card__distance::before { content: "\00b7"; margin-inline-end: 4px; }
 
 /* ──────────────────────────────────────────────────────────────────────────
    Custom fields (per-category, core-rendered)
