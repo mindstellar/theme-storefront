@@ -1651,6 +1651,7 @@ body.sf-list .sf-card__desc {
 .sf-dialog__body { padding: 0 var(--space-4) var(--space-4); }
 .sf-dialog__actions { display: flex; justify-content: flex-end; gap: var(--space-2); padding: var(--space-3) var(--space-4) var(--space-4); }
 .sf-dialog .sf-field:last-of-type { margin-bottom: 0; }
+.sf-dialog .sf-report .sf-field { margin-bottom: var(--space-4); }
 .sf-dialog .sf-field textarea { height: 120px; }
 
 .sf-dialog__context {
