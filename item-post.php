@@ -46,11 +46,11 @@ osc_current_web_theme_path('common/header.php');
             <?php ItemForm::category_select(null, null, __('Select a category', 'storefront')); ?>
         </div>
         <div class="sf-field">
-            <label for="title[<?php echo osc_current_user_locale(); ?>]"><?php _e('Title', 'storefront'); ?></label>
+            <label for="<?php echo osc_esc_html(ItemForm::locale_field_id('title', osc_current_user_locale())); ?>"><?php _e('Title', 'storefront'); ?></label>
             <?php ItemForm::title_input('title', osc_current_user_locale(), osc_esc_html(osc_item_title())); ?>
         </div>
         <div class="sf-field">
-            <label for="description[<?php echo osc_current_user_locale(); ?>]"><?php _e('Description', 'storefront'); ?></label>
+            <label for="<?php echo osc_esc_html(ItemForm::locale_field_id('description', osc_current_user_locale())); ?>"><?php _e('Description', 'storefront'); ?></label>
             <?php ItemForm::description_textarea('description', osc_current_user_locale(), osc_esc_html(osc_item_description())); ?>
         </div>
         <?php if (osc_price_enabled_at_items()) { ?>
