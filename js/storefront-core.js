@@ -202,10 +202,13 @@
                 }
                 e.preventDefault();
                 pending = el.tagName === 'BUTTON' ? el : null;
-                if (titleEl) { titleEl.textContent = el.getAttribute('data-confirm-title') || defTitle; }
+                // Core's own confirm links carry only a message; name the action from the link text.
+                var label = (el.textContent || '').trim();
+                var own = el.hasAttribute('data-confirm-title') || !el.hasAttribute('data-osc-confirm') || !label;
+                if (titleEl) { titleEl.textContent = el.getAttribute('data-confirm-title') || (own ? defTitle : label + '?'); }
                 if (msgEl) { msgEl.textContent = msg; }
                 if (goEl) {
-                    goEl.textContent = el.getAttribute('data-confirm-ok') || defOk;
+                    goEl.textContent = el.getAttribute('data-confirm-ok') || (own ? defOk : label);
                     goEl.setAttribute('href', pending ? '#' : el.getAttribute('href'));
                 }
                 dlg.showModal();
