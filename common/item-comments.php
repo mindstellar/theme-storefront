@@ -20,7 +20,7 @@ $sf_c_total = (int) osc_count_item_comments();
 // instead of a form they cannot submit — the list still shows either way.
 $sf_c_gated = osc_reg_user_post_comments() && !osc_is_web_user_logged_in();
 $sf_c_form  = static function ($key) {
-    return osc_esc_html((string) Session::newInstance()->_getForm($key));
+    return osc_esc_html((string) Session::getInstance()->_getForm($key));
 };
 ?>
 <section class="sf-comments sf-detail__section" id="comments" aria-label="<?php echo osc_esc_html(__('Comments', 'storefront')); ?>">
@@ -56,7 +56,7 @@ $sf_c_form  = static function ($key) {
         <?php } ?>
     </ol>
     <?php
-    View::newInstance()->_exportVariableToView('sf_pagination_html', osc_comments_pagination());
+    View::getInstance()->_exportVariableToView('sf_pagination_html', osc_comments_pagination());
     osc_current_web_theme_path('common/pagination.php');
     ?>
     <?php } else { ?>
@@ -105,10 +105,8 @@ $sf_c_form  = static function ($key) {
         </div>
         <?php
         // Shown exactly when core will verify it in the add_comment action (the comment
-        // captcha toggle AND an active provider). Guarded so older cores without the
-        // comment-captcha preference simply never render a challenge.
-        if (function_exists('osc_recaptcha_comments_enabled') && osc_recaptcha_comments_enabled()
-            && function_exists('osc_captcha_enabled') && osc_captcha_enabled()) { ?>
+        // captcha toggle AND an active provider).
+        if (osc_recaptcha_comments_enabled() && osc_captcha_enabled()) { ?>
         <div class="sf-field"><?php osc_show_captcha('comment'); ?></div>
         <?php } ?>
         <div class="sf-form__actions">

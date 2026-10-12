@@ -14,10 +14,10 @@
  * navigate to.
  *
  * Callers export the pre-rendered string and include this partial, e.g.:
- *   View::newInstance()->_exportVariableToView('sf_pagination_html', osc_search_pagination());
+ *   View::getInstance()->_exportVariableToView('sf_pagination_html', osc_search_pagination());
  *   osc_current_web_theme_path('common/pagination.php');
  */
-$sf_pagination_html = (string) View::newInstance()->_get('sf_pagination_html');
+$sf_pagination_html = (string) View::getInstance()->_get('sf_pagination_html');
 if (strpos($sf_pagination_html, '<a ') !== false) { ?>
     <div class="sf-pagination"><?php echo $sf_pagination_html; ?></div>
 <?php } ?>

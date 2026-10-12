@@ -3,7 +3,7 @@
  * Storefront — a Shopclass public theme.
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
-$sf_error = View::newInstance()->_get('error');
+$sf_error = View::getInstance()->_get('error');
 if (!is_string($sf_error) || $sf_error === '') {
     $sf_error = __('Something went wrong. Please try again later.', 'storefront');
 }

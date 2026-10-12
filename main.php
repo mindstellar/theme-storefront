@@ -122,7 +122,7 @@ if (osc_count_premiums() > 0) { ?>
         </div>
         <?php osc_run_hook('home_before_featured'); ?>
         <?php
-        View::newInstance()->_exportVariableToView('listType', 'premiums');
+        View::getInstance()->_exportVariableToView('listType', 'premiums');
         osc_current_web_theme_path('common/loop.php');
         ?>
         <?php osc_run_hook('home_after_featured'); ?>
@@ -141,7 +141,7 @@ if (osc_count_premiums() > 0) { ?>
         <?php if (osc_count_latest_items() === 0) { ?>
             <p class="sf-empty"><?php _e('No listings yet — be the first to post one.', 'storefront'); ?></p>
         <?php } else {
-            View::newInstance()->_exportVariableToView('listType', 'latestItems');
+            View::getInstance()->_exportVariableToView('listType', 'latestItems');
             osc_current_web_theme_path('common/loop.php');
             if (osc_count_latest_items() === osc_max_latest_items()) { ?>
                 <p class="sf-more">

@@ -43,7 +43,7 @@ if (osc_images_enabled_at_items()) {
             'thumb' => osc_resource_thumbnail_url(),
             'large' => osc_resource_preview_url(),
             'full'  => osc_resource_url(),
-            'dl'    => function_exists('osc_resource_download_url') ? osc_resource_download_url() : osc_resource_url(),
+            'dl'    => osc_resource_download_url(),
         );
     }
     osc_reset_resources();
@@ -88,11 +88,11 @@ if ($sf_show_map && $sf_map_type === 'google') {
 
 // Seller facts, read straight off the user row (no view-state mutation, so the
 // contact form's own prefill is untouched).
-$sf_seller = $sf_seller_id ? User::newInstance()->findByPrimaryKey($sf_seller_id) : array();
+$sf_seller = $sf_seller_id ? User::getInstance()->findByPrimaryKey($sf_seller_id) : array();
 $sf_is_company = !empty($sf_seller['b_company']);
 $sf_since      = isset($sf_seller['dt_reg_date']) ? $sf_seller['dt_reg_date'] : '';
 $sf_seller_url = $sf_seller_id ? osc_user_public_profile_url($sf_seller_id) : '';
-$sf_seller_count = $sf_seller_id ? (int) Item::newInstance()->countByUserIDEnabled($sf_seller_id) : 0;
+$sf_seller_count = $sf_seller_id ? (int) Item::getInstance()->countByUserIDEnabled($sf_seller_id) : 0;
 // A days-old account with barely any listings shows a clear "New seller" note instead
 // of a bare "Member since <this year>", so the buyer's trust expectation is set
 // honestly. A young account that already has a real catalogue isn't framed as new.
@@ -212,14 +212,12 @@ $sf_next = storefront_adjacent_item_url('next');
             <p class="sf-detail__owner-label"><?php _e('This is your listing.', 'storefront'); ?></p>
             <div class="sf-detail__owner-actions">
                 <a class="sf-btn sf-btn--ghost" href="<?php echo osc_item_edit_url(); ?>"><?php echo $sf_icon('edit'); ?><?php _e('Edit', 'storefront'); ?></a>
-                <?php if (function_exists('osc_item_delete_url')) { ?>
                 <a class="sf-btn sf-btn--ghost" rel="nofollow" href="<?php echo osc_item_delete_url(); ?>"
                    data-confirm="<?php echo osc_esc_html(sprintf(__('Delete “%s”? This cannot be undone.', 'storefront'), osc_item_title())); ?>"
                    data-confirm-title="<?php echo osc_esc_html(__('Delete listing', 'storefront')); ?>"
                    data-confirm-ok="<?php echo osc_esc_html(__('Delete listing', 'storefront')); ?>">
                     <?php echo $sf_icon('trash'); ?><?php _e('Delete', 'storefront'); ?>
                 </a>
-                <?php } ?>
             </div>
         </div>
         <?php } ?>
@@ -366,8 +364,7 @@ $sf_next = storefront_adjacent_item_url('next');
                 // file this theme does not ship -> a broken image), and EMAIL/PHONE
                 // (registry types stored as TEXT, so the legacy helper prints them plain).
                 $sf_row  = osc_item_meta();
-                $sf_type = function_exists('osc_field_resolve_type')
-                    ? osc_field_resolve_type($sf_row) : ($sf_row['e_type'] ?? 'TEXT');
+                $sf_type = osc_field_resolve_type($sf_row);
                 $sf_raw  = isset($sf_row['s_value']) ? (string) $sf_row['s_value'] : '';
 
                 if ($sf_type === 'CHECKBOX') {
@@ -397,7 +394,7 @@ $sf_next = storefront_adjacent_item_url('next');
         // whatever no group claims stays a loose block in field-loop order. Installs
         // without groups leave $sf_groups empty and render one flat table as before.
         $sf_groups = array();
-        if (!empty($sf_vals) && function_exists('osc_get_category_field_groups')) {
+        if (!empty($sf_vals)) {
             foreach (osc_get_category_field_groups(osc_item_category_id()) as $sf_g) {
                 $sf_rows = array();
                 foreach ((array) ($sf_g['fields'] ?? array()) as $sf_f) {
@@ -507,9 +504,9 @@ $sf_next = storefront_adjacent_item_url('next');
             <h2 class="sf-related__title"><?php _e('Related listings', 'storefront'); ?></h2>
             <?php osc_run_hook('item_before_related', osc_item()); ?>
             <?php
-            View::newInstance()->_exportVariableToView('items', $sf_related);
-            View::newInstance()->_reset('items');
-            View::newInstance()->_exportVariableToView('listType', 'items');
+            View::getInstance()->_exportVariableToView('items', $sf_related);
+            View::getInstance()->_reset('items');
+            View::getInstance()->_exportVariableToView('listType', 'items');
             osc_current_web_theme_path('common/loop.php');
             ?>
             <?php osc_run_hook('item_after_related', osc_item()); ?>
@@ -557,7 +554,7 @@ $sf_next = storefront_adjacent_item_url('next');
 <?php // ════════════════ dialogs ════════════════ ?>
 
 <?php if ($sf_can_contact) { ?>
-<?php $sf_contact_error = (string) Session::newInstance()->_getForm('contact_error'); ?>
+<?php $sf_contact_error = (string) Session::getInstance()->_getForm('contact_error'); ?>
 <dialog class="sf-dialog" id="sf-dialog-contact" aria-labelledby="sf-dialog-contact-title"<?php echo $sf_contact_error !== '' ? ' data-dialog-show' : ''; ?>>
     <div class="sf-dialog__head">
         <h2 class="sf-dialog__title" id="sf-dialog-contact-title"><?php _e('Message seller', 'storefront'); ?></h2>

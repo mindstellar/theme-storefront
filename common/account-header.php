@@ -28,7 +28,7 @@ $sf_place = $sf_acct
 $sf_page = isset($sf_page) ? (string) $sf_page : '';
 
 // Live listings only: the figure a seller watches, one COUNT on their own rows.
-$sf_active = (int) Item::newInstance()->countItemTypesByUserID(osc_logged_user_id(), 'active');
+$sf_active = (int) Item::getInstance()->countItemTypesByUserID(osc_logged_user_id(), 'active');
 
 $sf_settings = in_array($sf_page, array('user-profile', 'user-signin', 'user-delete_account'), true);
 $sf_tabs = array(
@@ -39,7 +39,7 @@ $sf_tabs = array(
     // active without a second aria-current, which the sub-tab carries.
     array('name' => __('Settings', 'storefront'),    'url' => osc_user_profile_url(),    'icon' => 'settings', 'soft' => true, 'current' => $sf_settings),
 );
-if (function_exists('osc_billing_enabled') && osc_billing_enabled()) {
+if (osc_billing_enabled()) {
     $sf_tabs[] = array('name' => __('Credits', 'storefront'), 'url' => osc_billing_wallet_url(), 'icon' => 'credit-card', 'current' => osc_get_osclass_location() === 'billing');
 }
 

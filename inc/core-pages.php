@@ -70,7 +70,7 @@ function storefront_listing_cards($html, $items, $context)
     // One query for every card's upgrades, rather than one per card.
     osc_prime_item_upgrades($items);
 
-    $view = View::newInstance();
+    $view = View::getInstance();
     if ($context === 'dashboard') {
         // One row of the owner's newest listings; "Manage all" leads to the rest.
         $view->_exportVariableToView('items', array_slice($items, 0, 3));

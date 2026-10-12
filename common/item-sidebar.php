@@ -23,9 +23,7 @@
     </div>
     <?php
     // Shown only when core will verify it (report-captcha toggle AND an active provider).
-    // Guarded so older cores without the preference never render a challenge.
-    if (function_exists('osc_recaptcha_reports_enabled') && osc_recaptcha_reports_enabled()
-        && function_exists('osc_captcha_enabled') && osc_captcha_enabled()) { ?>
+    if (osc_recaptcha_reports_enabled() && osc_captcha_enabled()) { ?>
     <div class="sf-field"><?php osc_show_captcha('report'); ?></div>
     <?php } ?>
     <button type="submit" class="sf-btn sf-btn--secondary sf-btn--block"><?php _e('Submit report', 'storefront'); ?></button>

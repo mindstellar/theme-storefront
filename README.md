@@ -16,7 +16,7 @@ responsive, **vanilla-JS** (no jQuery) classifieds front end.
 
 ## Install
 
-Storefront 2.0 needs ShopClass 6.4.0 or later; sites on an older core stay on Storefront 1.3.x.
+Storefront 2.0 needs ShopClass 7.0.0 or later; sites on an older core stay on Storefront 1.3.x.
 ShopClass bundles Storefront in the release zip and activates it on a fresh install. To
 install manually, drop this folder into `oc-content/themes/storefront/` and activate it under
 **Settings → Appearance**.

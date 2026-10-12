@@ -342,7 +342,7 @@ if (!function_exists('storefront_related_items')) {
             }
         }
 
-        if (function_exists('osc_prime_item_upgrades')) { osc_prime_item_upgrades($items); }
+        osc_prime_item_upgrades($items);
 
         return $items;
     }
@@ -376,7 +376,7 @@ if (!function_exists('storefront_related_rows')) {
             $collect($s);
         }
         if (count($items) < $max && $catId > 0) {
-            $cat = Category::newInstance()->findByPrimaryKey($catId);
+            $cat = Category::getInstance()->findByPrimaryKey($catId);
             $parentId = isset($cat['fk_i_parent_id']) ? (int) $cat['fk_i_parent_id'] : 0;
             if ($parentId > 0) {
                 $s = new Search();
@@ -505,7 +505,7 @@ if (!function_exists('storefront_item_category_path')) {
         }
         if (!isset($paths[$id])) {
             $paths[$id] = array();
-            foreach (Category::newInstance()->toRootTree($id) as $cat) {
+            foreach (Category::getInstance()->toRootTree($id) as $cat) {
                 if (is_array($cat) && !empty($cat['pk_i_id'])) {
                     $paths[$id][] = array(
                         'name' => (string) ($cat['s_name'] ?? ''),
@@ -537,7 +537,7 @@ if (!function_exists('sf_account_user')) {
         if ($row !== false) { return $row; }
 
         $id = osc_logged_user_id();
-        $row = $id ? User::newInstance()->findByPrimaryKey($id) : null;
+        $row = $id ? User::getInstance()->findByPrimaryKey($id) : null;
         if (!is_array($row)) { $row = null; }
 
         return $row;
@@ -556,9 +556,7 @@ if (!function_exists('sf_account_user')) {
 if (!function_exists('sf_avatars_enabled')) {
     function sf_avatars_enabled()
     {
-        return function_exists('osc_user_avatar_url')
-            && function_exists('osc_get_preference')
-            && osc_get_preference('enabled_user_avatars');
+        return (bool) osc_get_preference('enabled_user_avatars');
     }
 }
 
@@ -568,7 +566,7 @@ if (!function_exists('sf_avatars_enabled')) {
 if (!function_exists('sf_has_avatar')) {
     function sf_has_avatar($userId = null)
     {
-        return function_exists('osc_has_user_avatar') && osc_has_user_avatar($userId);
+        return osc_has_user_avatar($userId);
     }
 }
 
@@ -608,9 +606,6 @@ if (!function_exists('storefront_search_multi_country')) {
 if (!function_exists('storefront_alert_summary')) {
     function storefront_alert_summary()
     {
-        if (!function_exists('osc_get_raw_search') || !function_exists('osc_alert_field')) {
-            return null;
-        }
         $raw = osc_get_raw_search((array) json_decode((string) osc_alert_field('s_search'), true));
         if (!is_array($raw)) {
             return null;
@@ -654,7 +649,7 @@ if (!function_exists('storefront_countries')) {
             $found     = false;
             $countries = osc_cache_get('storefront_countries', $found);
             if ($found === false || !is_array($countries)) {
-                $countries = (array) Country::newInstance()->listAll();
+                $countries = (array) Country::getInstance()->listAll();
                 osc_cache_set('storefront_countries', $countries, 680);
             }
         }
@@ -675,7 +670,7 @@ if (!function_exists('storefront_search_category')) {
         $ids = (array) osc_search_category_id();
         if (empty($ids)) { return array('id' => 0, 'name' => ''); }
         $id  = (int) reset($ids);
-        $cat = $id ? Category::newInstance()->findByPrimaryKey($id) : array();
+        $cat = $id ? Category::getInstance()->findByPrimaryKey($id) : array();
 
         return array('id' => $id, 'name' => !empty($cat['s_name']) ? $cat['s_name'] : '');
     }
@@ -750,8 +745,8 @@ if (!function_exists('storefront_subcategories')) {
         $parentId = (int) $cat['id'];
 
         $subs = $parentId
-            ? Category::newInstance()->toSubTree($parentId)
-            : Category::newInstance()->toTree();
+            ? Category::getInstance()->toSubTree($parentId)
+            : Category::getInstance()->toTree();
 
         // Drilled into a category: offer the way out and say where you are.
         if ($parentId) { ?>
@@ -832,7 +827,7 @@ if (!function_exists('storefront_admin_item_action')) {
         }
 
         $id  = (int) Params::getParam('id');
-        $row = $id ? Item::newInstance()->findByPrimaryKey($id) : array();
+        $row = $id ? Item::getInstance()->findByPrimaryKey($id) : array();
         if (empty($row)) {
             osc_add_flash_error_message(__("This listing doesn't exist.", 'storefront'));
             osc_redirect_to(osc_base_url(true));
@@ -863,7 +858,7 @@ if (!function_exists('storefront_admin_item_action')) {
         osc_add_flash_ok_message($messages[$action], 'pubMessages');
 
         // osc_item_url() reads the exported view var for the redirect back.
-        View::newInstance()->_exportVariableToView('item', $row);
+        View::getInstance()->_exportVariableToView('item', $row);
         osc_redirect_to(osc_item_url());
     }
 }
@@ -1023,7 +1018,7 @@ if (!function_exists('storefront_theme_delete')) {
     {
         storefront_logo_unlink_raster('logo');
         storefront_logo_unlink_raster('logo_compact');
-        Preference::newInstance()->delete(array('s_section' => 'storefront'));
+        Preference::getInstance()->delete(array('s_section' => 'storefront'));
     }
 }
 
@@ -1038,9 +1033,7 @@ osc_admin_menu_appearance(
     'storefront_settings'
 );
 // The theme prints its own feed link with a friendlier title than core's.
-if (function_exists('osc_add_theme_support')) {
-    osc_add_theme_support('head', array('feed' => false));
-}
+osc_add_theme_support('head', array('feed' => false));
 
 osc_add_hook('init_admin', 'storefront_admin_actions');
 osc_add_hook('theme_delete_storefront', 'storefront_theme_delete');
@@ -1050,15 +1043,13 @@ storefront_check_install();
 
 if (!function_exists('storefront_distance_search')) {
     /**
-     * Whether the site offers distance search. Shopclass before 7.0 has none.
+     * Whether the site offers distance search.
      */
     function storefront_distance_search()
     {
-        return function_exists('osc_geo_search_enabled') && osc_geo_search_enabled();
+        return osc_geo_search_enabled();
     }
 }
 
 // The sidebar draws the distance field in its location group, not at the end of the form.
-if (function_exists('osc_search_distance_field')) {
-    osc_remove_hook('search_form', 'osc_search_distance_field');
-}
+osc_remove_hook('search_form', 'osc_search_distance_field');

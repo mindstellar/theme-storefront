@@ -5,17 +5,17 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-$sf_type = View::newInstance()->_exists('listType') ? View::newInstance()->_get('listType') : 'items';
+$sf_type = View::getInstance()->_exists('listType') ? View::getInstance()->_get('listType') : 'items';
 
 // The account dashboard shows the owner their own listings and opts into a
 // per-card view count ("how many people looked") — the status signal that is
 // too costly to sum globally. Off everywhere else, so public grids stay clean.
-$sf_show_views = View::newInstance()->_exists('sfCardViews') && View::newInstance()->_get('sfCardViews');
+$sf_show_views = View::getInstance()->_exists('sfCardViews') && View::getInstance()->_get('sfCardViews');
 
 // The dashboard shows the owner their own listings and opts into per-card owner
 // actions (view / edit / delete). Off on every public grid, so those stay clean and
 // never expose edit/delete on a listing the visitor doesn't own.
-$sf_card_owner = View::newInstance()->_exists('sfCardOwner') && View::newInstance()->_get('sfCardOwner');
+$sf_card_owner = View::getInstance()->_exists('sfCardOwner') && View::getInstance()->_get('sfCardOwner');
 
 // Card for a regular listing (current item in an osc_has_items/latest loop).
 $sf_item_card = static function () use ($sf_show_views, $sf_card_owner) {

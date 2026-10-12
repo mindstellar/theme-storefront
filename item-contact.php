@@ -36,7 +36,7 @@ if ($sf_contact_page) {
     <span><?php _e('The seller will see your name and email. Never pay in advance — meet in a public place and inspect the item first.', 'storefront'); ?></span>
 </p>
 
-<?php $sf_contact_error = (string) Session::newInstance()->_getForm('contact_error');
+<?php $sf_contact_error = (string) Session::getInstance()->_getForm('contact_error');
 if ($sf_contact_error !== '') { ?>
     <p class="sf-form-error" role="alert"><?php echo osc_esc_html($sf_contact_error); ?></p>
 <?php } ?>

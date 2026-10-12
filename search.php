@@ -108,11 +108,11 @@ if ($sf_title === '') { $sf_title = __('Browse listings', 'storefront'); }
                 <p><a class="sf-btn sf-btn--secondary" href="<?php echo osc_search_show_all_url(); ?>"><?php _e('Clear filters', 'storefront'); ?></a></p>
             </div>
         <?php } else {
-            View::newInstance()->_exportVariableToView('listType', 'items');
+            View::getInstance()->_exportVariableToView('listType', 'items');
             osc_current_web_theme_path('common/loop.php');
             ?>
             <?php
-            View::newInstance()->_exportVariableToView('sf_pagination_html', osc_search_pagination());
+            View::getInstance()->_exportVariableToView('sf_pagination_html', osc_search_pagination());
             osc_current_web_theme_path('common/pagination.php');
             ?>
         <?php } ?>

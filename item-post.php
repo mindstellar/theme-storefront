@@ -144,8 +144,7 @@ osc_current_web_theme_path('common/header.php');
         // Show the challenge exactly when core will verify it: the item-post toggle
         // AND an active provider. Passing a context lets Turnstile label the action;
         // osc_show_captcha() emits nothing when no provider is configured.
-        $sf_item_captcha = osc_recaptcha_items_enabled()
-            && (!function_exists('osc_captcha_enabled') || osc_captcha_enabled());
+        $sf_item_captcha = osc_recaptcha_items_enabled() && osc_captcha_enabled();
         if ($sf_item_captcha) { ?>
         <div class="sf-field">
             <?php osc_show_captcha('item_post'); ?>
