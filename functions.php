@@ -799,47 +799,7 @@ if (!function_exists('storefront_subcategories')) {
 if (!function_exists('storefront_adjacent_item_url')) {
     function storefront_adjacent_item_url($dir = 'next')
     {
-        // Core 6.4.0 has a faster helper with the same links; the code below is for older cores.
-        if (function_exists('osc_item_adjacent_url')) {
-            return osc_item_adjacent_url($dir === 'prev' ? 'prev' : 'next');
-        }
-
-        $itemId = (int) osc_item_id();
-        if ($itemId === 0) { return ''; }
-
-        $isNext = ($dir !== 'prev');
-        $key    = 'storefront_adjacent_' . ($isNext ? 'next_' : 'prev_') . $itemId;
-
-        // A real miss leaves $found false; a cached "no neighbour" is stored as ''
-        // and comes back with $found true — the newest/oldest listing is often a hot
-        // page, so the empty result is worth caching too rather than re-querying it
-        // on every hit. osc_cache_get() requires the by-reference $found out-param.
-        $found = false;
-        $url   = osc_cache_get($key, $found);
-        if ($found === false) {
-            // $itemId is int-cast; it is the only interpolated value.
-            $sql = sprintf(
-                'SELECT pk_i_id FROM %st_item WHERE pk_i_id %s %d'
-                . ' AND b_spam = 0 AND b_enabled = 1 AND b_active = 1'
-                . ' ORDER BY pk_i_id %s LIMIT 1',
-                DB_TABLE_PREFIX,
-                $isNext ? '>' : '<',
-                $itemId,
-                $isNext ? 'ASC' : 'DESC'
-            );
-
-            $dao    = new DAO();
-            $rs     = $dao->dao->query($sql);
-            $rows   = $rs ? $rs->result() : array();
-            $url    = '';
-            if (!empty($rows)) {
-                $row = Item::newInstance()->findByPrimaryKey((int) $rows[0]['pk_i_id']);
-                if (!empty($row)) { $url = osc_item_url_from_item($row); }
-            }
-            osc_cache_set($key, $url, 180);
-        }
-
-        return $url;
+        return osc_item_adjacent_url($dir === 'prev' ? 'prev' : 'next');
     }
 }
 
