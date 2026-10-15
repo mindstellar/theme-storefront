@@ -92,7 +92,8 @@ $sf_seller = $sf_seller_id ? User::getInstance()->findByPrimaryKey($sf_seller_id
 $sf_is_company = !empty($sf_seller['b_company']);
 $sf_since      = isset($sf_seller['dt_reg_date']) ? $sf_seller['dt_reg_date'] : '';
 $sf_seller_url = $sf_seller_id ? osc_user_public_profile_url($sf_seller_id) : '';
-$sf_seller_count = $sf_seller_id ? (int) Item::getInstance()->countByUserIDEnabled($sf_seller_id) : 0;
+// The live-listing count core keeps on the user row, so the page runs no count of its own.
+$sf_seller_count = (int) ($sf_seller['i_items'] ?? 0);
 // A days-old account with barely any listings shows a clear "New seller" note instead
 // of a bare "Member since <this year>", so the buyer's trust expectation is set
 // honestly. A young account that already has a real catalogue isn't framed as new.
