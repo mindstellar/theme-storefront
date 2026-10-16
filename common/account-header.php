@@ -43,6 +43,28 @@ if (osc_billing_enabled()) {
     $sf_tabs[] = array('name' => __('Credits', 'storefront'), 'url' => osc_billing_wallet_url(), 'icon' => 'credit-card', 'current' => osc_get_osclass_location() === 'billing');
 }
 
+// Entries plugins and core add through user_menu_filter, such as a plugin's account page.
+// The ones the tabs above already cover are skipped.
+$sf_covered = array('opt_dashboard', 'opt_items', 'opt_alerts', 'opt_account', 'opt_signin', 'opt_publicprofile', 'opt_logout', 'opt_billing_wallet', 'opt_billing_buy');
+$sf_where   = static function (string $url): array {
+    $parts = parse_url($url) ?: array();
+    parse_str((string) ($parts['query'] ?? ''), $query);
+
+    return array($parts['path'] ?? '', $query['page'] ?? '', $query['action'] ?? '', $query['route'] ?? '');
+};
+$sf_here = $sf_where((string) ($_SERVER['REQUEST_URI'] ?? ''));
+foreach ((array) osc_apply_filter('user_menu_filter', array()) as $sf_extra) {
+    if (!is_array($sf_extra) || empty($sf_extra['url']) || empty($sf_extra['name']) || in_array($sf_extra['class'] ?? '', $sf_covered, true)) {
+        continue;
+    }
+    $sf_tabs[] = array(
+        'name'    => (string) $sf_extra['name'],
+        'url'     => (string) $sf_extra['url'],
+        'icon'    => 'zap',
+        'current' => $sf_where((string) $sf_extra['url']) === $sf_here,
+    );
+}
+
 $sf_settings_tabs = array(
     // Delete account is reached from the profile page, so it keeps Profile lit.
     array('name' => __('Profile', 'storefront'),          'url' => osc_user_profile_url(),      'current' => in_array($sf_page, array('user-profile', 'user-delete_account'), true)),
