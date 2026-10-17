@@ -897,6 +897,10 @@ if (!function_exists('storefront_admin_actions')) {
 
         $action = (string) Params::getParam('action_specific');
         if (in_array($action, array('storefront_brand', 'storefront_upload_logo', 'storefront_remove_logo', 'storefront_settings'), true)) {
+            // Theme settings are for administrators; a moderator's post changes nothing.
+            if (osc_is_moderator()) {
+                return;
+            }
             osc_csrf_check();
         }
 
