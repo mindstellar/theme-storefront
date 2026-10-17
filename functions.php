@@ -906,8 +906,8 @@ if (!function_exists('storefront_logo_unlink_raster')) {
 /**
  * Theme admin panel actions: brand text, logo upload/remove, and the settings form.
  * Hooked on `init_admin` (before any admin output), mirroring bender's single
- * dispatcher keyed off `action_specific`. These forms carry no CSRF token — same as
- * bender's — so none is added here.
+ * dispatcher keyed off `action_specific`. Core puts a CSRF token in each form; every
+ * action checks it before it changes anything.
  */
 if (!function_exists('storefront_admin_actions')) {
     function storefront_admin_actions()
@@ -916,7 +916,16 @@ if (!function_exists('storefront_admin_actions')) {
             return osc_admin_render_theme_url('oc-content/themes/storefront/admin/' . $page . '.php');
         };
 
-        switch (Params::getParam('action_specific')) {
+        $action = (string) Params::getParam('action_specific');
+        if (in_array($action, array('storefront_brand', 'storefront_upload_logo', 'storefront_remove_logo', 'storefront_settings'), true)) {
+            // Theme settings are for administrators; a moderator's post changes nothing.
+            if (osc_is_moderator()) {
+                return;
+            }
+            osc_csrf_check();
+        }
+
+        switch ($action) {
             case 'storefront_brand':
                 osc_set_preference('header_logo_text', Params::getParam('header_logo_text'), 'storefront');
                 osc_reset_preferences();
