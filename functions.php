@@ -885,9 +885,8 @@ if (!function_exists('storefront_logo_unlink_raster')) {
 
 /**
  * Theme admin panel actions: brand text, logo upload/remove, and the settings form.
- * Hooked on `init_admin` (before any admin output), mirroring bender's single
- * dispatcher keyed off `action_specific`. These forms carry no CSRF token — same as
- * bender's — so none is added here.
+ * Hooked on `init_admin` (before any admin output). Core puts a CSRF token in each form;
+ * every action checks it before it changes anything.
  */
 if (!function_exists('storefront_admin_actions')) {
     function storefront_admin_actions()
@@ -896,7 +895,12 @@ if (!function_exists('storefront_admin_actions')) {
             return osc_admin_render_theme_url('oc-content/themes/storefront/admin/' . $page . '.php');
         };
 
-        switch (Params::getParam('action_specific')) {
+        $action = (string) Params::getParam('action_specific');
+        if (in_array($action, array('storefront_brand', 'storefront_upload_logo', 'storefront_remove_logo', 'storefront_settings'), true)) {
+            osc_csrf_check();
+        }
+
+        switch ($action) {
             case 'storefront_brand':
                 osc_set_preference('header_logo_text', Params::getParam('header_logo_text'), 'storefront');
                 osc_reset_preferences();
@@ -1032,6 +1036,20 @@ osc_admin_menu_appearance(
     osc_admin_render_theme_url('oc-content/themes/storefront/admin/settings.php'),
     'storefront_settings'
 );
+// Name the theme's own admin screens in core's page title instead of "Appearance".
+if (OC_ADMIN) {
+    $storefrontAdminTitles = array(
+        'oc-content/themes/storefront/admin/header.php'   => __('Storefront: Brand', 'storefront'),
+        'oc-content/themes/storefront/admin/settings.php' => __('Storefront: Settings', 'storefront'),
+    );
+    $storefrontAdminFile = Params::getParamString('file');
+    if (isset($storefrontAdminTitles[$storefrontAdminFile])) {
+        $storefrontAdminTitle = $storefrontAdminTitles[$storefrontAdminFile];
+        osc_add_filter('custom_appearance_title', static fn () => $storefrontAdminTitle);
+    }
+    unset($storefrontAdminTitles, $storefrontAdminFile, $storefrontAdminTitle);
+}
+
 // The theme prints its own feed link with a friendlier title than core's.
 osc_add_theme_support('head', array('feed' => false));
 
