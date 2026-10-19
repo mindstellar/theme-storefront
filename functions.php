@@ -48,6 +48,22 @@ if (!function_exists('storefront_asset')) {
 }
 
 /**
+ * Whether the theme offers a "Post a listing" link. In shop mode the public form is closed.
+ *
+ * @return bool
+ */
+if (!function_exists('storefront_can_post')) {
+    function storefront_can_post()
+    {
+        if (function_exists('osc_site_mode') && osc_site_mode() === 'shop') {
+            return false;
+        }
+
+        return osc_users_enabled() || !osc_reg_user_post();
+    }
+}
+
+/**
  * Every page: the design system stylesheet + core chrome (header nav, account menus,
  * dialogs, confirm guards, flash dismiss). Runs on the `header` hook at priority 5,
  * before core prints the queue at 8.

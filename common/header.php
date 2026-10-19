@@ -81,7 +81,7 @@
                 <?php } ?>
             <?php } ?>
 
-            <?php if (osc_users_enabled() || (!osc_users_enabled() && !osc_reg_user_post())) { ?>
+            <?php if (storefront_can_post()) { ?>
                 <a class="sf-btn sf-btn--primary sf-nav__cta" href="<?php echo osc_item_post_url_in_category(); ?>">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
                     <?php _e('Post a listing', 'storefront'); ?>

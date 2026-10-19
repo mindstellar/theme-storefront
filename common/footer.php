@@ -20,9 +20,8 @@ while (osc_has_static_pages()) {
     echo '<a href="' . osc_static_page_url() . '">' . osc_esc_html(osc_static_page_title()) . '</a>';
 }
 $sf_pages = trim(ob_get_clean());
-// Whether the header/theme offers a post CTA at all — mirror the header's gate so
-// the footer never shows a "Post" button the header withholds.
-$sf_can_post = osc_users_enabled() || (!osc_users_enabled() && !osc_reg_user_post());
+// The header's gate, so the footer never shows a "Post" button the header withholds.
+$sf_can_post = storefront_can_post();
 ?>
 <footer class="sf-footer">
     <div class="sf-container sf-footer__grid">
@@ -88,8 +87,10 @@ $sf_can_post = osc_users_enabled() || (!osc_users_enabled() && !osc_reg_user_pos
             <h2><?php _e('Account', 'storefront'); ?></h2>
             <?php if (osc_is_web_user_logged_in()) { ?>
                 <a href="<?php echo osc_user_dashboard_url(); ?>"><?php _e('Dashboard', 'storefront'); ?></a>
-                <a href="<?php echo osc_user_list_items_url(); ?>"><?php _e('My listings', 'storefront'); ?></a>
-                <a href="<?php echo osc_user_alerts_url(); ?>"><?php _e('Alerts', 'storefront'); ?></a>
+                <?php if (!(function_exists('osc_is_shopper') && osc_is_shopper())) { ?>
+                    <a href="<?php echo osc_user_list_items_url(); ?>"><?php _e('My listings', 'storefront'); ?></a>
+                    <a href="<?php echo osc_user_alerts_url(); ?>"><?php _e('Alerts', 'storefront'); ?></a>
+                <?php } ?>
                 <a href="<?php echo osc_user_logout_url(); ?>"><?php _e('Log out', 'storefront'); ?></a>
             <?php } else { ?>
                 <a href="<?php echo osc_user_login_url(); ?>"><?php _e('Log in', 'storefront'); ?></a>

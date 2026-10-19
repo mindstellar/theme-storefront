@@ -118,7 +118,9 @@ function storefront_contact_aside()
     <div class="sf-panel sf-contact-panel">
         <h2 class="sf-contact-panel__title"><?php _e('Quick links', 'storefront'); ?></h2>
         <ul class="sf-contact-panel__links">
-            <li><a href="<?php echo osc_esc_html(osc_item_post_url_in_category()); ?>"><?php _e('Post a free listing', 'storefront'); ?> &rarr;</a></li>
+            <?php if (storefront_can_post()) { ?>
+                <li><a href="<?php echo osc_esc_html(osc_item_post_url_in_category()); ?>"><?php _e('Post a free listing', 'storefront'); ?> &rarr;</a></li>
+            <?php } ?>
             <li><a href="<?php echo osc_esc_html(osc_search_show_all_url()); ?>"><?php _e('Browse listings', 'storefront'); ?> &rarr;</a></li>
             <?php
             // The static-page cursor is shared with the footer: reset before and after.
