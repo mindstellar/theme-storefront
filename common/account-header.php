@@ -27,20 +27,26 @@ $sf_place = $sf_acct
 
 $sf_page = isset($sf_page) ? (string) $sf_page : '';
 
+// A shopper (shop mode, signed in, not an admin) has no listings, alerts or wallet.
+$sf_shopper = function_exists('osc_is_shopper') && osc_is_shopper();
+
 // Live listings only: the figure a seller watches, one COUNT on their own rows.
-$sf_active = (int) Item::getInstance()->countItemTypesByUserID(osc_logged_user_id(), 'active');
+$sf_active = $sf_shopper ? 0 : (int) Item::getInstance()->countItemTypesByUserID(osc_logged_user_id(), 'active');
 
 $sf_settings = in_array($sf_page, array('user-profile', 'user-signin', 'user-delete_account'), true);
 $sf_tabs = array(
     array('name' => __('Dashboard', 'storefront'),   'url' => osc_user_dashboard_url(),  'icon' => 'layout', 'current' => $sf_page === 'user-dashboard'),
-    array('name' => __('My listings', 'storefront'), 'url' => osc_user_list_items_url(), 'icon' => 'list',   'current' => $sf_page === 'user-items'),
-    array('name' => __('Alerts', 'storefront'),      'url' => osc_user_alerts_url(),     'icon' => 'bell',   'current' => $sf_page === 'user-alerts'),
+    array('name' => __('My listings', 'storefront'), 'url' => osc_user_list_items_url(), 'icon' => 'list',   'current' => $sf_page === 'user-items', 'seller' => true),
+    array('name' => __('Alerts', 'storefront'),      'url' => osc_user_alerts_url(),     'icon' => 'bell',   'current' => $sf_page === 'user-alerts', 'seller' => true),
     // "Settings", not "Profile": the sub-tabs below own "Profile". `soft` keeps it
     // active without a second aria-current, which the sub-tab carries.
     array('name' => __('Settings', 'storefront'),    'url' => osc_user_profile_url(),    'icon' => 'settings', 'soft' => true, 'current' => $sf_settings),
 );
 if (osc_billing_enabled()) {
-    $sf_tabs[] = array('name' => __('Credits', 'storefront'), 'url' => osc_billing_wallet_url(), 'icon' => 'credit-card', 'current' => osc_get_osclass_location() === 'billing');
+    $sf_tabs[] = array('name' => __('Credits', 'storefront'), 'url' => osc_billing_wallet_url(), 'icon' => 'credit-card', 'current' => osc_get_osclass_location() === 'billing', 'seller' => true);
+}
+if ($sf_shopper) {
+    $sf_tabs = array_values(array_filter($sf_tabs, static fn (array $sf_t): bool => empty($sf_t['seller'])));
 }
 
 // Entries plugins and core add through user_menu_filter, such as a plugin's account page.
@@ -75,7 +81,7 @@ $sf_settings_tabs = array(
 // The heading each page had when the theme drew it; core's own h1 is kept for
 // screen readers and hidden on screen (css/storefront.css).
 $sf_titles = array(
-    'user-dashboard'      => __('Your latest listings', 'storefront'),
+    'user-dashboard'      => $sf_shopper ? __('Your recent orders', 'storefront') : __('Your latest listings', 'storefront'),
     'user-items'          => __('My listings', 'storefront'),
     'user-alerts'         => __('Alerts', 'storefront'),
     'user-profile'        => __('Edit profile', 'storefront'),
@@ -109,6 +115,7 @@ $sf_titles = array(
             <?php } ?>
         </p>
     </div>
+    <?php if (!$sf_shopper) { ?>
     <div class="sf-account-head__actions">
         <a class="sf-btn sf-btn--secondary" href="<?php echo osc_esc_html(osc_user_public_profile_url(osc_logged_user_id())); ?>">
             <?php echo storefront_icon('globe', 15); ?><span><?php _e('Public profile', 'storefront'); ?></span>
@@ -117,6 +124,7 @@ $sf_titles = array(
             <?php echo storefront_icon('plus', 15); ?><span><?php _e('Post a listing', 'storefront'); ?></span>
         </a>
     </div>
+    <?php } ?>
 </header>
 
 <nav class="sf-account-tabs" aria-label="<?php echo osc_esc_html(__('Your account', 'storefront')); ?>">
