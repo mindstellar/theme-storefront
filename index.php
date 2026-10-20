@@ -11,4 +11,5 @@ Theme update URI: storefront
 Requires Shopclass: 7.0.0
 Tested up to: 7.0.0
 Requires PHP: 8.0
+Modes: classifieds
 */
