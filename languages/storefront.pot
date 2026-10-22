@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Storefront 2.0.1\n"
+"Project-Id-Version: Storefront 2.1.0\n"
 "Report-Msgid-Bugs-To: "
 "https://github.com/mindstellar/theme-storefront/issues\n"
 "MIME-Version: 1.0\n"
@@ -47,6 +47,10 @@ msgstr ""
 msgid "%s · free"
 msgstr ""
 
+#: search.php:48
+msgid "%s results"
+msgstr ""
+
 #: common/search-sidebar.php:262
 msgid "%s to be emailed when a new listing matches this search."
 msgstr ""
@@ -61,16 +65,16 @@ msgid_plural "%s views"
 msgstr[0] ""
 msgstr[1] ""
 
-#: common/footer.php:104
 #: common/footer.php:105
+#: common/footer.php:106
 msgid "About"
 msgstr ""
 
-#: common/footer.php:88
+#: common/footer.php:87
 msgid "Account"
 msgstr ""
 
-#: common/account-header.php:135
+#: common/account-header.php:143
 msgid "Account settings"
 msgstr ""
 
@@ -90,11 +94,11 @@ msgstr ""
 msgid "Active filters"
 msgstr ""
 
-#: common/account-header.php:152
+#: common/account-header.php:160
 msgid "active listing"
 msgstr ""
 
-#: common/account-header.php:152
+#: common/account-header.php:160
 msgid "active listings"
 msgstr ""
 
@@ -106,24 +110,24 @@ msgstr ""
 msgid "Admin"
 msgstr ""
 
-#: common/account-header.php:37
-#: common/account-header.php:80
+#: common/account-header.php:40
+#: common/account-header.php:86
 #: common/footer.php:92
 #: common/header.php:60
 msgid "Alerts"
 msgstr ""
 
-#: functions.php:756
+#: functions.php:772
 #: main.php:64
 msgid "All categories"
 msgstr ""
 
-#: functions.php:637
+#: functions.php:653
 msgid "All listings"
 msgstr ""
 
-#: functions.php:915
-#: functions.php:946
+#: functions.php:939
+#: functions.php:970
 msgid "An error has occurred, please try again."
 msgstr ""
 
@@ -172,7 +176,7 @@ msgstr ""
 msgid "Back to listing"
 msgstr ""
 
-#: common/footer.php:159
+#: common/footer.php:160
 msgid "Back to top"
 msgstr ""
 
@@ -186,7 +190,7 @@ msgstr ""
 msgid "Blocked"
 msgstr ""
 
-#: functions.php:903
+#: functions.php:927
 msgid "Brand settings updated correctly."
 msgstr ""
 
@@ -207,7 +211,7 @@ msgstr ""
 msgid "Browse categories"
 msgstr ""
 
-#: common/footer.php:79
+#: common/footer.php:78
 #: search.php:22
 msgid "Browse listings"
 msgstr ""
@@ -216,11 +220,11 @@ msgstr ""
 msgid "Browse popular categories"
 msgstr ""
 
-#: common/footer.php:39
+#: common/footer.php:38
 msgid "Buy and sell locally — real listings, real people, near you."
 msgstr ""
 
-#: common/account-header.php:85
+#: common/account-header.php:91
 msgid "Buy credits"
 msgstr ""
 
@@ -230,7 +234,7 @@ msgid ""
 "your own for free in a couple of minutes."
 msgstr ""
 
-#: common/footer.php:178
+#: common/footer.php:179
 #: item-contact.php:80
 #: item-contact.php:82
 msgid "Cancel"
@@ -246,7 +250,7 @@ msgstr ""
 msgid "Category"
 msgstr ""
 
-#: common/footer.php:143
+#: common/footer.php:144
 msgid "Change language"
 msgstr ""
 
@@ -309,12 +313,12 @@ msgstr ""
 msgid "Compact logo (optional)"
 msgstr ""
 
-#: common/account-header.php:101
+#: common/account-header.php:107
 #: item.php:293
 msgid "Company"
 msgstr ""
 
-#: common/footer.php:83
+#: common/footer.php:82
 msgid "Contact"
 msgstr ""
 
@@ -344,8 +348,8 @@ msgstr ""
 msgid "Create a free account"
 msgstr ""
 
-#: common/account-header.php:43
-#: common/account-header.php:84
+#: common/account-header.php:46
+#: common/account-header.php:90
 msgid "Credits"
 msgstr ""
 
@@ -353,8 +357,8 @@ msgstr ""
 msgid "Dark"
 msgstr ""
 
-#: common/account-header.php:35
-#: common/footer.php:90
+#: common/account-header.php:38
+#: common/footer.php:89
 #: common/header.php:58
 msgid "Dashboard"
 msgstr ""
@@ -367,7 +371,7 @@ msgstr ""
 msgid "Default results view"
 msgstr ""
 
-#: common/footer.php:179
+#: common/footer.php:180
 #: common/item-comments.php:52
 #: common/loop.php:88
 #: common/manage-list.php:77
@@ -393,11 +397,11 @@ msgstr ""
 msgid "Delete listing"
 msgstr ""
 
-#: common/footer.php:175
+#: common/footer.php:176
 msgid "Delete this?"
 msgstr ""
 
-#: common/account-header.php:83
+#: common/account-header.php:89
 msgid "Delete your account"
 msgstr ""
 
@@ -436,7 +440,7 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: common/account-header.php:81
+#: common/account-header.php:87
 msgid "Edit profile"
 msgstr ""
 
@@ -456,7 +460,7 @@ msgid "Expired"
 msgstr ""
 
 #: admin/settings.php:178
-#: common/footer.php:53
+#: common/footer.php:52
 msgid "Facebook"
 msgstr ""
 
@@ -570,13 +574,13 @@ msgstr ""
 msgid "Indigo"
 msgstr ""
 
-#: common/account-header.php:101
+#: common/account-header.php:107
 #: item.php:293
 msgid "Individual"
 msgstr ""
 
 #: admin/settings.php:180
-#: common/footer.php:55
+#: common/footer.php:54
 msgid "Instagram"
 msgstr ""
 
@@ -593,9 +597,9 @@ msgstr ""
 msgid "Keywords"
 msgstr ""
 
-#: common/footer.php:138
-#: common/footer.php:151
+#: common/footer.php:139
 #: common/footer.php:152
+#: common/footer.php:153
 msgid "Language"
 msgstr ""
 
@@ -628,7 +632,7 @@ msgid "Link selected — press Ctrl+C to copy."
 msgstr ""
 
 #: admin/settings.php:182
-#: common/footer.php:57
+#: common/footer.php:56
 msgid "LinkedIn"
 msgstr ""
 
@@ -648,23 +652,23 @@ msgstr ""
 msgid "Listing #%d"
 msgstr ""
 
-#: functions.php:852
+#: functions.php:868
 msgid "Listing activated."
 msgstr ""
 
-#: functions.php:849
+#: functions.php:865
 msgid "Listing blocked — hidden from the site and search."
 msgstr ""
 
-#: functions.php:851
+#: functions.php:867
 msgid "Listing deactivated."
 msgstr ""
 
-#: functions.php:856
+#: functions.php:872
 msgid "Listing is no longer featured."
 msgstr ""
 
-#: functions.php:855
+#: functions.php:871
 msgid "Listing is now featured."
 msgstr ""
 
@@ -680,7 +684,7 @@ msgstr ""
 msgid "Listing navigation"
 msgstr ""
 
-#: functions.php:850
+#: functions.php:866
 msgid "Listing unblocked."
 msgstr ""
 
@@ -694,7 +698,7 @@ msgstr ""
 msgid "Location"
 msgstr ""
 
-#: common/footer.php:95
+#: common/footer.php:96
 #: common/header.php:77
 #: item.php:320
 msgid "Log in"
@@ -704,7 +708,7 @@ msgstr ""
 msgid "Log in to contact the seller."
 msgstr ""
 
-#: common/footer.php:93
+#: common/footer.php:94
 #: common/header.php:73
 msgid "Log out"
 msgstr ""
@@ -717,7 +721,7 @@ msgstr ""
 msgid "Logos"
 msgstr ""
 
-#: common/account-header.php:161
+#: common/account-header.php:169
 msgid "Manage all"
 msgstr ""
 
@@ -725,12 +729,12 @@ msgstr ""
 msgid "Mark spam"
 msgstr ""
 
-#: functions.php:853
+#: functions.php:869
 msgid "Marked as spam."
 msgstr ""
 
+#: common/footer.php:76
 #: common/footer.php:77
-#: common/footer.php:78
 msgid "Marketplace"
 msgstr ""
 
@@ -742,7 +746,7 @@ msgstr ""
 msgid "Maximum price"
 msgstr ""
 
-#: common/account-header.php:108
+#: common/account-header.php:114
 #: item.php:302
 msgid "Member since %s"
 msgstr ""
@@ -774,8 +778,8 @@ msgstr ""
 msgid "Most recent"
 msgstr ""
 
-#: common/account-header.php:36
-#: common/account-header.php:79
+#: common/account-header.php:39
+#: common/account-header.php:85
 #: common/footer.php:91
 #: common/header.php:59
 msgid "My listings"
@@ -819,7 +823,7 @@ msgstr ""
 msgid "No listings yet — be the first to post one."
 msgstr ""
 
-#: functions.php:854
+#: functions.php:870
 msgid "No longer marked as spam."
 msgstr ""
 
@@ -831,7 +835,7 @@ msgstr ""
 msgid "No results for \"%s\". Try widening your filters or clearing the search."
 msgstr ""
 
-#: functions.php:767
+#: functions.php:783
 msgid "No subcategories"
 msgstr ""
 
@@ -864,7 +868,7 @@ msgstr ""
 msgid "Other details"
 msgstr ""
 
-#: functions.php:719
+#: functions.php:735
 msgid "Over %s"
 msgstr ""
 
@@ -872,7 +876,7 @@ msgstr ""
 msgid "Overrides the big home headline. Leave empty to use the site title."
 msgstr ""
 
-#: functions.php:614
+#: functions.php:630
 msgid "Paused: delete this alert and save the search again."
 msgstr ""
 
@@ -909,16 +913,16 @@ msgstr ""
 msgid "Post & edit form location"
 msgstr ""
 
-#: common/search-sidebar.php:273
+#: common/search-sidebar.php:274
 msgid "Post a free listing in under two minutes."
 msgstr ""
 
-#: common/account-header.php:117
-#: common/account-header.php:165
-#: common/footer.php:45
-#: common/footer.php:81
+#: common/account-header.php:124
+#: common/account-header.php:173
+#: common/footer.php:44
+#: common/footer.php:80
 #: common/header.php:87
-#: common/search-sidebar.php:274
+#: common/search-sidebar.php:275
 #: item-post.php:27
 msgid "Post a listing"
 msgstr ""
@@ -927,7 +931,7 @@ msgstr ""
 msgid "Post comment"
 msgstr ""
 
-#: common/footer.php:118
+#: common/footer.php:119
 msgid "Powered by %s"
 msgstr ""
 
@@ -943,11 +947,11 @@ msgstr ""
 msgid "Price"
 msgstr ""
 
-#: functions.php:630
+#: functions.php:646
 msgid "Price %1$s – %2$s"
 msgstr ""
 
-#: functions.php:632
+#: functions.php:648
 msgid "Price from %s"
 msgstr ""
 
@@ -955,7 +959,7 @@ msgstr ""
 msgid "Price range"
 msgstr ""
 
-#: functions.php:634
+#: functions.php:650
 msgid "Price up to %s"
 msgstr ""
 
@@ -971,7 +975,7 @@ msgstr ""
 msgid "Primary"
 msgstr ""
 
-#: common/account-header.php:70
+#: common/account-header.php:76
 #: common/header.php:61
 msgid "Profile"
 msgstr ""
@@ -984,7 +988,7 @@ msgstr ""
 msgid "Promoted listings"
 msgstr ""
 
-#: common/account-header.php:114
+#: common/account-header.php:121
 msgid "Public profile"
 msgstr ""
 
@@ -1011,7 +1015,7 @@ msgstr ""
 msgid "Region & city"
 msgstr ""
 
-#: common/footer.php:97
+#: common/footer.php:98
 #: common/header.php:79
 msgid "Register"
 msgstr ""
@@ -1107,7 +1111,7 @@ msgstr ""
 msgid "Sellers reply faster when they know what you want to ask."
 msgstr ""
 
-#: common/search-sidebar.php:272
+#: common/search-sidebar.php:273
 msgid "Selling something?"
 msgstr ""
 
@@ -1119,7 +1123,7 @@ msgstr ""
 msgid "Sets the primary and secondary accent colours across the site."
 msgstr ""
 
-#: common/account-header.php:40
+#: common/account-header.php:43
 msgid "Settings"
 msgstr ""
 
@@ -1174,8 +1178,8 @@ msgstr ""
 msgid "Sign in"
 msgstr ""
 
-#: common/account-header.php:72
-#: common/account-header.php:82
+#: common/account-header.php:78
+#: common/account-header.php:88
 msgid "Sign-in details"
 msgstr ""
 
@@ -1187,7 +1191,7 @@ msgstr ""
 msgid "Skip to content"
 msgstr ""
 
-#: common/footer.php:67
+#: common/footer.php:66
 msgid "Social"
 msgstr ""
 
@@ -1221,13 +1225,13 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: functions.php:1026
-#: functions.php:1038
+#: functions.php:1050
+#: functions.php:1062
 msgid "Storefront: Brand"
 msgstr ""
 
-#: functions.php:1031
-#: functions.php:1039
+#: functions.php:1055
+#: functions.php:1063
 msgid "Storefront: Settings"
 msgstr ""
 
@@ -1274,7 +1278,7 @@ msgstr ""
 msgid "Tell us what's wrong. Reports are confidential."
 msgstr ""
 
-#: functions.php:927
+#: functions.php:951
 msgid ""
 "That SVG could not be used — it may be malformed, unsafe, or over the size "
 "limit."
@@ -1286,12 +1290,12 @@ msgid ""
 "mistyped. Try searching for what you were after."
 msgstr ""
 
-#: functions.php:972
+#: functions.php:996
 msgid "The logo has been removed."
 msgstr ""
 
-#: functions.php:938
-#: functions.php:955
+#: functions.php:962
+#: functions.php:979
 msgid "The logo has been uploaded correctly."
 msgstr ""
 
@@ -1307,11 +1311,11 @@ msgid ""
 "in every case."
 msgstr ""
 
-#: functions.php:1005
+#: functions.php:1029
 msgid "Theme settings updated correctly."
 msgstr ""
 
-#: common/account-header.php:156
+#: common/account-header.php:164
 msgid "This is how buyers and sellers see you across the marketplace."
 msgstr ""
 
@@ -1319,7 +1323,7 @@ msgstr ""
 msgid "This is your listing."
 msgstr ""
 
-#: functions.php:832
+#: functions.php:848
 msgid "This listing doesn't exist."
 msgstr ""
 
@@ -1344,7 +1348,7 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: common/footer.php:54
+#: common/footer.php:53
 msgid "Twitter / X"
 msgstr ""
 
@@ -1352,7 +1356,7 @@ msgstr ""
 msgid "Unblock"
 msgstr ""
 
-#: functions.php:720
+#: functions.php:736
 msgid "Under %s"
 msgstr ""
 
@@ -1364,11 +1368,11 @@ msgstr ""
 msgid "Unfeature"
 msgstr ""
 
-#: functions.php:825
+#: functions.php:841
 msgid "Unknown action."
 msgstr ""
 
-#: functions.php:957
+#: functions.php:981
 msgid "Unsupported file type — upload an SVG, JPG or PNG."
 msgstr ""
 
@@ -1437,7 +1441,7 @@ msgstr ""
 msgid "What are you looking for?"
 msgstr ""
 
-#: functions.php:724
+#: functions.php:740
 msgid "With photos"
 msgstr ""
 
@@ -1445,7 +1449,7 @@ msgstr ""
 msgid "With photos only"
 msgstr ""
 
-#: functions.php:727
+#: functions.php:743
 msgid "Within %s"
 msgstr ""
 
@@ -1461,12 +1465,12 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: functions.php:814
+#: functions.php:830
 msgid "You are not allowed to do that."
 msgstr ""
 
-#: common/account-header.php:122
-#: common/footer.php:87
+#: common/account-header.php:130
+#: common/footer.php:86
 msgid "Your account"
 msgstr ""
 
@@ -1478,7 +1482,7 @@ msgstr ""
 msgid "Your e-mail address"
 msgstr ""
 
-#: common/account-header.php:78
+#: common/account-header.php:84
 msgid "Your latest listings"
 msgstr ""
 
@@ -1491,11 +1495,15 @@ msgstr ""
 msgid "Your name"
 msgstr ""
 
-#: common/account-header.php:86
+#: common/account-header.php:92
 msgid "Your orders"
 msgstr ""
 
+#: common/account-header.php:84
+msgid "Your recent orders"
+msgstr ""
+
 #: admin/settings.php:181
-#: common/footer.php:56
+#: common/footer.php:55
 msgid "YouTube"
 msgstr ""
