@@ -2393,7 +2393,7 @@ body.sf-list .sf-card__desc {
 .sf .oe-page .oe-compose textarea:focus { outline: 2px solid var(--color-accent); outline-offset: 1px; }
 .sf .oe-page .oe-compose .oe-actions { display: flex; justify-content: flex-end; margin-top: var(--space-2); }
 
-.sf .oe-page .oe-thread-actions { gap: var(--space-1) var(--space-5); font-size: 13px; }
+.sf .oe-page .oe-thread-actions { gap: var(--space-1) var(--space-4); font-size: 13px; }
 .sf .oe-page .oe-thread-actions :is(a, button, summary) { color: var(--color-accent-ink); }
 .sf .oe-page .oe-thread-actions .oe-danger-link { color: var(--color-accent-2-ink); }
 .sf .oe-page .oe-thread-actions details[open] {
