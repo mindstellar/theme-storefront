@@ -18,8 +18,8 @@
  */
 $sf_contact_page = !defined('STOREFRONT_CONTACT_IN_DIALOG');
 // Core 7.1 on-site messaging: the message goes to the seller's inbox, and core draws that form.
-$sf_messaging = function_exists('osc_item_uses_messaging') && osc_item_uses_messaging()
-    && is_file(ABS_PATH . 'oc-includes/osclass/gui/parts/contact-form.php');
+$sf_messaging = function_exists('osc_item_contact_form') && function_exists('osc_item_uses_messaging')
+    && osc_item_uses_messaging();
 if ($sf_contact_page) {
     osc_current_web_theme_path('common/header.php'); ?>
 <section class="sf-form sf-contact-page">
@@ -45,18 +45,8 @@ if ($sf_contact_page) {
 
 <?php if ($sf_messaging) {
     // On-site message: core draws the form, the theme only styles it.
-    $contactForm = array(
-        'hidden'    => array('page' => 'item', 'action' => 'contact_post', 'id' => (int) osc_item_id()),
-        'prefix'    => 'sf-contact',
-        'captcha'   => 'contact_seller',
-        'hooks'     => static function () {
-            osc_run_hook('item_contact_form', osc_item_id());
-        },
-        'messaging' => true,
-    );
-    require_once ABS_PATH . 'oc-includes/osclass/gui/page-fn.php';
     echo '<div class="oe-page">';
-    require ABS_PATH . 'oc-includes/osclass/gui/parts/contact-form.php';
+    osc_item_contact_form(array('prefix' => 'sf-contact'));
     echo '</div>';
 } else { ?>
 <?php $sf_contact_error = (string) Session::getInstance()->_getForm('contact_error');
