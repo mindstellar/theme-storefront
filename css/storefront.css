@@ -2467,14 +2467,17 @@ body.sf-list .sf-card__desc {
 }
 .sf .oe-page .oe-account-main > form:not(:has(.oe-group)) { max-width: 440px; }
 
-/* A tab strip with more tabs past its end fades that edge (storefront-core.js sets data-more). */
-.sf-account-tabs[data-more], .sf-settings-nav[data-more] {
-    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
-    mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+/* A tab strip fades each end that has more tabs past it (storefront-core.js sets data-more, data-more-start). */
+:is(.sf-account-tabs, .sf-settings-nav):is([data-more], [data-more-start]) {
+    --sf-fade-start: #000; --sf-fade-end: #000;
+    -webkit-mask-image: linear-gradient(to right, var(--sf-fade-start), #000 28px, #000 calc(100% - 28px), var(--sf-fade-end));
+    mask-image: linear-gradient(to right, var(--sf-fade-start), #000 28px, #000 calc(100% - 28px), var(--sf-fade-end));
 }
-[dir="rtl"] :is(.sf-account-tabs, .sf-settings-nav)[data-more] {
-    -webkit-mask-image: linear-gradient(to left, #000 calc(100% - 28px), transparent);
-    mask-image: linear-gradient(to left, #000 calc(100% - 28px), transparent);
+:is(.sf-account-tabs, .sf-settings-nav)[data-more] { --sf-fade-end: transparent; }
+:is(.sf-account-tabs, .sf-settings-nav)[data-more-start] { --sf-fade-start: transparent; }
+[dir="rtl"] :is(.sf-account-tabs, .sf-settings-nav):is([data-more], [data-more-start]) {
+    -webkit-mask-image: linear-gradient(to left, var(--sf-fade-start), #000 28px, #000 calc(100% - 28px), var(--sf-fade-end));
+    mask-image: linear-gradient(to left, var(--sf-fade-start), #000 28px, #000 calc(100% - 28px), var(--sf-fade-end));
 }
 .sf .oe-page .oe-check input[type=checkbox] { accent-color: var(--color-accent); width: 16px; height: 16px; }
 /* A failed form shows its reason inside the form, so the same flash above the page is left out. */
