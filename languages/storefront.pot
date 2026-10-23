@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Storefront 2.1.1\n"
+"Project-Id-Version: Storefront 2.2.0\n"
 "Report-Msgid-Bugs-To: "
 "https://github.com/mindstellar/theme-storefront/issues\n"
 "MIME-Version: 1.0\n"
@@ -113,7 +113,7 @@ msgstr ""
 #: common/account-header.php:40
 #: common/account-header.php:87
 #: common/footer.php:92
-#: common/header.php:62
+#: common/header.php:64
 msgid "Alerts"
 msgstr ""
 
@@ -154,7 +154,7 @@ msgstr ""
 msgid "Apply filters"
 msgstr ""
 
-#: item-contact.php:91
+#: item-contact.php:82
 msgid "Attachment"
 msgstr ""
 
@@ -198,7 +198,7 @@ msgstr ""
 msgid "Brand tagline shown in the footer. Leave empty to use the default."
 msgstr ""
 
-#: common/header.php:25
+#: common/header.php:27
 #: search.php:25
 msgid "Browse"
 msgstr ""
@@ -235,8 +235,8 @@ msgid ""
 msgstr ""
 
 #: common/footer.php:179
-#: item-contact.php:102
-#: item-contact.php:104
+#: item-contact.php:93
+#: item-contact.php:95
 msgid "Cancel"
 msgstr ""
 
@@ -363,7 +363,7 @@ msgstr ""
 
 #: common/account-header.php:38
 #: common/footer.php:89
-#: common/header.php:60
+#: common/header.php:62
 msgid "Dashboard"
 msgstr ""
 
@@ -532,7 +532,7 @@ msgstr ""
 msgid "Headline"
 msgstr ""
 
-#: common/header.php:26
+#: common/header.php:28
 msgid "Help"
 msgstr ""
 
@@ -541,7 +541,7 @@ msgid "Highlighted"
 msgstr ""
 
 #: common/head-seo.php:130
-#: common/header.php:24
+#: common/header.php:26
 #: item.php:120
 #: search.php:25
 msgid "Home"
@@ -703,7 +703,7 @@ msgid "Location"
 msgstr ""
 
 #: common/footer.php:96
-#: common/header.php:79
+#: common/header.php:81
 #: item.php:320
 msgid "Log in"
 msgstr ""
@@ -713,7 +713,7 @@ msgid "Log in to contact the seller."
 msgstr ""
 
 #: common/footer.php:94
-#: common/header.php:75
+#: common/header.php:77
 msgid "Log out"
 msgstr ""
 
@@ -755,11 +755,11 @@ msgstr ""
 msgid "Member since %s"
 msgstr ""
 
-#: common/header.php:18
+#: common/header.php:20
 msgid "Menu"
 msgstr ""
 
-#: item-contact.php:85
+#: item-contact.php:76
 msgid "Message"
 msgstr ""
 
@@ -789,7 +789,7 @@ msgstr ""
 #: common/account-header.php:39
 #: common/account-header.php:86
 #: common/footer.php:91
-#: common/header.php:61
+#: common/header.php:63
 msgid "My listings"
 msgstr ""
 
@@ -868,7 +868,7 @@ msgid "Open in full map"
 msgstr ""
 
 #: common/item-comments.php:99
-#: item-contact.php:81
+#: item-contact.php:72
 msgid "optional"
 msgstr ""
 
@@ -893,7 +893,7 @@ msgstr ""
 msgid "Pending"
 msgstr ""
 
-#: item-contact.php:81
+#: item-contact.php:72
 msgid "Phone number"
 msgstr ""
 
@@ -929,7 +929,7 @@ msgstr ""
 #: common/account-header.php:176
 #: common/footer.php:44
 #: common/footer.php:80
-#: common/header.php:89
+#: common/header.php:91
 #: common/search-sidebar.php:275
 #: item-post.php:27
 msgid "Post a listing"
@@ -979,12 +979,12 @@ msgstr ""
 msgid "Price: low to high"
 msgstr ""
 
-#: common/header.php:23
+#: common/header.php:25
 msgid "Primary"
 msgstr ""
 
 #: common/account-header.php:77
-#: common/header.php:63
+#: common/header.php:65
 msgid "Profile"
 msgstr ""
 
@@ -1024,7 +1024,7 @@ msgid "Region & city"
 msgstr ""
 
 #: common/footer.php:98
-#: common/header.php:81
+#: common/header.php:83
 msgid "Register"
 msgstr ""
 
@@ -1115,7 +1115,7 @@ msgstr ""
 msgid "Seller's information"
 msgstr ""
 
-#: item-contact.php:87
+#: item-contact.php:78
 msgid "Sellers reply faster when they know what you want to ask."
 msgstr ""
 
@@ -1123,7 +1123,7 @@ msgstr ""
 msgid "Selling something?"
 msgstr ""
 
-#: item-contact.php:106
+#: item-contact.php:97
 msgid "Send message"
 msgstr ""
 
@@ -1486,7 +1486,7 @@ msgstr ""
 msgid "Your e-mail"
 msgstr ""
 
-#: item-contact.php:77
+#: item-contact.php:68
 msgid "Your e-mail address"
 msgstr ""
 
@@ -1506,7 +1506,7 @@ msgid ""
 msgstr ""
 
 #: common/item-comments.php:87
-#: item-contact.php:73
+#: item-contact.php:64
 msgid "Your name"
 msgstr ""
 
