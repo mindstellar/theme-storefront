@@ -573,6 +573,8 @@ select.sf-select, .sf-field select { cursor: pointer; }
     position: absolute; top: 2px; inset-inline-end: 0; min-width: 18px; height: 18px; padding: 0 5px;
     line-height: 18px; text-align: center; font-size: 11px; font-weight: 800; font-variant-numeric: tabular-nums;
 }
+/* On a phone the icon sits in the bar beside the menu button, so the count shows with the drawer shut. */
+.sf-header__msg { display: none; }
 
 .sf-nav-toggle {
     display: none; margin-inline-start: auto; background: none; border: 0; cursor: pointer;
@@ -2167,12 +2169,9 @@ body.sf-list .sf-card__desc {
     .sf-nav__link[aria-current] { font-weight: 800; }
     .sf-nav__link[aria-current]::after { display: none; }
     .sf-nav__cta { margin-top: var(--space-3); }
-    .sf-nav__msg {
-        width: 100%; height: auto; min-height: 44px; justify-content: flex-start; padding: 12px 0;
-        border-radius: 0; border-bottom: 1px solid var(--color-divider); font-size: 14px; font-weight: 600;
-    }
-    .sf .sf-nav__msg .oe-msg-label { display: inline; }
-    .sf-nav__msg .oe-badge.oe-unread { position: static; }
+    .sf-header__msg { display: inline-flex; width: 44px; height: 44px; margin-inline-start: auto; }
+    .sf-header__msg + .sf-nav-toggle { margin-inline-start: 0; }
+    .sf-nav .sf-nav__msg { display: none; }
 
     /* Account cluster becomes an inline, always-open list inside the drawer:
        an identity row (avatar + name) with its menu items indented beneath it. */

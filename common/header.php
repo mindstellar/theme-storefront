@@ -14,6 +14,8 @@
     <div class="sf-container sf-header__bar">
         <a class="sf-logo" href="<?php echo osc_base_url(); ?>"><?php echo storefront_logo(); ?></a>
 
+        <?php echo sf_messaging_link('sf-nav__msg sf-header__msg'); ?>
+
         <button class="sf-nav-toggle" type="button" aria-expanded="false"
                 aria-controls="sf-nav" aria-label="<?php echo osc_esc_html(__('Menu', 'storefront')); ?>"
                 data-sf-nav-toggle>

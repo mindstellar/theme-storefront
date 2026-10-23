@@ -562,16 +562,16 @@ if (!function_exists('sf_account_user')) {
 
 /**
  * Core's Messages link for the header, with the theme's icon. '' on core 7.0, with messaging
- * off, for a guest and for a shopper.
+ * off, for a guest and for a shopper. $class places it: in the nav, or in the bar on a phone.
  */
 if (!function_exists('sf_messaging_link')) {
-    function sf_messaging_link(): string
+    function sf_messaging_link(string $class = 'sf-nav__msg'): string
     {
         if (!function_exists('osc_messaging_link')) {
             return '';
         }
 
-        return osc_messaging_link(array('class' => 'sf-nav__msg', 'icon' => storefront_icon('message-circle', 20)));
+        return osc_messaging_link(array('class' => $class, 'icon' => storefront_icon('message-circle', 20)));
     }
 }
 
