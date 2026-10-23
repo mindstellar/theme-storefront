@@ -63,11 +63,12 @@ foreach ((array) osc_apply_filter('user_menu_filter', array()) as $sf_extra) {
     if (!is_array($sf_extra) || empty($sf_extra['url']) || empty($sf_extra['name']) || in_array($sf_extra['class'] ?? '', $sf_covered, true)) {
         continue;
     }
+    $sf_msg = ($sf_extra['class'] ?? '') === 'opt_messages';
     $sf_tabs[] = array(
         'name'    => (string) $sf_extra['name'],
         'url'     => (string) $sf_extra['url'],
-        'icon'    => 'zap',
-        'current' => $sf_where((string) $sf_extra['url']) === $sf_here,
+        'icon'    => $sf_msg ? 'message-circle' : 'zap',
+        'current' => $sf_msg ? in_array($sf_page, array('user-messages', 'user-conversation'), true) : $sf_where((string) $sf_extra['url']) === $sf_here,
     );
 }
 
@@ -84,6 +85,8 @@ $sf_titles = array(
     'user-dashboard'      => $sf_shopper ? __('Your recent orders', 'storefront') : __('Your latest listings', 'storefront'),
     'user-items'          => __('My listings', 'storefront'),
     'user-alerts'         => __('Alerts', 'storefront'),
+    'user-messages'       => __('Messages', 'storefront'),
+    'user-conversation'   => __('Conversation', 'storefront'),
     'user-profile'        => __('Edit profile', 'storefront'),
     'user-signin'         => __('Sign-in details', 'storefront'),
     'user-delete_account' => __('Delete your account', 'storefront'),

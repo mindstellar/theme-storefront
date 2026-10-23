@@ -561,6 +561,21 @@ if (!function_exists('sf_account_user')) {
 }
 
 /**
+ * Core's Messages link for the header, with the theme's icon. '' on core 7.0, with messaging
+ * off, for a guest and for a shopper.
+ */
+if (!function_exists('sf_messaging_link')) {
+    function sf_messaging_link(): string
+    {
+        if (!function_exists('osc_messaging_link')) {
+            return '';
+        }
+
+        return osc_messaging_link(array('class' => 'sf-nav__msg', 'icon' => storefront_icon('message-circle', 20)));
+    }
+}
+
+/**
  * Whether the avatar-upload UI should be offered.
  *
  * Two gates: the core build must actually ship the avatar helpers (older cores
