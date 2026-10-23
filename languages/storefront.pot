@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Storefront 2.1.0\n"
+"Project-Id-Version: Storefront 2.1.1\n"
 "Report-Msgid-Bugs-To: "
 "https://github.com/mindstellar/theme-storefront/issues\n"
 "MIME-Version: 1.0\n"
@@ -154,7 +154,7 @@ msgstr ""
 msgid "Apply filters"
 msgstr ""
 
-#: item-contact.php:69
+#: item-contact.php:78
 msgid "Attachment"
 msgstr ""
 
@@ -172,7 +172,7 @@ msgstr ""
 msgid "Back to home"
 msgstr ""
 
-#: item-contact.php:23
+#: item-contact.php:26
 msgid "Back to listing"
 msgstr ""
 
@@ -235,8 +235,8 @@ msgid ""
 msgstr ""
 
 #: common/footer.php:179
-#: item-contact.php:80
-#: item-contact.php:82
+#: item-contact.php:89
+#: item-contact.php:91
 msgid "Cancel"
 msgstr ""
 
@@ -755,11 +755,11 @@ msgstr ""
 msgid "Menu"
 msgstr ""
 
-#: item-contact.php:63
+#: item-contact.php:72
 msgid "Message"
 msgstr ""
 
-#: item-contact.php:24
+#: item-contact.php:27
 #: item.php:324
 #: item.php:550
 #: item.php:561
@@ -860,7 +860,7 @@ msgid "Open in full map"
 msgstr ""
 
 #: common/item-comments.php:99
-#: item-contact.php:59
+#: item-contact.php:67
 msgid "optional"
 msgstr ""
 
@@ -885,7 +885,7 @@ msgstr ""
 msgid "Pending"
 msgstr ""
 
-#: item-contact.php:59
+#: item-contact.php:67
 msgid "Phone number"
 msgstr ""
 
@@ -1107,7 +1107,7 @@ msgstr ""
 msgid "Seller's information"
 msgstr ""
 
-#: item-contact.php:65
+#: item-contact.php:74
 msgid "Sellers reply faster when they know what you want to ask."
 msgstr ""
 
@@ -1115,7 +1115,7 @@ msgstr ""
 msgid "Selling something?"
 msgstr ""
 
-#: item-contact.php:84
+#: item-contact.php:93
 msgid "Send message"
 msgstr ""
 
@@ -1299,7 +1299,7 @@ msgstr ""
 msgid "The logo has been uploaded correctly."
 msgstr ""
 
-#: item-contact.php:36
+#: item-contact.php:42
 msgid ""
 "The seller will see your name and email. Never pay in advance — meet in a "
 "public place and inspect the item first."
@@ -1478,7 +1478,7 @@ msgstr ""
 msgid "Your e-mail"
 msgstr ""
 
-#: item-contact.php:55
+#: item-contact.php:63
 msgid "Your e-mail address"
 msgstr ""
 
@@ -1490,8 +1490,15 @@ msgstr ""
 msgid "Your main logo, shown in the site header."
 msgstr ""
 
+#: item-contact.php:40
+msgid ""
+"Your message goes to the seller on this site. Read the reply under Messages "
+"in your account. Never pay in advance — meet in a public place and inspect "
+"the item first."
+msgstr ""
+
 #: common/item-comments.php:87
-#: item-contact.php:51
+#: item-contact.php:59
 msgid "Your name"
 msgstr ""
 

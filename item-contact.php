@@ -17,6 +17,9 @@
  * draws the site chrome and a page title around the form itself.
  */
 $sf_contact_page = !defined('STOREFRONT_CONTACT_IN_DIALOG');
+// Core 7.1 on-site messaging: a signed-in buyer's message goes to the seller's inbox, so the
+// e-mail, name, phone and attachment fields are not asked for.
+$sf_messaging = function_exists('osc_item_uses_messaging') && osc_item_uses_messaging();
 if ($sf_contact_page) {
     osc_current_web_theme_path('common/header.php'); ?>
 <section class="sf-form sf-contact-page">
@@ -33,7 +36,11 @@ if ($sf_contact_page) {
 
 <p class="sf-dialog__note">
     <?php echo storefront_icon('info', 15); ?>
+    <?php if ($sf_messaging) { ?>
+    <span><?php _e('Your message goes to the seller on this site. Read the reply under Messages in your account. Never pay in advance — meet in a public place and inspect the item first.', 'storefront'); ?></span>
+    <?php } else { ?>
     <span><?php _e('The seller will see your name and email. Never pay in advance — meet in a public place and inspect the item first.', 'storefront'); ?></span>
+    <?php } ?>
 </p>
 
 <?php $sf_contact_error = (string) Session::getInstance()->_getForm('contact_error');
@@ -41,12 +48,13 @@ if ($sf_contact_error !== '') { ?>
     <p class="sf-form-error" role="alert"><?php echo osc_esc_html($sf_contact_error); ?></p>
 <?php } ?>
 <ul id="error_list"></ul>
-<form action="<?php echo osc_base_url(true); ?>" method="post" name="contact_form" id="contact_form" <?php if (osc_item_attachment()) { echo 'enctype="multipart/form-data"'; } ?>>
+<form action="<?php echo osc_base_url(true); ?>" method="post" name="contact_form" id="contact_form" <?php if (!$sf_messaging && osc_item_attachment()) { echo 'enctype="multipart/form-data"'; } ?>>
     <?php osc_prepare_user_info(); ?>
     <input type="hidden" name="action" value="contact_post" />
     <input type="hidden" name="page" value="item" />
     <input type="hidden" name="id" value="<?php echo osc_item_id(); ?>" />
 
+    <?php if (!$sf_messaging) { ?>
     <div class="sf-field">
         <label for="yourName"><?php _e('Your name', 'storefront'); ?></label>
         <?php ContactForm::your_name(); ?>
@@ -59,12 +67,13 @@ if ($sf_contact_error !== '') { ?>
         <label for="phoneNumber"><?php _e('Phone number', 'storefront'); ?> <span class="sf-muted">(<?php _e('optional', 'storefront'); ?>)</span></label>
         <?php ContactForm::your_phone_number(); ?>
     </div>
+    <?php } ?>
     <div class="sf-field">
         <label for="message"><?php _e('Message', 'storefront'); ?></label>
         <?php ContactForm::your_message(); ?>
         <p class="sf-field__hint"><?php _e('Sellers reply faster when they know what you want to ask.', 'storefront'); ?></p>
     </div>
-    <?php if (osc_item_attachment()) { ?>
+    <?php if (!$sf_messaging && osc_item_attachment()) { ?>
     <div class="sf-field">
         <label for="attachment"><?php _e('Attachment', 'storefront'); ?></label>
         <?php ContactForm::your_attachment(); ?>
