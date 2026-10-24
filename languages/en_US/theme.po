@@ -57,10 +57,6 @@ msgstr "%s results"
 msgid "%s to be emailed when a new listing matches this search."
 msgstr "%s to be emailed when a new listing matches this search."
 
-#: common/item-comments.php:71
-msgid "%s to leave a comment on this listing."
-msgstr "%s to leave a comment on this listing."
-
 #: item.php:428
 msgid "%s view"
 msgid_plural "%s views"
@@ -304,15 +300,6 @@ msgstr "Colour palette"
 msgid "Colour scheme"
 msgstr "Colour scheme"
 
-#: common/item-comments.php:103
-msgid "Comment"
-msgstr "Comment"
-
-#: common/item-comments.php:26
-#: common/item-comments.php:28
-msgid "Comments"
-msgstr "Comments"
-
 #: admin/header.php:134
 msgid "Compact logo (optional)"
 msgstr "Compact logo (optional)"
@@ -380,7 +367,6 @@ msgid "Default results view"
 msgstr "Default results view"
 
 #: common/footer.php:180
-#: common/item-comments.php:52
 #: common/loop.php:88
 #: common/manage-list.php:77
 #: item.php:220
@@ -392,11 +378,6 @@ msgstr "Delete"
 #: item.php:217
 msgid "Delete “%s”? This cannot be undone."
 msgstr "Delete “%s”? This cannot be undone."
-
-#: common/item-comments.php:50
-#: common/item-comments.php:51
-msgid "Delete comment"
-msgstr "Delete comment"
 
 #: common/loop.php:88
 #: common/manage-list.php:78
@@ -412,10 +393,6 @@ msgstr "Delete this?"
 #: common/account-header.php:92
 msgid "Delete your account"
 msgstr "Delete your account"
-
-#: common/item-comments.php:49
-msgid "Delete your comment? This cannot be undone."
-msgstr "Delete your comment? This cannot be undone."
 
 #: item-post.php:53
 #: item.php:346
@@ -599,10 +576,6 @@ msgstr "Instagram"
 msgid "It's your own listing — you can't contact yourself."
 msgstr "It's your own listing — you can't contact yourself."
 
-#: common/item-comments.php:68
-msgid "Join the conversation"
-msgstr "Join the conversation"
-
 #: common/search-sidebar.php:93
 #: common/search-sidebar.php:95
 msgid "Keywords"
@@ -617,10 +590,6 @@ msgstr "Language"
 #: common/head.php:19
 msgid "Latest listings"
 msgstr "Latest listings"
-
-#: common/item-comments.php:77
-msgid "Leave a comment"
-msgstr "Leave a comment"
 
 #: admin/settings.php:168
 msgid "Leave any field empty to hide that icon from the footer."
@@ -828,10 +797,6 @@ msgstr "Next listing"
 msgid "Next photo"
 msgstr "Next photo"
 
-#: common/item-comments.php:63
-msgid "No comments yet — ask the seller a question to get the conversation started."
-msgstr "No comments yet — ask the seller a question to get the conversation started."
-
 #: search.php:106
 msgid "No listings match"
 msgstr "No listings match"
@@ -856,10 +821,6 @@ msgstr "No results for \"%s\". Try widening your filters or clearing the search.
 msgid "No subcategories"
 msgstr "No subcategories"
 
-#: common/item-comments.php:92
-msgid "not published"
-msgstr "not published"
-
 #: item.php:263
 msgid "Not spam"
 msgstr "Not spam"
@@ -876,7 +837,6 @@ msgstr "Open in admin"
 msgid "Open in full map"
 msgstr "Open in full map"
 
-#: common/item-comments.php:99
 #: item-contact.php:72
 msgid "optional"
 msgstr "optional"
@@ -943,10 +903,6 @@ msgstr "Post a free listing in under two minutes."
 #: item-post.php:27
 msgid "Post a listing"
 msgstr "Post a listing"
-
-#: common/item-comments.php:113
-msgid "Post comment"
-msgstr "Post comment"
 
 #: common/footer.php:119
 msgid "Powered by %s"
@@ -1192,7 +1148,6 @@ msgstr ""
 "Shown on small screens in place of the main logo. Use a square-ish mark. "
 "Falls back to the main logo if left empty."
 
-#: common/item-comments.php:72
 #: common/search-sidebar.php:263
 msgid "Sign in"
 msgstr "Sign in"
@@ -1375,7 +1330,6 @@ msgstr "This listing is not active yet."
 msgid "This page couldn't be found."
 msgstr "This page couldn't be found."
 
-#: common/item-comments.php:99
 #: item-post.php:49
 msgid "Title"
 msgstr "Title"
@@ -1506,10 +1460,6 @@ msgstr "You are not allowed to do that."
 msgid "Your account"
 msgstr "Your account"
 
-#: common/item-comments.php:92
-msgid "Your e-mail"
-msgstr "Your e-mail"
-
 #: item-contact.php:68
 msgid "Your e-mail address"
 msgstr "Your e-mail address"
@@ -1532,7 +1482,6 @@ msgstr ""
 "in your account. Never pay in advance — meet in a public place and inspect "
 "the item first."
 
-#: common/item-comments.php:87
 #: item-contact.php:64
 msgid "Your name"
 msgstr "Your name"

@@ -408,7 +408,7 @@ img { display: block; max-width: 100%; height: auto; }
 
 /* A form's own action buttons match its 40px fields. */
 @media not (pointer: coarse) {
-    .sf-form .sf-btn[type=submit], .sf-comment-form .sf-btn[type=submit], .sf-dialog__actions .sf-btn { min-height: 40px; }
+    .sf-form .sf-btn[type=submit], .sf-dialog__actions .sf-btn { min-height: 40px; }
 }
 
 /* Screen-reader-only utility: keeps a label in the accessibility tree without
@@ -1257,32 +1257,32 @@ body.sf-list .sf-card__desc {
    emits (an earlier build targeted .active/<strong>, which core never renders, so
    the current page was invisible). Core supplies the aria-current + control names;
    common/pagination.php wraps this in a presentational (non-landmark) container. */
-.sf-pagination { margin-top: var(--space-6); padding-top: var(--space-4); border-top: 2px solid var(--color-divider); }
-.sf-pagination ul { display: flex; flex-wrap: wrap; gap: var(--space-2); list-style: none; padding: 0; margin: 0; justify-content: center; }
-.sf-pagination a, .sf-pagination span {
+:is(.sf-pagination, .sf-comments .oe-comments-pager) { margin-top: var(--space-6); padding-top: var(--space-4); border-top: 2px solid var(--color-divider); }
+:is(.sf-pagination, .sf-comments .oe-comments-pager) ul { display: flex; flex-wrap: wrap; gap: var(--space-2); list-style: none; padding: 0; margin: 0; justify-content: center; }
+:is(.sf-pagination, .sf-comments .oe-comments-pager) a, :is(.sf-pagination, .sf-comments .oe-comments-pager) span {
     display: inline-flex; align-items: center; justify-content: center;
     min-width: 40px; min-height: 40px; padding: 0 var(--space-3);
     border: 1px solid var(--color-divider); border-radius: var(--radius-md);
     color: var(--color-text); font-family: ui-monospace, monospace; font-size: 13px; line-height: 1;
     transition: background-color .15s ease, border-color .15s ease, color .15s ease;
 }
-.sf-pagination a:hover {
+:is(.sf-pagination, .sf-comments .oe-comments-pager) a:hover {
     background: color-mix(in srgb, var(--color-accent) 12%, transparent);
     border-color: color-mix(in srgb, var(--color-accent) 40%, transparent);
     color: var(--color-accent-ink); text-decoration: none;
 }
-.sf-pagination a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+:is(.sf-pagination, .sf-comments .oe-comments-pager) a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
 /* Current page: solid teal so "you are here" is unmistakable. Steps to the 700
    fill so the white label clears WCAG AA (~5.8:1), unlike white on base teal. */
-.sf-pagination .searchPaginationSelected {
+:is(.sf-pagination, .sf-comments .oe-comments-pager) .searchPaginationSelected {
     background: var(--color-accent-700); border-color: var(--color-accent-700);
     color: var(--color-fixed-light); font-weight: var(--font-heading-weight); cursor: default;
 }
 /* Directional controls («‹›») read as controls, not page numbers. */
-.sf-pagination .searchPaginationFirst,
-.sf-pagination .searchPaginationPrev,
-.sf-pagination .searchPaginationNext,
-.sf-pagination .searchPaginationLast { color: var(--color-accent-ink); font-weight: var(--font-heading-weight); }
+:is(.sf-pagination, .sf-comments .oe-comments-pager) .searchPaginationFirst,
+:is(.sf-pagination, .sf-comments .oe-comments-pager) .searchPaginationPrev,
+:is(.sf-pagination, .sf-comments .oe-comments-pager) .searchPaginationNext,
+:is(.sf-pagination, .sf-comments .oe-comments-pager) .searchPaginationLast { color: var(--color-accent-ink); font-weight: var(--font-heading-weight); }
 
 /* ──────────────────────────────────────────────────────────────────────────
    Item detail
@@ -1551,32 +1551,60 @@ body.sf-list .sf-card__desc {
 .sf-map__link a { display: inline-flex; align-items: center; gap: 6px; color: var(--color-accent-ink); font-weight: 600; }
 .sf-map__link a:hover { color: var(--color-accent-ink); }
 
-/* Comments — a calm thread of bordered cards on the body column (not nested cards),
-   then the post form (or a sign-in invite when comments require an account). */
-.sf-comments__count {
+/* Comments: core prints the block (.oe-comments*), Storefront styles it as a calm thread of
+   bordered cards, then the post form (or a sign-in invite when comments need an account). */
+.sf-comments { --oe-star: var(--color-accent-2-ink); }
+.sf-comments .oe-comments { margin: 0; }
+.sf-comments .oe-comments-head { margin: 0 0 var(--space-3); }
+.sf-comments .oe-comments-head h2 { font-size: 22px; margin: 0; }
+.sf-comments .oe-comments-count {
     display: inline-flex; align-items: center; justify-content: center; min-width: 24px; height: 22px;
-    padding: 0 7px; margin-inline-start: 6px; border-radius: 999px; vertical-align: 3px;
+    padding: 0 7px; border-radius: 999px; opacity: 1;
     background: var(--color-accent-100); color: var(--color-accent-800);
     font-family: ui-monospace, monospace; font-size: 13px; font-weight: 800;
 }
-.sf-comments__list { list-style: none; margin: 0 0 var(--space-6); padding: 0; display: flex; flex-direction: column; gap: var(--space-3); }
-.sf-comment {
+.sf-comments .oe-comments-list { margin: 0 0 var(--space-6); gap: var(--space-3); }
+.sf-comments .oe-comment {
     padding: var(--space-4); background: var(--color-surface);
     border: 1px solid var(--color-divider); border-radius: var(--radius-lg);
 }
-.sf-comment__head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3); }
-.sf-comment__author { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--font-heading); font-weight: 800; font-size: 14px; color: var(--color-text); }
-.sf-comment__date { flex: none; font-size: 12px; color: var(--color-muted); }
-.sf-comment__title { font-family: var(--font-heading); font-weight: 800; font-size: 15px; margin: var(--space-2) 0 var(--space-1); }
-.sf-comment__body { margin: var(--space-1) 0 0; font-size: 15px; line-height: 1.6; color: var(--color-text); }
-.sf-comment__delete { display: inline-flex; align-items: center; gap: 5px; margin-top: var(--space-3); font-size: 12px; font-weight: 600; color: var(--color-accent-2-ink); }
-.sf-comment__delete:hover { color: var(--color-accent-2-ink); text-decoration: none; }
-.sf-comments__empty { margin: 0 0 var(--space-6); font-size: 15px; color: var(--color-muted); }
-.sf-comments__formhead { font-family: var(--font-heading); font-weight: 800; font-size: 16px; line-height: 1.3; margin: 0 0 var(--space-3); }
-.sf-comments__hint { margin: 0; font-size: 14px; color: var(--color-muted); }
-.sf-comment-form, .sf-comments__gate { margin-top: var(--space-6); padding-top: var(--space-6); border-top: 2px solid var(--color-divider); }
-.sf-comment-form > :is(.sf-field, .sf-field-grid) { max-width: 64ch; }
-.sf-comment-form .sf-form__actions { margin-top: var(--space-4); }
+.sf-comments .oe-comment-head { justify-content: space-between; gap: var(--space-3); }
+.sf-comments .oe-comment-author { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--font-heading); font-weight: 800; font-size: 14px; color: var(--color-text); }
+.sf-comments .oe-comment-date { flex: none; font-size: 12px; color: var(--color-muted); opacity: 1; }
+.sf-comments .oe-comment-rating { margin: var(--space-1) 0 0; font-size: 14px; }
+.sf-comments .oe-comment-title { font-family: var(--font-heading); font-weight: 800; font-size: 15px; margin: var(--space-2) 0 var(--space-1); }
+.sf-comments .oe-comment-body { margin: var(--space-1) 0 0; font-size: 15px; line-height: 1.6; color: var(--color-text); }
+.sf-comments .oe-comment-actions { margin-top: var(--space-3); }
+.sf-comments .oe-comment-delete { font-size: 12px; font-weight: 600; color: var(--color-accent-2-ink); }
+.sf-comments .oe-comment-delete:hover { color: var(--color-accent-2-ink); }
+.sf-comments .oe-comments-empty { margin: 0 0 var(--space-6); font-size: 15px; color: var(--color-muted); opacity: 1; }
+.sf-comments :is(.oe-comment-form, .oe-comments-gate) { margin-top: var(--space-6); padding-top: var(--space-6); border-top: 2px solid var(--color-divider); }
+.sf-comments .oe-comments-gate { font-size: 14px; color: var(--color-muted); }
+.sf-comments .oe-comment-form { gap: var(--space-4); max-width: 64ch; }
+.sf-comments .oe-comment-form h3 { font-family: var(--font-heading); font-weight: 800; font-size: 16px; line-height: 1.3; margin: 0; }
+.sf-comments .oe-comment-form :is(label, legend) { font-size: 13px; color: var(--color-muted); font-weight: 600; }
+.sf-comments .oe-comment-optional { color: var(--color-muted); opacity: 1; }
+.sf-comments .oe-comment-form :is(input[type="text"], input[type="email"], textarea) {
+    min-height: 40px; padding: 8px 10px; font-size: 14px; color: var(--color-text); caret-color: var(--color-accent);
+    background: var(--color-surface); border: 1px solid var(--color-divider); border-radius: var(--radius-md);
+    transition: border-color .15s ease, box-shadow .15s ease;
+}
+.sf-comments .oe-comment-form :is(input[type="text"], input[type="email"], textarea):hover { border-color: color-mix(in srgb, var(--color-text) 45%, transparent); }
+.sf-comments .oe-comment-form :is(input[type="text"], input[type="email"], textarea):focus {
+    border-color: var(--color-accent); outline: none;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 30%, transparent);
+}
+.sf-comments .oe-comment-form textarea { min-height: 96px; }
+.sf-comments .oe-comment-form button[type="submit"] {
+    display: inline-flex; align-items: center; gap: var(--space-2); min-height: 40px; cursor: pointer;
+    font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 13px; line-height: 1.2;
+    padding: calc(var(--space-2) * 0.85) var(--space-3); border: 1px solid transparent; border-radius: var(--radius-md);
+    background: var(--color-accent-fill); color: var(--color-fixed-light);
+    transition: background .15s ease;
+}
+.sf-comments .oe-comment-form button[type="submit"]:hover { background: var(--color-accent-fill-hover); }
+.sf-comments .oe-comment-form button[type="submit"]:active { background: var(--color-accent-fill-active); transform: translateY(1px); }
+@media (pointer: coarse) { .sf-comments .oe-comment-form button[type="submit"] { min-height: 44px; } }
 
 /* Sticky mobile contact bar — desktop keeps the sticky rail, so this is off there. */
 .sf-buybar { display: none; }
