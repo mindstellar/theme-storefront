@@ -17,6 +17,9 @@
  * draws the site chrome and a page title around the form itself.
  */
 $sf_contact_page = !defined('STOREFRONT_CONTACT_IN_DIALOG');
+// Core 7.1 on-site messaging: the message goes to the seller's inbox, and core draws that form.
+$sf_messaging = function_exists('osc_item_contact_form') && function_exists('osc_item_uses_messaging')
+    && osc_item_uses_messaging();
 if ($sf_contact_page) {
     osc_current_web_theme_path('common/header.php'); ?>
 <section class="sf-form sf-contact-page">
@@ -33,9 +36,19 @@ if ($sf_contact_page) {
 
 <p class="sf-dialog__note">
     <?php echo storefront_icon('info', 15); ?>
+    <?php if ($sf_messaging) { ?>
+    <span><?php _e('Your message goes to the seller on this site. Read the reply under Messages in your account. Never pay in advance — meet in a public place and inspect the item first.', 'storefront'); ?></span>
+    <?php } else { ?>
     <span><?php _e('The seller will see your name and email. Never pay in advance — meet in a public place and inspect the item first.', 'storefront'); ?></span>
+    <?php } ?>
 </p>
 
+<?php if ($sf_messaging) {
+    // On-site message: core draws the form, the theme only styles it.
+    echo '<div class="oe-page">';
+    osc_item_contact_form(array('prefix' => 'sf-contact'));
+    echo '</div>';
+} else { ?>
 <?php $sf_contact_error = (string) Session::getInstance()->_getForm('contact_error');
 if ($sf_contact_error !== '') { ?>
     <p class="sf-form-error" role="alert"><?php echo osc_esc_html($sf_contact_error); ?></p>
@@ -84,6 +97,7 @@ if ($sf_contact_error !== '') { ?>
         <button type="submit" class="sf-btn sf-btn--primary"><?php _e('Send message', 'storefront'); ?></button>
     </div>
 </form>
+<?php } ?>
 <?php if ($sf_contact_page) { ?>
 </section>
 <?php osc_current_web_theme_path('common/footer.php');

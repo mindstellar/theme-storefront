@@ -14,6 +14,8 @@
     <div class="sf-container sf-header__bar">
         <a class="sf-logo" href="<?php echo osc_base_url(); ?>"><?php echo storefront_logo(); ?></a>
 
+        <?php echo sf_messaging_link('sf-nav__msg sf-header__msg'); ?>
+
         <button class="sf-nav-toggle" type="button" aria-expanded="false"
                 aria-controls="sf-nav" aria-label="<?php echo osc_esc_html(__('Menu', 'storefront')); ?>"
                 data-sf-nav-toggle>
@@ -24,6 +26,8 @@
             <a class="sf-nav__link" href="<?php echo osc_base_url(); ?>"<?php echo osc_is_home_page() ? ' aria-current="page"' : ''; ?>><?php _e('Home', 'storefront'); ?></a>
             <a class="sf-nav__link" href="<?php echo osc_search_show_all_url(); ?>"<?php echo osc_is_search_page() ? ' aria-current="page"' : ''; ?>><?php _e('Browse', 'storefront'); ?></a>
             <a class="sf-nav__link" href="<?php echo osc_contact_url(); ?>"<?php echo osc_is_contact_page() ? ' aria-current="page"' : ''; ?>><?php _e('Help', 'storefront'); ?></a>
+
+            <?php echo sf_messaging_link(); ?>
 
             <?php if (osc_users_enabled()) { ?>
                 <?php if (osc_is_web_user_logged_in()) {

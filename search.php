@@ -45,7 +45,7 @@ if ($sf_title === '') { $sf_title = __('Browse listings', 'storefront'); }
             </button>
             <div class="sf-results__headline">
                 <h1 class="sf-results__title"><?php echo osc_esc_html($sf_title); ?></h1>
-                <span class="sf-results__count"><?php printf(__('%d results', 'storefront'), (int) osc_search_total_items()); ?></span>
+                <span class="sf-results__count"><?php if (function_exists('osc_search_total_capped') && osc_search_total_capped()) { echo osc_esc_html(sprintf(__('%s results', 'storefront'), osc_search_total_text())); } else { printf(__('%d results', 'storefront'), (int) osc_search_total_items()); } ?></span>
                 <?php // Subscribe to this exact search — core serves it as RSS (sFeed=rss). ?>
                 <a class="sf-results__feed" rel="alternate nofollow" type="application/rss+xml"
                    href="<?php echo osc_esc_html(osc_update_search_url(array('sFeed' => 'rss'))); ?>"
