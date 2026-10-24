@@ -143,7 +143,7 @@
     }
 
     // Account tab strips scroll sideways on a phone: bring the current tab into view,
-    // and mark the strip while more tabs sit past its end, so CSS can fade that edge.
+    // and mark each end that has more tabs past it, so CSS can fade that edge.
     function bindTabStrips() {
         document.querySelectorAll('.sf-account-tabs, .sf-settings-nav').forEach(function (strip) {
             var active = strip.querySelector('.is-active');
@@ -154,6 +154,7 @@
             function mark() {
                 var more = strip.scrollWidth - strip.clientWidth - Math.abs(strip.scrollLeft) > 4;
                 strip.toggleAttribute('data-more', more);
+                strip.toggleAttribute('data-more-start', Math.abs(strip.scrollLeft) > 4);
             }
             mark();
             strip.addEventListener('scroll', mark, { passive: true });
