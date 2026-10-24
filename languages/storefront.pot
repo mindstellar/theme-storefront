@@ -375,6 +375,11 @@ msgstr ""
 msgid "Delete “%s”? This cannot be undone."
 msgstr ""
 
+#: common/item-comments.php:15
+#: common/item-comments.php:16
+msgid "Delete comment"
+msgstr ""
+
 #: common/loop.php:88
 #: common/manage-list.php:78
 #: item.php:218
@@ -388,6 +393,10 @@ msgstr ""
 
 #: common/account-header.php:92
 msgid "Delete your account"
+msgstr ""
+
+#: common/item-comments.php:14
+msgid "Delete your comment? This cannot be undone."
 msgstr ""
 
 #: item-post.php:53

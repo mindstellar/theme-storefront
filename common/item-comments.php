@@ -7,5 +7,12 @@
 if (!osc_comments_enabled()) {
     return;
 }
+// The delete link opens the theme's confirm dialog, naming what goes; core 7.0 sets no prompt of its own.
+ob_start();
+osc_show_item_comments();
+$sf_comments = str_replace('class="oe-comment-delete"', 'class="oe-comment-delete" data-confirm="'
+    . osc_esc_html(__('Delete your comment? This cannot be undone.', 'storefront')) . '" data-confirm-title="'
+    . osc_esc_html(__('Delete comment', 'storefront')) . '" data-confirm-ok="'
+    . osc_esc_html(__('Delete comment', 'storefront')) . '"', (string) ob_get_clean());
 ?>
-<div class="sf-comments sf-detail__section"><?php osc_show_item_comments(); ?></div>
+<div class="sf-comments sf-detail__section"><?php echo $sf_comments; ?></div>
