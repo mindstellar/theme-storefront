@@ -16,6 +16,9 @@ osc_add_theme_support('chrome', array(
     'account' => true,
 ));
 
+// The theme styles core's .oe-* markup in css/storefront.css, so core skips its own sheets.
+osc_add_theme_support('core-styles', false);
+
 /**
  * The account chrome on every account page: identity band, tabs, and the page's
  * heading, as the theme drew them before core took the pages over.
