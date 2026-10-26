@@ -1257,32 +1257,32 @@ body.sf-list .sf-card__desc {
    emits (an earlier build targeted .active/<strong>, which core never renders, so
    the current page was invisible). Core supplies the aria-current + control names;
    common/pagination.php wraps this in a presentational (non-landmark) container. */
-:is(.sf-pagination, .sf-comments .oe-comments-pager, .sf-comments .oe-comments-list + nav) { margin-top: var(--space-6); padding-top: var(--space-4); border-top: 2px solid var(--color-divider); }
-:is(.sf-pagination, .sf-comments .oe-comments-pager, .sf-comments .oe-comments-list + nav) ul { display: flex; flex-wrap: wrap; gap: var(--space-2); list-style: none; padding: 0; margin: 0; justify-content: center; }
-:is(.sf-pagination, .sf-comments .oe-comments-pager, .sf-comments .oe-comments-list + nav) a, :is(.sf-pagination, .sf-comments .oe-comments-pager, .sf-comments .oe-comments-list + nav) span {
+:is(.sf-pagination, .sf-comments .oe-pager, .sf-comments .oe-comments-list + nav) { margin-top: var(--space-6); padding-top: var(--space-4); border-top: 2px solid var(--color-divider); }
+:is(.sf-pagination, .sf-comments .oe-pager, .sf-comments .oe-comments-list + nav) ul { display: flex; flex-wrap: wrap; gap: var(--space-2); list-style: none; padding: 0; margin: 0; justify-content: center; }
+:is(.sf-pagination, .sf-comments .oe-pager, .sf-comments .oe-comments-list + nav) a, :is(.sf-pagination, .sf-comments .oe-pager, .sf-comments .oe-comments-list + nav) span {
     display: inline-flex; align-items: center; justify-content: center;
     min-width: 40px; min-height: 40px; padding: 0 var(--space-3);
     border: 1px solid var(--color-divider); border-radius: var(--radius-md);
     color: var(--color-text); font-family: ui-monospace, monospace; font-size: 13px; line-height: 1;
     transition: background-color .15s ease, border-color .15s ease, color .15s ease;
 }
-:is(.sf-pagination, .sf-comments .oe-comments-pager, .sf-comments .oe-comments-list + nav) a:hover {
+:is(.sf-pagination, .sf-comments .oe-pager, .sf-comments .oe-comments-list + nav) a:hover {
     background: color-mix(in srgb, var(--color-accent) 12%, transparent);
     border-color: color-mix(in srgb, var(--color-accent) 40%, transparent);
     color: var(--color-accent-ink); text-decoration: none;
 }
-:is(.sf-pagination, .sf-comments .oe-comments-pager, .sf-comments .oe-comments-list + nav) a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+:is(.sf-pagination, .sf-comments .oe-pager, .sf-comments .oe-comments-list + nav) a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
 /* Current page: solid teal so "you are here" is unmistakable. Steps to the 700
    fill so the white label clears WCAG AA (~5.8:1), unlike white on base teal. */
-:is(.sf-pagination, .sf-comments .oe-comments-pager, .sf-comments .oe-comments-list + nav) .searchPaginationSelected {
+:is(.sf-pagination, .sf-comments .oe-pager, .sf-comments .oe-comments-list + nav) .searchPaginationSelected {
     background: var(--color-accent-700); border-color: var(--color-accent-700);
     color: var(--color-fixed-light); font-weight: var(--font-heading-weight); cursor: default;
 }
 /* Directional controls («‹›») read as controls, not page numbers. */
-:is(.sf-pagination, .sf-comments .oe-comments-pager, .sf-comments .oe-comments-list + nav) .searchPaginationFirst,
-:is(.sf-pagination, .sf-comments .oe-comments-pager, .sf-comments .oe-comments-list + nav) .searchPaginationPrev,
-:is(.sf-pagination, .sf-comments .oe-comments-pager, .sf-comments .oe-comments-list + nav) .searchPaginationNext,
-:is(.sf-pagination, .sf-comments .oe-comments-pager, .sf-comments .oe-comments-list + nav) .searchPaginationLast { color: var(--color-accent-ink); font-weight: var(--font-heading-weight); }
+:is(.sf-pagination, .sf-comments .oe-pager, .sf-comments .oe-comments-list + nav) .searchPaginationFirst,
+:is(.sf-pagination, .sf-comments .oe-pager, .sf-comments .oe-comments-list + nav) .searchPaginationPrev,
+:is(.sf-pagination, .sf-comments .oe-pager, .sf-comments .oe-comments-list + nav) .searchPaginationNext,
+:is(.sf-pagination, .sf-comments .oe-pager, .sf-comments .oe-comments-list + nav) .searchPaginationLast { color: var(--color-accent-ink); font-weight: var(--font-heading-weight); }
 
 /* ──────────────────────────────────────────────────────────────────────────
    Item detail
@@ -1577,7 +1577,7 @@ body.sf-list .sf-card__desc {
 .sf-comments .oe-comment-actions { margin-top: var(--space-3); }
 .sf-comments .oe-comment-delete { font-size: 12px; font-weight: 600; color: var(--color-accent-2-ink); }
 .sf-comments .oe-comment-delete:hover { color: var(--color-accent-2-ink); }
-.sf-comments .oe-comments-empty { margin: 0 0 var(--space-6); font-size: 15px; color: var(--color-muted); opacity: 1; }
+.sf-comments .oe-empty { margin: 0 0 var(--space-6); font-size: 15px; color: var(--color-muted); opacity: 1; }
 .sf-comments :is(.oe-comment-form, .oe-comments-gate) { margin-top: var(--space-6); padding-top: var(--space-6); border-top: 2px solid var(--color-divider); }
 .sf-comments .oe-comments-gate { font-size: 14px; color: var(--color-muted); }
 .sf-comments .oe-comment-form { gap: var(--space-4); max-width: 64ch; }
@@ -2243,16 +2243,16 @@ body.sf-list .sf-card__desc {
     .oe-page .oe-h1 { font-size: 1.5rem; font-weight: 600; margin: 0 0 20px; overflow-wrap: anywhere; }
     .oe-page h2 { font-size: 1.0625rem; font-weight: 600; margin: 0 0 12px; }
     .oe-page .oe-doc { max-width: 880px; margin: 0 auto; padding: 32px 16px 64px; }
-    .oe-page :is(.oe-panel, .oe-bill-card) {
+    .oe-page .oe-panel {
         background: var(--oe-bench); border: 1px solid var(--oe-rule); border-radius: var(--radius-md);
         padding: 20px 24px; margin-bottom: 20px;
     }
-    :is(.oe-btn, .oe-bill-btn, .oe-actions a.oe-primary, .oe-actions a.oe-secondary) {
+    :is(.oe-btn, .oe-actions a.oe-primary, .oe-actions a.oe-secondary) {
         display: inline-block; text-decoration: none; border: 1px solid var(--color-accent-fill);
         border-radius: var(--radius-md); padding: 9px 18px; font: inherit; font-size: .9375rem;
         font-weight: 500; cursor: pointer; background: var(--color-accent-fill); color: var(--color-fixed-light);
     }
-    :is(.oe-btn, .oe-bill-btn, .oe-actions a.oe-primary):hover { background: var(--oe-teal-deep); }
+    :is(.oe-btn, .oe-actions a.oe-primary):hover { background: var(--oe-teal-deep); }
     .oe-btn-danger { background: var(--color-accent-2-700); border-color: var(--color-accent-2-700); color: var(--color-fixed-light); }
     .oe-btn-danger:hover { background: var(--color-accent-2-800); }
     :is(.oe-actions a.oe-secondary, .oe-btn.oe-secondary) { background: var(--oe-bench); color: var(--oe-ink); border-color: var(--oe-rule); }
@@ -2272,10 +2272,10 @@ body.sf-list .sf-card__desc {
     .oe-page fieldset { border: 0; margin: 0 0 20px; padding: 0; }
     .oe-page legend { font-weight: 600; font-size: 1.0625rem; margin: 0 0 12px; padding: 0; }
     .oe-page :is(input[type=radio], input[type=checkbox]) { accent-color: var(--color-accent); }
-    .oe-page .oe-bill table { width: 100%; border-collapse: collapse; font-size: .9375rem; }
-    .oe-page .oe-bill :is(th, td) { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--oe-rule); }
-    .oe-page .oe-bill th { color: var(--oe-ink-muted); font-weight: 500; font-size: .8125rem; text-transform: uppercase; letter-spacing: .02em; }
-    .oe-page :is(.oe-num, .oe-bill-num) { text-align: right; font-variant-numeric: tabular-nums; }
+    .oe-page .oe-table { width: 100%; border-collapse: collapse; font-size: .9375rem; }
+    .oe-page .oe-table :is(th, td) { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--oe-rule); }
+    .oe-page .oe-table th { color: var(--oe-ink-muted); font-weight: 500; font-size: .8125rem; text-transform: uppercase; letter-spacing: .02em; }
+    .oe-page .oe-num { text-align: right; font-variant-numeric: tabular-nums; }
     .oe-page .oe-scroll { overflow-x: auto; }
     @media (max-width: 40rem) {
         .oe-page .oe-bill thead { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); }
@@ -2285,9 +2285,9 @@ body.sf-list .sf-card__desc {
         .oe-page .oe-bill td[data-label]::before { content: attr(data-label); color: var(--oe-ink-muted); font-size: .8125rem; text-align: start; }
     }
     :is(.oe-muted, .oe-bill-sub) { color: var(--oe-ink-muted); margin: 4px 0 0; font-size: .875rem; }
-    .oe-page :is(.oe-empty, .oe-bill-empty) { color: var(--oe-ink-muted); padding: 24px 0; text-align: center; }
-    .oe-page :is(.oe-pager, .oe-bill-pager) { display: flex; justify-content: space-between; margin-top: 16px; font-size: .875rem; }
-    .oe-page :is(.oe-pager, .oe-bill-pager) a { text-decoration: none; }
+    .oe-page .oe-empty { color: var(--oe-ink-muted); padding: 24px 0; text-align: center; }
+    .oe-page .oe-pager { display: flex; justify-content: space-between; margin-top: 16px; font-size: .875rem; }
+    .oe-page .oe-pager a { text-decoration: none; }
     .oe-page .oe-bill-balance { font-size: 2rem; font-weight: 700; margin: 0; }
     .oe-page .oe-bill-balance.neg { color: var(--oe-danger); }
     :is(.oe-badge, .oe-bill-badge) { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: .75rem; font-weight: 500; }
@@ -2391,8 +2391,8 @@ body.sf-list .sf-card__desc {
     .oe-comment-body { margin: .35rem 0 0; }
     .oe-comment-actions { margin-block-start: .35rem; font-size: .875em; }
     .oe-comment-delete { color: inherit; }
-    .oe-comments-pager { margin-block-start: 1rem; }
-    .oe-comments-empty { color: var(--oe-ink-muted); }
+    .oe-comments .oe-pager { margin-block-start: 1rem; }
+    .oe-comments .oe-empty { color: var(--oe-ink-muted); }
     .oe-comments-gate { margin-block-start: 1.5rem; }
     .oe-comment-form { margin-block-start: 1.5rem; display: grid; gap: .75rem; max-inline-size: 40rem; }
     .oe-comment-form .oe-field { display: grid; gap: .25rem; margin: 0; }
