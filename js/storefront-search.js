@@ -191,7 +191,7 @@
             }).then(function (r) { return r.text(); }).then(function (t) {
                 t = (t || '').trim();
                 if (t === '1') {
-                    say(box.getAttribute('data-ok'), 'ok');
+                    say(box.getAttribute(box.getAttribute('data-signed-in') === '1' ? 'data-ok-signed-in' : 'data-ok'), 'ok');
                     form.querySelectorAll('input, button').forEach(function (el) { el.disabled = true; });
                 } else if (t === '-4') { say(box.getAttribute('data-login'), 'err'); }
                 else if (t === '-1') { say(box.getAttribute('data-bademail'), 'err'); }
