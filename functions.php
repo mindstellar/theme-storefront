@@ -758,7 +758,41 @@ if (!function_exists('storefront_active_filters')) {
             $add(sprintf(__('Within %s', 'storefront'), osc_distance_label(osc_search_radius())), array('iRadius' => null, 'sLat' => null, 'sLng' => null));
         }
 
+        // One chip per option filter (meta[fieldId]); removing it keeps the others.
+        $meta = Params::getParamsAsArray()['meta'] ?? array();
+        if (is_array($meta)) {
+            foreach ($meta as $fieldId => $value) {
+                $text = storefront_option_filter_text($value);
+                if ($text === '' || !is_numeric($fieldId)) { continue; }
+                $field = Field::getInstance()->findByPrimaryKey((int) $fieldId);
+                $name  = is_array($field) && !empty($field['s_name']) ? $field['s_name'] : '';
+                $label = $name === '' ? $text : ($text === '1' ? $name : $name . ': ' . $text);
+                $rest  = $meta;
+                unset($rest[$fieldId]);
+                $add($label, array('meta' => $rest));
+            }
+        }
+
         return $filters;
+    }
+}
+
+/**
+ * The value of one option filter as plain text: a scalar, a list, or a from/to pair.
+ * Empty string when nothing is set.
+ */
+if (!function_exists('storefront_option_filter_text')) {
+    function storefront_option_filter_text($value)
+    {
+        if (!is_array($value)) { return trim((string) $value); }
+        $from = trim((string) ($value['from'] ?? ''));
+        $to   = trim((string) ($value['to'] ?? ''));
+        if (isset($value['from']) || isset($value['to'])) {
+            if ($from !== '' && $to !== '') { return $from . ' – ' . $to; }
+            return $from !== '' ? sprintf(__('From %s', 'storefront'), $from) : ($to !== '' ? sprintf(__('Up to %s', 'storefront'), $to) : '');
+        }
+        $parts = array_filter(array_map(static fn ($v) => is_scalar($v) ? trim((string) $v) : '', $value), static fn ($v) => $v !== '');
+        return implode(', ', $parts);
     }
 }
 
