@@ -1122,6 +1122,21 @@ if (OC_ADMIN) {
 // The theme prints its own feed link with a friendlier title than core's.
 osc_add_theme_support('head', array('feed' => false));
 
+osc_add_theme_support('widget_locations', array(
+    'footer'         => array(
+        'label'       => __('Footer', 'storefront'),
+        'description' => __('Above the copyright line, on every page', 'storefront'),
+    ),
+    'item_sidebar'   => array(
+        'label'       => __('Listing sidebar', 'storefront'),
+        'description' => __('Beside a listing', 'storefront'),
+    ),
+    'user-dashboard' => array(
+        'label'       => __('Account dashboard', 'storefront'),
+        'description' => __('On the signed-in user\'s dashboard', 'storefront'),
+    ),
+));
+
 osc_add_hook('init_admin', 'storefront_admin_actions');
 osc_add_hook('theme_delete_storefront', 'storefront_theme_delete');
 
