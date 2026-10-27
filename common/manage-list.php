@@ -107,7 +107,7 @@ $sf_action = static function (array $action, string $class, string $icon = '') u
             <span class="sf-manage__info">
                 <span class="sf-manage__title"><?php echo osc_esc_html(osc_item_title()); ?></span>
                 <span class="sf-manage__sub">
-                    <span class="sf-manage__price"><?php echo osc_item_formated_price() !== '' ? osc_esc_html(osc_item_formated_price()) : osc_esc_html(__('Check with seller', 'storefront')); ?></span>
+                    <span class="sf-manage__price"><?php echo osc_item_formated_price() !== '' ? '<bdi dir="ltr">' . osc_esc_html(osc_item_formated_price()) . '</bdi>' : osc_esc_html(__('Check with seller', 'storefront')); ?></span>
                     <span class="sf-manage__date"><?php echo osc_esc_html(osc_format_date(osc_item_pub_date())); ?></span>
                 </span>
             </span>

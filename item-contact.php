@@ -30,7 +30,7 @@ if ($sf_contact_page) {
 <p class="sf-dialog__context">
     <span class="sf-dialog__context-title"><?php echo osc_esc_html(osc_item_title()); ?></span>
     <?php if (storefront_price_state() === 'price') { ?>
-        <span class="sf-dialog__context-price"><?php echo osc_esc_html(osc_item_formated_price()); ?></span>
+        <span class="sf-dialog__context-price"><bdi dir="ltr"><?php echo osc_esc_html(osc_item_formated_price()); ?></bdi></span>
     <?php } ?>
 </p>
 

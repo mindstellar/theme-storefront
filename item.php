@@ -186,7 +186,7 @@ $sf_next = storefront_adjacent_item_url('next');
         <h1 class="sf-detail__title"><?php echo osc_esc_html(osc_item_title()); ?></h1>
 
         <?php if ($sf_price_state === 'price') { ?>
-            <p class="sf-detail__price" data-price-state="price"><?php echo osc_esc_html(osc_item_formated_price()); ?></p>
+            <p class="sf-detail__price" data-price-state="price"><bdi dir="ltr"><?php echo osc_esc_html(osc_item_formated_price()); ?></bdi></p>
         <?php } elseif ($sf_price_state === 'free') { ?>
             <p class="sf-detail__price" data-price-state="free"><?php _e('Free', 'storefront'); ?></p>
         <?php } else { ?>
@@ -538,7 +538,7 @@ $sf_next = storefront_adjacent_item_url('next');
 <div class="sf-buybar" data-buybar hidden>
     <div class="sf-buybar__price">
         <?php if ($sf_price_state === 'price') { ?>
-            <span class="sf-buybar__amount"><?php echo osc_esc_html(osc_item_formated_price()); ?></span>
+            <span class="sf-buybar__amount"><bdi dir="ltr"><?php echo osc_esc_html(osc_item_formated_price()); ?></bdi></span>
         <?php } elseif ($sf_price_state === 'free') { ?>
             <span class="sf-buybar__amount"><?php _e('Free', 'storefront'); ?></span>
         <?php } else { ?>

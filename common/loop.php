@@ -51,7 +51,7 @@ $sf_item_card = static function () use ($sf_show_views, $sf_card_owner) {
         <div class="sf-card__body">
             <div class="sf-card__pricerow">
                 <?php if (osc_item_formated_price() !== '') { ?>
-                    <span class="sf-card__price"><?php echo osc_esc_html(osc_item_formated_price()); ?></span>
+                    <span class="sf-card__price"><bdi dir="ltr"><?php echo osc_esc_html(osc_item_formated_price()); ?></bdi></span>
                 <?php } else { ?>
                     <span class="sf-card__price"><?php _e('Check with seller', 'storefront'); ?></span>
                 <?php } ?>
@@ -111,7 +111,7 @@ $sf_premium_card = static function () {
         <div class="sf-card__body">
             <div class="sf-card__pricerow">
                 <?php if (osc_premium_formated_price() !== '') { ?>
-                    <span class="sf-card__price"><?php echo osc_esc_html(osc_premium_formated_price()); ?></span>
+                    <span class="sf-card__price"><bdi dir="ltr"><?php echo osc_esc_html(osc_premium_formated_price()); ?></bdi></span>
                 <?php } else { ?>
                     <span class="sf-card__price"><?php _e('Check with seller', 'storefront'); ?></span>
                 <?php } ?>
