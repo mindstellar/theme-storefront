@@ -684,8 +684,9 @@ if (!function_exists('storefront_countries')) {
                 osc_cache_set('storefront_countries', $countries, 680);
             }
         }
+        // Names are translated per request; the cached rows stay untranslated.
 
-        return $countries;
+        return function_exists('_osc_location_list') ? (array) _osc_location_list($countries, 'country') : $countries;
     }
 }
 
