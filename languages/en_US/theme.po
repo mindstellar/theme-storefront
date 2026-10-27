@@ -160,7 +160,7 @@ msgstr "Appearance"
 msgid "Apply filters"
 msgstr "Apply filters"
 
-#: item-contact.php:82
+#: item-contact.php:78
 msgid "Attachment"
 msgstr "Attachment"
 
@@ -247,8 +247,8 @@ msgstr ""
 "your own for free in a couple of minutes."
 
 #: common/footer.php:179
-#: item-contact.php:93
-#: item-contact.php:95
+#: item-contact.php:89
+#: item-contact.php:91
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -774,7 +774,7 @@ msgstr "Member since %s"
 msgid "Menu"
 msgstr "Menu"
 
-#: item-contact.php:76
+#: item-contact.php:72
 msgid "Message"
 msgstr "Message"
 
@@ -880,7 +880,7 @@ msgstr "Open in admin"
 msgid "Open in full map"
 msgstr "Open in full map"
 
-#: item-contact.php:72
+#: item-contact.php:68
 msgid "optional"
 msgstr "optional"
 
@@ -905,7 +905,7 @@ msgstr "Paused: delete this alert and save the search again."
 msgid "Pending"
 msgstr "Pending"
 
-#: item-contact.php:72
+#: item-contact.php:68
 msgid "Phone number"
 msgstr "Phone number"
 
@@ -1123,7 +1123,7 @@ msgstr "Seller"
 msgid "Seller's information"
 msgstr "Seller's information"
 
-#: item-contact.php:78
+#: item-contact.php:74
 msgid "Sellers reply faster when they know what you want to ask."
 msgstr "Sellers reply faster when they know what you want to ask."
 
@@ -1131,7 +1131,7 @@ msgstr "Sellers reply faster when they know what you want to ask."
 msgid "Selling something?"
 msgstr "Selling something?"
 
-#: item-contact.php:97
+#: item-contact.php:93
 msgid "Send message"
 msgstr "Send message"
 
@@ -1515,7 +1515,7 @@ msgstr "You are subscribed to this search."
 msgid "Your account"
 msgstr "Your account"
 
-#: item-contact.php:68
+#: item-contact.php:64
 msgid "Your e-mail address"
 msgstr "Your e-mail address"
 
@@ -1537,7 +1537,7 @@ msgstr ""
 "in your account. Never pay in advance — meet in a public place and inspect "
 "the item first."
 
-#: item-contact.php:64
+#: item-contact.php:60
 msgid "Your name"
 msgstr "Your name"
 
