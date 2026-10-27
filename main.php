@@ -47,7 +47,8 @@ $sf_hues = array(
                 <input type="hidden" name="page" value="search" />
                 <div class="sf-hero__field">
                     <svg class="sf-hero__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
-                    <input type="text" name="sPattern" value="<?php echo osc_esc_html(osc_search_pattern()); ?>"
+                    <label class="sf-sr-only" for="sf-hero-query"><?php _e('Keywords', 'storefront'); ?></label>
+                    <input type="text" name="sPattern" id="sf-hero-query" value="<?php echo osc_esc_html(osc_search_pattern()); ?>"
                            placeholder="<?php echo osc_esc_html(__('What are you looking for?', 'storefront')); ?>" />
                 </div>
                 <div class="sf-hero__field">
@@ -55,7 +56,8 @@ $sf_hues = array(
                     <?php // Same vanilla autocomplete the search rail uses (js/storefront.js binds
                           // input[data-ac] against core's location_cities ajax). No region scope here —
                           // the hero is a global quick-search — so it suggests cities everywhere. ?>
-                    <input type="text" name="sCity" autocomplete="off"
+                    <label class="sf-sr-only" for="sf-hero-city"><?php _e('Location', 'storefront'); ?></label>
+                    <input type="text" name="sCity" id="sf-hero-city" autocomplete="off"
                            data-ac="location_cities" data-ac-url="<?php echo osc_esc_html(osc_base_url(true)); ?>"
                            placeholder="<?php echo osc_esc_html(__('Location', 'storefront')); ?>" />
                 </div>

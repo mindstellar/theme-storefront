@@ -345,11 +345,16 @@ img { display: block; max-width: 100%; height: auto; }
 }
 
 .sf-skip {
-    position: absolute; left: -9999px; top: 0; z-index: 100;
+    position: absolute; inset-block-start: 0; inset-inline-start: 0; z-index: 100;
+    inline-size: 1px; block-size: 1px; overflow: hidden;
+    clip-path: inset(50%); white-space: nowrap;
     background: var(--color-text); color: var(--color-bg);
     padding: 10px 16px; font-family: var(--font-heading); font-weight: 800;
 }
-.sf-skip:focus { left: 8px; top: 8px; border-radius: var(--radius-md); }
+.sf-skip:focus {
+    inline-size: auto; block-size: auto; overflow: visible; clip-path: none;
+    inset-block-start: 8px; inset-inline-start: 8px; border-radius: var(--radius-md);
+}
 
 /* ──────────────────────────────────────────────────────────────────────────
    Design-system components (available to every template)
