@@ -104,7 +104,13 @@ if ($sf_title === '') { $sf_title = __('Browse listings', 'storefront'); }
         <?php if (osc_count_items() === 0) { ?>
             <div class="sf-empty">
                 <h4><?php _e('No listings match', 'storefront'); ?></h4>
-                <p><?php printf(__('No results for "%s". Try widening your filters or clearing the search.', 'storefront'), osc_esc_html(osc_search_pattern())); ?></p>
+                <p><?php
+                    if (trim((string) osc_search_pattern()) !== '') {
+                        printf(__('No results for "%s". Try widening your filters or clearing the search.', 'storefront'), osc_esc_html(osc_search_pattern()));
+                    } else {
+                        _e('Try widening your filters or clearing the search.', 'storefront');
+                    }
+                ?></p>
                 <p><a class="sf-btn sf-btn--secondary" href="<?php echo osc_search_show_all_url(); ?>"><?php _e('Clear filters', 'storefront'); ?></a></p>
             </div>
         <?php } else {
