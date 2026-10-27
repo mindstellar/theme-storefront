@@ -158,7 +158,7 @@ msgstr ""
 msgid "Apply filters"
 msgstr ""
 
-#: item-contact.php:82
+#: item-contact.php:78
 msgid "Attachment"
 msgstr ""
 
@@ -243,8 +243,8 @@ msgid ""
 msgstr ""
 
 #: common/footer.php:179
-#: item-contact.php:93
-#: item-contact.php:95
+#: item-contact.php:89
+#: item-contact.php:91
 msgid "Cancel"
 msgstr ""
 
@@ -767,7 +767,7 @@ msgstr ""
 msgid "Menu"
 msgstr ""
 
-#: item-contact.php:76
+#: item-contact.php:72
 msgid "Message"
 msgstr ""
 
@@ -871,7 +871,7 @@ msgstr ""
 msgid "Open in full map"
 msgstr ""
 
-#: item-contact.php:72
+#: item-contact.php:68
 msgid "optional"
 msgstr ""
 
@@ -896,7 +896,7 @@ msgstr ""
 msgid "Pending"
 msgstr ""
 
-#: item-contact.php:72
+#: item-contact.php:68
 msgid "Phone number"
 msgstr ""
 
@@ -1114,7 +1114,7 @@ msgstr ""
 msgid "Seller's information"
 msgstr ""
 
-#: item-contact.php:78
+#: item-contact.php:74
 msgid "Sellers reply faster when they know what you want to ask."
 msgstr ""
 
@@ -1122,7 +1122,7 @@ msgstr ""
 msgid "Selling something?"
 msgstr ""
 
-#: item-contact.php:97
+#: item-contact.php:93
 msgid "Send message"
 msgstr ""
 
@@ -1491,7 +1491,7 @@ msgstr ""
 msgid "Your account"
 msgstr ""
 
-#: item-contact.php:68
+#: item-contact.php:64
 msgid "Your e-mail address"
 msgstr ""
 
@@ -1510,7 +1510,7 @@ msgid ""
 "the item first."
 msgstr ""
 
-#: item-contact.php:64
+#: item-contact.php:60
 msgid "Your name"
 msgstr ""
 

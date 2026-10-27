@@ -49,10 +49,6 @@ if ($sf_contact_page) {
     osc_item_contact_form(array('prefix' => 'sf-contact'));
     echo '</div>';
 } else { ?>
-<?php $sf_contact_error = (string) Session::getInstance()->_getForm('contact_error');
-if ($sf_contact_error !== '') { ?>
-    <p class="sf-form-error" role="alert"><?php echo osc_esc_html($sf_contact_error); ?></p>
-<?php } ?>
 <ul id="error_list"></ul>
 <form action="<?php echo osc_base_url(true); ?>" method="post" name="contact_form" id="contact_form" <?php if (osc_item_attachment()) { echo 'enctype="multipart/form-data"'; } ?>>
     <?php osc_prepare_user_info(); ?>
