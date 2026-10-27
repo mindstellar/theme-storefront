@@ -42,7 +42,7 @@ osc_current_web_theme_path('common/header.php');
         <h2 class="sf-form__legend"><?php _e('General information', 'storefront'); ?></h2>
 
         <div class="sf-field">
-            <label for="select_1"><?php _e('Category', 'storefront'); ?></label>
+            <label for="catId"><?php _e('Category', 'storefront'); ?></label>
             <?php ItemForm::category_select(null, null, __('Select a category', 'storefront')); ?>
         </div>
         <div class="sf-field">
@@ -57,6 +57,7 @@ osc_current_web_theme_path('common/header.php');
         <div class="sf-field control-group-price">
             <label for="price"><?php _e('Price', 'storefront'); ?></label>
             <?php ItemForm::price_input_text(); ?>
+            <label class="sf-sr-only" for="currency"><?php _e('Currency', 'storefront'); ?></label>
             <?php ItemForm::currency_select(); ?>
         </div>
         <?php } ?>
@@ -70,7 +71,7 @@ osc_current_web_theme_path('common/header.php');
 
         <h2 class="sf-form__legend"><?php _e('Listing location', 'storefront'); ?></h2>
         <div class="sf-field">
-            <label for="country"><?php _e('Country', 'storefront'); ?></label>
+            <label for="countryId"><?php _e('Country', 'storefront'); ?></label>
             <?php ItemForm::country_select(osc_get_countries(), $sf_loc); ?>
         </div>
         <?php if (storefront_setting('location_input_type', 'autocomplete') === 'dropdown') {
