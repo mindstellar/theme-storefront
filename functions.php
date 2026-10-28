@@ -64,6 +64,18 @@ if (!function_exists('storefront_can_post')) {
 }
 
 /**
+ * The mark after the label of a field core refuses to save empty.
+ *
+ * @return string
+ */
+if (!function_exists('storefront_required_mark')) {
+    function storefront_required_mark()
+    {
+        return ' <span class="sf-req" aria-hidden="true">*</span><span class="sf-sr-only"> ' . osc_esc_html(__('(required)', 'storefront')) . '</span>';
+    }
+}
+
+/**
  * Every page: the design system stylesheet + core chrome (header nav, account menus,
  * dialogs, confirm guards, flash dismiss). Runs on the `header` hook at priority 5,
  * before core prints the queue at 8.
