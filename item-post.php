@@ -27,12 +27,8 @@ osc_current_web_theme_path('common/header.php');
         <?php echo $sf_edit ? osc_esc_html(__('Edit your listing', 'storefront')) : osc_esc_html(__('Post a listing', 'storefront')); ?>
     </h1>
     <p class="text-muted" style="font-size:15px; margin-bottom:var(--space-6);">
-        <?php if ($sf_edit ? osc_moderate_admin_edit() : osc_moderate_admin_post()) {
-            _e('Fill in the details below. An admin approves each listing before it goes live.', 'storefront');
-        } else {
-            _e('Fill in the details below. Listings are reviewed and go live within minutes.', 'storefront');
-        } ?>
-        <?php printf(osc_esc_html(__('Fields marked %s are required.', 'storefront')), '<span class="sf-req" aria-hidden="true">*</span>'); ?>
+        <?php echo osc_esc_html(storefront_post_intro($sf_edit)); ?>
+        <?php echo str_replace('*', '<span class="sf-req" aria-hidden="true">*</span>', osc_esc_html(__('Fields marked * are required.', 'storefront'))); ?>
     </p>
 
     <ul id="error_list"></ul>
@@ -123,7 +119,7 @@ osc_current_web_theme_path('common/header.php');
         </div>
 
         <?php if (!osc_is_web_user_logged_in()) { ?>
-        <h2 class="sf-form__legend"><?php _e('Your contact information', 'storefront'); ?></h2>
+        <h2 class="sf-form__legend"><?php echo osc_esc_html(__('Your contact information', 'storefront')); ?></h2>
         <div class="sf-field">
             <label for="contactName"><?php _e('Name', 'storefront'); ?></label>
             <?php ItemForm::contact_name_text(); ?>
