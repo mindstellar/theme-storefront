@@ -424,7 +424,7 @@ img { display: block; max-width: 100%; height: auto; }
     color: var(--color-muted);
     font-weight: 600;
 }
-.sf-req { color: var(--color-accent-2-ink); font-weight: 700; }
+.sf-req, .osc-required { color: var(--color-accent-2-ink); font-weight: 700; }
 .input, .sf-input, .sf-textarea, .sf-select,
 .sf-field input[type="text"], .sf-field input[type="email"],
 .sf-field input[type="password"], .sf-field input[type="tel"],
