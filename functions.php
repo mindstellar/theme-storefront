@@ -64,6 +64,40 @@ if (!function_exists('storefront_can_post')) {
 }
 
 /**
+ * The line under the post form's heading, saying what happens after the poster saves. It
+ * follows core's rules for admin approval and for the e-mail link a poster must confirm.
+ *
+ * @param bool $edit
+ *
+ * @return string
+ */
+if (!function_exists('storefront_post_intro')) {
+    function storefront_post_intro($edit)
+    {
+        if ($edit) {
+            return osc_moderate_admin_edit()
+                ? __('Fill in the details below. An admin approves your changes before they go live.', 'storefront')
+                : __('Fill in the details below. Listings are reviewed and go live within minutes.', 'storefront');
+        }
+        if (osc_moderate_admin_post()) {
+            return __('Fill in the details below. An admin approves each listing before it goes live.', 'storefront');
+        }
+        $moderate = osc_moderate_items();
+        if (osc_is_web_user_logged_in()) {
+            $user    = osc_user();
+            $confirm = $moderate >= 0 && !osc_logged_user_item_validation()
+                && ($moderate === 0 || (int) ($user['i_items'] ?? 0) < $moderate);
+        } else {
+            $confirm = $moderate >= 0;
+        }
+
+        return $confirm
+            ? __('Fill in the details below. We e-mail you a link to confirm your listing before it goes live.', 'storefront')
+            : __('Fill in the details below. Listings are reviewed and go live within minutes.', 'storefront');
+    }
+}
+
+/**
  * The mark after the label of a field core refuses to save empty.
  *
  * @return string
