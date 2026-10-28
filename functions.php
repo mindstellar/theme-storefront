@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-define('STOREFRONT_THEME_VERSION', '2.2.1');
+define('STOREFRONT_THEME_VERSION', '2.2.2');
 define('STOREFRONT_THEME_FOLDER', __DIR__);
 
 if (!OC_ADMIN) {
