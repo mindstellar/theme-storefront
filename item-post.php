@@ -27,7 +27,12 @@ osc_current_web_theme_path('common/header.php');
         <?php echo $sf_edit ? osc_esc_html(__('Edit your listing', 'storefront')) : osc_esc_html(__('Post a listing', 'storefront')); ?>
     </h1>
     <p class="text-muted" style="font-size:15px; margin-bottom:var(--space-6);">
-        <?php _e('Fill in the details below. Listings are reviewed and go live within minutes.', 'storefront'); ?>
+        <?php if ($sf_edit ? osc_moderate_admin_edit() : osc_moderate_admin_post()) {
+            _e('Fill in the details below. An admin approves each listing before it goes live.', 'storefront');
+        } else {
+            _e('Fill in the details below. Listings are reviewed and go live within minutes.', 'storefront');
+        } ?>
+        <?php printf(osc_esc_html(__('Fields marked %s are required.', 'storefront')), '<span class="sf-req" aria-hidden="true">*</span>'); ?>
     </p>
 
     <ul id="error_list"></ul>
@@ -42,15 +47,15 @@ osc_current_web_theme_path('common/header.php');
         <h2 class="sf-form__legend"><?php _e('General information', 'storefront'); ?></h2>
 
         <div class="sf-field">
-            <label for="select_1"><?php _e('Category', 'storefront'); ?></label>
+            <label for="select_1"><?php _e('Category', 'storefront'); ?><?php echo storefront_required_mark(); ?></label>
             <?php ItemForm::category_select(null, null, __('Select a category', 'storefront')); ?>
         </div>
         <div class="sf-field">
-            <label for="<?php echo osc_esc_html(ItemForm::locale_field_id('title', osc_current_user_locale())); ?>"><?php _e('Title', 'storefront'); ?></label>
+            <label for="<?php echo osc_esc_html(ItemForm::locale_field_id('title', osc_current_user_locale())); ?>"><?php _e('Title', 'storefront'); ?><?php echo storefront_required_mark(); ?></label>
             <?php ItemForm::title_input('title', osc_current_user_locale(), osc_esc_html(osc_item_title())); ?>
         </div>
         <div class="sf-field">
-            <label for="<?php echo osc_esc_html(ItemForm::locale_field_id('description', osc_current_user_locale())); ?>"><?php _e('Description', 'storefront'); ?></label>
+            <label for="<?php echo osc_esc_html(ItemForm::locale_field_id('description', osc_current_user_locale())); ?>"><?php _e('Description', 'storefront'); ?><?php echo storefront_required_mark(); ?></label>
             <?php ItemForm::description_textarea('description', osc_current_user_locale(), osc_esc_html(osc_item_description())); ?>
         </div>
         <?php if (osc_price_enabled_at_items()) { ?>
@@ -118,13 +123,13 @@ osc_current_web_theme_path('common/header.php');
         </div>
 
         <?php if (!osc_is_web_user_logged_in()) { ?>
-        <h2 class="sf-form__legend"><?php _e("Seller's information", 'storefront'); ?></h2>
+        <h2 class="sf-form__legend"><?php _e('Your contact information', 'storefront'); ?></h2>
         <div class="sf-field">
             <label for="contactName"><?php _e('Name', 'storefront'); ?></label>
             <?php ItemForm::contact_name_text(); ?>
         </div>
         <div class="sf-field">
-            <label for="contactEmail"><?php _e('E-mail', 'storefront'); ?></label>
+            <label for="contactEmail"><?php _e('E-mail', 'storefront'); ?><?php echo storefront_required_mark(); ?></label>
             <?php ItemForm::contact_email_text(); ?>
         </div>
         <div class="sf-field sf-field--check">
