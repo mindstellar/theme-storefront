@@ -120,9 +120,12 @@ $sf_titles = array(
     </div>
     <?php if (!$sf_shopper) { ?>
     <div class="sf-account-head__actions">
-        <a class="sf-btn sf-btn--secondary" href="<?php echo osc_esc_html(osc_user_public_profile_url(osc_logged_user_id())); ?>">
+        <?php $sf_profile_url = (string) osc_user_public_profile_url(osc_logged_user_id()); ?>
+        <?php if ($sf_profile_url !== '') { ?>
+        <a class="sf-btn sf-btn--secondary" href="<?php echo osc_esc_html($sf_profile_url); ?>">
             <?php echo storefront_icon('globe', 15); ?><span><?php _e('Public profile', 'storefront'); ?></span>
         </a>
+        <?php } ?>
         <a class="sf-btn sf-btn--primary" href="<?php echo osc_esc_html(osc_item_post_url_in_category()); ?>">
             <?php echo storefront_icon('plus', 15); ?><span><?php _e('Post a listing', 'storefront'); ?></span>
         </a>
