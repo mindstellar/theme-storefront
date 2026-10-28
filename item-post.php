@@ -28,7 +28,7 @@ osc_current_web_theme_path('common/header.php');
     </h1>
     <p class="text-muted" style="font-size:15px; margin-bottom:var(--space-6);">
         <?php echo osc_esc_html(storefront_post_intro($sf_edit)); ?>
-        <?php printf(osc_esc_html(__('Fields marked %s are required.', 'storefront')), '<span class="sf-req" aria-hidden="true">*</span>'); ?>
+        <?php echo str_replace('*', '<span class="sf-req" aria-hidden="true">*</span>', osc_esc_html(__('Fields marked * are required.', 'storefront'))); ?>
     </p>
 
     <ul id="error_list"></ul>

@@ -105,7 +105,7 @@ if (!function_exists('storefront_post_intro')) {
 if (!function_exists('storefront_required_mark')) {
     function storefront_required_mark()
     {
-        return ' <span class="sf-req" aria-hidden="true">*</span><span class="sf-sr-only"> ' . osc_esc_html(__('(required)', 'storefront')) . '</span>';
+        return ' <span class="sf-req" aria-hidden="true">*</span><span class="sf-sr-only"> ' . osc_esc_html(__('(required field)', 'storefront')) . '</span>';
     }
 }
 
