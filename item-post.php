@@ -27,7 +27,11 @@ osc_current_web_theme_path('common/header.php');
         <?php echo $sf_edit ? osc_esc_html(__('Edit your listing', 'storefront')) : osc_esc_html(__('Post a listing', 'storefront')); ?>
     </h1>
     <p class="text-muted" style="font-size:15px; margin-bottom:var(--space-6);">
-        <?php _e('Fill in the details below. Listings are reviewed and go live within minutes.', 'storefront'); ?>
+        <?php if ($sf_edit ? osc_moderate_admin_edit() : osc_moderate_admin_post()) {
+            _e('Fill in the details below. An admin approves each listing before it goes live.', 'storefront');
+        } else {
+            _e('Fill in the details below. Listings are reviewed and go live within minutes.', 'storefront');
+        } ?>
     </p>
 
     <ul id="error_list"></ul>
