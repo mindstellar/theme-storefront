@@ -122,7 +122,7 @@ osc_current_web_theme_path('common/header.php');
         </div>
 
         <?php if (!osc_is_web_user_logged_in()) { ?>
-        <h2 class="sf-form__legend"><?php _e("Seller's information", 'storefront'); ?></h2>
+        <h2 class="sf-form__legend"><?php _e('Your contact information', 'storefront'); ?></h2>
         <div class="sf-field">
             <label for="contactName"><?php _e('Name', 'storefront'); ?></label>
             <?php ItemForm::contact_name_text(); ?>
