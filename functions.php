@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-define('STOREFRONT_THEME_VERSION', '2.2.1');
+define('STOREFRONT_THEME_VERSION', '2.2.2');
 define('STOREFRONT_THEME_FOLDER', __DIR__);
 
 if (!OC_ADMIN) {
@@ -60,6 +60,18 @@ if (!function_exists('storefront_can_post')) {
         }
 
         return osc_users_enabled() || !osc_reg_user_post();
+    }
+}
+
+/**
+ * The mark after the label of a field core refuses to save empty.
+ *
+ * @return string
+ */
+if (!function_exists('storefront_required_mark')) {
+    function storefront_required_mark()
+    {
+        return ' <span class="sf-req" aria-hidden="true">*</span><span class="sf-sr-only"> ' . osc_esc_html(__('(required)', 'storefront')) . '</span>';
     }
 }
 
