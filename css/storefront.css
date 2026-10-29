@@ -2808,6 +2808,9 @@ body.sf-list .sf-card__desc {
 @media (max-width: 899px) {
     .sf .oe-messenger { grid-template-columns: minmax(0, 1fr); border-radius: var(--radius-lg); block-size: clamp(26rem, calc(100dvh - var(--sf-header-h) - 12rem), 60rem); }
     .sf .oe-messenger.is-empty { block-size: auto; }
+    /* On a phone the inbox is a plain list: the page scrolls, not a box inside it. */
+    .sf .oe-messenger:not(.is-chat) { block-size: auto; }
+    .sf .oe-messenger:not(.is-chat) .oe-threads { overflow: visible; }
     .sf .oe-messenger:not(.is-chat) .oe-messenger-chat { display: none; }
     .sf .oe-messenger.is-chat .oe-messenger-list { display: none; }
     .sf .oe-messenger-list { border-inline-end: 0; }
