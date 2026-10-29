@@ -2840,10 +2840,25 @@ body.sf-list .sf-card__desc {
     background: var(--color-surface); color: var(--color-text); box-shadow: var(--shadow-lg);
 }
 .sf .oe-dialog[data-osc-dialog-ready]::backdrop { background: var(--color-scrim); }
-.sf .oe-dialog-head { border-color: var(--color-divider); padding: var(--space-4) var(--space-6); }
-.sf .oe-dialog-head h2 { font-family: var(--font-heading); font-weight: 800; font-size: 20px; }
-.sf .oe-dialog-body { padding: var(--space-4) var(--space-6) var(--space-6); }
-.sf .oe-dialog-body .oe-actions .oe-btn { width: 100%; justify-content: center; }
+.sf .oe-dialog-head { align-items: flex-start; border: 0; padding: 20px 20px 0; }
+.sf .oe-dialog-head h2 { font-family: var(--font-heading); font-weight: 800; font-size: 20px; line-height: 1.2; }
+.sf .oe-dialog-close { display: grid; place-items: center; inline-size: 32px; block-size: 32px; margin: -6px -8px 0 0; padding: 0; border-radius: var(--radius-md); color: var(--color-muted); }
+.sf .oe-dialog-close:hover { background: var(--color-neutral-100); color: var(--color-text); }
+.sf .oe-dialog-body { padding: 4px 20px 20px; }
+.sf .oe-dialog-body > p { margin: 0 0 14px; font-size: 14px; color: var(--color-muted); }
+.sf .oe-dialog-body form { margin: 0; padding: 0; }
+.sf .oe-dialog-body fieldset { display: grid; gap: 6px; margin: 0 0 18px; padding: 0; border: 0; min-inline-size: 0; }
+.sf .oe-dialog-body legend { margin-bottom: 8px; padding: 0; font-size: 14px; font-weight: 600; color: var(--color-text); }
+.sf .oe-page .oe-dialog-body .oe-check {
+    display: flex; align-items: center; gap: 10px; min-block-size: 44px; margin: 0; padding: 8px 12px;
+    border: 1px solid var(--color-divider); border-radius: var(--radius-md);
+    font-size: 14px; font-weight: 600; color: var(--color-text); cursor: pointer;
+}
+.sf .oe-page .oe-dialog-body .oe-check:hover { background: var(--color-neutral-100); }
+.sf .oe-page .oe-dialog-body .oe-check:has(input:checked) { border-color: var(--color-accent); background: color-mix(in srgb, var(--color-accent) 8%, transparent); }
+.sf .oe-dialog-body .oe-check input { inline-size: 16px; block-size: 16px; margin: 0; accent-color: var(--color-accent-fill); }
+.sf .oe-dialog-body .oe-actions { justify-content: flex-end; gap: var(--space-2); margin: 0; }
+.sf .oe-page .oe-dialog-body .oe-actions .oe-btn { min-block-size: 40px; padding: 0 14px; font-size: 14px; font-weight: 700; }
 .sf .oe-form-error {
     border-color: var(--color-accent-2-ink); color: var(--color-accent-2-ink);
     background: color-mix(in srgb, var(--color-accent-2) 12%, transparent);
