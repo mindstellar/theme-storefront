@@ -2683,7 +2683,7 @@ body.sf-list .sf-card__desc {
 .sf .oe-listing-link { grid-column: 3; grid-row: 1 / 3; font-size: 14px; font-weight: 600; white-space: nowrap; }
 .sf .oe-listing-card .oe-thread-flag { grid-column: 3; grid-row: 1 / 3; }
 .sf .oe-listing-card.is-removed .oe-listing-photo { filter: grayscale(1); opacity: .45; }
-.sf .oe-listing-card.is-removed .oe-listing-title { color: var(--color-muted); }
+.sf .oe-listing-card.is-removed .oe-listing-title { grid-row: 1 / 3; align-self: center; color: var(--color-muted); }
 
 .sf .oe-messenger .oe-messages {
     flex: 1; display: flex; flex-direction: column; min-block-size: 0; overflow-y: auto; overscroll-behavior: contain;
