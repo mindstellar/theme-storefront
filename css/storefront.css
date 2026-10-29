@@ -2613,7 +2613,7 @@ body.sf-list .sf-card__desc {
 }
 .sf .oe-thread-link:is(:hover, [aria-current]) .oe-thread-initial { box-shadow: 0 0 0 2px var(--color-surface); }
 .sf .oe-thread-name { grid-column: 2; grid-row: 1; min-inline-size: 0; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.sf .oe-thread-time { grid-column: 3; grid-row: 1; font-size: 13px; color: var(--color-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.sf .oe-thread-time { grid-column: 3; grid-row: 1; justify-self: end; font-size: 13px; color: var(--color-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .sf .oe-messenger .oe-thread-title {
     grid-column: 2 / 4; grid-row: 2; margin: 0; font-size: 14px; font-weight: 400; line-height: 1.35;
     color: var(--color-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
