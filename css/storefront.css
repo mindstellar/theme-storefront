@@ -2670,6 +2670,8 @@ body.sf-list .sf-card__desc {
 }
 .sf .oe-menu-item:hover, .sf .oe-menu-item:focus-visible { background: var(--color-neutral-100); outline: none; }
 .sf .oe-menu-item.oe-danger-link { color: var(--color-accent-2-ink); }
+.sf .oe-menu-item[hidden], .sf .oe-menu-note[hidden] { display: none; }
+.sf .oe-menu-note { max-inline-size: 16rem; margin: 4px 12px 8px; font-size: 13px; line-height: 1.4; color: var(--color-muted); }
 .sf .oe-menu-report > summary { list-style: none; cursor: pointer; }
 .sf .oe-menu-report > summary::-webkit-details-marker { display: none; }
 .sf .oe-menu-report > form { padding: var(--space-2) var(--space-3); }
