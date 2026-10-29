@@ -2573,8 +2573,10 @@ body.sf-list .sf-card__desc {
 .sf .oe-list-head:has(> .oe-push) { grid-template-columns: minmax(0, 1fr) auto; align-items: center; }
 .sf .oe-list-head > :is(.oe-list-filter, .oe-list-tabs) { grid-column: 1 / -1; }
 .sf .oe-list-head .oe-push { margin: 0; }
+.sf .oe-list-filter { position: relative; }
+.sf .oe-list-filter-icon { position: absolute; inset-inline-start: 14px; inset-block-start: 50%; translate: 0 -50%; color: var(--color-muted); pointer-events: none; }
 .sf .oe-list-filter input {
-    inline-size: 100%; min-block-size: 44px; padding: 9px 12px; font-size: 14px;
+    inline-size: 100%; min-block-size: 44px; padding: 9px 12px; padding-inline-start: 40px; font-size: 14px;
     color: var(--color-text); background: var(--color-bg);
     border: 1px solid var(--color-divider); border-radius: var(--radius-md);
 }
