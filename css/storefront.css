@@ -2553,7 +2553,7 @@ body.sf-list .sf-card__desc {
     --msg-row-active: color-mix(in srgb, var(--color-accent) 11%, var(--color-surface));
     --msg-row-hover: color-mix(in srgb, var(--color-text) 4%, var(--color-surface));
     display: grid; grid-template-columns: minmax(16rem, 1fr) minmax(0, 2fr);
-    block-size: clamp(28rem, calc(100dvh - var(--sf-header-h) - 17rem), 60rem);
+    block-size: clamp(28rem, calc(100dvh - var(--sf-header-h) - 13rem), 60rem);
     margin: 0; overflow: hidden;
     background: var(--color-surface); border: 1px solid var(--color-divider);
     border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);
@@ -2809,7 +2809,9 @@ body.sf-list .sf-card__desc {
     .sf .sf-main__pad:has(.oe-messenger.is-chat) { padding: 0; }
     .sf .sf-main__pad:has(.oe-messenger.is-chat) > .sf-container,
     .sf .sf-container:has(.oe-messenger.is-chat) { padding-inline: 0; }
-    .sf .oe-messenger.is-chat { block-size: calc(100dvh - var(--sf-header-h)); border-width: 0; border-radius: 0; box-shadow: none; }
+    /* The header is its bar plus a 2px bottom rule. */
+    .sf .oe-messenger.is-chat { block-size: calc(100dvh - var(--sf-header-h) - 2px); border-width: 0; border-radius: 0; box-shadow: none; }
+    .sf .oe-account-main:has(> .sf-account) > .oe-messenger.is-chat { margin-block-start: 0; }
     .sf .oe-chat-back {
         display: inline-grid; place-items: center; inline-size: 44px; block-size: 44px;
         margin-inline-start: -6px; color: var(--color-text); border-radius: var(--radius-md);
