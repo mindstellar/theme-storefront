@@ -2615,6 +2615,7 @@ body.sf-list .sf-card__desc {
     background: var(--color-accent-fill); color: var(--color-fixed-light);
     font-size: 12px; font-weight: 800; line-height: 1; box-shadow: 0 0 0 2px var(--color-surface);
 }
+.sf .oe-thread-initial[style*="--oe-hue"] { background: hsl(var(--oe-hue) 45% 34%); }
 .sf .oe-thread-link:is(:hover, [aria-current]) .oe-thread-initial { box-shadow: 0 0 0 2px var(--color-surface); }
 .sf .oe-thread-name { grid-column: 2; grid-row: 1; min-inline-size: 0; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .sf .oe-thread-time { grid-column: 3; grid-row: 1; justify-self: end; font-size: 13px; color: var(--color-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
