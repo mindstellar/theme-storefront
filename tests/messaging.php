@@ -60,12 +60,50 @@ foreach (['.oe-thread', '.oe-message', '.oe-message.is-mine', '.oe-message.is-he
     }
 }
 
+$classes = [
+    '.oe-messenger', '.oe-messenger-list', '.oe-messenger-chat', '.oe-list-head', '.oe-list-filter', '.oe-list-tabs',
+    '.oe-thread-link', '.oe-thread.is-unread', '.oe-thread.is-current', '.oe-thread-photo', '.oe-thread-initial',
+    '.oe-thread-name', '.oe-thread-time', '.oe-thread-preview', '.oe-thread-flag', '.oe-chat-head', '.oe-chat-back',
+    '.oe-chat-name', '.oe-chat-role', '.oe-menu', '.oe-menu-panel', '.oe-menu-item', '.oe-menu-report',
+    '.oe-listing-card', '.oe-listing-photo', '.oe-listing-title', '.oe-listing-price', '.oe-listing-link',
+    '.oe-day', '.oe-seen', '.oe-held', '.oe-typing', '.oe-typing-bubble', '.oe-compose-row', '.oe-compose-send',
+    '.oe-compose-foot', '.oe-compose-counter', '.oe-stopbar', '.oe-chat-empty',
+];
+foreach ($classes as $sel) {
+    if (!preg_match('/^\.sf [^{]*' . preg_quote($sel, '/') . '[^{]*\{/m', $css)) {
+        $fail[] = "no .sf rule for $sel";
+    }
+}
+
+// The phone and footer rules ship as CSS only (:has), no theme PHP.
+$d4 = [
+    '.sf:has(.oe-messenger) .sf-footer { display: none; }' => 'footer hidden on the messages screen',
+    '.oe-account-main:has(> .oe-messenger.is-chat) > :is(.sf-account, .oe-h1) { display: none; }' => 'band and tabs hidden in a phone chat',
+    '.oe-messenger:not(.is-chat) .oe-messenger-chat { display: none; }' => 'phone list shows one pane',
+    '.oe-messenger.is-chat .oe-messenger-list { display: none; }' => 'phone chat shows one pane',
+];
+foreach ($d4 as $rule => $what) {
+    if (strpos($css, $rule) === false) {
+        $fail[] = "missing rule: $what";
+    }
+}
+if (!preg_match('/prefers-reduced-motion: reduce\)\s*\{\s*\.sf \.oe-typing-bubble > i \{ animation: none/', $css)) {
+    $fail[] = 'typing dots ignore prefers-reduced-motion';
+}
+
 $start = strpos($css, '/* Messages: inbox, thread');
 $end   = strpos($css, "/* Core's message dialog", (int) $start);
 if ($start === false || $end === false) {
     $fail[] = 'messaging CSS block not found';
-} elseif (preg_match('/#[0-9a-fA-F]{3,8}\b/', substr($css, $start, $end - $start))) {
-    $fail[] = 'raw hex colour in the messaging CSS block';
+} else {
+    $block = substr($css, $start, $end - $start);
+    if (preg_match('/#[0-9a-fA-F]{3,8}\b(?![^()]*\))/', preg_replace('/url\([^)]*\)/', '', $block))) {
+        $fail[] = 'raw hex colour in the messaging CSS block';
+    }
+    // Colours come from tokens, so dark mode (data-theme dark and auto) follows with no extra rules.
+    if (preg_match('/\[data-theme|prefers-color-scheme/', $block)) {
+        $fail[] = 'messaging CSS has its own dark-mode override; use tokens';
+    }
 }
 
 if ($fail) {
