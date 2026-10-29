@@ -2747,10 +2747,11 @@ body.sf-list .sf-card__desc {
 .sf .oe-compose-row { display: flex; align-items: flex-end; gap: var(--space-2); }
 .sf .oe-messenger .oe-compose textarea {
     flex: 1; min-inline-size: 0; inline-size: auto; max-inline-size: none; min-block-size: 48px; max-block-size: 10rem; resize: none;
-    padding: 12px 16px; line-height: 1.45; color: var(--color-text); background: var(--color-bg);
+    padding: 12px 16px; font: inherit; font-size: 15px; line-height: 1.45; color: var(--color-text); background: var(--color-bg);
     border: 1px solid var(--color-divider); border-radius: var(--radius-lg);
 }
 .sf .oe-messenger .oe-compose textarea:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 1px; }
+.sf .oe-messenger .oe-compose textarea::placeholder { color: var(--color-muted); }
 .sf .oe-compose-send {
     flex: none; display: grid; place-items: center; inline-size: 48px; block-size: 48px; padding: 0; border: 0;
     border-radius: var(--radius-lg); background: var(--color-accent-fill); color: var(--color-fixed-light);
