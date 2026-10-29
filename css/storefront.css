@@ -2585,6 +2585,8 @@ body.sf-list .sf-card__desc {
     background: transparent; color: var(--color-muted); font-size: 14px; font-weight: 700;
 }
 .sf .oe-list-tabs button[aria-pressed="true"] { background: var(--color-surface); color: var(--color-accent-ink); box-shadow: var(--shadow-sm); }
+.sf .oe-list-tabs-count { margin-inline-start: 6px; font-variant-numeric: tabular-nums; }
+.sf .oe-list-tabs-count[hidden] { display: none; }
 .sf .oe-list-tabs button:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 1px; }
 
 .sf .oe-messenger-list [data-osc-inbox] { flex: 1; display: flex; flex-direction: column; min-block-size: 0; }
