@@ -2040,6 +2040,7 @@ body.sf-list .sf-card__desc {
 
 .sf-page > .sf-section__title { margin: 0 0 var(--space-4); }
 .sf-page__body { line-height: 1.7; max-width: 68ch; }
+.layout-full-width .sf-page__body { max-width: none; }
 .sf-page__body h2, .sf-page__body h3 { margin-top: var(--space-6); }
 /* Page-builder canvas: stacked widget blocks get vertical rhythm without a max-width
    cap (a block may be a full-width band, not prose). See template-widgets.php. */

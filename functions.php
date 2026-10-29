@@ -340,6 +340,7 @@ if (!function_exists('storefront_body_class')) {
             if (osc_search_show_as() === 'list') { $classes[] = 'sf-list'; }
         }
         if (osc_is_static_page()) { $classes[] = 'sf-page'; }
+        if (storefront_is_full_width()) { $classes[] = 'layout-full-width'; }
         if ($extra !== '')        { $classes[] = $extra; }
 
         echo 'class="' . osc_esc_html(implode(' ', $classes)) . '"';
@@ -1202,3 +1203,31 @@ if (!function_exists('storefront_distance_search')) {
 
 // The sidebar draws the distance field in its location group, not at the end of the form.
 osc_remove_hook('search_form', 'osc_search_distance_field');
+
+/**
+ * The "Full width" page template: the theme's own page.php without the narrow reading column.
+ * The id is shared by our themes, so a page keeps the template when the site changes theme.
+ */
+function storefront_page_templates(): void
+{
+    if (function_exists('osc_register_page_template')) {
+        osc_register_page_template('theme.full_width', array(
+            'label'       => __('Full width', 'storefront'),
+            'description' => __('The page uses the whole width of the content area.', 'storefront'),
+            'render'      => 'page.php',
+        ));
+    }
+}
+
+osc_add_hook('init', 'storefront_page_templates');
+
+/** Whether the current static page uses the Full width template. */
+function storefront_is_full_width(): bool
+{
+    if (!osc_is_static_page()) {
+        return false;
+    }
+    $meta = json_decode((string) osc_static_page_field('s_meta'), true);
+
+    return is_array($meta) && ($meta['template'] ?? '') === 'theme.full_width';
+}
