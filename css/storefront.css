@@ -3185,3 +3185,27 @@ body.sf-list .sf-card__desc {
 .sf .tox .tox-collection__item--active { background: color-mix(in srgb, var(--color-accent) 16%, transparent); }
 .sf .tox .tox-pop .tox-tbtn { background: transparent; color: var(--color-text); }
 .sf .tox .tox-pop .tox-tbtn svg { fill: currentColor; }
+
+/* Shop emails newsletter widget */
+.shop-emails-widget { position: relative; display: grid; gap: var(--space-2); color: var(--color-text); }
+.shop-emails-title { margin: 0; font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 16px; }
+.shop-emails-answer { margin: 0; font-size: 13px; color: var(--color-accent-ink); }
+.shop-emails-widget form { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--space-2); }
+.shop-emails-widget label { flex: 1 1 200px; display: grid; gap: var(--space-1); font-size: 13px; font-weight: 600; }
+.shop-emails-widget input[type="email"] {
+    width: 100%; min-height: 40px; padding: 8px 10px; font: inherit; font-size: 14px;
+    color: var(--color-text); background: var(--color-surface);
+    border: 1px solid var(--color-divider); border-radius: var(--radius-md);
+}
+.shop-emails-widget input[type="email"]:focus-visible {
+    border-color: var(--color-accent); outline: none;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 30%, transparent);
+}
+.shop-emails-widget button {
+    min-height: 40px; padding: 8px var(--space-4); cursor: pointer; border: 1px solid transparent;
+    font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 13px;
+    color: var(--color-fixed-light); background: var(--color-accent-fill); border-radius: var(--radius-md);
+}
+.shop-emails-widget button:hover { background: var(--color-accent-fill-hover); }
+.shop-emails-widget button:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+@media (max-width: 480px) { .shop-emails-widget button { width: 100%; } }
