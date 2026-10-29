@@ -2827,8 +2827,9 @@ body.sf-list .sf-card__desc {
     .sf .oe-chat-head > .oe-chat-back + .oe-thread-initial { grid-column: 2; }
     .sf .oe-chat-head > .oe-chat-back ~ :is(.oe-chat-name, .oe-chat-role) { grid-column: 3; }
     .sf .oe-chat-head > .oe-chat-back ~ .oe-menu { grid-column: 4; }
-    .sf .oe-listing-card { grid-template-columns: 64px minmax(0, 1fr); padding: var(--space-3) var(--space-4); }
-    .sf .oe-listing-photo { inline-size: 64px; block-size: 56px; }
+    .sf .oe-listing-card { grid-template-columns: 44px minmax(0, 1fr); padding: var(--space-3) var(--space-4); }
+    .sf .oe-listing-photo { inline-size: 44px; block-size: 44px; }
+    .sf .oe-chat-head > .oe-thread-initial { inline-size: 36px; block-size: 36px; font-size: 16px; }
     .sf .oe-listing-link { display: none; }
     .sf .oe-listing-card .oe-thread-flag { grid-column: 2; grid-row: 2; justify-self: start; }
     .sf .oe-messenger .oe-messages { padding: var(--space-2) var(--space-4); }
