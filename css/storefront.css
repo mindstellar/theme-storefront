@@ -2066,6 +2066,8 @@ body.sf-list .sf-card__desc {
 /* The 2px signature rule earns its weight: stepped up from the 16% divider so it
    reads as an authored line, not a hairline. Derived from --color-text, so it holds
    in both themes. */
+.sf-footer-widgets { margin-top: var(--space-8); }
+.sf-footer-widgets + .sf-footer { margin-top: var(--space-6); }
 .sf-footer { border-top: 2px solid color-mix(in srgb, var(--color-text) 22%, transparent); margin-top: var(--space-8); }
 .sf-footer__grid {
     display: flex; flex-wrap: wrap; align-items: flex-start;

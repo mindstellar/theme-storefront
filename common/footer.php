@@ -8,7 +8,14 @@
 <?php osc_run_hook('after-main'); ?>
 </main>
 
-<?php osc_show_widgets('footer'); ?>
+<?php
+// Buffered so an empty footer location adds no box.
+ob_start();
+osc_show_widgets('footer');
+$sf_footer_widgets = trim(ob_get_clean());
+if ($sf_footer_widgets !== '') { ?>
+<div class="sf-container sf-footer-widgets"><?php echo $sf_footer_widgets; ?></div>
+<?php } ?>
 
 <?php
 // Static pages are admin-authored (About, Terms, Safety…). Buffer the loop so the
