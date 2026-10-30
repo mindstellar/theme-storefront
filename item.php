@@ -26,6 +26,8 @@ $sf_item_id   = (int) osc_item_id();
 $sf_seller_id = (int) osc_item_user_id();
 $sf_expired   = osc_item_is_expired();
 $sf_inactive  = osc_item_is_inactive();
+// Core prints its own notice, with a pay link, for a listing waiting for payment.
+$sf_unpaid    = function_exists('osc_item_is_unpaid') && osc_item_is_unpaid();
 $sf_is_owner  = ($sf_seller_id === (int) osc_logged_user_id()) && osc_logged_user_id() != 0;
 $sf_price_state = storefront_price_state();
 
@@ -124,7 +126,7 @@ $sf_next = storefront_adjacent_item_url('next');
     <?php echo osc_esc_html(osc_item_title()); ?>
 </div>
 
-<?php if ($sf_expired || $sf_inactive) { ?>
+<?php if ($sf_expired || ($sf_inactive && !$sf_unpaid)) { ?>
 <p class="sf-alert sf-alert--warning" role="status">
     <?php echo $sf_icon('alert', 18); ?>
     <span><?php echo $sf_expired
