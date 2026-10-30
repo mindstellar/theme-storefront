@@ -4,7 +4,8 @@
  * css/storefront.css styles its .oe-* classes. Nothing prints when comments are off.
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
-if (!osc_comments_enabled()) {
+// A listing waiting for payment is not live, so it takes no comments yet.
+if (!osc_comments_enabled() || (function_exists('osc_item_is_unpaid') && osc_item_is_unpaid())) {
     return;
 }
 // The delete link opens the theme's confirm dialog, naming what goes; core 7.0 sets no prompt of its own.

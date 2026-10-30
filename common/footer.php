@@ -27,11 +27,14 @@ $sf_taken = array();
 foreach ($sf_footer_menu['items'] ?? array() as $sf_link) {
     $sf_taken[storefront_url_key((string) $sf_link['url'])] = true;
 }
-$sf_link_shown = static fn(string $url): bool => !isset($sf_taken[storefront_url_key($url)]);
+// $plain is the same page without friendly URLs, so "/contact" and "?page=contact" count as one.
+$sf_link_shown = static fn(string $url, string $plain = ''): bool => !isset($sf_taken[storefront_url_key($url)])
+    && ($plain === '' || !isset($sf_taken[storefront_url_key($plain)]));
+$sf_contact_plain = osc_base_url() . 'index.php?page=contact';
 osc_reset_static_pages();
 ob_start();
 while (osc_has_static_pages()) {
-    if ($sf_link_shown(osc_static_page_url())) {
+    if ($sf_link_shown(osc_static_page_url(), osc_base_url() . 'index.php?page=page&id=' . osc_static_page_id())) {
         echo '<a href="' . osc_static_page_url() . '">' . osc_esc_html(osc_static_page_title()) . '</a>';
     }
 }
@@ -97,7 +100,7 @@ $sf_can_post = storefront_can_post();
             <?php if ($sf_can_post && $sf_link_shown(osc_item_post_url_in_category())) { ?>
                 <a href="<?php echo osc_item_post_url_in_category(); ?>"><?php _e('Post a listing', 'storefront'); ?></a>
             <?php } ?>
-            <?php if ($sf_link_shown(osc_contact_url())) { ?>
+            <?php if ($sf_link_shown(osc_contact_url(), $sf_contact_plain)) { ?>
                 <a href="<?php echo osc_contact_url(); ?>"><?php _e('Contact', 'storefront'); ?></a>
             <?php } ?>
         </nav>

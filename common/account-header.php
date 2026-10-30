@@ -34,16 +34,17 @@ $sf_shopper = function_exists('osc_is_shopper') && osc_is_shopper();
 $sf_active = $sf_shopper ? 0 : (int) Item::getInstance()->countItemTypesByUserID(osc_logged_user_id(), 'active');
 
 $sf_settings = in_array($sf_page, array('user-profile', 'user-signin', 'user-delete_account'), true);
+// The pay step is about one listing, so it sits under My listings, not Credits.
 $sf_tabs = array(
     array('name' => __('Dashboard', 'storefront'),   'url' => osc_user_dashboard_url(),  'icon' => 'layout', 'current' => $sf_page === 'user-dashboard'),
-    array('name' => __('My listings', 'storefront'), 'url' => osc_user_list_items_url(), 'icon' => 'list',   'current' => $sf_page === 'user-items', 'seller' => true),
+    array('name' => __('My listings', 'storefront'), 'url' => osc_user_list_items_url(), 'icon' => 'list',   'current' => in_array($sf_page, array('user-items', 'billing-publish'), true), 'seller' => true),
     array('name' => __('Alerts', 'storefront'),      'url' => osc_user_alerts_url(),     'icon' => 'bell',   'current' => $sf_page === 'user-alerts', 'seller' => true),
     // "Settings", not "Profile": the sub-tabs below own "Profile". `soft` keeps it
     // active without a second aria-current, which the sub-tab carries.
     array('name' => __('Settings', 'storefront'),    'url' => osc_user_profile_url(),    'icon' => 'settings', 'soft' => true, 'current' => $sf_settings),
 );
 if (osc_billing_enabled()) {
-    $sf_tabs[] = array('name' => __('Credits', 'storefront'), 'url' => osc_billing_wallet_url(), 'icon' => 'credit-card', 'current' => osc_get_osclass_location() === 'billing', 'seller' => true);
+    $sf_tabs[] = array('name' => __('Credits', 'storefront'), 'url' => osc_billing_wallet_url(), 'icon' => 'credit-card', 'current' => osc_get_osclass_location() === 'billing' && $sf_page !== 'billing-publish', 'seller' => true);
 }
 if ($sf_shopper) {
     $sf_tabs = array_values(array_filter($sf_tabs, static fn (array $sf_t): bool => empty($sf_t['seller'])));
