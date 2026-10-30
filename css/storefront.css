@@ -111,9 +111,9 @@
     --color-accent-2-fill: var(--color-accent-2-700);
     --color-accent-2-fill-hover: var(--color-accent-2-800);
 
-    --font-heading: "Archivo", system-ui, sans-serif;
+    --font-heading: "Archivo", "Noto Sans Devanagari", system-ui, sans-serif;
     --font-heading-weight: 800;
-    --font-body: "Archivo", system-ui, sans-serif;
+    --font-body: "Archivo", "Noto Sans Devanagari", system-ui, sans-serif;
 
     --space-1: 4px;
     --space-2: 8px;
@@ -559,13 +559,55 @@ select.sf-select, .sf-field select { cursor: pointer; }
     :root[data-theme="auto"] .sf-logo svg [stroke="#0f2742" i] { stroke: var(--color-text); }
 }
 
-.sf-nav { display: flex; align-items: center; gap: var(--space-4); margin-inline-start: auto; }
+.sf-logo { flex: none; }
+.sf-nav { display: flex; align-items: center; gap: var(--space-4); margin-inline-start: auto; min-width: 0; }
+/* Menu links stay on one line; storefront-core.js moves the ones that do not fit into "More".
+   The padding/negative margin pair keeps focus rings and the current-page rule inside the clip. */
+.sf-nav__menu {
+    display: flex; align-items: center; gap: var(--space-4); min-width: 0;
+    overflow: hidden; padding: 8px 4px; margin: -8px -4px;
+}
 .sf-nav__link {
+    flex: none; white-space: nowrap;
     color: color-mix(in srgb, var(--color-text) 78%, transparent);
     font-size: 14px; font-weight: 600;
 }
 .sf-nav__link:hover { color: var(--color-accent-ink); text-decoration: none; }
-.sf-nav__cta { margin-inline-start: var(--space-1); }
+.sf-nav__cta { flex: none; margin-inline-start: var(--space-1); white-space: nowrap; }
+.sf-nav > .sf-account { flex: none; }
+
+.sf-nav__more { position: relative; flex: none; }
+.sf-nav__more[hidden] { display: none; }
+.sf-nav__more-toggle {
+    display: inline-flex; align-items: center; gap: 2px; min-height: 40px; padding: 0 6px; margin-inline-start: -6px;
+    background: none; border: 0; border-radius: var(--radius-md); cursor: pointer;
+    font: inherit; font-size: 14px; font-weight: 600; white-space: nowrap;
+    color: color-mix(in srgb, var(--color-text) 78%, transparent);
+    transition: background-color .15s ease, color .15s ease;
+}
+.sf-nav__more-toggle:hover { background: color-mix(in srgb, var(--color-text) 6%, transparent); color: var(--color-accent-ink); }
+.sf-nav__more-toggle.is-current { color: var(--color-accent-ink); }
+.sf-nav__more-toggle > svg { color: var(--color-muted); transition: transform .15s ease; }
+.sf-nav__more-toggle[aria-expanded="true"] > svg { transform: rotate(180deg); }
+.sf-nav__more-menu {
+    position: absolute; inset-inline-end: 0; top: calc(100% + 8px); z-index: 60;
+    min-width: 220px; max-width: min(320px, calc(100vw - 32px));
+    max-height: calc(100vh - var(--sf-header-h) - 24px); overflow-y: auto; overscroll-behavior: contain;
+    padding: var(--space-1); display: flex; flex-direction: column;
+    background: var(--color-surface); border: 1px solid var(--color-divider);
+    border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
+}
+.sf-nav__more-menu[hidden] { display: none; }
+.sf-nav__more-menu .sf-nav__link {
+    display: flex; align-items: center; min-height: 40px; padding: 9px var(--space-3);
+    border-radius: var(--radius-md); white-space: normal; color: var(--color-text);
+}
+.sf-nav__more-menu .sf-nav__link:hover { background: color-mix(in srgb, var(--color-accent) 10%, transparent); }
+.sf-nav__more-menu .sf-nav__link[aria-current] { font-weight: 800; }
+.sf-nav__more-menu .sf-nav__link[aria-current]::after { display: none; }
+@media (prefers-reduced-motion: no-preference) {
+    .sf-nav__more-menu:not([hidden]) { animation: sf-menu-in .16s cubic-bezier(0.16, 1, 0.3, 1); }
+}
 
 /* Core's Messages link (a.oe-msg-link): icon with the unread count, left of the account control. */
 .sf-nav__msg {
@@ -1010,16 +1052,16 @@ body.sf-list .sf-card__desc {
     display: block; margin: 0 0 5px; font-family: var(--font-body);
     font-size: 13px; font-weight: 600; color: var(--color-muted);
 }
-/* Search-rail field title — core writes an <h6>; align it to the rail's own
-   filter labels rather than a browser-default heading. */
+/* Search-rail field title — core writes an <h6>; it reads as a field label, like Country or Region. */
 .sf-filters__plugin h3,
 .sf-filters__plugin h4,
 .sf-filters__plugin h5,
 .sf-filters__plugin h6,
 .sf-filters__plugin legend {
-    margin: 0 0 var(--space-2); font-family: var(--font-heading); font-size: 12px;
-    font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text);
+    margin: 0 0 5px; padding: 0; font-family: var(--font-body); font-size: 13px;
+    font-weight: 600; line-height: 1.4; text-transform: none; letter-spacing: 0; color: var(--color-muted);
 }
+.sf-filters__plugin fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
 .meta_list .form-text, .sf-filters__plugin .form-text {
     margin: 5px 0 0; font-size: 12px; line-height: 1.5; color: var(--color-muted);
 }
@@ -1335,6 +1377,7 @@ body.sf-list .sf-card__desc {
    forms; styled as a coral error panel, hidden while empty.
    ────────────────────────────────────────────────────────────────────────── */
 .sf-flash-wrap { margin-top: var(--space-4); }
+.sf:has(.sf-post) .sf-flash-wrap > * { max-width: 680px; margin-inline: auto; }
 .flashmessage {
     position: relative; display: flex; align-items: flex-start; gap: var(--space-2);
     margin-bottom: var(--space-2);
@@ -2237,7 +2280,52 @@ body.sf-list .sf-card__desc {
     }
     .sf-account__item:hover { background: none; }
     .sf-account__sep { display: none; }
+    .sf-nav__menu { flex-direction: column; align-items: stretch; gap: 0; overflow: visible; padding: 0; margin: 0; }
+    .sf-nav__link { white-space: normal; }
+    .sf-nav__more { display: none; }
 }
+
+/* The same drawer when the bar is wide but its links and actions still do not fit
+   (storefront-core.js sets the class). */
+.sf-header--collapsed .sf-nav-toggle { display: flex; }
+.sf-header--collapsed .sf-logo__mark--full { display: none; }
+.sf-header--collapsed .sf-logo__mark--compact { display: inline-flex; }
+.sf-header--collapsed .sf-nav {
+    position: absolute; inset-inline: 0; top: 100%; flex-direction: column; align-items: stretch;
+    gap: 0; background: var(--color-bg); border-bottom: 2px solid var(--color-divider);
+    padding: var(--space-2) var(--space-6) var(--space-4); display: none;
+    max-height: calc(100vh - var(--sf-header-h)); overflow-y: auto; overscroll-behavior: contain;
+}
+.sf-header--collapsed .sf-nav.is-open { display: flex; }
+.sf-header--collapsed .sf-nav__link { padding: 12px 0; border-bottom: 1px solid var(--color-divider); }
+.sf-header--collapsed .sf-nav__link[aria-current] { font-weight: 800; }
+.sf-header--collapsed .sf-nav__link[aria-current]::after { display: none; }
+.sf-header--collapsed .sf-nav__cta { margin-top: var(--space-3); }
+.sf-header--collapsed .sf-header__msg { display: inline-flex; width: 44px; height: 44px; margin-inline-start: auto; }
+.sf-header--collapsed .sf-header__msg + .sf-nav-toggle { margin-inline-start: 0; }
+.sf-header--collapsed .sf-nav .sf-nav__msg { display: none; }
+
+.sf-header--collapsed .sf-account { width: 100%; }
+.sf-header--collapsed .sf-account__toggle {
+    width: 100%; justify-content: flex-start; margin: 0; padding: 12px 0;
+    min-height: 44px; border-radius: 0; border-bottom: 1px solid var(--color-divider);
+}
+.sf-header--collapsed .sf-account__toggle > svg { display: none; }
+.sf-header--collapsed .sf-account__toggle .sf-account__avatar { width: 38px; height: 38px; }
+.sf-header--collapsed .sf-account__name { max-width: none; font-weight: 700; }
+.sf-header--collapsed .sf-account__menu, .sf-header--collapsed .sf-account__menu[hidden] {
+    position: static; display: flex; z-index: auto; min-width: 0;
+    padding: 0; background: none; border: 0; border-radius: 0; box-shadow: none; animation: none;
+}
+.sf-header--collapsed .sf-account__item {
+    padding: 12px 0 12px var(--space-6); min-height: 44px; border-radius: 0;
+    border-bottom: 1px solid var(--color-divider);
+}
+.sf-header--collapsed .sf-account__item:hover { background: none; }
+.sf-header--collapsed .sf-account__sep { display: none; }
+.sf-header--collapsed .sf-nav__menu { flex-direction: column; align-items: stretch; gap: 0; overflow: visible; padding: 0; margin: 0; }
+.sf-header--collapsed .sf-nav__link { white-space: normal; }
+.sf-header--collapsed .sf-nav__more { display: none; }
 
 @media (prefers-reduced-motion: reduce) {
     * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
@@ -3103,6 +3191,8 @@ body.sf-list .sf-card__desc {
     color: var(--color-text);
 }
 :root[data-theme="dark"] .sf-filters__promo :is(h3, p) { color: var(--color-text); }
+:root[data-theme="dark"] .sf-state--ok { background: color-mix(in srgb, var(--color-accent) 20%, var(--color-surface)); color: var(--color-accent-ink); }
+:root[data-theme="dark"] .sf-state--warn { background: color-mix(in srgb, var(--color-accent-2) 20%, var(--color-surface)); color: var(--color-accent-2-ink); }
 :root[data-theme="dark"] :is(.sf .oe-page .oe-tabs [aria-current], .sf-settings-nav__tab.is-active) {
     background: var(--color-neutral-300); box-shadow: var(--shadow-md);
 }
@@ -3113,6 +3203,8 @@ body.sf-list .sf-card__desc {
         color: var(--color-text);
     }
     :root[data-theme="auto"] .sf-filters__promo :is(h3, p) { color: var(--color-text); }
+    :root[data-theme="auto"] .sf-state--ok { background: color-mix(in srgb, var(--color-accent) 20%, var(--color-surface)); color: var(--color-accent-ink); }
+    :root[data-theme="auto"] .sf-state--warn { background: color-mix(in srgb, var(--color-accent-2) 20%, var(--color-surface)); color: var(--color-accent-2-ink); }
     :root[data-theme="auto"] :is(.sf .oe-page .oe-tabs [aria-current], .sf-settings-nav__tab.is-active) {
         background: var(--color-neutral-300); box-shadow: var(--shadow-md);
     }

@@ -21,13 +21,10 @@ osc_current_web_theme_path('common/header.php');
 ?>
 <section class="sf-form sf-post">
     <?php if (!$sf_edit) {
-        // Core sets this quote when the next listing is held for payment.
+        // Core sets this quote when the next listing is held for payment; its flash names the cost.
         $sf_quote = View::getInstance()->_exists('listingPostQuote') ? (array) View::getInstance()->_get('listingPostQuote') : null;
-        $sf_cost  = (int) ($sf_quote['credits'] ?? 0);
         if ($sf_quote === null) { ?>
             <div class="sf-hero__kicker"><?php _e('Free to post', 'storefront'); ?></div>
-        <?php } elseif ($sf_cost > 0) { ?>
-            <div class="sf-hero__kicker"><?php echo osc_esc_html(sprintf(_n('%d credit to post', '%d credits to post', $sf_cost, 'storefront'), $sf_cost)); ?></div>
         <?php }
     } ?>
     <h1>
@@ -162,7 +159,13 @@ osc_current_web_theme_path('common/header.php');
 
         <div class="sf-form__actions">
             <button type="submit" class="sf-btn sf-btn--primary">
-                <?php echo $sf_edit ? osc_esc_html(__('Update', 'storefront')) : osc_esc_html(__('Publish', 'storefront')); ?>
+                <?php
+                if ($sf_edit) {
+                    echo osc_esc_html(__('Update', 'storefront'));
+                } else {
+                    // Core 7.1 says "Save and pay" when the listing is held for payment.
+                    echo osc_esc_html(function_exists('osc_item_post_submit_label') ? osc_item_post_submit_label() : __('Publish', 'storefront'));
+                } ?>
             </button>
         </div>
     </form>

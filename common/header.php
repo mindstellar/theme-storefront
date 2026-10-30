@@ -23,16 +23,25 @@
         </button>
 
         <nav id="sf-nav" class="sf-nav" aria-label="<?php echo osc_esc_html(__('Primary', 'storefront')); ?>">
-            <?php $sf_main_menu = storefront_saved_menu('main'); ?>
-            <?php if ($sf_main_menu !== null) { ?>
-                <?php foreach ($sf_main_menu['items'] as $sf_link) { ?>
-                    <a class="sf-nav__link" href="<?php echo osc_esc_html((string) $sf_link['url']); ?>"<?php echo storefront_menu_current((string) $sf_link['url']) ? ' aria-current="page"' : ''; ?>><?php echo osc_esc_html((string) $sf_link['label']); ?></a>
+            <div class="sf-nav__menu" data-sf-nav-menu>
+                <?php $sf_main_menu = storefront_saved_menu('main'); ?>
+                <?php if ($sf_main_menu !== null) { ?>
+                    <?php foreach ($sf_main_menu['items'] as $sf_link) { ?>
+                        <a class="sf-nav__link" href="<?php echo osc_esc_html((string) $sf_link['url']); ?>"<?php echo storefront_menu_current((string) $sf_link['url']) ? ' aria-current="page"' : ''; ?>><?php echo osc_esc_html((string) $sf_link['label']); ?></a>
+                    <?php } ?>
+                <?php } else { ?>
+                    <a class="sf-nav__link" href="<?php echo osc_base_url(); ?>"<?php echo osc_is_home_page() ? ' aria-current="page"' : ''; ?>><?php _e('Home', 'storefront'); ?></a>
+                    <a class="sf-nav__link" href="<?php echo osc_search_show_all_url(); ?>"<?php echo osc_is_search_page() ? ' aria-current="page"' : ''; ?>><?php _e('Browse', 'storefront'); ?></a>
+                    <a class="sf-nav__link" href="<?php echo osc_contact_url(); ?>"<?php echo osc_is_contact_page() ? ' aria-current="page"' : ''; ?>><?php _e('Help', 'storefront'); ?></a>
                 <?php } ?>
-            <?php } else { ?>
-                <a class="sf-nav__link" href="<?php echo osc_base_url(); ?>"<?php echo osc_is_home_page() ? ' aria-current="page"' : ''; ?>><?php _e('Home', 'storefront'); ?></a>
-                <a class="sf-nav__link" href="<?php echo osc_search_show_all_url(); ?>"<?php echo osc_is_search_page() ? ' aria-current="page"' : ''; ?>><?php _e('Browse', 'storefront'); ?></a>
-                <a class="sf-nav__link" href="<?php echo osc_contact_url(); ?>"<?php echo osc_is_contact_page() ? ' aria-current="page"' : ''; ?>><?php _e('Help', 'storefront'); ?></a>
-            <?php } ?>
+            </div>
+            <?php // Links that do not fit the bar move in here (storefront-core.js); the drawer shows them all inline. ?>
+            <div class="sf-nav__more" data-sf-nav-more hidden>
+                <button class="sf-nav__more-toggle" type="button" aria-expanded="false" aria-controls="sf-nav-more">
+                    <?php _e('More', 'storefront'); ?><?php echo storefront_icon('chevron-down', 16); ?>
+                </button>
+                <div class="sf-nav__more-menu" id="sf-nav-more" hidden></div>
+            </div>
 
             <?php echo sf_messaging_link(); ?>
 

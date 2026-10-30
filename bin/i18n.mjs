@@ -27,7 +27,7 @@ import gettextParser from 'gettext-parser';
 const ROOT = path.resolve(path.dirname(url.fileURLToPath(import.meta.url)), '..');
 const LANG_DIR = path.join(ROOT, 'languages');
 const POT = path.join(LANG_DIR, 'storefront.pot');
-const SCAN_DIRS = ['', 'common', 'admin'];
+const SCAN_DIRS = ['', 'common', 'admin', 'inc'];
 const PLURAL_FORMS = 'nplurals=2; plural=(n != 1);';
 const SILENCE = '<?php // Silence.';
 

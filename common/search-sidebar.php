@@ -273,7 +273,7 @@ $sf_render_region_city_selects = function ($sf_country_code) use ($sf_region_par
     <?php if (storefront_can_post()) { ?>
     <div class="sf-filters__promo">
         <h3><?php _e('Selling something?', 'storefront'); ?></h3>
-        <p><?php _e('Post a free listing in under two minutes.', 'storefront'); ?></p>
+        <p><?php echo storefront_posting_is_free() ? osc_esc_html(__('Post a free listing in under two minutes.', 'storefront')) : osc_esc_html(__('Post a listing in under two minutes.', 'storefront')); ?></p>
         <a class="sf-btn sf-btn--primary sf-btn--block" href="<?php echo osc_item_post_url_in_category(); ?>"><?php _e('Post a listing', 'storefront'); ?></a>
     </div>
     <?php } ?>

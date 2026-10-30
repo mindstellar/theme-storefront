@@ -73,9 +73,101 @@
                 else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
             }
         });
-        // Resized back to desktop while open: reset so the inline nav isn't stuck locked.
+        // Back to the inline nav while open (wider window, or the links now fit): reset so it isn't stuck locked.
         window.addEventListener('resize', function () {
-            if (isOpen() && window.innerWidth > 860) { close(false); }
+            if (isOpen() && toggle.offsetParent === null) { close(false); }
+        });
+    }
+
+    // Desktop header: menu links stay on one line. Links that do not fit move into the
+    // "More" dropdown; when even that leaves no room, the header switches to the drawer.
+    function bindNavFit() {
+        var header = document.querySelector('.sf-header');
+        var bar = header && header.querySelector('.sf-header__bar');
+        var menu = header && header.querySelector('[data-sf-nav-menu]');
+        var more = header && header.querySelector('[data-sf-nav-more]');
+        if (!bar || !menu || !more) { return; }
+        var btn = more.querySelector('.sf-nav__more-toggle');
+        var panel = more.querySelector('.sf-nav__more-menu');
+        var links = Array.prototype.slice.call(menu.children);
+        var phone = window.matchMedia('(max-width: 860px)');
+
+        function openMore() { panel.hidden = false; btn.setAttribute('aria-expanded', 'true'); }
+        function closeMore(returnFocus) {
+            if (panel.hidden) { return; }
+            panel.hidden = true;
+            btn.setAttribute('aria-expanded', 'false');
+            if (returnFocus) { btn.focus(); }
+        }
+        function overflows() {
+            return menu.scrollWidth > menu.clientWidth + 1 || bar.scrollWidth > bar.clientWidth + 1;
+        }
+        function restore() {
+            links.forEach(function (a) { menu.appendChild(a); });
+            more.hidden = true;
+            btn.classList.remove('is-current');
+        }
+        function fit() {
+            closeMore(false);
+            restore();
+            header.classList.remove('sf-header--collapsed');
+            if (phone.matches || !overflows()) { return; }
+            more.hidden = false;
+            var inline = links.slice();
+            while (inline.length && overflows()) { panel.insertBefore(inline.pop(), panel.firstChild); }
+            if (!inline.length || overflows()) {
+                restore();
+                header.classList.add('sf-header--collapsed');
+                return;
+            }
+            btn.classList.toggle('is-current', !!panel.querySelector('[aria-current]'));
+        }
+
+        var lastWidth = -1, frame = 0;
+        function schedule() {
+            if (frame) { return; }
+            frame = window.requestAnimationFrame(function () {
+                frame = 0;
+                if (bar.clientWidth !== lastWidth) { lastWidth = bar.clientWidth; fit(); }
+            });
+        }
+        fit();
+        lastWidth = bar.clientWidth;
+        if ('ResizeObserver' in window) { new ResizeObserver(schedule).observe(bar); }
+        else { window.addEventListener('resize', schedule); }
+        if (document.fonts && document.fonts.ready) { document.fonts.ready.then(fit); }
+
+        btn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            panel.hidden ? openMore() : closeMore(false);
+        });
+        btn.addEventListener('keydown', function (e) {
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                openMore();
+                var first = panel.querySelector('a[href]');
+                if (first) { first.focus(); }
+            }
+        });
+        panel.addEventListener('keydown', function (e) {
+            if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') { return; }
+            var items = Array.prototype.slice.call(panel.querySelectorAll('a[href]'));
+            var i = items.indexOf(document.activeElement);
+            if (i < 0) { return; }
+            e.preventDefault();
+            items[(i + (e.key === 'ArrowDown' ? 1 : items.length - 1)) % items.length].focus();
+        });
+        panel.addEventListener('click', function (e) {
+            if (e.target.closest('a[href]')) { closeMore(false); }
+        });
+        more.addEventListener('focusout', function (e) {
+            if (!e.relatedTarget || !more.contains(e.relatedTarget)) { closeMore(false); }
+        });
+        document.addEventListener('click', function (e) {
+            if (!more.contains(e.target)) { closeMore(false); }
+        });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && !panel.hidden) { closeMore(true); }
         });
     }
 
@@ -258,6 +350,7 @@
 
     ready(function () {
         bindToggles();
+        bindNavFit();
         bindNav();
         bindMenus();
         bindNavSelects();

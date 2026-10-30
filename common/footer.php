@@ -21,10 +21,19 @@ if ($sf_footer_widgets !== '') { ?>
 // Static pages are admin-authored (About, Terms, Safety…). Buffer the loop so the
 // "About" column is drawn only when at least one exists — an empty titled column
 // reads as a broken footer.
+// A link the saved footer menu already shows is not repeated in the other columns.
+$sf_footer_menu = storefront_saved_menu('footer');
+$sf_taken = array();
+foreach ($sf_footer_menu['items'] ?? array() as $sf_link) {
+    $sf_taken[storefront_url_key((string) $sf_link['url'])] = true;
+}
+$sf_link_shown = static fn(string $url): bool => !isset($sf_taken[storefront_url_key($url)]);
 osc_reset_static_pages();
 ob_start();
 while (osc_has_static_pages()) {
-    echo '<a href="' . osc_static_page_url() . '">' . osc_esc_html(osc_static_page_title()) . '</a>';
+    if ($sf_link_shown(osc_static_page_url())) {
+        echo '<a href="' . osc_static_page_url() . '">' . osc_esc_html(osc_static_page_title()) . '</a>';
+    }
 }
 $sf_pages = trim(ob_get_clean());
 // The header's gate, so the footer never shows a "Post" button the header withholds.
@@ -82,14 +91,17 @@ $sf_can_post = storefront_can_post();
 
         <nav class="sf-footer__links" aria-label="<?php echo osc_esc_html(__('Marketplace', 'storefront')); ?>">
             <h2><?php _e('Marketplace', 'storefront'); ?></h2>
-            <a href="<?php echo osc_search_show_all_url(); ?>"><?php _e('Browse listings', 'storefront'); ?></a>
-            <?php if ($sf_can_post) { ?>
+            <?php if ($sf_link_shown(osc_search_show_all_url())) { ?>
+                <a href="<?php echo osc_search_show_all_url(); ?>"><?php _e('Browse listings', 'storefront'); ?></a>
+            <?php } ?>
+            <?php if ($sf_can_post && $sf_link_shown(osc_item_post_url_in_category())) { ?>
                 <a href="<?php echo osc_item_post_url_in_category(); ?>"><?php _e('Post a listing', 'storefront'); ?></a>
             <?php } ?>
-            <a href="<?php echo osc_contact_url(); ?>"><?php _e('Contact', 'storefront'); ?></a>
+            <?php if ($sf_link_shown(osc_contact_url())) { ?>
+                <a href="<?php echo osc_contact_url(); ?>"><?php _e('Contact', 'storefront'); ?></a>
+            <?php } ?>
         </nav>
 
-        <?php $sf_footer_menu = storefront_saved_menu('footer'); ?>
         <?php if ($sf_footer_menu !== null) {
             $sf_footer_title = $sf_footer_menu['label'] !== '' ? $sf_footer_menu['label'] : __('Links', 'storefront'); ?>
         <nav class="sf-footer__links" aria-label="<?php echo osc_esc_html($sf_footer_title); ?>">

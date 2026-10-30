@@ -63,6 +63,21 @@ if (!function_exists('storefront_can_post')) {
     }
 }
 
+/** Whether the visitor's next listing costs nothing, so "free" copy is true. Always true on core 7.0. */
+if (!function_exists('storefront_posting_is_free')) {
+    function storefront_posting_is_free(): bool
+    {
+        if (!function_exists('osc_billing_credits_enabled') || !osc_billing_credits_enabled()) {
+            return true;
+        }
+        if (!osc_is_web_user_logged_in() || !method_exists('mindstellar\\billing\\ListingCheckout', 'postingRule')) {
+            return false;
+        }
+
+        return \mindstellar\billing\ListingCheckout::postingRule((int) osc_logged_user_id()) === \mindstellar\billing\ListingCheckout::POST_PUBLISH;
+    }
+}
+
 /**
  * The line under the post form's heading, saying what happens after the poster saves. It
  * follows core's rules for admin approval and for the e-mail link a poster must confirm.
@@ -1258,18 +1273,20 @@ function storefront_saved_menu(string $id): ?array
     return $items === array() ? null : array('label' => (string) $saved['label'], 'items' => $items);
 }
 
+/** A URL reduced to path and sorted query, so two links to the same page compare equal. */
+function storefront_url_key(string $url): string
+{
+    $path = rtrim(preg_replace('#/index\.php$#', '', (string) parse_url($url, PHP_URL_PATH)), '/');
+    parse_str((string) parse_url($url, PHP_URL_QUERY), $query);
+    ksort($query);
+
+    return $path . '?' . http_build_query($query);
+}
+
 /** True when a menu link points at the page being shown. */
 function storefront_menu_current(string $url): bool
 {
-    $normal = static function (string $u): string {
-        $path = rtrim(preg_replace('#/index\.php$#', '', (string) parse_url($u, PHP_URL_PATH)), '/');
-        parse_str((string) parse_url($u, PHP_URL_QUERY), $query);
-        ksort($query);
-
-        return $path . '?' . http_build_query($query);
-    };
-
-    return $normal($url) === $normal((string) ($_SERVER['REQUEST_URI'] ?? '/'));
+    return storefront_url_key($url) === storefront_url_key((string) ($_SERVER['REQUEST_URI'] ?? '/'));
 }
 
 /** Whether the current static page uses the Full width template. */
