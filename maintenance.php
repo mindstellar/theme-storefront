@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 $sf_site = osc_get_preference('pageTitle');
+$sf_note = function_exists('osc_sanitize_maintenance_message') ? osc_sanitize_maintenance_message(osc_get_preference('maintenance_message')) : '';
 ?><!doctype html>
 <html lang="<?php echo str_replace('_', '-', osc_current_user_locale()); ?>">
 <head>
@@ -41,7 +42,7 @@ $sf_site = osc_get_preference('pageTitle');
 <main>
     <span class="mark" aria-hidden="true"></span>
     <h1><?php _e("We'll be back soon", 'storefront'); ?></h1>
-    <p><?php _e("Sorry for the inconvenience — we're performing some maintenance right now. We'll be back online shortly.", 'storefront'); ?></p>
+    <p><?php echo $sf_note !== '' ? nl2br(osc_esc_html($sf_note), false) : osc_esc_html(__("Sorry for the inconvenience — we're performing some maintenance right now. We'll be back online shortly.", 'storefront')); ?></p>
     <p><?php printf(__('— The %s team', 'storefront'), osc_esc_html($sf_site)); ?></p>
 </main>
 </body>

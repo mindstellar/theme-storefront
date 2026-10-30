@@ -2892,6 +2892,8 @@ body.sf-list .sf-card__desc {
 }
 .sf .oe-page .oe-push .oe-btn.oe-icon-btn:hover { background: var(--color-neutral-100); color: var(--color-text); }
 .sf .oe-page .oe-push .oe-btn.oe-icon-btn[aria-pressed="true"] { color: var(--color-accent-ink); }
+.sf .oe-page .oe-push .oe-btn.oe-icon-btn[aria-pressed="true"] svg { fill: currentColor; }
+.sf .oe-page .oe-push .oe-btn.oe-icon-btn:disabled { opacity: .45; cursor: not-allowed; background: transparent; }
 
 .sf .oe-badge[hidden] { display: none; }
 .sf .oe-badge {
