@@ -82,6 +82,17 @@ $sf_can_post = storefront_can_post();
             <a href="<?php echo osc_contact_url(); ?>"><?php _e('Contact', 'storefront'); ?></a>
         </nav>
 
+        <?php $sf_footer_menu = storefront_saved_menu('footer'); ?>
+        <?php if ($sf_footer_menu !== null) {
+            $sf_footer_title = $sf_footer_menu['label'] !== '' ? $sf_footer_menu['label'] : __('Links', 'storefront'); ?>
+        <nav class="sf-footer__links" aria-label="<?php echo osc_esc_html($sf_footer_title); ?>">
+            <h2><?php echo osc_esc_html($sf_footer_title); ?></h2>
+            <?php foreach ($sf_footer_menu['items'] as $sf_link) { ?>
+                <a href="<?php echo osc_esc_html((string) $sf_link['url']); ?>"><?php echo osc_esc_html((string) $sf_link['label']); ?></a>
+            <?php } ?>
+        </nav>
+        <?php } ?>
+
         <?php if (osc_users_enabled()) { ?>
         <nav class="sf-footer__links" aria-label="<?php echo osc_esc_html(__('Your account', 'storefront')); ?>">
             <h2><?php _e('Account', 'storefront'); ?></h2>

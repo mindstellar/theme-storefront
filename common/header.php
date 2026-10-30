@@ -23,9 +23,16 @@
         </button>
 
         <nav id="sf-nav" class="sf-nav" aria-label="<?php echo osc_esc_html(__('Primary', 'storefront')); ?>">
-            <a class="sf-nav__link" href="<?php echo osc_base_url(); ?>"<?php echo osc_is_home_page() ? ' aria-current="page"' : ''; ?>><?php _e('Home', 'storefront'); ?></a>
-            <a class="sf-nav__link" href="<?php echo osc_search_show_all_url(); ?>"<?php echo osc_is_search_page() ? ' aria-current="page"' : ''; ?>><?php _e('Browse', 'storefront'); ?></a>
-            <a class="sf-nav__link" href="<?php echo osc_contact_url(); ?>"<?php echo osc_is_contact_page() ? ' aria-current="page"' : ''; ?>><?php _e('Help', 'storefront'); ?></a>
+            <?php $sf_main_menu = storefront_saved_menu('main'); ?>
+            <?php if ($sf_main_menu !== null) { ?>
+                <?php foreach ($sf_main_menu['items'] as $sf_link) { ?>
+                    <a class="sf-nav__link" href="<?php echo osc_esc_html((string) $sf_link['url']); ?>"<?php echo storefront_menu_current((string) $sf_link['url']) ? ' aria-current="page"' : ''; ?>><?php echo osc_esc_html((string) $sf_link['label']); ?></a>
+                <?php } ?>
+            <?php } else { ?>
+                <a class="sf-nav__link" href="<?php echo osc_base_url(); ?>"<?php echo osc_is_home_page() ? ' aria-current="page"' : ''; ?>><?php _e('Home', 'storefront'); ?></a>
+                <a class="sf-nav__link" href="<?php echo osc_search_show_all_url(); ?>"<?php echo osc_is_search_page() ? ' aria-current="page"' : ''; ?>><?php _e('Browse', 'storefront'); ?></a>
+                <a class="sf-nav__link" href="<?php echo osc_contact_url(); ?>"<?php echo osc_is_contact_page() ? ' aria-current="page"' : ''; ?>><?php _e('Help', 'storefront'); ?></a>
+            <?php } ?>
 
             <?php echo sf_messaging_link(); ?>
 
