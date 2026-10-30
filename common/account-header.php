@@ -126,9 +126,6 @@ $sf_titles = array(
             <?php echo storefront_icon('globe', 15); ?><span><?php _e('Public profile', 'storefront'); ?></span>
         </a>
         <?php } ?>
-        <a class="sf-btn sf-btn--primary" href="<?php echo osc_esc_html(osc_item_post_url_in_category()); ?>">
-            <?php echo storefront_icon('plus', 15); ?><span><?php _e('Post a listing', 'storefront'); ?></span>
-        </a>
     </div>
     <?php } ?>
 </header>
@@ -173,10 +170,6 @@ $sf_titles = array(
         <?php if ($sf_page === 'user-dashboard' && $sf_active > 0) { ?>
             <a class="sf-account-more" href="<?php echo osc_esc_html(osc_user_list_items_url()); ?>">
                 <?php _e('Manage all', 'storefront'); ?><?php echo storefront_icon('chevron-right', 15); ?>
-            </a>
-        <?php } elseif ($sf_page === 'user-items') { ?>
-            <a class="sf-btn sf-btn--primary sf-btn--sm" href="<?php echo osc_esc_html(osc_item_post_url_in_category()); ?>">
-                <?php echo storefront_icon('plus', 15); ?><span><?php _e('Post a listing', 'storefront'); ?></span>
             </a>
         <?php } ?>
     </div>

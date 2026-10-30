@@ -138,6 +138,8 @@ $sf_action = static function (array $action, string $class, string $icon = '') u
                     $sf_action($sf_act, 'sf-btn sf-btn--ghost sf-btn--icon-only', 'edit');
                 } elseif ($sf_key === 'delete') {
                     $sf_action($sf_act, 'sf-btn sf-btn--ghost sf-btn--icon-only sf-manage__delete', 'trash');
+                } elseif (!empty($sf_act['primary'])) {
+                    $sf_action($sf_act, 'sf-btn sf-btn--primary sf-btn--sm');
                 } else {
                     $sf_action($sf_act, 'sf-btn sf-btn--ghost sf-btn--sm');
                 }

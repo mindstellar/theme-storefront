@@ -199,21 +199,29 @@ $sf_next = storefront_adjacent_item_url('next');
             <p class="sf-detail__location"><?php echo $sf_icon('map-pin', 15); ?><span><?php echo osc_esc_html($sf_location); ?></span></p>
         <?php } ?>
 
+        <?php if (!$sf_unpaid || !$sf_is_owner) { ?>
         <div class="sf-detail__actions">
+            <?php if (!$sf_unpaid) { ?>
             <button type="button" class="sf-btn sf-btn--ghost" data-dialog-open="sf-dialog-share">
                 <?php echo $sf_icon('share'); ?><?php _e('Share', 'storefront'); ?>
             </button>
+            <?php } ?>
             <?php if (!$sf_is_owner) { ?>
             <button type="button" class="sf-btn sf-btn--ghost" data-dialog-open="sf-dialog-report">
                 <?php echo $sf_icon('flag'); ?><?php _e('Report', 'storefront'); ?>
             </button>
             <?php } ?>
         </div>
+        <?php } ?>
 
-        <?php if ($sf_is_owner) { ?>
+        <?php if ($sf_is_owner) {
+            $sf_pay_url = function_exists('osc_item_pay_url') ? osc_item_pay_url() : ''; ?>
         <div class="sf-detail__owner">
             <p class="sf-detail__owner-label"><?php _e('This is your listing.', 'storefront'); ?></p>
             <div class="sf-detail__owner-actions">
+                <?php if ($sf_pay_url !== '') { ?>
+                <a class="sf-btn sf-btn--primary" href="<?php echo osc_esc_html($sf_pay_url); ?>"><?php echo $sf_icon('credit-card'); ?><?php _e('Pay to publish', 'storefront'); ?></a>
+                <?php } ?>
                 <a class="sf-btn sf-btn--ghost" href="<?php echo osc_item_edit_url(); ?>"><?php echo $sf_icon('edit'); ?><?php _e('Edit', 'storefront'); ?></a>
                 <a class="sf-btn sf-btn--ghost" rel="nofollow" href="<?php echo osc_item_delete_url(); ?>"
                    data-confirm="<?php echo osc_esc_html(sprintf(__('Delete “%s”? This cannot be undone.', 'storefront'), osc_item_title())); ?>"
