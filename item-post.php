@@ -20,9 +20,16 @@ osc_enqueue_style('osc-uploader');
 osc_current_web_theme_path('common/header.php');
 ?>
 <section class="sf-form sf-post">
-    <?php if (!$sf_edit) { ?>
-        <div class="sf-hero__kicker"><?php _e('Free to post', 'storefront'); ?></div>
-    <?php } ?>
+    <?php if (!$sf_edit) {
+        // Core sets this quote when the next listing is held for payment.
+        $sf_quote = View::getInstance()->_exists('listingPostQuote') ? (array) View::getInstance()->_get('listingPostQuote') : null;
+        $sf_cost  = (int) ($sf_quote['credits'] ?? 0);
+        if ($sf_quote === null) { ?>
+            <div class="sf-hero__kicker"><?php _e('Free to post', 'storefront'); ?></div>
+        <?php } elseif ($sf_cost > 0) { ?>
+            <div class="sf-hero__kicker"><?php echo osc_esc_html(sprintf(_n('%d credit to post', '%d credits to post', $sf_cost, 'storefront'), $sf_cost)); ?></div>
+        <?php }
+    } ?>
     <h1>
         <?php echo $sf_edit ? osc_esc_html(__('Edit your listing', 'storefront')) : osc_esc_html(__('Post a listing', 'storefront')); ?>
     </h1>

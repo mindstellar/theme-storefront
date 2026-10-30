@@ -32,6 +32,12 @@ msgstr ""
 msgid "%1$s · %2$d credits"
 msgstr ""
 
+#: item-post.php:30
+msgid "%d credit to post"
+msgid_plural "%d credits to post"
+msgstr[0] ""
+msgstr[1] ""
+
 #: item.php:305
 #: main.php:104
 msgid "%d listing"
@@ -110,7 +116,7 @@ msgstr ""
 msgid "active listings"
 msgstr ""
 
-#: item-post.php:118
+#: item-post.php:125
 msgid "Address"
 msgstr ""
 
@@ -257,7 +263,7 @@ msgstr ""
 msgid "Categories"
 msgstr ""
 
-#: item-post.php:46
+#: item-post.php:53
 #: main.php:66
 msgid "Category"
 msgstr ""
@@ -276,12 +282,12 @@ msgstr ""
 
 #: common/search-sidebar.php:168
 #: common/search-sidebar.php:57
-#: item-post.php:109
-#: item-post.php:91
+#: item-post.php:116
+#: item-post.php:98
 msgid "City"
 msgstr ""
 
-#: item-post.php:114
+#: item-post.php:121
 msgid "City area"
 msgstr ""
 
@@ -343,7 +349,7 @@ msgstr ""
 
 #: common/search-sidebar.php:115
 #: common/search-sidebar.php:145
-#: item-post.php:75
+#: item-post.php:82
 msgid "Country"
 msgstr ""
 
@@ -360,7 +366,7 @@ msgstr ""
 msgid "Credits"
 msgstr ""
 
-#: item-post.php:61
+#: item-post.php:68
 msgid "Currency"
 msgstr ""
 
@@ -419,7 +425,7 @@ msgstr ""
 msgid "Delete your comment? This cannot be undone."
 msgstr ""
 
-#: item-post.php:54
+#: item-post.php:61
 #: item.php:346
 msgid "Description"
 msgstr ""
@@ -440,7 +446,7 @@ msgstr ""
 msgid "Duplicated listing"
 msgstr ""
 
-#: item-post.php:129
+#: item-post.php:136
 msgid "E-mail"
 msgstr ""
 
@@ -454,7 +460,7 @@ msgstr ""
 msgid "Edit profile"
 msgstr ""
 
-#: item-post.php:27
+#: item-post.php:34
 msgid "Edit your listing"
 msgstr ""
 
@@ -486,7 +492,7 @@ msgstr ""
 msgid "Featured"
 msgstr ""
 
-#: item-post.php:31
+#: item-post.php:38
 msgid "Fields marked * are required."
 msgstr ""
 
@@ -540,7 +546,7 @@ msgstr ""
 msgid "Free"
 msgstr ""
 
-#: item-post.php:24
+#: item-post.php:28
 msgid "Free to post"
 msgstr ""
 
@@ -556,7 +562,7 @@ msgstr ""
 msgid "Gallery"
 msgstr ""
 
-#: item-post.php:43
+#: item-post.php:50
 msgid "General information"
 msgstr ""
 
@@ -714,7 +720,7 @@ msgstr ""
 msgid "Listing link"
 msgstr ""
 
-#: item-post.php:73
+#: item-post.php:80
 msgid "Listing location"
 msgstr ""
 
@@ -832,7 +838,7 @@ msgstr ""
 msgid "My listings"
 msgstr ""
 
-#: item-post.php:125
+#: item-post.php:132
 msgid "Name"
 msgstr ""
 
@@ -939,7 +945,7 @@ msgstr ""
 msgid "Photo viewer"
 msgstr ""
 
-#: item-post.php:67
+#: item-post.php:74
 msgid "Photos"
 msgstr ""
 
@@ -965,7 +971,7 @@ msgstr ""
 #: common/footer.php:80
 #: common/header.php:91
 #: common/search-sidebar.php:277
-#: item-post.php:27
+#: item-post.php:34
 msgid "Post a listing"
 msgstr ""
 
@@ -981,7 +987,7 @@ msgstr ""
 msgid "Previous photo"
 msgstr ""
 
-#: item-post.php:59
+#: item-post.php:66
 msgid "Price"
 msgstr ""
 
@@ -1030,7 +1036,7 @@ msgstr ""
 msgid "Public profile"
 msgstr ""
 
-#: item-post.php:158
+#: item-post.php:165
 msgid "Publish"
 msgstr ""
 
@@ -1044,8 +1050,8 @@ msgstr ""
 
 #: common/search-sidebar.php:158
 #: common/search-sidebar.php:48
-#: item-post.php:103
-#: item-post.php:87
+#: item-post.php:110
+#: item-post.php:94
 msgid "Region"
 msgstr ""
 
@@ -1133,7 +1139,7 @@ msgstr ""
 msgid "See all listings"
 msgstr ""
 
-#: item-post.php:47
+#: item-post.php:54
 msgid "Select a category"
 msgstr ""
 
@@ -1181,7 +1187,7 @@ msgstr ""
 msgid "Show decorative graphic"
 msgstr ""
 
-#: item-post.php:133
+#: item-post.php:140
 msgid "Show e-mail on the listing page"
 msgstr ""
 
@@ -1380,7 +1386,7 @@ msgstr ""
 msgid "This page couldn't be found."
 msgstr ""
 
-#: item-post.php:50
+#: item-post.php:57
 msgid "Title"
 msgstr ""
 
@@ -1420,7 +1426,7 @@ msgstr ""
 msgid "Up to %s"
 msgstr ""
 
-#: item-post.php:158
+#: item-post.php:165
 msgid "Update"
 msgstr ""
 
@@ -1522,7 +1528,7 @@ msgstr ""
 msgid "Your account"
 msgstr ""
 
-#: item-post.php:123
+#: item-post.php:130
 msgid "Your contact information"
 msgstr ""
 

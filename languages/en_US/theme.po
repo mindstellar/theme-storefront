@@ -34,6 +34,12 @@ msgstr "(required field)"
 msgid "%1$s · %2$d credits"
 msgstr "%1$s · %2$d credits"
 
+#: item-post.php:30
+msgid "%d credit to post"
+msgid_plural "%d credits to post"
+msgstr[0] "%d credit to post"
+msgstr[1] "%d credits to post"
+
 #: item.php:305
 #: main.php:104
 msgid "%d listing"
@@ -112,7 +118,7 @@ msgstr "active listing"
 msgid "active listings"
 msgstr "active listings"
 
-#: item-post.php:118
+#: item-post.php:125
 msgid "Address"
 msgstr "Address"
 
@@ -261,7 +267,7 @@ msgstr "Cancel"
 msgid "Categories"
 msgstr "Categories"
 
-#: item-post.php:46
+#: item-post.php:53
 #: main.php:66
 msgid "Category"
 msgstr "Category"
@@ -280,12 +286,12 @@ msgstr "Check with seller"
 
 #: common/search-sidebar.php:168
 #: common/search-sidebar.php:57
-#: item-post.php:109
-#: item-post.php:91
+#: item-post.php:116
+#: item-post.php:98
 msgid "City"
 msgstr "City"
 
-#: item-post.php:114
+#: item-post.php:121
 msgid "City area"
 msgstr "City area"
 
@@ -347,7 +353,7 @@ msgstr "Could not subscribe. Please try again."
 
 #: common/search-sidebar.php:115
 #: common/search-sidebar.php:145
-#: item-post.php:75
+#: item-post.php:82
 msgid "Country"
 msgstr "Country"
 
@@ -364,7 +370,7 @@ msgstr "Create a free account"
 msgid "Credits"
 msgstr "Credits"
 
-#: item-post.php:61
+#: item-post.php:68
 msgid "Currency"
 msgstr "Currency"
 
@@ -423,7 +429,7 @@ msgstr "Delete your account"
 msgid "Delete your comment? This cannot be undone."
 msgstr "Delete your comment? This cannot be undone."
 
-#: item-post.php:54
+#: item-post.php:61
 #: item.php:346
 msgid "Description"
 msgstr "Description"
@@ -444,7 +450,7 @@ msgstr "Dropdowns (cascading selects)"
 msgid "Duplicated listing"
 msgstr "Duplicated listing"
 
-#: item-post.php:129
+#: item-post.php:136
 msgid "E-mail"
 msgstr "E-mail"
 
@@ -458,7 +464,7 @@ msgstr "Edit"
 msgid "Edit profile"
 msgstr "Edit profile"
 
-#: item-post.php:27
+#: item-post.php:34
 msgid "Edit your listing"
 msgstr "Edit your listing"
 
@@ -490,7 +496,7 @@ msgstr "Feature"
 msgid "Featured"
 msgstr "Featured"
 
-#: item-post.php:31
+#: item-post.php:38
 msgid "Fields marked * are required."
 msgstr "Fields marked * are required."
 
@@ -550,7 +556,7 @@ msgstr "Footer tagline"
 msgid "Free"
 msgstr "Free"
 
-#: item-post.php:24
+#: item-post.php:28
 msgid "Free to post"
 msgstr "Free to post"
 
@@ -566,7 +572,7 @@ msgstr "Full width"
 msgid "Gallery"
 msgstr "Gallery"
 
-#: item-post.php:43
+#: item-post.php:50
 msgid "General information"
 msgstr "General information"
 
@@ -727,7 +733,7 @@ msgstr "Listing is now featured."
 msgid "Listing link"
 msgstr "Listing link"
 
-#: item-post.php:73
+#: item-post.php:80
 msgid "Listing location"
 msgstr "Listing location"
 
@@ -845,7 +851,7 @@ msgstr "Most recent"
 msgid "My listings"
 msgstr "My listings"
 
-#: item-post.php:125
+#: item-post.php:132
 msgid "Name"
 msgstr "Name"
 
@@ -954,7 +960,7 @@ msgstr "Photo %1$d of %2$d"
 msgid "Photo viewer"
 msgstr "Photo viewer"
 
-#: item-post.php:67
+#: item-post.php:74
 msgid "Photos"
 msgstr "Photos"
 
@@ -980,7 +986,7 @@ msgstr "Post a free listing in under two minutes."
 #: common/footer.php:80
 #: common/header.php:91
 #: common/search-sidebar.php:277
-#: item-post.php:27
+#: item-post.php:34
 msgid "Post a listing"
 msgstr "Post a listing"
 
@@ -996,7 +1002,7 @@ msgstr "Previous listing"
 msgid "Previous photo"
 msgstr "Previous photo"
 
-#: item-post.php:59
+#: item-post.php:66
 msgid "Price"
 msgstr "Price"
 
@@ -1045,7 +1051,7 @@ msgstr "Promoted listings"
 msgid "Public profile"
 msgstr "Public profile"
 
-#: item-post.php:158
+#: item-post.php:165
 msgid "Publish"
 msgstr "Publish"
 
@@ -1059,8 +1065,8 @@ msgstr "Refine by category"
 
 #: common/search-sidebar.php:158
 #: common/search-sidebar.php:48
-#: item-post.php:103
-#: item-post.php:87
+#: item-post.php:110
+#: item-post.php:94
 msgid "Region"
 msgstr "Region"
 
@@ -1148,7 +1154,7 @@ msgstr "See all"
 msgid "See all listings"
 msgstr "See all listings"
 
-#: item-post.php:47
+#: item-post.php:54
 msgid "Select a category"
 msgstr "Select a category"
 
@@ -1196,7 +1202,7 @@ msgstr "Show \"Powered by Shopclass\" credit"
 msgid "Show decorative graphic"
 msgstr "Show decorative graphic"
 
-#: item-post.php:133
+#: item-post.php:140
 msgid "Show e-mail on the listing page"
 msgstr "Show e-mail on the listing page"
 
@@ -1410,7 +1416,7 @@ msgstr "This listing is not active yet."
 msgid "This page couldn't be found."
 msgstr "This page couldn't be found."
 
-#: item-post.php:50
+#: item-post.php:57
 msgid "Title"
 msgstr "Title"
 
@@ -1450,7 +1456,7 @@ msgstr "Unsupported file type — upload an SVG, JPG or PNG."
 msgid "Up to %s"
 msgstr "Up to %s"
 
-#: item-post.php:158
+#: item-post.php:165
 msgid "Update"
 msgstr "Update"
 
@@ -1552,7 +1558,7 @@ msgstr "You are subscribed to this search."
 msgid "Your account"
 msgstr "Your account"
 
-#: item-post.php:123
+#: item-post.php:130
 msgid "Your contact information"
 msgstr "Your contact information"
 
