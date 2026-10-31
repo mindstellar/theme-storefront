@@ -149,7 +149,7 @@ $sf_can_post = storefront_can_post();
                 &copy; <?php echo osc_esc_html(date('Y') . ' ' . osc_page_title()); ?>
                 <?php if ((!defined('MULTISITE') || MULTISITE == 0) && osc_get_preference('footer_link', 'storefront') !== '0') { ?>
                     <span class="sf-footer__sep" aria-hidden="true">&middot;</span>
-                    <?php printf(__('Powered by %s', 'storefront'), '<a href="https://github.com/mindstellar/shopclass">Shopclass</a>'); ?>
+                    <?php printf(__('Powered by %s', 'storefront'), '<a href="https://mindstellar.com">Shopclass</a>'); ?>
                 <?php } ?>
             </p>
 
