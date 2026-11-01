@@ -1226,66 +1226,74 @@ osc_remove_hook('search_form', 'osc_search_distance_field');
  * The "Full width" page template: the theme's own page.php without the narrow reading column.
  * The id is shared by our themes, so a page keeps the template when the site changes theme.
  */
-function storefront_page_templates(): void
-{
-    if (function_exists('osc_register_page_template')) {
-        osc_register_page_template('theme.full_width', array(
-            'label'       => __('Full width', 'storefront'),
-            'description' => __('The page uses the whole width of the content area.', 'storefront'),
-            'render'      => 'page.php',
-        ));
+if (!function_exists('storefront_page_templates')) {
+    function storefront_page_templates(): void
+    {
+        if (function_exists('osc_register_page_template')) {
+            osc_register_page_template('theme.full_width', array(
+                'label'       => __('Full width', 'storefront'),
+                'description' => __('The page uses the whole width of the content area.', 'storefront'),
+                'render'      => 'page.php',
+            ));
+        }
     }
 }
 
 osc_add_hook('init', 'storefront_page_templates');
 
 /** Names the menu places the theme shows in Appearance > Menus. Older cores have no menus. */
-function storefront_menu_places(): void
-{
-    if (function_exists('osc_menu')) {
-        osc_add_theme_support('menus', array(
-            'main'   => array('label' => __('Header', 'storefront'), 'depth' => 1),
-            'footer' => array('label' => __('Footer', 'storefront'), 'depth' => 1),
-            'social' => array(
-                'label' => __('Social icons', 'storefront'),
-                'depth' => 1,
-                'hint'  => __('Each link shows as an icon picked from its address, such as TikTok or Facebook; other sites get a plain link icon.', 'storefront'),
-            ),
-        ));
+if (!function_exists('storefront_menu_places')) {
+    function storefront_menu_places(): void
+    {
+        if (function_exists('osc_menu')) {
+            osc_add_theme_support('menus', array(
+                'main'   => array('label' => __('Header', 'storefront'), 'depth' => 1),
+                'footer' => array('label' => __('Footer', 'storefront'), 'depth' => 1),
+                'social' => array(
+                    'label' => __('Social icons', 'storefront'),
+                    'depth' => 1,
+                    'hint'  => __('Each link shows as an icon picked from its address, such as TikTok or Facebook; other sites get a plain link icon.', 'storefront'),
+                ),
+            ));
+        }
     }
 }
 
 osc_add_hook('init', 'storefront_menu_places');
 
 /** True on cores with Appearance > Menus. */
-function storefront_has_menus(): bool
-{
-    return function_exists('osc_menu') && class_exists('mindstellar\\menu\\MenuService');
+if (!function_exists('storefront_has_menus')) {
+    function storefront_has_menus(): bool
+    {
+        return function_exists('osc_menu') && class_exists('mindstellar\\menu\\MenuService');
+    }
 }
 
 /** Moves the old social_* fields into the Social icons menu, once, on cores with menus. */
-function storefront_migrate_social_fields(): void
-{
-    if (!storefront_has_menus()) {
-        return;
-    }
-    $icons = storefront_social_icons();
-    $items = array();
-    foreach (array('facebook', 'twitter', 'instagram', 'youtube', 'linkedin') as $key) {
-        $url = (string) osc_get_preference('social_' . $key, 'storefront');
-        if ($url !== '') {
-            $items[$key] = array('type' => 'link', 'url' => $url, 'label' => array(osc_language() => (string) ($icons[$key][0] ?? ucfirst($key))));
+if (!function_exists('storefront_migrate_social_fields')) {
+    function storefront_migrate_social_fields(): void
+    {
+        if (!storefront_has_menus()) {
+            return;
         }
-    }
-    $menus = \mindstellar\menu\MenuService::getInstance();
-    if ($items === array() || $menus->load('social') !== null) {
-        return;
-    }
-    if ($menus->save('social', array_values($items), __('Social icons', 'storefront')) === array()) {
-        foreach (array_keys($items) as $key) {
-            osc_delete_preference('social_' . $key, 'storefront');
+        $icons = storefront_social_icons();
+        $items = array();
+        foreach (array('facebook', 'twitter', 'instagram', 'youtube', 'linkedin') as $key) {
+            $url = (string) osc_get_preference('social_' . $key, 'storefront');
+            if ($url !== '') {
+                $items[$key] = array('type' => 'link', 'url' => $url, 'label' => array(osc_language() => (string) ($icons[$key][0] ?? ucfirst($key))));
+            }
         }
-        osc_reset_preferences();
+        $menus = \mindstellar\menu\MenuService::getInstance();
+        if ($items === array() || $menus->load('social') !== null) {
+            return;
+        }
+        if ($menus->save('social', array_values($items), __('Social icons', 'storefront')) === array()) {
+            foreach (array_keys($items) as $key) {
+                osc_delete_preference('social_' . $key, 'storefront');
+            }
+            osc_reset_preferences();
+        }
     }
 }
 
@@ -1294,23 +1302,25 @@ function storefront_migrate_social_fields(): void
  *
  * @return array{label:string,items:array<int,array<string,mixed>>}|null
  */
-function storefront_saved_menu(string $id): ?array
-{
-    if (!storefront_has_menus()) {
-        return null;
-    }
-    $saved = \mindstellar\menu\MenuService::getInstance()->load($id);
-    if ($saved === null) {
-        return null;
-    }
-    $items = array();
-    foreach (osc_menu($id) as $item) {
-        if (!empty($item['url']) && isset($item['label']) && (string) $item['label'] !== '') {
-            $items[] = $item;
+if (!function_exists('storefront_saved_menu')) {
+    function storefront_saved_menu(string $id): ?array
+    {
+        if (!storefront_has_menus()) {
+            return null;
         }
-    }
+        $saved = \mindstellar\menu\MenuService::getInstance()->load($id);
+        if ($saved === null) {
+            return null;
+        }
+        $items = array();
+        foreach (osc_menu($id) as $item) {
+            if (!empty($item['url']) && isset($item['label']) && (string) $item['label'] !== '') {
+                $items[] = $item;
+            }
+        }
 
-    return $items === array() ? null : array('label' => (string) $saved['label'], 'items' => $items);
+        return $items === array() ? null : array('label' => (string) $saved['label'], 'items' => $items);
+    }
 }
 
 /**
@@ -1319,59 +1329,69 @@ function storefront_saved_menu(string $id): ?array
  *
  * @return array<string,array{0:string,1:array<int,string>,2:string}>
  */
-function storefront_social_icons(): array
-{
-    $icons = array(
-        'facebook' => array(__('Facebook', 'storefront'), array('facebook.com', 'fb.com'), '<path d="M22 12a10 10 0 1 0-11.5 9.87v-6.98H7.9V12h2.6V9.8c0-2.57 1.53-4 3.87-4 1.12 0 2.3.2 2.3.2v2.5h-1.3c-1.28 0-1.68.8-1.68 1.62V12h2.86l-.46 2.89h-2.4v6.98A10 10 0 0 0 22 12z"/>'),
-        'twitter' => array(__('Twitter / X', 'storefront'), array('x.com', 'twitter.com'), '<path d="M18.24 2h3.3l-7.2 8.23L23 22h-6.63l-5.2-6.8L5.1 22H1.8l7.7-8.8L1 2h6.8l4.7 6.2L18.24 2zm-1.16 18h1.83L7.02 3.9H5.06L17.08 20z"/>'),
-        'instagram' => array(__('Instagram', 'storefront'), array('instagram.com'), '<path d="M12 2c2.72 0 3.06.01 4.12.06 1.07.05 1.79.22 2.43.46.66.26 1.22.6 1.77 1.15.55.55.9 1.11 1.15 1.77.24.64.41 1.36.46 2.43.05 1.06.06 1.4.06 4.12s-.01 3.06-.06 4.12c-.05 1.07-.22 1.79-.46 2.43-.26.66-.6 1.22-1.15 1.77-.55.55-1.11.9-1.77 1.15-.64.24-1.36.41-2.43.46-1.06.05-1.4.06-4.12.06s-3.06-.01-4.12-.06c-1.07-.05-1.79-.22-2.43-.46-.66-.26-1.22-.6-1.77-1.15-.55-.55-.9-1.11-1.15-1.77-.24-.64-.41-1.36-.46-2.43C2.01 15.06 2 14.72 2 12s.01-3.06.06-4.12c.05-1.07.22-1.79.46-2.43.26-.66.6-1.22 1.15-1.77.55-.55 1.11-.9 1.77-1.15.64-.24 1.36-.41 2.43-.46C8.94 2.01 9.28 2 12 2zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4zm5.4-8.4a1.17 1.17 0 1 0 0-2.34 1.17 1.17 0 0 0 0 2.34z"/>'),
-        'youtube' => array(__('YouTube', 'storefront'), array('youtube.com', 'youtu.be'), '<path d="M23.5 7.2a3 3 0 0 0-2.1-2.1C19.5 4.6 12 4.6 12 4.6s-7.5 0-9.4.5A3 3 0 0 0 .5 7.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-4.8zM9.6 15.6V8.4L15.8 12l-6.2 3.6z"/>'),
-        'linkedin' => array(__('LinkedIn', 'storefront'), array('linkedin.com'), '<path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.24 8.5h4.5V23H.24V8.5zM8.28 8.5h4.32v1.98h.06c.6-1.14 2.07-2.34 4.26-2.34 4.56 0 5.4 3 5.4 6.9V23h-4.5v-6.24c0-1.49-.03-3.4-2.07-3.4-2.07 0-2.39 1.62-2.39 3.3V23H8.28V8.5z"/>'),
-        'tiktok' => array(__('TikTok', 'storefront'), array('tiktok.com'), '<path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>'),
-    );
-    $filtered = osc_apply_filter('storefront_social_icons', $icons);
+if (!function_exists('storefront_social_icons')) {
+    function storefront_social_icons(): array
+    {
+        $icons = array(
+            'facebook' => array(__('Facebook', 'storefront'), array('facebook.com', 'fb.com'), '<path d="M22 12a10 10 0 1 0-11.5 9.87v-6.98H7.9V12h2.6V9.8c0-2.57 1.53-4 3.87-4 1.12 0 2.3.2 2.3.2v2.5h-1.3c-1.28 0-1.68.8-1.68 1.62V12h2.86l-.46 2.89h-2.4v6.98A10 10 0 0 0 22 12z"/>'),
+            'twitter' => array(__('Twitter / X', 'storefront'), array('x.com', 'twitter.com'), '<path d="M18.24 2h3.3l-7.2 8.23L23 22h-6.63l-5.2-6.8L5.1 22H1.8l7.7-8.8L1 2h6.8l4.7 6.2L18.24 2zm-1.16 18h1.83L7.02 3.9H5.06L17.08 20z"/>'),
+            'instagram' => array(__('Instagram', 'storefront'), array('instagram.com'), '<path d="M12 2c2.72 0 3.06.01 4.12.06 1.07.05 1.79.22 2.43.46.66.26 1.22.6 1.77 1.15.55.55.9 1.11 1.15 1.77.24.64.41 1.36.46 2.43.05 1.06.06 1.4.06 4.12s-.01 3.06-.06 4.12c-.05 1.07-.22 1.79-.46 2.43-.26.66-.6 1.22-1.15 1.77-.55.55-1.11.9-1.77 1.15-.64.24-1.36.41-2.43.46-1.06.05-1.4.06-4.12.06s-3.06-.01-4.12-.06c-1.07-.05-1.79-.22-2.43-.46-.66-.26-1.22-.6-1.77-1.15-.55-.55-.9-1.11-1.15-1.77-.24-.64-.41-1.36-.46-2.43C2.01 15.06 2 14.72 2 12s.01-3.06.06-4.12c.05-1.07.22-1.79.46-2.43.26-.66.6-1.22 1.15-1.77.55-.55 1.11-.9 1.77-1.15.64-.24 1.36-.41 2.43-.46C8.94 2.01 9.28 2 12 2zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4zm5.4-8.4a1.17 1.17 0 1 0 0-2.34 1.17 1.17 0 0 0 0 2.34z"/>'),
+            'youtube' => array(__('YouTube', 'storefront'), array('youtube.com', 'youtu.be'), '<path d="M23.5 7.2a3 3 0 0 0-2.1-2.1C19.5 4.6 12 4.6 12 4.6s-7.5 0-9.4.5A3 3 0 0 0 .5 7.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-4.8zM9.6 15.6V8.4L15.8 12l-6.2 3.6z"/>'),
+            'linkedin' => array(__('LinkedIn', 'storefront'), array('linkedin.com'), '<path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.24 8.5h4.5V23H.24V8.5zM8.28 8.5h4.32v1.98h.06c.6-1.14 2.07-2.34 4.26-2.34 4.56 0 5.4 3 5.4 6.9V23h-4.5v-6.24c0-1.49-.03-3.4-2.07-3.4-2.07 0-2.39 1.62-2.39 3.3V23H8.28V8.5z"/>'),
+            'tiktok' => array(__('TikTok', 'storefront'), array('tiktok.com'), '<path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>'),
+        );
+        $filtered = osc_apply_filter('storefront_social_icons', $icons);
 
-    return is_array($filtered) ? $filtered : $icons;
+        return is_array($filtered) ? $filtered : $icons;
+    }
 }
 
 /** The icon for a social link, chosen by its site; a plain link icon for a site with none. */
-function storefront_social_icon(string $url): string
-{
-    $host = strtolower((string) parse_url($url, PHP_URL_HOST));
-    foreach (storefront_social_icons() as $icon) {
-        foreach ((array) ($icon[1] ?? array()) as $site) {
-            if ($host === $site || str_ends_with($host, '.' . $site)) {
-                return (string) $icon[2];
+if (!function_exists('storefront_social_icon')) {
+    function storefront_social_icon(string $url): string
+    {
+        $host = strtolower((string) parse_url($url, PHP_URL_HOST));
+        foreach (storefront_social_icons() as $icon) {
+            foreach ((array) ($icon[1] ?? array()) as $site) {
+                if ($host === $site || str_ends_with($host, '.' . $site)) {
+                    return (string) $icon[2];
+                }
             }
         }
-    }
 
-    return '<path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>';
+        return '<path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>';
+    }
 }
 
 /** A URL reduced to path and sorted query, so two links to the same page compare equal. */
-function storefront_url_key(string $url): string
-{
-    $path = rtrim(preg_replace('#/index\.php$#', '', (string) parse_url($url, PHP_URL_PATH)), '/');
-    parse_str((string) parse_url($url, PHP_URL_QUERY), $query);
-    ksort($query);
+if (!function_exists('storefront_url_key')) {
+    function storefront_url_key(string $url): string
+    {
+        $path = rtrim(preg_replace('#/index\.php$#', '', (string) parse_url($url, PHP_URL_PATH)), '/');
+        parse_str((string) parse_url($url, PHP_URL_QUERY), $query);
+        ksort($query);
 
-    return $path . '?' . http_build_query($query);
+        return $path . '?' . http_build_query($query);
+    }
 }
 
 /** True when a menu link points at the page being shown. */
-function storefront_menu_current(string $url): bool
-{
-    return storefront_url_key($url) === storefront_url_key((string) ($_SERVER['REQUEST_URI'] ?? '/'));
+if (!function_exists('storefront_menu_current')) {
+    function storefront_menu_current(string $url): bool
+    {
+        return storefront_url_key($url) === storefront_url_key((string) ($_SERVER['REQUEST_URI'] ?? '/'));
+    }
 }
 
 /** Whether the current static page uses the Full width template. */
-function storefront_is_full_width(): bool
-{
-    if (!osc_is_static_page()) {
-        return false;
-    }
-    $meta = json_decode((string) osc_static_page_field('s_meta'), true);
+if (!function_exists('storefront_is_full_width')) {
+    function storefront_is_full_width(): bool
+    {
+        if (!osc_is_static_page()) {
+            return false;
+        }
+        $meta = json_decode((string) osc_static_page_field('s_meta'), true);
 
-    return is_array($meta) && ($meta['template'] ?? '') === 'theme.full_width';
+        return is_array($meta) && ($meta['template'] ?? '') === 'theme.full_width';
+    }
 }
