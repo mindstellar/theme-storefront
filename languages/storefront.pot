@@ -70,7 +70,7 @@ msgstr[1] ""
 msgid "About"
 msgstr ""
 
-#: functions.php:1191
+#: functions.php:1193
 msgid "Above the copyright line, on every page"
 msgstr ""
 
@@ -78,7 +78,7 @@ msgstr ""
 msgid "Account"
 msgstr ""
 
-#: functions.php:1198
+#: functions.php:1200
 msgid "Account dashboard"
 msgstr ""
 
@@ -158,6 +158,10 @@ msgstr ""
 msgid "Appearance"
 msgstr ""
 
+#: admin/settings.php:171
+msgid "Appearance → Menus → Social icons"
+msgstr ""
+
 #: common/search-sidebar.php:223
 msgid "Apply filters"
 msgstr ""
@@ -188,7 +192,7 @@ msgstr ""
 msgid "Back to top"
 msgstr ""
 
-#: functions.php:1195
+#: functions.php:1197
 msgid "Beside a listing"
 msgstr ""
 
@@ -206,7 +210,7 @@ msgstr ""
 msgid "Brand settings updated correctly."
 msgstr ""
 
-#: admin/settings.php:177
+#: admin/settings.php:182
 msgid "Brand tagline shown in the footer. Leave empty to use the default."
 msgstr ""
 
@@ -445,6 +449,12 @@ msgstr ""
 msgid "E-mail"
 msgstr ""
 
+#: functions.php:1252
+msgid ""
+"Each link shows as an icon picked from its address, such as TikTok or "
+"Facebook; other sites get a plain link icon."
+msgstr ""
+
 #: common/loop.php:87
 #: common/manage-list.php:75
 #: item.php:225
@@ -470,8 +480,8 @@ msgstr ""
 msgid "Expired"
 msgstr ""
 
-#: admin/settings.php:180
-#: functions.php:1286
+#: admin/settings.php:186
+#: functions.php:1325
 msgid "Facebook"
 msgstr ""
 
@@ -524,16 +534,16 @@ msgstr ""
 msgid "Flagged"
 msgstr ""
 
-#: functions.php:1190
-#: functions.php:1245
+#: functions.php:1192
+#: functions.php:1248
 msgid "Footer"
 msgstr ""
 
-#: admin/settings.php:166
+#: admin/settings.php:167
 msgid "Footer & Social"
 msgstr ""
 
-#: admin/settings.php:174
+#: admin/settings.php:179
 msgid "Footer tagline"
 msgstr ""
 
@@ -550,7 +560,7 @@ msgstr ""
 msgid "From %s"
 msgstr ""
 
-#: functions.php:1230
+#: functions.php:1233
 msgid "Full width"
 msgstr ""
 
@@ -571,7 +581,7 @@ msgstr ""
 msgid "Grid view"
 msgstr ""
 
-#: functions.php:1244
+#: functions.php:1247
 msgid "Header"
 msgstr ""
 
@@ -630,8 +640,8 @@ msgstr ""
 msgid "Individual"
 msgstr ""
 
-#: admin/settings.php:182
-#: functions.php:1288
+#: admin/settings.php:188
+#: functions.php:1327
 msgid "Instagram"
 msgstr ""
 
@@ -655,15 +665,8 @@ msgstr ""
 msgid "Latest listings"
 msgstr ""
 
-#: admin/settings.php:170
+#: admin/settings.php:175
 msgid "Leave any field empty to hide that icon from the footer."
-msgstr ""
-
-#: admin/settings.php:169
-msgid ""
-"Leave any field empty to hide that icon from the footer. For other sites, "
-"such as TikTok, build the Social icons menu in Appearance → Menus; it then "
-"replaces these fields."
 msgstr ""
 
 #: admin/settings.php:152
@@ -682,8 +685,8 @@ msgstr ""
 msgid "Link selected — press Ctrl+C to copy."
 msgstr ""
 
-#: admin/settings.php:184
-#: functions.php:1290
+#: admin/settings.php:190
+#: functions.php:1329
 msgid "LinkedIn"
 msgstr ""
 
@@ -739,7 +742,7 @@ msgstr ""
 msgid "Listing navigation"
 msgstr ""
 
-#: functions.php:1194
+#: functions.php:1196
 msgid "Listing sidebar"
 msgstr ""
 
@@ -911,7 +914,7 @@ msgstr ""
 msgid "Offensive content"
 msgstr ""
 
-#: functions.php:1199
+#: functions.php:1201
 msgid "On the signed-in user's dashboard"
 msgstr ""
 
@@ -1127,7 +1130,7 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: admin/settings.php:201
+#: admin/settings.php:208
 msgid "Save settings"
 msgstr ""
 
@@ -1209,7 +1212,7 @@ msgstr ""
 msgid "Share…"
 msgstr ""
 
-#: admin/settings.php:197
+#: admin/settings.php:204
 msgid "Show \"Powered by Shopclass\" credit"
 msgstr ""
 
@@ -1264,8 +1267,13 @@ msgstr ""
 msgid "Social"
 msgstr ""
 
-#: functions.php:1246
+#: functions.php:1250
+#: functions.php:1284
 msgid "Social icons"
+msgstr ""
+
+#: admin/settings.php:170
+msgid "Social links are set in %s."
 msgstr ""
 
 #: error.php:13
@@ -1298,13 +1306,13 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: functions.php:1162
-#: functions.php:1174
+#: functions.php:1164
+#: functions.php:1176
 msgid "Storefront: Brand"
 msgstr ""
 
-#: functions.php:1167
-#: functions.php:1175
+#: functions.php:1169
+#: functions.php:1177
 msgid "Storefront: Settings"
 msgstr ""
 
@@ -1376,7 +1384,7 @@ msgstr ""
 msgid "The logo has been uploaded correctly."
 msgstr ""
 
-#: functions.php:1231
+#: functions.php:1234
 msgid "The page uses the whole width of the content area."
 msgstr ""
 
@@ -1392,7 +1400,7 @@ msgid ""
 "in every case."
 msgstr ""
 
-#: functions.php:1141
+#: functions.php:1143
 msgid "Theme settings updated correctly."
 msgstr ""
 
@@ -1424,7 +1432,7 @@ msgstr ""
 msgid "This page couldn't be found."
 msgstr ""
 
-#: functions.php:1291
+#: functions.php:1330
 msgid "TikTok"
 msgstr ""
 
@@ -1436,7 +1444,7 @@ msgstr ""
 msgid "Try widening your filters or clearing the search."
 msgstr ""
 
-#: functions.php:1287
+#: functions.php:1326
 msgid "Twitter / X"
 msgstr ""
 
@@ -1557,7 +1565,7 @@ msgstr ""
 msgid "Wrong category"
 msgstr ""
 
-#: admin/settings.php:181
+#: admin/settings.php:187
 msgid "X (Twitter)"
 msgstr ""
 
@@ -1613,7 +1621,7 @@ msgstr ""
 msgid "Your recent orders"
 msgstr ""
 
-#: admin/settings.php:183
-#: functions.php:1289
+#: admin/settings.php:189
+#: functions.php:1328
 msgid "YouTube"
 msgstr ""

@@ -163,11 +163,16 @@ osc_admin_select(array(
     'help'     => __('How search results are displayed by default.', 'storefront'),
 ));
 
-osc_admin_form_section(__('Footer & Social', 'storefront'), array(
+$hasMenus = storefront_has_menus();
+osc_admin_form_section(__('Footer & Social', 'storefront'), $hasMenus ? array(
+    'spaced'     => true,
+    'intro_html' => sprintf(
+        __('Social links are set in %s.', 'storefront'),
+        '<a href="' . osc_esc_html(osc_admin_base_url(true) . '?page=appearance&action=menus') . '">' . osc_esc_html(__('Appearance → Menus → Social icons', 'storefront')) . '</a>'
+    ),
+) : array(
     'spaced' => true,
-    'intro'  => function_exists('osc_menu')
-        ? __('Leave any field empty to hide that icon from the footer. For other sites, such as TikTok, build the Social icons menu in Appearance → Menus; it then replaces these fields.', 'storefront')
-        : __('Leave any field empty to hide that icon from the footer.', 'storefront'),
+    'intro'  => __('Leave any field empty to hide that icon from the footer.', 'storefront'),
 ));
 osc_admin_textarea(array(
     'name'  => 'footer_message',
@@ -176,21 +181,23 @@ osc_admin_textarea(array(
     'rows'  => 2,
     'help'  => __('Brand tagline shown in the footer. Leave empty to use the default.', 'storefront'),
 ));
-$socials = array(
-    'social_facebook'  => array(__('Facebook', 'storefront'), 'https://facebook.com/…'),
-    'social_twitter'   => array(__('X (Twitter)', 'storefront'), 'https://x.com/…'),
-    'social_instagram' => array(__('Instagram', 'storefront'), 'https://instagram.com/…'),
-    'social_youtube'   => array(__('YouTube', 'storefront'), 'https://youtube.com/…'),
-    'social_linkedin'  => array(__('LinkedIn', 'storefront'), 'https://linkedin.com/…'),
-);
-foreach ($socials as $key => [$label, $placeholder]) {
-    osc_admin_text(array(
-        'type'        => 'url',
-        'name'        => $key,
-        'label'       => $label,
-        'value'       => $pref($key),
-        'placeholder' => $placeholder,
-    ));
+if (!$hasMenus) {
+    $socials = array(
+        'social_facebook'  => array(__('Facebook', 'storefront'), 'https://facebook.com/…'),
+        'social_twitter'   => array(__('X (Twitter)', 'storefront'), 'https://x.com/…'),
+        'social_instagram' => array(__('Instagram', 'storefront'), 'https://instagram.com/…'),
+        'social_youtube'   => array(__('YouTube', 'storefront'), 'https://youtube.com/…'),
+        'social_linkedin'  => array(__('LinkedIn', 'storefront'), 'https://linkedin.com/…'),
+    );
+    foreach ($socials as $key => [$label, $placeholder]) {
+        osc_admin_text(array(
+            'type'        => 'url',
+            'name'        => $key,
+            'label'       => $label,
+            'value'       => $pref($key),
+            'placeholder' => $placeholder,
+        ));
+    }
 }
 osc_admin_field_row('', array(
     array('type' => 'checkbox', 'name' => 'footer_link', 'id' => 'footer_link',

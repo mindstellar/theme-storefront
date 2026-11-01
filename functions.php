@@ -1130,11 +1130,13 @@ if (!function_exists('storefront_admin_actions')) {
                 osc_set_preference('defaultShowAs@all', Params::getParam('defaultShowAs@all'), 'storefront');
                 osc_set_preference('defaultShowAs@search', Params::getParam('defaultShowAs@all'));
                 $set('footer_message');
-                $set('social_facebook');
-                $set('social_twitter');
-                $set('social_instagram');
-                $set('social_youtube');
-                $set('social_linkedin');
+                if (!storefront_has_menus()) {
+                    $set('social_facebook');
+                    $set('social_twitter');
+                    $set('social_instagram');
+                    $set('social_youtube');
+                    $set('social_linkedin');
+                }
                 $setCheckbox('footer_link');
 
                 osc_reset_preferences();
@@ -1200,6 +1202,7 @@ osc_add_theme_support('widget_locations', array(
     ),
 ));
 
+osc_add_hook('init_admin', 'storefront_migrate_social_fields');
 osc_add_hook('init_admin', 'storefront_admin_actions');
 osc_add_hook('theme_delete_storefront', 'storefront_theme_delete');
 
@@ -1243,12 +1246,48 @@ function storefront_menu_places(): void
         osc_add_theme_support('menus', array(
             'main'   => array('label' => __('Header', 'storefront'), 'depth' => 1),
             'footer' => array('label' => __('Footer', 'storefront'), 'depth' => 1),
-            'social' => array('label' => __('Social icons', 'storefront'), 'depth' => 1),
+            'social' => array(
+                'label' => __('Social icons', 'storefront'),
+                'depth' => 1,
+                'hint'  => __('Each link shows as an icon picked from its address, such as TikTok or Facebook; other sites get a plain link icon.', 'storefront'),
+            ),
         ));
     }
 }
 
 osc_add_hook('init', 'storefront_menu_places');
+
+/** True on cores with Appearance > Menus. */
+function storefront_has_menus(): bool
+{
+    return function_exists('osc_menu') && class_exists('mindstellar\\menu\\MenuService');
+}
+
+/** Moves the old social_* fields into the Social icons menu, once, on cores with menus. */
+function storefront_migrate_social_fields(): void
+{
+    if (!storefront_has_menus()) {
+        return;
+    }
+    $icons = storefront_social_icons();
+    $items = array();
+    foreach (array('facebook', 'twitter', 'instagram', 'youtube', 'linkedin') as $key) {
+        $url = (string) osc_get_preference('social_' . $key, 'storefront');
+        if ($url !== '') {
+            $items[$key] = array('type' => 'link', 'url' => $url, 'label' => array(osc_language() => (string) ($icons[$key][0] ?? ucfirst($key))));
+        }
+    }
+    $menus = \mindstellar\menu\MenuService::getInstance();
+    if ($items === array() || $menus->load('social') !== null) {
+        return;
+    }
+    if ($menus->save('social', array_values($items), __('Social icons', 'storefront')) === array()) {
+        foreach (array_keys($items) as $key) {
+            osc_delete_preference('social_' . $key, 'storefront');
+        }
+        osc_reset_preferences();
+    }
+}
 
 /**
  * The menu the owner saved in Appearance > Menus, or null when there is none (or the core has no menus).
@@ -1257,7 +1296,7 @@ osc_add_hook('init', 'storefront_menu_places');
  */
 function storefront_saved_menu(string $id): ?array
 {
-    if (!function_exists('osc_menu') || !class_exists('mindstellar\\menu\\MenuService')) {
+    if (!storefront_has_menus()) {
         return null;
     }
     $saved = \mindstellar\menu\MenuService::getInstance()->load($id);
