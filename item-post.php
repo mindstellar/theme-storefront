@@ -126,7 +126,7 @@ osc_current_web_theme_path('common/header.php');
         <?php if (!osc_is_web_user_logged_in()) { ?>
         <h2 class="sf-form__legend"><?php echo osc_esc_html(__('Your contact information', 'storefront')); ?></h2>
         <div class="sf-field">
-            <label for="contactName"><?php _e('Name', 'storefront'); ?></label>
+            <label for="contactName"><?php _e('Name', 'storefront'); ?><?php echo function_exists('osc_item_contact_name_required') && osc_item_contact_name_required() ? storefront_required_mark() : ''; ?></label>
             <?php ItemForm::contact_name_text(); ?>
         </div>
         <div class="sf-field">
