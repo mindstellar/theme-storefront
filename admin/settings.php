@@ -165,7 +165,9 @@ osc_admin_select(array(
 
 osc_admin_form_section(__('Footer & Social', 'storefront'), array(
     'spaced' => true,
-    'intro'  => __('Leave any field empty to hide that icon from the footer.', 'storefront'),
+    'intro'  => function_exists('osc_menu')
+        ? __('Leave any field empty to hide that icon from the footer. For other sites, such as TikTok, build the Social icons menu in Appearance → Menus; it then replaces these fields.', 'storefront')
+        : __('Leave any field empty to hide that icon from the footer.', 'storefront'),
 ));
 osc_admin_textarea(array(
     'name'  => 'footer_message',
