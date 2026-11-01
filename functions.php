@@ -1277,23 +1277,34 @@ if (!function_exists('storefront_migrate_social_fields')) {
             return;
         }
         $icons = storefront_social_icons();
+        $old   = array();
         $items = array();
         foreach (array('facebook', 'twitter', 'instagram', 'youtube', 'linkedin') as $key) {
-            $url = (string) osc_get_preference('social_' . $key, 'storefront');
-            if ($url !== '') {
-                $items[$key] = array('type' => 'link', 'url' => $url, 'label' => array(osc_language() => (string) ($icons[$key][0] ?? ucfirst($key))));
+            $url = trim((string) osc_get_preference('social_' . $key, 'storefront'));
+            if ($url === '') {
+                continue;
+            }
+            $old[] = $key;
+            // An address typed without its scheme ("facebook.com/page") still moves.
+            $url = preg_match('#^https?://#i', $url) ? $url : 'https://' . ltrim($url, '/');
+            if (filter_var($url, FILTER_VALIDATE_URL) !== false) {
+                $items[] = array('type' => 'link', 'url' => $url, 'label' => array(osc_language() => (string) ($icons[$key][0] ?? ucfirst($key))));
             }
         }
-        $menus = \mindstellar\menu\MenuService::getInstance();
-        if ($items === array() || $menus->load('social') !== null) {
+        if ($old === array()) {
             return;
         }
-        if ($menus->save('social', array_values($items), __('Social icons', 'storefront')) === array()) {
-            foreach (array_keys($items) as $key) {
-                osc_delete_preference('social_' . $key, 'storefront');
-            }
-            osc_reset_preferences();
+        $menus = \mindstellar\menu\MenuService::getInstance();
+        // A Social menu that already exists wins; the old fields are no longer read.
+        if ($menus->load('social') === null && $items !== array()
+            && $menus->save('social', $items, __('Social icons', 'storefront')) !== array()
+        ) {
+            return;
         }
+        foreach ($old as $key) {
+            osc_delete_preference('social_' . $key, 'storefront');
+        }
+        osc_reset_preferences();
     }
 }
 
@@ -1325,7 +1336,7 @@ if (!function_exists('storefront_saved_menu')) {
 
 /**
  * Footer social icons: key => [label, sites, SVG path]. The key also names the old social_<key> field.
- * Developers add icons through the storefront_social_icons filter.
+ * Developers add icons through the storefront_social_icons filter; the SVG path is printed as is.
  *
  * @return array<string,array{0:string,1:array<int,string>,2:string}>
  */
