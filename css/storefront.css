@@ -359,7 +359,7 @@ img { display: block; max-width: 100%; height: auto; }
 /* ──────────────────────────────────────────────────────────────────────────
    Design-system components (available to every template)
    ────────────────────────────────────────────────────────────────────────── */
-.btn, .sf-btn {
+.btn, .sf-btn, .osc-button {
     display: inline-flex; align-items: center; justify-content: center; gap: 6px;
     cursor: pointer; text-decoration: none; white-space: nowrap;
     font-family: var(--font-heading); font-weight: var(--font-heading-weight);
@@ -377,12 +377,12 @@ img { display: block; max-width: 100%; height: auto; }
 /* Fill token, not the raw --color-accent: base teal (500) only clears ~2.8:1
    against the white label, so the AA-safe step (see --color-accent-fill above)
    is used instead. */
-.btn-primary, .sf-btn--primary { background: var(--color-accent-fill); color: var(--color-fixed-light); }
-.btn-primary:hover, .sf-btn--primary:hover { background: var(--color-accent-fill-hover); color: var(--color-fixed-light); }
+.btn-primary, .sf-btn--primary, .osc-button--primary { background: var(--color-accent-fill); color: var(--color-fixed-light); }
+.btn-primary:hover, .sf-btn--primary:hover, .osc-button--primary:hover { background: var(--color-accent-fill-hover); color: var(--color-fixed-light); }
 .btn-primary:active, .sf-btn--primary:active { background: var(--color-accent-fill-active); }
 
-.btn-secondary, .sf-btn--ghost, .sf-btn--secondary { color: var(--color-text); border-color: var(--color-divider); }
-.btn-secondary:hover, .sf-btn--ghost:hover, .sf-btn--secondary:hover { background: color-mix(in srgb, var(--color-text) 7%, transparent); border-color: var(--color-divider); color: var(--color-text); }
+.btn-secondary, .sf-btn--ghost, .sf-btn--secondary, .osc-button--secondary { color: var(--color-text); border-color: var(--color-divider); }
+.btn-secondary:hover, .sf-btn--ghost:hover, .sf-btn--secondary:hover, .osc-button--secondary:hover { background: color-mix(in srgb, var(--color-text) 7%, transparent); border-color: var(--color-divider); color: var(--color-text); }
 .btn-secondary:active, .sf-btn--ghost:active, .sf-btn--secondary:active { background: color-mix(in srgb, var(--color-text) 14%, transparent); }
 
 /* Fill token, not the raw --color-accent-2: base coral/amber/pink (500) fails AA
@@ -2097,9 +2097,34 @@ body.sf-list .sf-card__desc {
 .sf-page__body h2, .sf-page__body h3 { margin-top: var(--space-6); }
 /* Page-builder canvas: stacked widget blocks get vertical rhythm without a max-width
    cap (a block may be a full-width band, not prose). See template-widgets.php. */
-.sf-page__blocks { max-width: none; }
-.sf-page__blocks > * + * { margin-top: var(--space-8); }
-.sf-page__blocks .osc-rich-text { max-width: 68ch; }
+.sf-page__blocks { max-width: none; --osc-block-gap: var(--space-8); }
+.sf-page__blocks > * + * { margin-top: 56px; }
+.sf-page__blocks .osc-rich-text { max-width: 68ch; line-height: 1.7; }
+.sf-page__blocks :is(.osc-rich-text, .osc-heading) > :first-child { margin-top: 0; }
+.sf-page__blocks .osc-rich-text > :last-child { margin-bottom: 0; }
+.sf-page__blocks > .osc-rich-text h3 { font-size: 32px; }
+
+/* Layout blocks (core page-blocks.css lays them out; these are Storefront's look). */
+.sf-page__blocks .osc-heading > h2 { font-size: 36px; margin-bottom: var(--space-3); }
+.sf-page__blocks .osc-heading > h3 { font-size: 25px; }
+.sf-page__blocks .osc-heading > p { font-size: 18px; line-height: 1.5; color: var(--color-muted); max-width: 56ch; margin-block: 0; }
+.sf-page__blocks .osc-heading--center > p { margin-inline: auto; }
+.sf-page__blocks .osc-media-text > figure { border-radius: var(--radius-lg); overflow: hidden; background: var(--color-neutral-200); }
+.sf-page__blocks .osc-media-text .osc-rich-text :is(h2, h3) { font-size: 28px; margin-bottom: var(--space-3); }
+.sf-page__blocks .osc-media-text .osc-rich-text ul { padding-inline-start: 1.2em; margin: 0 0 var(--space-4); }
+.sf-page__blocks .osc-media-text .osc-rich-text li + li { margin-top: var(--space-1); }
+.sf-page__blocks .osc-media-text .osc-button-row { margin-top: var(--space-4); }
+.sf-page__blocks .osc-columns .osc-rich-text { max-width: none; padding-top: var(--space-4); border-top: 2px solid var(--color-divider); }
+.sf-page__blocks .osc-columns .osc-rich-text :is(h3, h4) { font-size: 20px; margin-bottom: var(--space-2); }
+.sf-page__blocks .osc-button { font-size: 15px; padding: 11px 20px; }
+@media (max-width: 639.98px) {
+    .sf-page__blocks > * + * { margin-top: 40px; }
+    .sf-page__blocks .osc-heading > h2 { font-size: 28px; }
+    .sf-page__blocks .osc-heading > p { font-size: 16px; }
+    .sf-page__blocks .osc-media-text { gap: var(--space-4); }
+    .sf-page__blocks .osc-columns { gap: var(--space-6); }
+    .sf-page__blocks .osc-button-row .osc-button { flex: 1 1 100%; min-height: 44px; }
+}
 
 /* 404 */
 .sf-error__code {
