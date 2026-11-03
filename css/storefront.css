@@ -2099,6 +2099,7 @@ body.sf-list .sf-card__desc {
    cap (a block may be a full-width band, not prose). See template-widgets.php. */
 .sf-page__blocks { max-width: none; }
 .sf-page__blocks > * + * { margin-top: var(--space-8); }
+.sf-page__blocks .osc-rich-text { max-width: 68ch; }
 
 /* 404 */
 .sf-error__code {
