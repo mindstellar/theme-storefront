@@ -2104,6 +2104,9 @@ body.sf-list .sf-card__desc {
 .sf-page__blocks .osc-rich-text > :last-child { margin-bottom: 0; }
 .sf-page__blocks > .osc-rich-text h3 { font-size: 32px; }
 
+/* A built page leads with a full-size title, as a landing page does. */
+.sf-page--builder > .sf-section__title { font-size: 42px; margin-bottom: var(--space-6); }
+
 /* Layout blocks (core page-blocks.css lays them out; these are Storefront's look). */
 .sf-page__blocks .osc-heading > h2 { font-size: 36px; margin-bottom: var(--space-3); }
 .sf-page__blocks .osc-heading > h3 { font-size: 25px; }
@@ -2118,6 +2121,7 @@ body.sf-list .sf-card__desc {
 .sf-page__blocks .osc-columns .osc-rich-text :is(h3, h4) { font-size: 20px; margin-bottom: var(--space-2); }
 .sf-page__blocks .osc-button { font-size: 15px; padding: 11px 20px; }
 @media (max-width: 639.98px) {
+    .sf-page--builder > .sf-section__title { font-size: 32px; }
     .sf-page__blocks > * + * { margin-top: 40px; }
     .sf-page__blocks .osc-heading > h2 { font-size: 28px; }
     .sf-page__blocks .osc-heading > p { font-size: 16px; }
