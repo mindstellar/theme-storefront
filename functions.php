@@ -1074,10 +1074,18 @@ if (!function_exists('storefront_admin_actions')) {
                     osc_add_flash_ok_message(__('The logo has been uploaded correctly.', 'storefront'), 'admin');
                 } elseif ($ext === 'jpg' || $ext === 'jpeg' || $ext === 'png') {
                     try {
-                        $img      = ImageResizer::fromFile($file['tmp_name']);
-                        $fileExt  = $img->getExt();
-                        $filename = 'storefront_logo' . $suffix . '.' . $fileExt;
-                        $img->saveToFile(osc_uploads_path() . $filename);
+                        if (class_exists('mindstellar\\image\\Processor')) {
+                            $processor = \mindstellar\image\Processor::site();
+                            $image     = $processor->open($file['tmp_name']);
+                            $fileExt   = $processor->defaultExt($image);
+                            $filename  = 'storefront_logo' . $suffix . '.' . $fileExt;
+                            $processor->save($image, osc_uploads_path() . $filename, $fileExt);
+                        } else {
+                            $img      = ImageResizer::fromFile($file['tmp_name']);
+                            $fileExt  = $img->getExt();
+                            $filename = 'storefront_logo' . $suffix . '.' . $fileExt;
+                            $img->saveToFile(osc_uploads_path() . $filename);
+                        }
                     } catch (Exception $e) {
                         osc_add_flash_error_message(__('An error has occurred, please try again.', 'storefront'), 'admin');
                         osc_redirect_to($adminUrl('header'));
