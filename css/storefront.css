@@ -2092,7 +2092,8 @@ body.sf-list .sf-card__desc {
 .sf-btn--lg { font-size: 15px; padding: 11px 20px; }
 
 .sf-page > .sf-section__title { margin: 0 0 var(--space-4); }
-.sf-page__body { line-height: 1.7; max-width: 68ch; }
+.sf-page__body { display: flow-root; line-height: 1.7; max-width: 68ch; }
+@media (max-width: 639.98px) { .sf-page__body img[style*="float"] { float: none !important; display: block; margin: 0 auto 1rem !important; max-width: 100% !important; } }
 .layout-full-width .sf-page__body { max-width: none; }
 .sf-page__body h2, .sf-page__body h3 { margin-top: var(--space-6); }
 /* Page-builder canvas: stacked widget blocks get vertical rhythm without a max-width
@@ -2100,6 +2101,8 @@ body.sf-list .sf-card__desc {
 .sf-page__blocks { max-width: none; --osc-block-gap: var(--space-8); }
 .sf-page__blocks > * + * { margin-top: 56px; }
 .sf-page__blocks .osc-rich-text { max-width: 68ch; line-height: 1.7; }
+.sf-page__blocks .osc-rich-text--wide { max-width: none; }
+.sf-page__blocks .osc-rich-text--center { margin-inline: auto; }
 .sf-page__blocks :is(.osc-rich-text, .osc-heading) > :first-child { margin-top: 0; }
 .sf-page__blocks .osc-rich-text > :last-child { margin-bottom: 0; }
 .sf-page__blocks > .osc-rich-text h3 { font-size: 32px; }
