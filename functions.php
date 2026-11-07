@@ -1255,7 +1255,11 @@ if (!function_exists('storefront_menu_places')) {
     {
         if (function_exists('osc_menu')) {
             osc_add_theme_support('menus', array(
-                'main'   => array('label' => __('Header', 'storefront'), 'depth' => 1),
+                'main'   => array('label' => __('Header', 'storefront'), 'depth' => 1, 'default' => array(
+                    array('type' => 'builtin', 'ref' => 'home', 'label' => __('Home', 'storefront')),
+                    array('type' => 'builtin', 'ref' => 'search', 'label' => __('Browse', 'storefront')),
+                    array('type' => 'builtin', 'ref' => 'contact', 'label' => __('Help', 'storefront')),
+                )),
                 'footer' => array('label' => __('Footer', 'storefront'), 'depth' => 1),
                 'social' => array(
                     'label' => __('Social icons', 'storefront'),
@@ -1343,6 +1347,33 @@ if (!function_exists('storefront_saved_menu')) {
 }
 
 /**
+ * The links of a menu place from Appearance > Menus, saved or the theme's default. Null on
+ * cores without menus, and on cores without menu defaults while nothing is saved.
+ *
+ * @return array<int,array<string,mixed>>|null
+ */
+if (!function_exists('storefront_menu_links')) {
+    function storefront_menu_links(string $id): ?array
+    {
+        if (!storefront_has_menus()) {
+            return null;
+        }
+        $menus = \mindstellar\menu\MenuService::getInstance();
+        if (!method_exists($menus, 'themeDefault') && $menus->load($id) === null) {
+            return null;
+        }
+        $items = array();
+        foreach (osc_menu($id) as $item) {
+            if (!empty($item['url']) && isset($item['label']) && (string) $item['label'] !== '') {
+                $items[] = $item;
+            }
+        }
+
+        return $items;
+    }
+}
+
+/**
  * Footer social icons: key => [label, sites, SVG path]. The key also names the old social_<key> field.
  * Developers add icons through the storefront_social_icons filter; the SVG path is printed as is.
  *
@@ -1398,7 +1429,23 @@ if (!function_exists('storefront_url_key')) {
 if (!function_exists('storefront_menu_current')) {
     function storefront_menu_current(string $url): bool
     {
-        return storefront_url_key($url) === storefront_url_key((string) ($_SERVER['REQUEST_URI'] ?? '/'));
+        $key = storefront_url_key($url);
+        if ($key === storefront_url_key((string) ($_SERVER['REQUEST_URI'] ?? '/'))) {
+            return true;
+        }
+        // Home, Browse and Contact stay current on every page of their kind, filtered searches included.
+        $kinds = array(
+            array(osc_base_url(), 'osc_is_home_page'),
+            array(osc_search_url(array('page' => 'search')), 'osc_is_search_page'),
+            array(osc_contact_url(), 'osc_is_contact_page'),
+        );
+        foreach ($kinds as $kind) {
+            if ($key === storefront_url_key((string) $kind[0])) {
+                return (bool) call_user_func($kind[1]);
+            }
+        }
+
+        return false;
     }
 }
 

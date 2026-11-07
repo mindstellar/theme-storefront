@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Storefront 2.3.0\n"
+"Project-Id-Version: Storefront 2.4.0\n"
 "Report-Msgid-Bugs-To: "
 "https://github.com/mindstellar/theme-storefront/issues\n"
 "MIME-Version: 1.0\n"
@@ -70,7 +70,7 @@ msgstr[1] ""
 msgid "About"
 msgstr ""
 
-#: functions.php:1193
+#: functions.php:1201
 msgid "Above the copyright line, on every page"
 msgstr ""
 
@@ -78,7 +78,7 @@ msgstr ""
 msgid "Account"
 msgstr ""
 
-#: functions.php:1200
+#: functions.php:1208
 msgid "Account dashboard"
 msgstr ""
 
@@ -135,7 +135,7 @@ msgid "All listings"
 msgstr ""
 
 #: functions.php:1051
-#: functions.php:1082
+#: functions.php:1090
 msgid "An error has occurred, please try again."
 msgstr ""
 
@@ -192,7 +192,7 @@ msgstr ""
 msgid "Back to top"
 msgstr ""
 
-#: functions.php:1197
+#: functions.php:1205
 msgid "Beside a listing"
 msgstr ""
 
@@ -215,6 +215,7 @@ msgid "Brand tagline shown in the footer. Leave empty to use the default."
 msgstr ""
 
 #: common/header.php:34
+#: functions.php:1260
 #: search.php:25
 msgid "Browse"
 msgstr ""
@@ -449,7 +450,7 @@ msgstr ""
 msgid "E-mail"
 msgstr ""
 
-#: functions.php:1252
+#: functions.php:1267
 msgid ""
 "Each link shows as an icon picked from its address, such as TikTok or "
 "Facebook; other sites get a plain link icon."
@@ -481,7 +482,7 @@ msgid "Expired"
 msgstr ""
 
 #: admin/settings.php:186
-#: functions.php:1325
+#: functions.php:1386
 msgid "Facebook"
 msgstr ""
 
@@ -534,8 +535,8 @@ msgstr ""
 msgid "Flagged"
 msgstr ""
 
-#: functions.php:1192
-#: functions.php:1248
+#: functions.php:1200
+#: functions.php:1263
 msgid "Footer"
 msgstr ""
 
@@ -560,7 +561,7 @@ msgstr ""
 msgid "From %s"
 msgstr ""
 
-#: functions.php:1233
+#: functions.php:1242
 msgid "Full width"
 msgstr ""
 
@@ -581,7 +582,7 @@ msgstr ""
 msgid "Grid view"
 msgstr ""
 
-#: functions.php:1247
+#: functions.php:1258
 msgid "Header"
 msgstr ""
 
@@ -590,6 +591,7 @@ msgid "Headline"
 msgstr ""
 
 #: common/header.php:35
+#: functions.php:1261
 msgid "Help"
 msgstr ""
 
@@ -599,6 +601,7 @@ msgstr ""
 
 #: common/head-seo.php:130
 #: common/header.php:33
+#: functions.php:1259
 #: item.php:122
 #: search.php:25
 msgid "Home"
@@ -641,7 +644,7 @@ msgid "Individual"
 msgstr ""
 
 #: admin/settings.php:188
-#: functions.php:1327
+#: functions.php:1388
 msgid "Instagram"
 msgstr ""
 
@@ -686,7 +689,7 @@ msgid "Link selected — press Ctrl+C to copy."
 msgstr ""
 
 #: admin/settings.php:190
-#: functions.php:1329
+#: functions.php:1390
 msgid "LinkedIn"
 msgstr ""
 
@@ -742,7 +745,7 @@ msgstr ""
 msgid "Listing navigation"
 msgstr ""
 
-#: functions.php:1196
+#: functions.php:1204
 msgid "Listing sidebar"
 msgstr ""
 
@@ -914,7 +917,7 @@ msgstr ""
 msgid "Offensive content"
 msgstr ""
 
-#: functions.php:1201
+#: functions.php:1209
 msgid "On the signed-in user's dashboard"
 msgstr ""
 
@@ -1267,8 +1270,8 @@ msgstr ""
 msgid "Social"
 msgstr ""
 
-#: functions.php:1250
-#: functions.php:1284
+#: functions.php:1265
+#: functions.php:1312
 msgid "Social icons"
 msgstr ""
 
@@ -1306,13 +1309,13 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: functions.php:1164
-#: functions.php:1176
+#: functions.php:1172
+#: functions.php:1184
 msgid "Storefront: Brand"
 msgstr ""
 
-#: functions.php:1169
 #: functions.php:1177
+#: functions.php:1185
 msgid "Storefront: Settings"
 msgstr ""
 
@@ -1375,16 +1378,16 @@ msgid ""
 "mistyped. Try searching for what you were after."
 msgstr ""
 
-#: functions.php:1108
+#: functions.php:1116
 msgid "The logo has been removed."
 msgstr ""
 
 #: functions.php:1074
-#: functions.php:1091
+#: functions.php:1099
 msgid "The logo has been uploaded correctly."
 msgstr ""
 
-#: functions.php:1234
+#: functions.php:1243
 msgid "The page uses the whole width of the content area."
 msgstr ""
 
@@ -1400,7 +1403,7 @@ msgid ""
 "in every case."
 msgstr ""
 
-#: functions.php:1143
+#: functions.php:1151
 msgid "Theme settings updated correctly."
 msgstr ""
 
@@ -1432,7 +1435,7 @@ msgstr ""
 msgid "This page couldn't be found."
 msgstr ""
 
-#: functions.php:1330
+#: functions.php:1391
 msgid "TikTok"
 msgstr ""
 
@@ -1444,7 +1447,7 @@ msgstr ""
 msgid "Try widening your filters or clearing the search."
 msgstr ""
 
-#: functions.php:1326
+#: functions.php:1387
 msgid "Twitter / X"
 msgstr ""
 
@@ -1472,7 +1475,7 @@ msgstr ""
 msgid "Unknown action."
 msgstr ""
 
-#: functions.php:1093
+#: functions.php:1101
 msgid "Unsupported file type — upload an SVG, JPG or PNG."
 msgstr ""
 
@@ -1622,6 +1625,6 @@ msgid "Your recent orders"
 msgstr ""
 
 #: admin/settings.php:189
-#: functions.php:1328
+#: functions.php:1389
 msgid "YouTube"
 msgstr ""

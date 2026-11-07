@@ -24,9 +24,9 @@
 
         <nav id="sf-nav" class="sf-nav" aria-label="<?php echo osc_esc_html(__('Primary', 'storefront')); ?>">
             <div class="sf-nav__menu" data-sf-nav-menu>
-                <?php $sf_main_menu = storefront_saved_menu('main'); ?>
+                <?php $sf_main_menu = storefront_menu_links('main'); ?>
                 <?php if ($sf_main_menu !== null) { ?>
-                    <?php foreach ($sf_main_menu['items'] as $sf_link) { ?>
+                    <?php foreach ($sf_main_menu as $sf_link) { ?>
                         <a class="sf-nav__link" href="<?php echo osc_esc_html((string) $sf_link['url']); ?>"<?php echo storefront_menu_current((string) $sf_link['url']) ? ' aria-current="page"' : ''; ?>><?php echo osc_esc_html((string) $sf_link['label']); ?></a>
                     <?php } ?>
                 <?php } else { ?>
