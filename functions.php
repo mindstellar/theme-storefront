@@ -125,6 +125,29 @@ if (!function_exists('storefront_required_mark')) {
 }
 
 /**
+ * The required mark for a listing form label when core's Listings settings make that field required.
+ * Older cores have no such settings and mark nothing.
+ *
+ * @param string $field 'price', 'photos', 'country', 'region' or 'city'
+ *
+ * @return string
+ */
+if (!function_exists('storefront_listing_mark')) {
+    function storefront_listing_mark($field)
+    {
+        if ($field === 'price') {
+            $required = function_exists('osc_item_price_required') && osc_item_price_required();
+        } elseif ($field === 'photos') {
+            $required = function_exists('osc_item_photos_min') && osc_item_photos_min() > 0;
+        } else {
+            $required = function_exists('osc_item_location_required') && osc_item_location_required($field);
+        }
+
+        return $required ? storefront_required_mark() : '';
+    }
+}
+
+/**
  * Every page: the design system stylesheet + core chrome (header nav, account menus,
  * dialogs, confirm guards, flash dismiss). Runs on the `header` hook at priority 5,
  * before core prints the queue at 8.

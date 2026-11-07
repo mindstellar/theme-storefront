@@ -60,7 +60,7 @@ osc_current_web_theme_path('common/header.php');
         </div>
         <?php if (osc_price_enabled_at_items()) { ?>
         <div class="sf-field control-group-price">
-            <label for="price"><?php _e('Price', 'storefront'); ?></label>
+            <label for="price"><?php _e('Price', 'storefront'); ?><?php echo storefront_listing_mark('price'); ?></label>
             <?php ItemForm::price_input_text(); ?>
             <label class="sf-sr-only" for="currency"><?php _e('Currency', 'storefront'); ?></label>
             <?php ItemForm::currency_select(); ?>
@@ -68,7 +68,7 @@ osc_current_web_theme_path('common/header.php');
         <?php } ?>
 
         <?php if (osc_images_enabled_at_items()) { ?>
-        <h2 class="sf-form__legend"><?php _e('Photos', 'storefront'); ?></h2>
+        <h2 class="sf-form__legend"><?php _e('Photos', 'storefront'); ?><?php echo storefront_listing_mark('photos'); ?></h2>
         <div class="sf-field">
             <?php ItemForm::ajax_photos(); ?>
         </div>
@@ -76,7 +76,7 @@ osc_current_web_theme_path('common/header.php');
 
         <h2 class="sf-form__legend"><?php _e('Listing location', 'storefront'); ?></h2>
         <div class="sf-field">
-            <label for="countryId"><?php _e('Country', 'storefront'); ?></label>
+            <label for="countryId"><?php _e('Country', 'storefront'); ?><?php echo storefront_listing_mark('country'); ?></label>
             <?php ItemForm::country_select(osc_get_countries(), $sf_loc); ?>
         </div>
         <?php if (storefront_setting('location_input_type', 'autocomplete') === 'dropdown') {
@@ -88,11 +88,11 @@ osc_current_web_theme_path('common/header.php');
             $sf_rid = $sf_edit ? osc_item_region_id() : osc_user_field('fk_i_region_id');
             ?>
             <div class="sf-field">
-                <label for="regionId"><?php _e('Region', 'storefront'); ?></label>
+                <label for="regionId"><?php _e('Region', 'storefront'); ?><?php echo storefront_listing_mark('region'); ?></label>
                 <?php ItemForm::region_select(osc_get_regions($sf_cc), $sf_loc); ?>
             </div>
             <div class="sf-field">
-                <label for="cityId"><?php _e('City', 'storefront'); ?></label>
+                <label for="cityId"><?php _e('City', 'storefront'); ?><?php echo storefront_listing_mark('city'); ?></label>
                 <?php ItemForm::city_select(osc_get_cities($sf_rid), $sf_loc); ?>
             </div>
         <?php } else { ?>
@@ -104,13 +104,13 @@ osc_current_web_theme_path('common/header.php');
                  data-ac-url="<?php echo osc_esc_html(osc_base_url(true)); ?>"
                  data-ac-target="#regionId" data-ac-scope="#countryId" data-ac-scope-param="country"
                  data-ac-clears="#city,#cityId">
-                <label for="region"><?php _e('Region', 'storefront'); ?></label>
+                <label for="region"><?php _e('Region', 'storefront'); ?><?php echo storefront_listing_mark('region'); ?></label>
                 <?php ItemForm::region_text($sf_loc); ?>
             </div>
             <div class="sf-field" data-ac-field="location_cities"
                  data-ac-url="<?php echo osc_esc_html(osc_base_url(true)); ?>"
                  data-ac-target="#cityId" data-ac-scope="#regionId" data-ac-scope-param="region">
-                <label for="city"><?php _e('City', 'storefront'); ?></label>
+                <label for="city"><?php _e('City', 'storefront'); ?><?php echo storefront_listing_mark('city'); ?></label>
                 <?php ItemForm::city_text($sf_loc); ?>
             </div>
         <?php } ?>
