@@ -94,9 +94,9 @@
                         </div>
                     </div>
                 <?php } else { ?>
-                    <a class="sf-nav__link" href="<?php echo osc_user_login_url(); ?>"><?php _e('Log in', 'storefront'); ?></a>
+                    <a class="sf-nav__link sf-nav__login" href="<?php echo osc_user_login_url(); ?>"><?php _e('Log in', 'storefront'); ?></a>
                     <?php if (osc_user_registration_enabled()) { ?>
-                        <a class="sf-nav__link" href="<?php echo osc_register_account_url(); ?>"><?php _e('Register', 'storefront'); ?></a>
+                        <a class="sf-nav__link sf-nav__register" href="<?php echo osc_register_account_url(); ?>"><?php _e('Register', 'storefront'); ?></a>
                     <?php } ?>
                 <?php } ?>
             <?php } ?>

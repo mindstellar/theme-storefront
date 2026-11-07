@@ -2319,6 +2319,23 @@ body.sf-list .sf-card__desc {
     .sf-nav__menu { flex-direction: column; align-items: stretch; gap: 0; overflow: visible; padding: 0; margin: 0; }
     .sf-nav__link { white-space: normal; }
     .sf-nav__more { display: none; }
+
+    /* Account controls and Post a listing come first as their own group; the site menu follows under a divider. */
+    .sf-nav > .sf-nav__login, .sf-nav > .sf-nav__register, .sf-nav > .sf-nav__cta {
+        display: flex; align-items: center; justify-content: center; min-height: 44px; margin: 0 0 var(--space-2);
+        padding: 10px var(--space-4); border: 1px solid var(--color-divider); border-radius: var(--radius-md);
+        font-weight: 700; color: var(--color-text);
+    }
+    .sf-nav > .sf-nav__login:hover, .sf-nav > .sf-nav__register:hover { background: color-mix(in srgb, var(--color-text) 7%, transparent); text-decoration: none; }
+    .sf-nav > .sf-nav__register, .sf-nav > .sf-nav__cta { background: var(--color-accent-fill); border-color: transparent; color: var(--color-fixed-light); }
+    .sf-nav > .sf-nav__register:hover, .sf-nav > .sf-nav__cta:hover { background: var(--color-accent-fill-hover); color: var(--color-fixed-light); }
+    .sf-nav > .sf-account { order: 1; margin-bottom: var(--space-2); }
+    .sf-nav > .sf-nav__login { order: 1; }
+    .sf-nav > .sf-nav__register { order: 2; }
+    .sf-nav > .sf-nav__cta { order: 3; }
+    .sf-nav > .sf-nav__menu {
+        order: 4; margin-top: var(--space-2); padding-top: var(--space-2); border-top: 2px solid var(--color-divider);
+    }
 }
 
 /* The same drawer when the bar is wide but its links and actions still do not fit
