@@ -1457,15 +1457,14 @@ if (!function_exists('storefront_menu_current')) {
             return true;
         }
         // Home, Browse and Contact stay current on every page of their kind, filtered searches included.
-        $kinds = array(
-            array(osc_base_url(), 'osc_is_home_page'),
-            array(osc_search_url(array('page' => 'search')), 'osc_is_search_page'),
-            array(osc_contact_url(), 'osc_is_contact_page'),
-        );
-        foreach ($kinds as $kind) {
-            if ($key === storefront_url_key((string) $kind[0])) {
-                return (bool) call_user_func($kind[1]);
-            }
+        if ($key === storefront_url_key(osc_base_url())) {
+            return osc_is_home_page();
+        }
+        if ($key === storefront_url_key(osc_search_url(array('page' => 'search')))) {
+            return osc_is_search_page();
+        }
+        if ($key === storefront_url_key(osc_contact_url())) {
+            return osc_is_contact_page();
         }
 
         return false;
