@@ -17,7 +17,7 @@ $sf_loc = $sf_edit ? osc_item() : osc_user();
 storefront_enqueue_search();
 osc_enqueue_script('osc-uploader');
 osc_enqueue_style('osc-uploader');
-if (function_exists('osc_place_field')) {
+if (storefront_core_place_field()) {
     // Queued before the header so core's base styles print ahead of the theme's skin.
     osc_enqueue_style('osc-ui-common');
     osc_enqueue_script('osc-place-field');
@@ -80,10 +80,10 @@ osc_current_web_theme_path('common/header.php');
         <?php } ?>
 
         <h2 class="sf-form__legend"><?php _e('Listing location', 'storefront'); ?></h2>
-        <?php if (function_exists('osc_place_field')) {
+        <?php if (storefront_core_place_field()) {
             osc_place_field([
                 'item'       => $sf_edit ? osc_item() : null,
-                'label'      => function_exists('osc_item_place_style') && osc_item_place_style() !== 'single' ? '' : __('Location', 'storefront'),
+                'label'      => osc_item_place_style() !== 'single' ? '' : __('Location', 'storefront'),
                 'class'      => 'sf-field',
                 'part_class' => 'sf-field',
                 'hint_class' => 'sf-field__hint',

@@ -122,7 +122,7 @@ osc_admin_field_row(__('Home page', 'storefront'), array(
 ));
 
 osc_admin_form_section(__('Search & Location', 'storefront'), array('spaced' => true));
-if (!function_exists('osc_item_place_style')) {
+if (!storefront_core_place_field()) {
     osc_admin_select(array(
         'name'     => 'location_input_type',
         'width'    => 'text',

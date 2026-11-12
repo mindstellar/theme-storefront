@@ -7,6 +7,7 @@
 
 define('STOREFRONT_THEME_VERSION', '2.5.0');
 define('STOREFRONT_THEME_FOLDER', __DIR__);
+require_once STOREFRONT_THEME_FOLDER . '/inc/place-field.php';
 
 if (!OC_ADMIN) {
     // Vanilla, jQuery-free assets. Defer every script — all of the theme's behaviour
@@ -1155,7 +1156,7 @@ if (!function_exists('storefront_admin_actions')) {
                 $setCheckbox('hero_show_decor');
                 $setCheckbox('hero_show_chips');
                 $setCheckbox('home_show_featured');
-                if (!function_exists('osc_item_place_style')) {
+                if (!storefront_core_place_field()) {
                     $set('location_input_type');
                 }
                 $set('search_location_type');
@@ -1274,21 +1275,6 @@ if (!function_exists('storefront_page_templates')) {
 
 osc_add_hook('init', 'storefront_page_templates');
 
-/**
- * New cores own the post-form location style. A site that chose dropdowns here keeps them once,
- * when the core setting has never been saved.
- */
-if (!function_exists('storefront_map_place_style')) {
-    function storefront_map_place_style()
-    {
-        if (!function_exists('osc_item_place_style') || (string) osc_get_preference('item_place_style') !== '') {
-            return;
-        }
-        if (osc_get_preference('location_input_type', 'storefront') === 'dropdown') {
-            osc_set_preference('item_place_style', 'dropdown');
-        }
-    }
-}
 osc_add_hook('init', 'storefront_map_place_style');
 
 /** Names the menu places the theme shows in Appearance > Menus. Older cores have no menus. */
