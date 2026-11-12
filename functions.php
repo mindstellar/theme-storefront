@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-define('STOREFRONT_THEME_VERSION', '2.5.0');
+define('STOREFRONT_THEME_VERSION', '2.6.0');
 define('STOREFRONT_THEME_FOLDER', __DIR__);
 require_once STOREFRONT_THEME_FOLDER . '/inc/place-field.php';
 
