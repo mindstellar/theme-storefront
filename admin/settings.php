@@ -122,17 +122,19 @@ osc_admin_field_row(__('Home page', 'storefront'), array(
 ));
 
 osc_admin_form_section(__('Search & Location', 'storefront'), array('spaced' => true));
-osc_admin_select(array(
-    'name'     => 'location_input_type',
-    'width'    => 'text',
-    'label'    => __('Post & edit form location', 'storefront'),
-    'options'  => array(
-        'autocomplete' => __('Autocomplete (type-ahead)', 'storefront'),
-        'dropdown'     => __('Dropdowns (cascading selects)', 'storefront'),
-    ),
-    'selected' => $locationType,
-    'help'     => __('How the location field behaves on the listing post/edit form.', 'storefront'),
-));
+if (!function_exists('osc_item_place_style')) {
+    osc_admin_select(array(
+        'name'     => 'location_input_type',
+        'width'    => 'text',
+        'label'    => __('Post & edit form location', 'storefront'),
+        'options'  => array(
+            'autocomplete' => __('Autocomplete (type-ahead)', 'storefront'),
+            'dropdown'     => __('Dropdowns (cascading selects)', 'storefront'),
+        ),
+        'selected' => $locationType,
+        'help'     => __('How the location field behaves on the listing post/edit form.', 'storefront'),
+    ));
+}
 osc_admin_select(array(
     'name'     => 'search_location_type',
     'width'    => 'text',
