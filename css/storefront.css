@@ -1226,6 +1226,49 @@ body.sf-list .sf-card__desc {
     background: color-mix(in srgb, var(--color-accent) 12%, transparent); color: var(--color-accent-ink);
 }
 
+/* Place field (core markup; this theme only skins it). The list is never wider than its input. */
+.oe-place__pin { color: var(--color-muted); transition: color .15s ease; }
+.oe-place.is-picked .oe-place__pin { color: var(--color-accent-ink); }
+.sf-field input.oe-place__input { padding-inline: 34px 40px; }
+.sf .oe-place p { margin-bottom: 0; }
+.oe-place__clear { width: 34px; height: 34px; color: var(--color-muted); border-radius: var(--radius-sm); }
+.oe-place__clear:hover { background: color-mix(in srgb, var(--color-text) 7%, transparent); color: var(--color-text); }
+.oe-place__spin { width: 34px; height: 34px; color: var(--color-accent); }
+.oe-place .osc-ac-list { padding: var(--space-1); list-style: none; background: var(--color-surface); border: 1px solid var(--color-divider);
+    border-radius: var(--radius-md); box-shadow: var(--shadow-md); overflow-y: auto; transform-origin: top center; }
+.oe-place .osc-ac-option { gap: var(--space-2); padding: 8px 10px; font-size: 14px; color: var(--color-text); cursor: pointer; list-style: none; border-radius: var(--radius-sm); }
+.oe-place .osc-ac-option.is-active, .oe-place .osc-ac-option:hover { background: color-mix(in srgb, var(--color-accent) 12%, transparent); color: var(--color-accent-ink); }
+.oe-place__name { font-weight: 400; }
+.oe-place__name b { font-weight: 800; }
+.oe-place__region { color: var(--color-muted); }
+.oe-place .osc-ac-option.is-active .oe-place__region { color: inherit; }
+.oe-place__cc { padding: 1px 6px; border-radius: var(--radius-sm); font-weight: 800; background: var(--color-neutral-100); color: var(--color-neutral-700); }
+.oe-place__tick { color: var(--color-accent-ink); }
+.oe-place__status { padding: 8px 10px; line-height: 1.45; color: var(--color-muted); }
+.oe-place__status--more { margin-top: var(--space-1); padding-top: 8px; border-top: 1px solid var(--color-divider); }
+.oe-place__status--error { color: var(--color-accent-2-ink); }
+.oe-place__status svg { flex: none; }
+.oe-place__retry { color: var(--color-accent-ink); border-color: var(--color-divider); border-radius: var(--radius-sm); }
+.oe-place__retry:hover { background: color-mix(in srgb, var(--color-accent) 10%, transparent); }
+.oe-place__note { margin: var(--space-1) 0 0; font-size: 13px; line-height: 1.45; color: var(--color-muted); }
+.oe-place__note--picked { color: var(--color-accent-ink); }
+.oe-place__hint { margin: var(--space-1) 0 0; }
+.oe-place__saved { margin-top: var(--space-2); padding: 4px 8px 4px 6px; font: inherit; font-size: 13px; font-weight: 600;
+    color: var(--color-accent-ink); background: transparent; border: 1px solid var(--color-divider); border-radius: var(--radius-md); }
+.oe-place__saved:hover { background: color-mix(in srgb, var(--color-accent) 10%, transparent); border-color: color-mix(in srgb, var(--color-accent) 40%, transparent); }
+.oe-place__saved span { color: var(--color-text); font-weight: 400; }
+.oe-place__legend { display: block; margin-bottom: var(--space-2); font-weight: 600; color: var(--color-text); }
+.oe-place__part.sf-field, .oe-place__part.sf-field + .oe-place__part.sf-field { margin: 0 0 var(--space-4); }
+.sf-field .oe-place__select:disabled { opacity: .6; cursor: not-allowed; }
+@media (pointer: coarse) {
+    .oe-place .osc-ac-option { min-height: 44px; align-items: center; }
+    .oe-place__clear, .oe-place__spin { width: 40px; height: 40px; }
+}
+@media (max-width: 520px) {
+    .sf-field .oe-place__select, .sf-field input.oe-place__input, .sf-field input.oe-place__text { min-height: 44px; font-size: 16px; }
+    .oe-place .osc-ac-list { max-height: 50vh; }
+}
+
 /* Mobile: the rail becomes an off-canvas drawer so results lead the page */
 @media (max-width: 860px) {
     .sf-filterbtn { display: inline-flex; }

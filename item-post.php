@@ -17,6 +17,11 @@ $sf_loc = $sf_edit ? osc_item() : osc_user();
 storefront_enqueue_search();
 osc_enqueue_script('osc-uploader');
 osc_enqueue_style('osc-uploader');
+if (storefront_core_place_field()) {
+    // Queued before the header so core's base styles print ahead of the theme's skin.
+    osc_enqueue_style('osc-ui-common');
+    osc_enqueue_script('osc-place-field');
+}
 osc_current_web_theme_path('common/header.php');
 ?>
 <section class="sf-form sf-post">
@@ -75,44 +80,49 @@ osc_current_web_theme_path('common/header.php');
         <?php } ?>
 
         <h2 class="sf-form__legend"><?php _e('Listing location', 'storefront'); ?></h2>
-        <div class="sf-field">
-            <label for="countryId"><?php _e('Country', 'storefront'); ?><?php echo storefront_listing_mark('country'); ?></label>
-            <?php ItemForm::country_select(osc_get_countries(), $sf_loc); ?>
-        </div>
-        <?php if (storefront_setting('location_input_type', 'autocomplete') === 'dropdown') {
-            // Cascading core selects: Region options come from the current country,
-            // City options from the current region. js/storefront-search.js re-fetches
-            // both lists (core's location_regions/location_cities ajax) when Country or
-            // Region changes, so the pair stays in sync without a page reload.
-            $sf_cc  = $sf_edit ? osc_item_country_code() : osc_user_field('fk_c_country_code');
-            $sf_rid = $sf_edit ? osc_item_region_id() : osc_user_field('fk_i_region_id');
-            ?>
+        <?php if (storefront_core_place_field()) {
+            osc_place_field([
+                'item'       => $sf_edit ? osc_item() : null,
+                'label'      => osc_item_place_style() !== 'single' ? '' : __('Location', 'storefront'),
+                'class'      => 'sf-field',
+                'part_class' => 'sf-field',
+                'hint_class' => 'sf-field__hint',
+                'req_class'  => 'sf-req',
+            ]);
+        } else { ?>
             <div class="sf-field">
-                <label for="regionId"><?php _e('Region', 'storefront'); ?><?php echo storefront_listing_mark('region'); ?></label>
-                <?php ItemForm::region_select(osc_get_regions($sf_cc), $sf_loc); ?>
+                <label for="countryId"><?php _e('Country', 'storefront'); ?><?php echo storefront_listing_mark('country'); ?></label>
+                <?php ItemForm::country_select(osc_get_countries(), $sf_loc); ?>
             </div>
-            <div class="sf-field">
-                <label for="cityId"><?php _e('City', 'storefront'); ?><?php echo storefront_listing_mark('city'); ?></label>
-                <?php ItemForm::city_select(osc_get_cities($sf_rid), $sf_loc); ?>
-            </div>
-        <?php } else { ?>
-            <?php // Region/City are core-rendered plain #region/#city text inputs. This theme is
-                  // jQuery-free, so core's own autocomplete never binds; instead we declare the same
-                  // data-ac config the search rail uses (js/storefront.js promotes it onto the inner
-                  // input and wires the shared vanilla autocomplete against core's location_* ajax). ?>
-            <div class="sf-field" data-ac-field="location_regions"
-                 data-ac-url="<?php echo osc_esc_html(osc_base_url(true)); ?>"
-                 data-ac-target="#regionId" data-ac-scope="#countryId" data-ac-scope-param="country"
-                 data-ac-clears="#city,#cityId">
-                <label for="region"><?php _e('Region', 'storefront'); ?><?php echo storefront_listing_mark('region'); ?></label>
-                <?php ItemForm::region_text($sf_loc); ?>
-            </div>
-            <div class="sf-field" data-ac-field="location_cities"
-                 data-ac-url="<?php echo osc_esc_html(osc_base_url(true)); ?>"
-                 data-ac-target="#cityId" data-ac-scope="#regionId" data-ac-scope-param="region">
-                <label for="city"><?php _e('City', 'storefront'); ?><?php echo storefront_listing_mark('city'); ?></label>
-                <?php ItemForm::city_text($sf_loc); ?>
-            </div>
+            <?php if (storefront_setting('location_input_type', 'autocomplete') === 'dropdown') {
+                // Cores without the place field: cascading selects, kept in sync by js/storefront-search.js.
+                $sf_cc  = $sf_edit ? osc_item_country_code() : osc_user_field('fk_c_country_code');
+                $sf_rid = $sf_edit ? osc_item_region_id() : osc_user_field('fk_i_region_id');
+                ?>
+                <div class="sf-field">
+                    <label for="regionId"><?php _e('Region', 'storefront'); ?><?php echo storefront_listing_mark('region'); ?></label>
+                    <?php ItemForm::region_select(osc_get_regions($sf_cc), $sf_loc); ?>
+                </div>
+                <div class="sf-field">
+                    <label for="cityId"><?php _e('City', 'storefront'); ?><?php echo storefront_listing_mark('city'); ?></label>
+                    <?php ItemForm::city_select(osc_get_cities($sf_rid), $sf_loc); ?>
+                </div>
+            <?php } else { ?>
+                <?php // Plain text inputs; the data-ac config is promoted onto the inner input by js/storefront.js. ?>
+                <div class="sf-field" data-ac-field="location_regions"
+                     data-ac-url="<?php echo osc_esc_html(osc_base_url(true)); ?>"
+                     data-ac-target="#regionId" data-ac-scope="#countryId" data-ac-scope-param="country"
+                     data-ac-clears="#city,#cityId">
+                    <label for="region"><?php _e('Region', 'storefront'); ?><?php echo storefront_listing_mark('region'); ?></label>
+                    <?php ItemForm::region_text($sf_loc); ?>
+                </div>
+                <div class="sf-field" data-ac-field="location_cities"
+                     data-ac-url="<?php echo osc_esc_html(osc_base_url(true)); ?>"
+                     data-ac-target="#cityId" data-ac-scope="#regionId" data-ac-scope-param="region">
+                    <label for="city"><?php _e('City', 'storefront'); ?><?php echo storefront_listing_mark('city'); ?></label>
+                    <?php ItemForm::city_text($sf_loc); ?>
+                </div>
+            <?php } ?>
         <?php } ?>
         <div class="sf-field">
             <label for="cityArea"><?php _e('City area', 'storefront'); ?></label>

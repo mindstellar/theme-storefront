@@ -26,7 +26,7 @@ Shopclass bundles Storefront and activates it on a fresh install. To install it 
    - **Colour palette**: Teal, Indigo or Violet.
    - **Colour scheme**: Light, Dark or Auto (follow device).
    - **Home / Hero**: **Headline** and **Tagline**, plus switches for the decorative graphic, the popular-category chips and the featured listings row.
-   - **Search & Location**: **Post & edit form location** (autocomplete or dropdowns), **Search page location** (country, region and city; region and city; or autocomplete), **Search box placeholder** and **Default results view** (gallery or list).
+   - **Search & Location**: **Post & edit form location** (autocomplete or dropdowns; on Shopclass 7.1 and newer core's **Location field** setting takes over, a dropdowns site keeps dropdowns and an autocomplete site gets core's one box), **Search page location** (country, region and city; region and city; or autocomplete), **Search box placeholder** and **Default results view** (gallery or list).
    - **Footer & Social**: **Footer tagline**, links for Facebook, X, Instagram, YouTube and LinkedIn, and the "Powered by Shopclass" credit.
 3. Press **Save**. An empty text field restores its default.
 

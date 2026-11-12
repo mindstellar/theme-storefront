@@ -56,7 +56,10 @@
         if (typeof oscAutocomplete !== 'function') { return; }
         // Item-post location fields are core-rendered plain inputs we can't annotate
         // inline; copy any wrapper [data-ac-field] config onto the inner input first.
+        // Only cores without osc_place_field need this; remove it when 7.0 support ends.
+        var corePlace = !!document.querySelector('[data-osc-place]');
         document.querySelectorAll('[data-ac-field]').forEach(function (wrap) {
+            if (corePlace) { return; }
             var input = wrap.querySelector('input[type="text"]');
             if (!input || input.hasAttribute('data-ac')) { return; }
             input.setAttribute('data-ac', wrap.getAttribute('data-ac-field'));
@@ -131,10 +134,11 @@
         });
     }
     function bindLocationDropdownCascade() {
-        [
-            { country: '#countryId', region: '#regionId', city: '#cityId' }, // item-post
-            { country: '#sCountry', region: '#sRegion', city: '#sCity' }     // search rail
-        ].forEach(function (ids) {
+        var pairs = [{ country: '#sCountry', region: '#sRegion', city: '#sCity' }]; // search rail
+        if (!document.querySelector('[data-osc-place]')) {
+            pairs.push({ country: '#countryId', region: '#regionId', city: '#cityId' }); // item-post on cores without the place field
+        }
+        pairs.forEach(function (ids) {
             var countryEl = document.querySelector(ids.country);
             var regionEl = document.querySelector(ids.region);
             var cityEl = document.querySelector(ids.city);
