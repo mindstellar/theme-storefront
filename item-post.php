@@ -95,10 +95,7 @@ osc_current_web_theme_path('common/header.php');
                 <?php ItemForm::country_select(osc_get_countries(), $sf_loc); ?>
             </div>
             <?php if (storefront_setting('location_input_type', 'autocomplete') === 'dropdown') {
-                // Cascading core selects: Region options come from the current country,
-                // City options from the current region. js/storefront-search.js re-fetches
-                // both lists (core's location_regions/location_cities ajax) when Country or
-                // Region changes, so the pair stays in sync without a page reload.
+                // Cores without the place field: cascading selects, kept in sync by js/storefront-search.js.
                 $sf_cc  = $sf_edit ? osc_item_country_code() : osc_user_field('fk_c_country_code');
                 $sf_rid = $sf_edit ? osc_item_region_id() : osc_user_field('fk_i_region_id');
                 ?>
@@ -111,10 +108,7 @@ osc_current_web_theme_path('common/header.php');
                     <?php ItemForm::city_select(osc_get_cities($sf_rid), $sf_loc); ?>
                 </div>
             <?php } else { ?>
-                <?php // Region/City are core-rendered plain #region/#city text inputs. This theme is
-                      // jQuery-free, so core's own autocomplete never binds; instead we declare the same
-                      // data-ac config the search rail uses (js/storefront.js promotes it onto the inner
-                      // input and wires the shared vanilla autocomplete against core's location_* ajax). ?>
+                <?php // Plain text inputs; the data-ac config is promoted onto the inner input by js/storefront.js. ?>
                 <div class="sf-field" data-ac-field="location_regions"
                      data-ac-url="<?php echo osc_esc_html(osc_base_url(true)); ?>"
                      data-ac-target="#regionId" data-ac-scope="#countryId" data-ac-scope-param="country"

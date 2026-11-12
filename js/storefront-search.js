@@ -56,7 +56,7 @@
         if (typeof oscAutocomplete !== 'function') { return; }
         // Item-post location fields are core-rendered plain inputs we can't annotate
         // inline; copy any wrapper [data-ac-field] config onto the inner input first.
-        // A core with its own place field binds the form itself.
+        // Only cores without osc_place_field need this; remove it when 7.0 support ends.
         var corePlace = !!document.querySelector('[data-osc-place]');
         document.querySelectorAll('[data-ac-field]').forEach(function (wrap) {
             if (corePlace) { return; }

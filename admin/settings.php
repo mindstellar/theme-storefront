@@ -13,7 +13,6 @@ $formAction = osc_admin_render_theme_url('oc-content/themes/storefront/admin/set
 
 $palette          = (string) osc_get_preference('palette', 'storefront');
 $colorScheme      = (string) osc_get_preference('color_scheme', 'storefront');
-$locationType     = (string) osc_get_preference('location_input_type', 'storefront');
 $searchLocation   = (string) osc_get_preference('search_location_type', 'storefront');
 $showAs           = (string) osc_get_preference('defaultShowAs@all', 'storefront');
 
@@ -22,9 +21,6 @@ if ($palette === '') {
 }
 if ($colorScheme === '') {
     $colorScheme = 'light';
-}
-if ($locationType === '') {
-    $locationType = 'autocomplete';
 }
 if ($searchLocation === '') {
     $searchLocation = 'autocomplete';
@@ -123,6 +119,7 @@ osc_admin_field_row(__('Home page', 'storefront'), array(
 
 osc_admin_form_section(__('Search & Location', 'storefront'), array('spaced' => true));
 if (!storefront_core_place_field()) {
+    $locationType = (string) osc_get_preference('location_input_type', 'storefront') ?: 'autocomplete';
     osc_admin_select(array(
         'name'     => 'location_input_type',
         'width'    => 'text',
