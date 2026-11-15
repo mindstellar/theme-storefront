@@ -461,14 +461,17 @@ select.sf-select, .sf-field select { cursor: pointer; }
 }
 .sf-field--check input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--color-accent); }
 .sf-field__hint { margin: var(--space-1) 0 0; font-size: 13px; line-height: 1.45; color: var(--color-muted); }
-.sf-field input[type="file"] { max-width: 100%; font: inherit; font-size: 13px; color: var(--color-muted); }
-.sf-field input[type="file"]::file-selector-button {
+.sf-field input[type="file"],
+.meta_list input[type="file"] { max-width: 100%; font: inherit; font-size: 13px; color: var(--color-muted); }
+.sf-field input[type="file"]::file-selector-button,
+.meta_list input[type="file"]::file-selector-button {
     margin-inline-end: var(--space-3); padding: 6px var(--space-3); cursor: pointer;
     font-family: var(--font-heading); font-weight: 800; font-size: 13px; color: var(--color-text);
     background: transparent; border: 1px solid var(--color-divider); border-radius: var(--radius-md);
     transition: background .15s ease;
 }
-.sf-field input[type="file"]::file-selector-button:hover { background: color-mix(in srgb, var(--color-text) 7%, transparent); }
+.sf-field input[type="file"]::file-selector-button:hover,
+.meta_list input[type="file"]::file-selector-button:hover { background: color-mix(in srgb, var(--color-text) 7%, transparent); }
 
 /* Cards (generic surface) */
 .card {
