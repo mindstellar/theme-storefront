@@ -8,6 +8,7 @@
 define('STOREFRONT_THEME_VERSION', '2.6.1');
 define('STOREFRONT_THEME_FOLDER', __DIR__);
 require_once STOREFRONT_THEME_FOLDER . '/inc/place-field.php';
+require_once STOREFRONT_THEME_FOLDER . '/inc/text-settings.php';
 
 if (!OC_ADMIN) {
     // Vanilla, jQuery-free assets. Defer every script — all of the theme's behaviour
@@ -244,6 +245,7 @@ if (!function_exists('storefront_theme_update')) {
         if ($current_version === 0 || $current_version === '') {
             storefront_theme_install();
         }
+        storefront_migrate_text_settings();
         osc_set_preference('version', STOREFRONT_THEME_VERSION, 'storefront');
         osc_reset_preferences();
     }
@@ -1152,7 +1154,7 @@ if (!function_exists('storefront_admin_actions')) {
                 $set('palette');
                 $set('color_scheme');
                 $set('hero_headline');
-                $set('hero_tagline');
+                storefront_save_text('hero_tagline');
                 $setCheckbox('hero_show_decor');
                 $setCheckbox('hero_show_chips');
                 $setCheckbox('home_show_featured');
@@ -1163,7 +1165,7 @@ if (!function_exists('storefront_admin_actions')) {
                 $set('keyword_placeholder');
                 osc_set_preference('defaultShowAs@all', Params::getParam('defaultShowAs@all'), 'storefront');
                 osc_set_preference('defaultShowAs@search', Params::getParam('defaultShowAs@all'));
-                $set('footer_message');
+                storefront_save_text('footer_message');
                 if (!storefront_has_menus()) {
                     $set('social_facebook');
                     $set('social_twitter');

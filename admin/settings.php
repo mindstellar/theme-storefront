@@ -51,6 +51,16 @@ foreach ($palettes as $value => $info) {
 }
 
 $pref = static fn ($key) => (string) osc_get_preference($key, 'storefront');
+
+$textLocales = storefront_text_locales();
+$textValues  = static function ($key) use ($textLocales, $pref) {
+    $values = array();
+    foreach (array_keys($textLocales) as $code) {
+        $values[$code] = $pref($key . $code);
+    }
+
+    return $values;
+};
 ?>
 <style type="text/css" media="screen">
     .sf-swatches {
@@ -102,9 +112,11 @@ osc_admin_text(array(
     'help'  => __('Overrides the big home headline. Leave empty to use the site title.', 'storefront'),
 ));
 osc_admin_textarea(array(
-    'name'  => 'hero_tagline',
-    'label' => __('Tagline', 'storefront'),
-    'value' => $pref('hero_tagline'),
+    'name'      => 'hero_tagline',
+    'label'     => __('Tagline', 'storefront'),
+    'translate' => true,
+    'locales'   => $textLocales,
+    'value'     => $textValues('hero_tagline'),
     'rows'  => 3,
     'help'  => __('Sub-text shown under the headline. Leave empty to use the site description.', 'storefront'),
 ));
@@ -174,9 +186,11 @@ osc_admin_form_section(__('Footer & Social', 'storefront'), $hasMenus ? array(
     'intro'  => __('Leave any field empty to hide that icon from the footer.', 'storefront'),
 ));
 osc_admin_textarea(array(
-    'name'  => 'footer_message',
-    'label' => __('Footer tagline', 'storefront'),
-    'value' => $pref('footer_message'),
+    'name'      => 'footer_message',
+    'label'     => __('Footer tagline', 'storefront'),
+    'translate' => true,
+    'locales'   => $textLocales,
+    'value'     => $textValues('footer_message'),
     'rows'  => 2,
     'help'  => __('Brand tagline shown in the footer. Leave empty to use the default.', 'storefront'),
 ));

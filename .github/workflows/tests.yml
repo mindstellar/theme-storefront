@@ -18,3 +18,4 @@ jobs:
         run: |
           php tests/messaging.php
           php tests/place-field.php
+          php tests/text-per-language.php

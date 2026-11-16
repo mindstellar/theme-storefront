@@ -31,7 +31,7 @@ $sf_hues = array(
         <h1 class="sf-hero__title"><?php echo osc_esc_html(storefront_setting('hero_headline', osc_page_title())); ?></h1>
         <p class="sf-hero__sub">
             <?php
-            $sf_hero_tagline = storefront_setting('hero_tagline', '');
+            $sf_hero_tagline = storefront_text_setting('hero_tagline', '');
             if ($sf_hero_tagline !== '') {
                 echo osc_esc_html($sf_hero_tagline);
             } else {
