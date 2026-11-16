@@ -53,10 +53,11 @@ foreach ($palettes as $value => $info) {
 $pref = static fn ($key) => (string) osc_get_preference($key, 'storefront');
 
 $textLocales = storefront_text_locales();
-$textValues  = static function ($key) use ($textLocales, $pref) {
+// Each language shows what its visitors see, so saving keeps the old single value.
+$textValues  = static function ($key) use ($textLocales) {
     $values = array();
     foreach (array_keys($textLocales) as $code) {
-        $values[$code] = $pref($key . $code);
+        $values[$code] = storefront_text_value($key, $code);
     }
 
     return $values;
