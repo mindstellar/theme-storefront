@@ -6,7 +6,8 @@
  */
 
 /**
- * The tagline and footer text are one value per language, in core's preferences: the settings form
+ * The headline, tagline, search placeholder, footer text and site name are one value per language,
+ * in core's preferences: the settings and brand forms
  * shows each language what its visitors see (its own text, the default language's, then the old
  * single value), so saving before the update has moved the old value keeps it; a visitor reads
  * their language, then the default; the update moves the old value to every language once.
@@ -78,12 +79,17 @@ $as = static function (string $locale, callable $read) {
     return $value;
 };
 /** The settings form as the admin sees it: each translated textarea's text, by posted name. */
-$form = static function () use ($root): array {
+$form = static function (array $keys = array('hero_tagline', 'footer_message'), string $page = 'settings') use ($root): array {
     ob_start();
-    require $root . '/admin/settings.php';
-    $html = (string) ob_get_clean();
-    preg_match_all('#<textarea[^>]*name="((?:hero_tagline|footer_message)[a-z]{2}_[A-Z]{2})"[^>]*>(.*?)</textarea>#s', $html, $m, PREG_SET_ORDER);
+    require $root . '/admin/' . $page . '.php';
+    $html  = (string) ob_get_clean();
+    $names = '(?:' . implode('|', $keys) . ')[a-z]{2}_[A-Z]{2}';
+    preg_match_all('#<textarea[^>]*name="(' . $names . ')"[^>]*>(.*?)</textarea>#s', $html, $m, PREG_SET_ORDER);
     $out = array();
+    foreach ($m as $hit) {
+        $out[$hit[1]] = html_entity_decode($hit[2], ENT_QUOTES);
+    }
+    preg_match_all('#<input(?=[^>]*name="(' . $names . ')")(?=[^>]*value="([^"]*)")[^>]*>#', $html, $m, PREG_SET_ORDER);
     foreach ($m as $hit) {
         $out[$hit[1]] = html_entity_decode($hit[2], ENT_QUOTES);
     }
@@ -138,6 +144,30 @@ pin('the old value moves to each empty language, a set one is kept, the old key 
 ));
 storefront_migrate_text_settings();
 pin('run again it changes nothing', array('Moved footer', 'Hindi footer'), array($stored('footer_messageen_US'), $stored('footer_messagehi_IN')));
+
+harness_section('the headline, search placeholder and site name');
+
+$set(array('hero_headline' => 'Old headline', 'keyword_placeholder' => 'Old placeholder', 'header_logo_text' => 'Old name'));
+pin('the settings form shows the old headline and placeholder in every language', array(
+    'hero_headlineen_US' => 'Old headline', 'hero_headlinehi_IN' => 'Old headline',
+    'keyword_placeholderen_US' => 'Old placeholder', 'keyword_placeholderhi_IN' => 'Old placeholder',
+), $form(array('hero_headline', 'keyword_placeholder')));
+pin('the brand form shows the old site name in every language', array(
+    'header_logo_texten_US' => 'Old name', 'header_logo_texthi_IN' => 'Old name',
+), $form(array('header_logo_text'), 'header'));
+
+$_POST = array('hero_headlineen_US' => 'Find it', 'hero_headlinehi_IN' => 'Khojiye', 'header_logo_texten_US' => 'Bazaar', 'header_logo_texthi_IN' => '');
+Params::init();
+storefront_save_text('hero_headline');
+storefront_save_text('header_logo_text');
+osc_reset_preferences();
+pin('a Hindi visitor reads the Hindi headline', 'Khojiye', $as('hi_IN', static fn () => storefront_text_setting('hero_headline', 'x')));
+pin('...and the default language\'s site name where Hindi has none', 'Bazaar', $as('hi_IN', static fn () => storefront_text_setting('header_logo_text', 'x')));
+
+storefront_migrate_text_settings();
+pin('the update moves the old placeholder to each language', array('Old placeholder', 'Old placeholder', null), array(
+    $stored('keyword_placeholderen_US'), $stored('keyword_placeholderhi_IN'), $stored('keyword_placeholder'),
+));
 
 $code = harness_result();
 ob_end_flush();

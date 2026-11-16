@@ -11,7 +11,7 @@
 if (!function_exists('storefront_text_keys')) {
     function storefront_text_keys()
     {
-        return array('hero_tagline', 'footer_message');
+        return array('hero_headline', 'hero_tagline', 'keyword_placeholder', 'footer_message', 'header_logo_text');
     }
 }
 

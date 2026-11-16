@@ -160,7 +160,7 @@ msgstr "Any region"
 msgid "Appearance"
 msgstr "Appearance"
 
-#: admin/settings.php:183
+#: admin/settings.php:187
 msgid "Appearance → Menus → Social icons"
 msgstr "Appearance → Menus → Social icons"
 
@@ -176,8 +176,8 @@ msgstr "Attachment"
 msgid "Auto (follow device)"
 msgstr "Auto (follow device)"
 
-#: admin/settings.php:141
-#: admin/settings.php:155
+#: admin/settings.php:143
+#: admin/settings.php:157
 msgid "Autocomplete (type-ahead)"
 msgstr "Autocomplete (type-ahead)"
 
@@ -212,7 +212,7 @@ msgstr "Blocked"
 msgid "Brand settings updated correctly."
 msgstr "Brand settings updated correctly."
 
-#: admin/settings.php:196
+#: admin/settings.php:200
 msgid "Brand tagline shown in the footer. Leave empty to use the default."
 msgstr "Brand tagline shown in the footer. Leave empty to use the default."
 
@@ -322,7 +322,7 @@ msgstr "Colour palette"
 msgid "Colour scheme"
 msgstr "Colour scheme"
 
-#: admin/header.php:134
+#: admin/header.php:141
 msgid "Compact logo (optional)"
 msgstr "Compact logo (optional)"
 
@@ -357,7 +357,7 @@ msgstr "Could not subscribe. Please try again."
 msgid "Country"
 msgstr "Country"
 
-#: admin/settings.php:153
+#: admin/settings.php:155
 msgid "Country, region & city"
 msgstr "Country, region & city"
 
@@ -388,7 +388,7 @@ msgstr "Dashboard"
 msgid "Deactivate"
 msgstr "Deactivate"
 
-#: admin/settings.php:169
+#: admin/settings.php:173
 msgid "Default results view"
 msgstr "Default results view"
 
@@ -442,7 +442,7 @@ msgstr "Details"
 msgid "Download"
 msgstr "Download"
 
-#: admin/settings.php:142
+#: admin/settings.php:144
 msgid "Dropdowns (cascading selects)"
 msgstr "Dropdowns (cascading selects)"
 
@@ -487,7 +487,7 @@ msgstr "Enter a valid e-mail address."
 msgid "Expired"
 msgstr "Expired"
 
-#: admin/settings.php:200
+#: admin/settings.php:204
 #: functions.php:1416
 msgid "Facebook"
 msgstr "Facebook"
@@ -552,11 +552,11 @@ msgstr "Flagged"
 msgid "Footer"
 msgstr "Footer"
 
-#: admin/settings.php:179
+#: admin/settings.php:183
 msgid "Footer & Social"
 msgstr "Footer & Social"
 
-#: admin/settings.php:191
+#: admin/settings.php:195
 msgid "Footer tagline"
 msgstr "Footer tagline"
 
@@ -577,7 +577,7 @@ msgstr "From %s"
 msgid "Full width"
 msgstr "Full width"
 
-#: admin/settings.php:171
+#: admin/settings.php:175
 msgid "Gallery"
 msgstr "Gallery"
 
@@ -623,19 +623,19 @@ msgstr "Home"
 msgid "Home / Hero"
 msgstr "Home / Hero"
 
-#: admin/settings.php:124
+#: admin/settings.php:126
 msgid "Home page"
 msgstr "Home page"
 
-#: admin/settings.php:175
+#: admin/settings.php:179
 msgid "How search results are displayed by default."
 msgstr "How search results are displayed by default."
 
-#: admin/settings.php:145
+#: admin/settings.php:147
 msgid "How the location field behaves on the listing post/edit form."
 msgstr "How the location field behaves on the listing post/edit form."
 
-#: admin/settings.php:158
+#: admin/settings.php:160
 msgid ""
 "How the location filter behaves on the search page. \"Region & city\" suits "
 "single-country sites — it hides the country choice and scopes results to "
@@ -658,7 +658,7 @@ msgstr "Indigo"
 msgid "Individual"
 msgstr "Individual"
 
-#: admin/settings.php:202
+#: admin/settings.php:206
 #: functions.php:1418
 msgid "Instagram"
 msgstr "Instagram"
@@ -683,11 +683,11 @@ msgstr "Language"
 msgid "Latest listings"
 msgstr "Latest listings"
 
-#: admin/settings.php:187
+#: admin/settings.php:191
 msgid "Leave any field empty to hide that icon from the footer."
 msgstr "Leave any field empty to hide that icon from the footer."
 
-#: admin/settings.php:164
+#: admin/settings.php:168
 msgid "Leave empty to use the default placeholder."
 msgstr "Leave empty to use the default placeholder."
 
@@ -703,7 +703,7 @@ msgstr "Link copied to clipboard."
 msgid "Link selected — press Ctrl+C to copy."
 msgstr "Link selected — press Ctrl+C to copy."
 
-#: admin/settings.php:204
+#: admin/settings.php:208
 #: functions.php:1420
 msgid "LinkedIn"
 msgstr "LinkedIn"
@@ -712,7 +712,7 @@ msgstr "LinkedIn"
 msgid "Links"
 msgstr "Links"
 
-#: admin/settings.php:172
+#: admin/settings.php:176
 msgid "List"
 msgstr "List"
 
@@ -795,11 +795,11 @@ msgstr "Log in to contact the seller."
 msgid "Log out"
 msgstr "Log out"
 
-#: admin/header.php:126
+#: admin/header.php:133
 msgid "Logo"
 msgstr "Logo"
 
-#: admin/header.php:117
+#: admin/header.php:124
 msgid "Logos"
 msgstr "Logos"
 
@@ -959,7 +959,7 @@ msgstr "Other details"
 msgid "Over %s"
 msgstr "Over %s"
 
-#: admin/settings.php:113
+#: admin/settings.php:115
 msgid "Overrides the big home headline. Leave empty to use the site title."
 msgstr "Overrides the big home headline. Leave empty to use the site title."
 
@@ -1000,7 +1000,7 @@ msgstr "Please sign in to subscribe."
 msgid "Popular:"
 msgstr "Popular:"
 
-#: admin/settings.php:139
+#: admin/settings.php:141
 msgid "Post & edit form location"
 msgstr "Post & edit form location"
 
@@ -1109,7 +1109,7 @@ msgstr "Refine by category"
 msgid "Region"
 msgstr "Region"
 
-#: admin/settings.php:154
+#: admin/settings.php:156
 msgid "Region & city"
 msgstr "Region & city"
 
@@ -1147,11 +1147,11 @@ msgstr "Report this listing"
 msgid "Reset"
 msgstr "Reset"
 
-#: admin/header.php:115
+#: admin/header.php:122
 msgid "Save"
 msgstr "Save"
 
-#: admin/settings.php:222
+#: admin/settings.php:226
 msgid "Save settings"
 msgstr "Save settings"
 
@@ -1161,11 +1161,11 @@ msgstr "Save settings"
 msgid "Search"
 msgstr "Search"
 
-#: admin/settings.php:133
+#: admin/settings.php:135
 msgid "Search & Location"
 msgstr "Search & Location"
 
-#: admin/settings.php:162
+#: admin/settings.php:164
 msgid "Search box placeholder"
 msgstr "Search box placeholder"
 
@@ -1177,7 +1177,7 @@ msgstr "Search filters"
 msgid "Search listings"
 msgstr "Search listings"
 
-#: admin/settings.php:151
+#: admin/settings.php:153
 msgid "Search page location"
 msgstr "Search page location"
 
@@ -1233,11 +1233,11 @@ msgstr "Share this listing"
 msgid "Share…"
 msgstr "Share…"
 
-#: admin/settings.php:218
+#: admin/settings.php:222
 msgid "Show \"Powered by Shopclass\" credit"
 msgstr "Show \"Powered by Shopclass\" credit"
 
-#: admin/settings.php:126
+#: admin/settings.php:128
 msgid "Show decorative graphic"
 msgstr "Show decorative graphic"
 
@@ -1245,7 +1245,7 @@ msgstr "Show decorative graphic"
 msgid "Show e-mail on the listing page"
 msgstr "Show e-mail on the listing page"
 
-#: admin/settings.php:130
+#: admin/settings.php:132
 msgid "Show featured (promoted) listings on the home page"
 msgstr "Show featured (promoted) listings on the home page"
 
@@ -1257,11 +1257,11 @@ msgstr "Show map"
 msgid "Show phone number"
 msgstr "Show phone number"
 
-#: admin/settings.php:128
+#: admin/settings.php:130
 msgid "Show popular-category chips"
 msgstr "Show popular-category chips"
 
-#: admin/header.php:135
+#: admin/header.php:142
 msgid ""
 "Shown on small screens in place of the main logo. Use a square-ish mark. "
 "Falls back to the main logo if left empty."
@@ -1278,7 +1278,7 @@ msgstr "Sign in"
 msgid "Sign-in details"
 msgstr "Sign-in details"
 
-#: admin/header.php:111
+#: admin/header.php:116
 msgid "Site name"
 msgstr "Site name"
 
@@ -1295,7 +1295,7 @@ msgstr "Social"
 msgid "Social icons"
 msgstr "Social icons"
 
-#: admin/settings.php:182
+#: admin/settings.php:186
 msgid "Social links are set in %s."
 msgstr "Social links are set in %s."
 
@@ -1341,7 +1341,7 @@ msgstr "Storefront: Brand"
 msgid "Storefront: Settings"
 msgstr "Storefront: Settings"
 
-#: admin/settings.php:122
+#: admin/settings.php:124
 msgid "Sub-text shown under the headline. Leave empty to use the site description."
 msgstr "Sub-text shown under the headline. Leave empty to use the site description."
 
@@ -1369,7 +1369,7 @@ msgstr "Subscribing…"
 msgid "Support hours"
 msgstr "Support hours"
 
-#: admin/header.php:119
+#: admin/header.php:126
 msgid ""
 "SVG, PNG or JPG. SVG is stored inline and follows your text colour (correct "
 "in dark mode). Scripts and remote references are stripped from SVGs on "
@@ -1379,7 +1379,7 @@ msgstr ""
 "in dark mode). Scripts and remote references are stripped from SVGs on "
 "upload."
 
-#: admin/settings.php:117
+#: admin/settings.php:119
 msgid "Tagline"
 msgstr "Tagline"
 
@@ -1428,7 +1428,7 @@ msgstr ""
 "The seller will see your name and email. Never pay in advance — meet in a "
 "public place and inspect the item first."
 
-#: admin/header.php:113
+#: admin/header.php:120
 msgid ""
 "The wordmark shown when no logo image is set, and the accessible site name "
 "in every case."
@@ -1601,7 +1601,7 @@ msgstr "Within %s"
 msgid "Wrong category"
 msgstr "Wrong category"
 
-#: admin/settings.php:201
+#: admin/settings.php:205
 msgid "X (Twitter)"
 msgstr "X (Twitter)"
 
@@ -1634,7 +1634,7 @@ msgstr "Your e-mail address"
 msgid "Your latest listings"
 msgstr "Your latest listings"
 
-#: admin/header.php:127
+#: admin/header.php:134
 msgid "Your main logo, shown in the site header."
 msgstr "Your main logo, shown in the site header."
 
@@ -1660,7 +1660,7 @@ msgstr "Your orders"
 msgid "Your recent orders"
 msgstr "Your recent orders"
 
-#: admin/settings.php:203
+#: admin/settings.php:207
 #: functions.php:1419
 msgid "YouTube"
 msgstr "YouTube"

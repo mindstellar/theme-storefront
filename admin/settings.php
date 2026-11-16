@@ -107,9 +107,11 @@ osc_admin_radio_group(array(
 
 osc_admin_form_section(__('Home / Hero', 'storefront'), array('spaced' => true));
 osc_admin_text(array(
-    'name'  => 'hero_headline',
-    'label' => __('Headline', 'storefront'),
-    'value' => $pref('hero_headline'),
+    'name'      => 'hero_headline',
+    'label'     => __('Headline', 'storefront'),
+    'translate' => true,
+    'locales'   => $textLocales,
+    'value'     => $textValues('hero_headline'),
     'help'  => __('Overrides the big home headline. Leave empty to use the site title.', 'storefront'),
 ));
 osc_admin_textarea(array(
@@ -158,9 +160,11 @@ osc_admin_select(array(
     'help'     => __('How the location filter behaves on the search page. "Region & city" suits single-country sites — it hides the country choice and scopes results to your site\'s default country.', 'storefront'),
 ));
 osc_admin_text(array(
-    'name'  => 'keyword_placeholder',
-    'label' => __('Search box placeholder', 'storefront'),
-    'value' => $pref('keyword_placeholder'),
+    'name'      => 'keyword_placeholder',
+    'label'     => __('Search box placeholder', 'storefront'),
+    'translate' => true,
+    'locales'   => $textLocales,
+    'value'     => $textValues('keyword_placeholder'),
     'help'  => __('Leave empty to use the default placeholder.', 'storefront'),
 ));
 osc_admin_select(array(

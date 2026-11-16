@@ -302,7 +302,7 @@ if (!function_exists('storefront_setting')) {
 if (!function_exists('storefront_logo')) {
     function storefront_logo($compact = false)
     {
-        $siteName = storefront_setting('header_logo_text', osc_page_title());
+        $siteName = storefront_text_setting('header_logo_text', osc_page_title());
         $wordmark = '<span class="sf-wordmark">' . osc_esc_html($siteName) . '</span>';
 
         $resolveMark = static function ($svgKey, $rasterKey) use ($siteName) {
@@ -1060,7 +1060,7 @@ if (!function_exists('storefront_admin_actions')) {
 
         switch ($action) {
             case 'storefront_brand':
-                osc_set_preference('header_logo_text', Params::getParam('header_logo_text'), 'storefront');
+                storefront_save_text('header_logo_text');
                 osc_reset_preferences();
                 osc_add_flash_ok_message(__('Brand settings updated correctly.', 'storefront'), 'admin');
                 osc_redirect_to($adminUrl('header'));
@@ -1153,7 +1153,7 @@ if (!function_exists('storefront_admin_actions')) {
 
                 $set('palette');
                 $set('color_scheme');
-                $set('hero_headline');
+                storefront_save_text('hero_headline');
                 storefront_save_text('hero_tagline');
                 $setCheckbox('hero_show_decor');
                 $setCheckbox('hero_show_chips');
@@ -1162,7 +1162,7 @@ if (!function_exists('storefront_admin_actions')) {
                     $set('location_input_type');
                 }
                 $set('search_location_type');
-                $set('keyword_placeholder');
+                storefront_save_text('keyword_placeholder');
                 osc_set_preference('defaultShowAs@all', Params::getParam('defaultShowAs@all'), 'storefront');
                 osc_set_preference('defaultShowAs@search', Params::getParam('defaultShowAs@all'));
                 storefront_save_text('footer_message');
