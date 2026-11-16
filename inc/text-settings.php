@@ -49,7 +49,8 @@ if (!function_exists('storefront_migrate_text_settings')) {
 
 /**
  * What a visitor in $code sees: that language's text, then the site's default language, then
- * the old single value, or '' when none is set. Core 7.0 has no osc_settings_text_value().
+ * the old single value, or ''. The fallback is core's osc_settings_text_value(); the body is
+ * its shim for core 7.0.
  */
 if (!function_exists('storefront_text_value')) {
     function storefront_text_value($key, $code)
@@ -57,9 +58,9 @@ if (!function_exists('storefront_text_value')) {
         if (function_exists('osc_settings_text_value')) {
             return osc_settings_text_value($key, 'storefront', $code);
         }
-        foreach (array($code, osc_language()) as $locale) {
-            $value = (string) osc_get_preference($key . $locale, 'storefront');
-            if ($value !== '') {
+        foreach (array((string) $code, osc_language()) as $locale) {
+            $value = $locale === '' ? '' : (string) osc_get_preference($key . $locale, 'storefront');
+            if (trim($value) !== '') {
                 return $value;
             }
         }
