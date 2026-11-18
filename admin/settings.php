@@ -51,6 +51,17 @@ foreach ($palettes as $value => $info) {
 }
 
 $pref = static fn ($key) => (string) osc_get_preference($key, 'storefront');
+
+$textLocales = storefront_text_locales();
+// Each language shows what its visitors see, so saving keeps the old single value.
+$textValues  = static function ($key) use ($textLocales) {
+    $values = array();
+    foreach (array_keys($textLocales) as $code) {
+        $values[$code] = storefront_text_value($key, $code);
+    }
+
+    return $values;
+};
 ?>
 <style type="text/css" media="screen">
     .sf-swatches {
@@ -96,15 +107,19 @@ osc_admin_radio_group(array(
 
 osc_admin_form_section(__('Home / Hero', 'storefront'), array('spaced' => true));
 osc_admin_text(array(
-    'name'  => 'hero_headline',
-    'label' => __('Headline', 'storefront'),
-    'value' => $pref('hero_headline'),
+    'name'      => 'hero_headline',
+    'label'     => __('Headline', 'storefront'),
+    'translate' => true,
+    'locales'   => $textLocales,
+    'value'     => $textValues('hero_headline'),
     'help'  => __('Overrides the big home headline. Leave empty to use the site title.', 'storefront'),
 ));
 osc_admin_textarea(array(
-    'name'  => 'hero_tagline',
-    'label' => __('Tagline', 'storefront'),
-    'value' => $pref('hero_tagline'),
+    'name'      => 'hero_tagline',
+    'label'     => __('Tagline', 'storefront'),
+    'translate' => true,
+    'locales'   => $textLocales,
+    'value'     => $textValues('hero_tagline'),
     'rows'  => 3,
     'help'  => __('Sub-text shown under the headline. Leave empty to use the site description.', 'storefront'),
 ));
@@ -145,9 +160,11 @@ osc_admin_select(array(
     'help'     => __('How the location filter behaves on the search page. "Region & city" suits single-country sites — it hides the country choice and scopes results to your site\'s default country.', 'storefront'),
 ));
 osc_admin_text(array(
-    'name'  => 'keyword_placeholder',
-    'label' => __('Search box placeholder', 'storefront'),
-    'value' => $pref('keyword_placeholder'),
+    'name'      => 'keyword_placeholder',
+    'label'     => __('Search box placeholder', 'storefront'),
+    'translate' => true,
+    'locales'   => $textLocales,
+    'value'     => $textValues('keyword_placeholder'),
     'help'  => __('Leave empty to use the default placeholder.', 'storefront'),
 ));
 osc_admin_select(array(
@@ -174,9 +191,11 @@ osc_admin_form_section(__('Footer & Social', 'storefront'), $hasMenus ? array(
     'intro'  => __('Leave any field empty to hide that icon from the footer.', 'storefront'),
 ));
 osc_admin_textarea(array(
-    'name'  => 'footer_message',
-    'label' => __('Footer tagline', 'storefront'),
-    'value' => $pref('footer_message'),
+    'name'      => 'footer_message',
+    'label'     => __('Footer tagline', 'storefront'),
+    'translate' => true,
+    'locales'   => $textLocales,
+    'value'     => $textValues('footer_message'),
     'rows'  => 2,
     'help'  => __('Brand tagline shown in the footer. Leave empty to use the default.', 'storefront'),
 ));

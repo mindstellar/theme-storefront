@@ -8,6 +8,7 @@
 define('STOREFRONT_THEME_VERSION', '2.6.1');
 define('STOREFRONT_THEME_FOLDER', __DIR__);
 require_once STOREFRONT_THEME_FOLDER . '/inc/place-field.php';
+require_once STOREFRONT_THEME_FOLDER . '/inc/text-settings.php';
 
 if (!OC_ADMIN) {
     // Vanilla, jQuery-free assets. Defer every script — all of the theme's behaviour
@@ -244,6 +245,7 @@ if (!function_exists('storefront_theme_update')) {
         if ($current_version === 0 || $current_version === '') {
             storefront_theme_install();
         }
+        storefront_migrate_text_settings();
         osc_set_preference('version', STOREFRONT_THEME_VERSION, 'storefront');
         osc_reset_preferences();
     }
@@ -300,7 +302,7 @@ if (!function_exists('storefront_setting')) {
 if (!function_exists('storefront_logo')) {
     function storefront_logo($compact = false)
     {
-        $siteName = storefront_setting('header_logo_text', osc_page_title());
+        $siteName = storefront_text_setting('header_logo_text', osc_page_title());
         $wordmark = '<span class="sf-wordmark">' . osc_esc_html($siteName) . '</span>';
 
         $resolveMark = static function ($svgKey, $rasterKey) use ($siteName) {
@@ -1058,7 +1060,7 @@ if (!function_exists('storefront_admin_actions')) {
 
         switch ($action) {
             case 'storefront_brand':
-                osc_set_preference('header_logo_text', Params::getParam('header_logo_text'), 'storefront');
+                storefront_save_text('header_logo_text');
                 osc_reset_preferences();
                 osc_add_flash_ok_message(__('Brand settings updated correctly.', 'storefront'), 'admin');
                 osc_redirect_to($adminUrl('header'));
@@ -1151,8 +1153,8 @@ if (!function_exists('storefront_admin_actions')) {
 
                 $set('palette');
                 $set('color_scheme');
-                $set('hero_headline');
-                $set('hero_tagline');
+                storefront_save_text('hero_headline');
+                storefront_save_text('hero_tagline');
                 $setCheckbox('hero_show_decor');
                 $setCheckbox('hero_show_chips');
                 $setCheckbox('home_show_featured');
@@ -1160,10 +1162,10 @@ if (!function_exists('storefront_admin_actions')) {
                     $set('location_input_type');
                 }
                 $set('search_location_type');
-                $set('keyword_placeholder');
+                storefront_save_text('keyword_placeholder');
                 osc_set_preference('defaultShowAs@all', Params::getParam('defaultShowAs@all'), 'storefront');
                 osc_set_preference('defaultShowAs@search', Params::getParam('defaultShowAs@all'));
-                $set('footer_message');
+                storefront_save_text('footer_message');
                 if (!storefront_has_menus()) {
                     $set('social_facebook');
                     $set('social_twitter');

@@ -48,7 +48,7 @@ $sf_can_post = storefront_can_post();
             <a class="sf-logo" href="<?php echo osc_base_url(); ?>"><?php echo storefront_logo(); ?></a>
             <p class="sf-footer__tagline">
                 <?php
-                $sf_footer_message = storefront_setting('footer_message', '');
+                $sf_footer_message = storefront_text_setting('footer_message', '');
                 if ($sf_footer_message !== '') {
                     echo osc_esc_html($sf_footer_message);
                 } elseif (osc_page_description() !== '') {

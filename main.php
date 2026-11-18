@@ -28,10 +28,10 @@ $sf_hues = array(
         <?php } ?>
 
         <div class="sf-hero__content">
-        <h1 class="sf-hero__title"><?php echo osc_esc_html(storefront_setting('hero_headline', osc_page_title())); ?></h1>
+        <h1 class="sf-hero__title"><?php echo osc_esc_html(storefront_text_setting('hero_headline', osc_page_title())); ?></h1>
         <p class="sf-hero__sub">
             <?php
-            $sf_hero_tagline = storefront_setting('hero_tagline', '');
+            $sf_hero_tagline = storefront_text_setting('hero_tagline', '');
             if ($sf_hero_tagline !== '') {
                 echo osc_esc_html($sf_hero_tagline);
             } else {
@@ -49,7 +49,7 @@ $sf_hues = array(
                     <svg class="sf-hero__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
                     <label class="sf-sr-only" for="sf-hero-query"><?php _e('Keywords', 'storefront'); ?></label>
                     <input type="text" name="sPattern" id="sf-hero-query" value="<?php echo osc_esc_html(osc_search_pattern()); ?>"
-                           placeholder="<?php echo osc_esc_html(__('What are you looking for?', 'storefront')); ?>" />
+                           placeholder="<?php echo osc_esc_html(storefront_text_setting('keyword_placeholder', __('What are you looking for?', 'storefront'))); ?>" />
                 </div>
                 <div class="sf-hero__field">
                     <svg class="sf-hero__icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>

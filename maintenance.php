@@ -3,7 +3,7 @@
  * Storefront — a Shopclass public theme.
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
-$sf_site = osc_get_preference('pageTitle');
+$sf_site = osc_page_title();
 $sf_note = function_exists('osc_sanitize_maintenance_message') ? osc_sanitize_maintenance_message(osc_get_preference('maintenance_message')) : '';
 ?><!doctype html>
 <html lang="<?php echo str_replace('_', '-', osc_current_user_locale()); ?>">

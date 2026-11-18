@@ -44,7 +44,7 @@ $renderLogoSlot = static function ($slot, $svgKey, $rasterKey, $label, $help) us
                 <?php echo $svg; /* already sanitized on save */ ?>
             <?php } else { ?>
                 <img src="<?php echo osc_esc_html(osc_base_url() . 'oc-content/uploads/' . $raster); ?>"
-                     alt="<?php echo osc_esc_html(osc_get_preference('header_logo_text', 'storefront') ?: osc_page_title()); ?>">
+                     alt="<?php echo osc_esc_html(storefront_text_setting('header_logo_text', osc_page_title())); ?>">
             <?php } ?>
         </div>
     <?php } ?>
@@ -106,10 +106,17 @@ osc_admin_form_open(array(
     'url'    => $formAction,
     'fields' => array('action_specific' => 'storefront_brand'),
 ));
+$textLocales = storefront_text_locales();
+$textValues  = array();
+foreach (array_keys($textLocales) as $code) {
+    $textValues[$code] = storefront_text_value('header_logo_text', $code);
+}
 osc_admin_text(array(
-    'name'  => 'header_logo_text',
-    'label' => __('Site name', 'storefront'),
-    'value' => (string) osc_get_preference('header_logo_text', 'storefront'),
+    'name'      => 'header_logo_text',
+    'label'     => __('Site name', 'storefront'),
+    'translate' => true,
+    'locales'   => $textLocales,
+    'value'     => $textValues,
     'help'  => __('The wordmark shown when no logo image is set, and the accessible site name in every case.', 'storefront'),
 ));
 osc_admin_form_close(array(array('label' => __('Save', 'storefront'), 'type' => 'submit')));

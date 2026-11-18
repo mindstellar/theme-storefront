@@ -95,7 +95,7 @@ $sf_render_region_city_selects = function ($sf_country_code) use ($sf_region_par
                 <label class="sf-sr-only" for="query"><?php _e('Keywords', 'storefront'); ?></label>
                 <input class="sf-input" type="search" name="sPattern" id="query"
                        value="<?php echo osc_esc_html(osc_search_pattern()); ?>"
-                       placeholder="<?php echo osc_esc_html(__('What are you looking for?', 'storefront')); ?>" />
+                       placeholder="<?php echo osc_esc_html(storefront_text_setting('keyword_placeholder', __('What are you looking for?', 'storefront'))); ?>" />
                 <button class="sf-btn sf-btn--primary sf-btn--icon-only" type="submit"
                         aria-label="<?php echo osc_esc_html(__('Search', 'storefront')); ?>">
                     <?php echo storefront_icon('search', 16); ?>
